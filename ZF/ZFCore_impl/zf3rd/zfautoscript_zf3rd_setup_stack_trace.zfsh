@@ -1,0 +1,7 @@
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/ZSaberLv0/stack_trace" master "<ZF_WORK_DIR>\_repo\stack_trace"
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\stack_trace\dbg\stack.hpp" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_stack_trace_template_prefix.hpp" "<ZF_WORK_DIR>\_repo\stack_trace\include\dbg\stack.hpp" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_stack_trace_template_postfix.hpp"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\stack_trace\stack.cpp" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_stack_trace_template_prefix.cpp" "<ZF_WORK_DIR>\_repo\stack_trace\src\stack.cpp" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_stack_trace_template_postfix.cpp"
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\stack_trace" "<ZF_WORK_DIR>\..\zfsrc\ZFImpl\_repo\stack_trace"
+

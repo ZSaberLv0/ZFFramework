@@ -1,0 +1,5 @@
+<lang>
+    <l k="hello" v="(localized) hello" />
+    <l k="hello in default only" v="(localized) hello in default only" />
+    <l k="hello with format: %s" v="(localized) hello with format: %s" />
+</lang>

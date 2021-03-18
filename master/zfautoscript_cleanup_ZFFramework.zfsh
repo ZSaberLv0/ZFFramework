@@ -1,0 +1,4 @@
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\rm_recursive.<ZF_SH_EXT>" "<ZF_WORK_DIR>\.." ".DS_Store"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\rm_recursive.<ZF_SH_EXT>" "<ZF_WORK_DIR>\.." ".gradle"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\rm_recursive.<ZF_SH_EXT>" "<ZF_WORK_DIR>\.." ".idea"
+

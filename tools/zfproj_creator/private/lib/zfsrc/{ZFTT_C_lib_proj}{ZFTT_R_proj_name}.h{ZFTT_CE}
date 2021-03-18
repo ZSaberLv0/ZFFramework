@@ -1,0 +1,12 @@
+/**
+ * @file {ZFTT_R_proj_name}.h
+ * @brief header file for {ZFTT_R_proj_name} module
+ */
+
+#ifndef _ZFI_{ZFTT_R_proj_name}_h_
+#define _ZFI_{ZFTT_R_proj_name}_h_
+
+#include "{ZFTT_R_proj_name}/{ZFTT_R_proj_name}Def.h"
+
+#endif // #ifndef _ZFI_{ZFTT_R_proj_name}_h_
+

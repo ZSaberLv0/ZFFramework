@@ -1,0 +1,184 @@
+matrix:
+ include:
+
+  - language: android
+    env:
+      - ZF_BUILD=Android;
+        ANDROID_HOME=/usr/local/android-sdk;
+        ZF_PROJ_PATH=demo/zfproj_with_src;
+        ZF_PROJ_NAME=ZFFramework_test;
+    android:
+      components:
+        - build-tools-25.0.2
+        - android-25
+    script:
+      # Android licenses
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "tools" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-25" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;google;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle" > /dev/null 2>&1
+      # build
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Android/${ZF_PROJ_NAME}
+      - if [ `basename $(dirname $(git remote get-url origin)) .git` = "ZFFramework" ]; then
+          chmod +x ../ZFFramework/master/ZF_CI/upload_app.sh;
+          ../ZFFramework/master/ZF_CI/upload_app.sh "${ZF_PROJ_PATH}/Android/${ZF_PROJ_NAME}/zfapp/build/outputs/apk/release/zfapp-release.apk" "${ZF_PROJ_NAME}.src.apk";
+        fi
+
+  - language: android
+    env:
+      - ZF_BUILD=Android;
+        ANDROID_HOME=/usr/local/android-sdk;
+        ZF_PROJ_PATH=demo/zfproj;
+        ZF_PROJ_NAME=ZFFramework_test;
+    android:
+      components:
+        - build-tools-25.0.2
+        - android-25
+    script:
+      # Android licenses
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "tools" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-25" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;google;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle" > /dev/null 2>&1
+      # build
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Android/${ZF_PROJ_NAME}
+      - if [ `basename $(dirname $(git remote get-url origin)) .git` = "ZFFramework" ]; then
+          chmod +x ../ZFFramework/master/ZF_CI/upload_app.sh;
+          ../ZFFramework/master/ZF_CI/upload_app.sh "${ZF_PROJ_PATH}/Android/${ZF_PROJ_NAME}/zfapp/build/outputs/apk/release/zfapp-release.apk" "${ZF_PROJ_NAME}.apk";
+        fi
+
+  - language: objective-c
+    env:
+      - ZF_BUILD=iOS;
+        ZF_PROJ_PATH=demo/zfproj_with_src;
+        ZF_PROJ_NAME=ZFFramework_test;
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/iOS/${ZF_PROJ_NAME}
+
+  - language: objective-c
+    env:
+      - ZF_BUILD=iOS;
+        ZF_PROJ_PATH=demo/zfproj;
+        ZF_PROJ_NAME=ZFFramework_test;
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/iOS/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH=demo/zfproj_with_src;
+        ZF_PROJ_NAME=ZFFramework_test;
+    os: linux
+    compiler: gcc
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH=demo/zfproj;
+        ZF_PROJ_NAME=ZFFramework_test;
+    os: linux
+    compiler: gcc
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH=demo/zfproj_with_src;
+        ZF_PROJ_NAME=ZFFramework_test;
+    os: osx
+    compiler: clang
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH=demo/zfproj;
+        ZF_PROJ_NAME=ZFFramework_test
+    os: osx
+    compiler: clang
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=doc
+    os: linux
+    compiler: clang
+    if: repo = ZFFramework/ZFFramework AND branch = master
+    script:
+      # we need Doxygen > 1.8.11 (better markdown support, BUG 742715 https://bugzilla.gnome.org/show_bug.cgi?id=742715)
+      - sudo apt-get install wget unzip cmake;
+        _OLD_DIR=$(pwd);
+        cd ..;
+        wget -q https://github.com/doxygen/doxygen/archive/Release_1_8_14.zip;
+        unzip -qo Release_1_8_14.zip;
+        cd doxygen-Release_1_8_14;
+        mkdir build;
+        cd build;
+        cmake -G "Unix Makefiles" ..;
+        sudo make install;
+        cd "$_OLD_DIR";
+      - chmod +x master/ZF_CI/doc.sh;
+        ./master/ZF_CI/doc.sh;
+
+  # pod lint takes too long time to build, always timeout, disable for now
+  #
+  # - language: cpp
+  #   env:
+  #     - ZF_BUILD=cocoapods_push
+  #   os: osx
+  #   compiler: clang
+  #   if: repo = ZFFrameworkDist/ZFFramework AND branch = master
+  #   script:
+  #     - sudo gem install cocoapods;
+  #     - chmod +x master/ZF_CI/cocoapods_push.sh;
+  #       travis_wait 30 ./master/ZF_CI/cocoapods_push.sh;
+  #
+  # - language: cpp
+  #   env:
+  #     - ZF_BUILD=cocoapods_lint
+  #   os: osx
+  #   compiler: clang
+  #   if: repo = ZFFramework/ZFFramework AND branch = master
+  #   script:
+  #     - sudo gem install cocoapods;
+  #     - chmod +x master/ZF_CI/cocoapods_lint.sh;
+  #       travis_wait 30 ./master/ZF_CI/cocoapods_lint.sh;
+  #
+
+
+install:
+  - if ! test -e "../ZFFramework"; then
+      travis_retry git clone https://github.com/ZFFramework/ZFFramework ../ZFFramework;
+    fi
+  - if [ "$ZF_BUILD" = "Qt" ]; then
+      if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+        travis_retry sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa;
+        travis_retry sudo apt-get update -qq;
+        travis_retry sudo apt-get install qtbase5-dev qt5-default qttools5-dev-tools;
+      else
+        travis_retry brew update;
+        travis_retry brew install qt5;
+        brew link --force qt5;
+        export HOMEBREW_QT5_VERSION=$(brew list --versions qt5 | rev | cut -d' ' -f1 | rev);
+        sudo ln -s /usr/local/Cellar/qt5/$HOMEBREW_QT5_VERSION/mkspecs /usr/local/mkspecs;
+      fi;
+    fi
+  - if [ "$ZF_BUILD" = "Android" ]; then
+      travis_retry sudo apt-get install ninja-build;
+    fi
+

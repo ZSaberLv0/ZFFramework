@@ -1,0 +1,88 @@
+<ZF_COMMENT> ============================================================
+<ZF_COMMENT> how to use:
+<ZF_COMMENT> 1. use zfproj_creator.sh to create "lib" or "impl" type module
+<ZF_COMMENT>    https://github.com/ZFFramework/ZFFramework/blob/master/tools/zfproj_creator/zfproj_creator.sh
+<ZF_COMMENT>    result structure should be:
+<ZF_COMMENT>        ZFModule/ZF/YourLibName/
+<ZF_COMMENT>            .git/
+<ZF_COMMENT>            zfproj/
+<ZF_COMMENT>            zfres/
+<ZF_COMMENT>            zfsrc/
+<ZF_COMMENT> 2. push the "YourLibName" dir to your git repo, let's say:
+<ZF_COMMENT>    https://github.com/YourUserName/YourLibName
+<ZF_COMMENT> 3. clone your libs like below
+<ZF_COMMENT>        sh zfmodule.sh https://github.com/YourUserName/YourLibName YourLibName YourLibBranch
+<ZF_COMMENT>        (YourLibName and YourLibBranch are optional)
+<ZF_COMMENT>    the lib would be built when needed,
+<ZF_COMMENT>    and would be installed to
+<ZF_COMMENT>        ZFFramework/_release
+<ZF_COMMENT> 4. use zfproj_creator.sh to create "app" type project files for your app
+<ZF_COMMENT> ============================================================
+
+
+<ZF_COMMENT> <ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" https://github.com/YourUserName/YourLibName{ZFTT_C_lib_ext_require_0}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_0}{ZFTT_CE}{ZFTT_C_lib_ext_require_1}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_1}{ZFTT_CE}{ZFTT_C_lib_ext_require_2}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_2}{ZFTT_CE}{ZFTT_C_lib_ext_require_3}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_3}{ZFTT_CE}{ZFTT_C_lib_ext_require_4}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_4}{ZFTT_CE}{ZFTT_C_lib_ext_require_5}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_5}{ZFTT_CE}{ZFTT_C_lib_ext_require_6}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_6}{ZFTT_CE}{ZFTT_C_lib_ext_require_7}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_7}{ZFTT_CE}{ZFTT_C_lib_ext_require_8}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_8}{ZFTT_CE}{ZFTT_C_lib_ext_require_9}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_9}{ZFTT_CE}{ZFTT_C_lib_ext_require_10}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_10}{ZFTT_CE}{ZFTT_C_lib_ext_require_11}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_11}{ZFTT_CE}{ZFTT_C_lib_ext_require_12}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_12}{ZFTT_CE}{ZFTT_C_lib_ext_require_13}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_13}{ZFTT_CE}{ZFTT_C_lib_ext_require_14}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_14}{ZFTT_CE}{ZFTT_C_lib_ext_require_15}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_15}{ZFTT_CE}{ZFTT_C_lib_ext_require_16}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_16}{ZFTT_CE}{ZFTT_C_lib_ext_require_17}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_17}{ZFTT_CE}{ZFTT_C_lib_ext_require_18}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_18}{ZFTT_CE}{ZFTT_C_lib_ext_require_19}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_19}{ZFTT_CE}{ZFTT_C_lib_ext_require_20}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_20}{ZFTT_CE}{ZFTT_C_lib_ext_require_21}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_21}{ZFTT_CE}{ZFTT_C_lib_ext_require_22}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_22}{ZFTT_CE}{ZFTT_C_lib_ext_require_23}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_23}{ZFTT_CE}{ZFTT_C_lib_ext_require_24}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_24}{ZFTT_CE}{ZFTT_C_lib_ext_require_25}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_25}{ZFTT_CE}{ZFTT_C_lib_ext_require_26}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_26}{ZFTT_CE}{ZFTT_C_lib_ext_require_27}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_27}{ZFTT_CE}{ZFTT_C_lib_ext_require_28}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_28}{ZFTT_CE}{ZFTT_C_lib_ext_require_29}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_29}{ZFTT_CE}{ZFTT_C_lib_ext_require_30}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_30}{ZFTT_CE}{ZFTT_C_lib_ext_require_31}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_lib_ext_git_31}{ZFTT_CE}{ZFTT_C_impl_ext_require_0}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_0}{ZFTT_CE}{ZFTT_C_impl_ext_require_1}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_1}{ZFTT_CE}{ZFTT_C_impl_ext_require_2}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_2}{ZFTT_CE}{ZFTT_C_impl_ext_require_3}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_3}{ZFTT_CE}{ZFTT_C_impl_ext_require_4}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_4}{ZFTT_CE}{ZFTT_C_impl_ext_require_5}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_5}{ZFTT_CE}{ZFTT_C_impl_ext_require_6}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_6}{ZFTT_CE}{ZFTT_C_impl_ext_require_7}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_7}{ZFTT_CE}{ZFTT_C_impl_ext_require_8}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_8}{ZFTT_CE}{ZFTT_C_impl_ext_require_9}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_9}{ZFTT_CE}{ZFTT_C_impl_ext_require_10}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_10}{ZFTT_CE}{ZFTT_C_impl_ext_require_11}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_11}{ZFTT_CE}{ZFTT_C_impl_ext_require_12}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_12}{ZFTT_CE}{ZFTT_C_impl_ext_require_13}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_13}{ZFTT_CE}{ZFTT_C_impl_ext_require_14}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_14}{ZFTT_CE}{ZFTT_C_impl_ext_require_15}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_15}{ZFTT_CE}{ZFTT_C_impl_ext_require_16}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_16}{ZFTT_CE}{ZFTT_C_impl_ext_require_17}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_17}{ZFTT_CE}{ZFTT_C_impl_ext_require_18}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_18}{ZFTT_CE}{ZFTT_C_impl_ext_require_19}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_19}{ZFTT_CE}{ZFTT_C_impl_ext_require_20}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_20}{ZFTT_CE}{ZFTT_C_impl_ext_require_21}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_21}{ZFTT_CE}{ZFTT_C_impl_ext_require_22}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_22}{ZFTT_CE}{ZFTT_C_impl_ext_require_23}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_23}{ZFTT_CE}{ZFTT_C_impl_ext_require_24}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_24}{ZFTT_CE}{ZFTT_C_impl_ext_require_25}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_25}{ZFTT_CE}{ZFTT_C_impl_ext_require_26}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_26}{ZFTT_CE}{ZFTT_C_impl_ext_require_27}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_27}{ZFTT_CE}{ZFTT_C_impl_ext_require_28}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_28}{ZFTT_CE}{ZFTT_C_impl_ext_require_29}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_29}{ZFTT_CE}{ZFTT_C_impl_ext_require_30}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_30}{ZFTT_CE}{ZFTT_C_impl_ext_require_31}
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" {ZFTT_R_impl_ext_git_31}{ZFTT_CE}
+

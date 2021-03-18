@@ -1,0 +1,11 @@
+ZF_NAME = ZFCore_impl
+ZF_TYPE = impl
+
+ZF_OUTPUT = ..
+ZF_INPLACE = 1
+ZF_INPLACE_SRC = ZFModule/ZF/$ZF_NAME
+
+ZF_LIB += ZFCore
+
+ZF_IMPL += ZF_impl
+

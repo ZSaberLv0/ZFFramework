@@ -1,0 +1,22 @@
+ZF_NAME = ZFFramework_test
+ZF_TYPE = app
+
+ZF_OUTPUT = ..
+ZF_INPLACE = 1
+ZF_INPLACE_SRC = $ZF_NAME/$ZF_NAME
+
+ZF_LIB += ZFCore
+ZF_LIB += ZFAlgorithm
+ZF_LIB += ZFUtility
+ZF_LIB += ZFUIKit
+ZF_LIB += ZFUIWidget
+ZF_LIB += ZFLua
+ZF_LIB += ZFUIWebKit
+
+ZF_IMPL += ZF_impl
+ZF_IMPL += ZFCore_impl
+ZF_IMPL += ZFAlgorithm_impl
+ZF_IMPL += ZFUIKit_impl
+ZF_IMPL += ZFLua_impl
+ZF_IMPL += ZFUIWebKit_impl
+

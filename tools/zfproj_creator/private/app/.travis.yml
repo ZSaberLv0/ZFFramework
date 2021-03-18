@@ -1,0 +1,129 @@
+matrix:
+ include:
+
+  - language: android
+    env:
+      - ZF_BUILD=Android;
+        ANDROID_HOME=/usr/local/android-sdk;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj_with_src;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    android:
+      components:
+        - build-tools-25.0.2
+        - android-25
+    script:
+      # Android licenses
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "tools" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-25" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;google;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle" > /dev/null 2>&1
+      # build
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Android/${ZF_PROJ_NAME}
+
+  - language: android
+    env:
+      - ZF_BUILD=Android;
+        ANDROID_HOME=/usr/local/android-sdk;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    android:
+      components:
+        - build-tools-25.0.2
+        - android-25
+    script:
+      # Android licenses
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "tools" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-25" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "extras;google;m2repository" > /dev/null 2>&1
+      - yes | ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle" > /dev/null 2>&1
+      # build
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Android.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Android/${ZF_PROJ_NAME}
+
+  - language: objective-c
+    env:
+      - ZF_BUILD=iOS;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj_with_src;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/iOS/${ZF_PROJ_NAME}
+
+  - language: objective-c
+    env:
+      - ZF_BUILD=iOS;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_iOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/iOS/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj_with_src;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    os: linux
+    compiler: gcc
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    os: linux
+    compiler: gcc
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_Posix.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj_with_src;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    os: osx
+    compiler: clang
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+  - language: cpp
+    env:
+      - ZF_BUILD=Qt;
+        ZF_PROJ_PATH={ZFTT_R_proj_name}/zfproj;
+        ZF_PROJ_NAME={ZFTT_R_proj_name};
+    os: osx
+    compiler: clang
+    script:
+      - chmod +x ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh
+      - ../ZFFramework/master/ZF_CI/testbuild/testbuild_Qt_MacOS.sh ${ZF_PROJ_NAME} ${ZF_PROJ_PATH}/Qt/${ZF_PROJ_NAME}
+
+
+install:
+  - if ! test -e "../ZFFramework"; then
+      travis_retry git clone https://github.com/ZFFramework/ZFFramework ../ZFFramework;
+    fi
+  - if [ "$ZF_BUILD" = "Qt" ]; then
+      if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+        travis_retry sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa;
+        travis_retry sudo apt-get update -qq;
+        travis_retry sudo apt-get install qtbase5-dev qt5-default qttools5-dev-tools;
+      else
+        travis_retry brew update;
+        travis_retry brew install qt5;
+        brew link --force qt5;
+        export HOMEBREW_QT5_VERSION=$(brew list --versions qt5 | rev | cut -d' ' -f1 | rev);
+        sudo ln -s /usr/local/Cellar/qt5/$HOMEBREW_QT5_VERSION/mkspecs /usr/local/mkspecs;
+      fi;
+    fi
+  - if [ "$ZF_BUILD" = "Android" ]; then
+      travis_retry sudo apt-get install ninja-build;
+    fi
+

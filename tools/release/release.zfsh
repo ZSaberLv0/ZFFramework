@@ -1,0 +1,15 @@
+<ZF_SET> ZF_PLATFORM=<ZF_P1>
+
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh_recursive.<ZF_SH_EXT>" "<ZF_ROOT_PATH>" "zfautoscript_release*.zfsh" <ZF_PL>ZF_PLATFORM<ZF_PR>
+<ZF_IF_FAILED_BEGIN>
+    <ZF_EXIT_FAILED>
+<ZF_IF_FAILED_END>
+
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh_recursive.<ZF_SH_EXT>" "<ZF_ROOT_PATH>\..\ZFModule" "zfautoscript_release*.zfsh" <ZF_PL>ZF_PLATFORM<ZF_PR>
+<ZF_IF_FAILED_BEGIN>
+    <ZF_EXIT_FAILED>
+<ZF_IF_FAILED_END>
+
+

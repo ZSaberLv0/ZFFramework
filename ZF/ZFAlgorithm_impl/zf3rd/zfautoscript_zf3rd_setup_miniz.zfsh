@@ -1,0 +1,4 @@
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/kuba--/zip" master "<ZF_WORK_DIR>\_repo\miniz"
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\miniz\src\miniz.h" "<ZF_WORK_DIR>\..\zfsrc\ZFImpl\_repo\miniz\miniz.h"
+

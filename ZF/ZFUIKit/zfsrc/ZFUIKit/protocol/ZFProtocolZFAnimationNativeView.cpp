@@ -1,0 +1,8 @@
+#include "ZFProtocolZFAnimationNativeView.h"
+
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFPROTOCOL_INTERFACE_REGISTER(ZFAnimationNativeView)
+
+ZF_NAMESPACE_GLOBAL_END
+

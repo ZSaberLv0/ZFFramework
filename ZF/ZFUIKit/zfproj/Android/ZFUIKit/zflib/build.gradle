@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+
+def ZF_ROOT_PATH = this.projectDir.getAbsolutePath() + '/../../../../../../../ZFFramework'
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+        ndk {
+            // abiFilters "arm64-v8a", "armeabi", "armeabi-v7a", "mips", "mips64", "x86", "x86_64"
+            abiFilters "armeabi-v7a"
+        }
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            java.srcDirs += this.projectDir.getAbsolutePath() + '/../../../../zfsrc/ZFImpl/sys_Android/java'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+    buildToolsVersion '29.0.3'
+}
+
+dependencies {
+    implementation fileTree(includes: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: ZF_ROOT_PATH + '/_release/Android/module/ZFCore/src/main/libs', includes: ['*.jar'])
+    implementation fileTree(dir: ZF_ROOT_PATH + '/_release/Android/module/ZFAlgorithm/src/main/libs', includes: ['*.jar'])
+    implementation fileTree(dir: ZF_ROOT_PATH + '/_release/Android/module/ZFUtility/src/main/libs', includes: ['*.jar'])
+}
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task ZFSetup {
+    doLast {
+        if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+            exec {
+                executable "cmd.exe"
+                args "/c", ZF_ROOT_PATH + "/tools/util/copy_res.bat", this.projectDir.getAbsolutePath() + "/../../../../zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+            }
+        }
+        else {
+            exec {
+                executable "sh"
+                args ZF_ROOT_PATH + "/tools/util/copy_res.sh", this.projectDir.getAbsolutePath() + "/../../../../zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+            }
+        }
+    }
+}
+preBuild.dependsOn ZFSetup
+
+gradle.buildFinished {
+    if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+        exec {
+            executable "cmd.exe"
+            args "/c", ZF_ROOT_PATH + "/tools/spec/Android/libs_copy.bat", "ZFUIKit", this.projectDir.getAbsolutePath() + '/..'
+        }
+    }
+    else {
+        exec {
+            executable "sh"
+            args ZF_ROOT_PATH + "/tools/spec/Android/libs_copy.sh", "ZFUIKit", this.projectDir.getAbsolutePath() + '/..'
+        }
+    }
+}
+

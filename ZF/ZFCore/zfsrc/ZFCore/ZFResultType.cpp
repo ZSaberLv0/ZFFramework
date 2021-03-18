@@ -1,0 +1,8 @@
+#include "ZFResultType.h"
+
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFENUM_DEFINE(ZFResultType)
+
+ZF_NAMESPACE_GLOBAL_END
+

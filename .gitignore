@@ -1,0 +1,35 @@
+# spec
+/master/ZF_docs/Doxygen/doxy*.exe
+/master/ZF_docs/Doxygen/libclang.dll
+
+# common
+**/.svn
+**/_release
+**/_repo
+**/_tmp
+**/_impl
+**/zfgensrc_*
+
+# Android
+**/Android/**/*.iml
+**/Android/**/.externalNativeBuild
+**/Android/**/.gradle
+**/Android/**/.idea
+**/Android/**/build
+**/Android/**/captures
+**/Android/**/local.properties
+**/Android/**/src/main/assets
+
+# iOS
+**/.DS_Store
+**/*xcuserdata*
+
+# Qt
+**/Qt/**/build-*
+**/*.pro.user
+
+# Windows
+**/*.ncb
+**/*.suo
+**/*.vcproj.*.user
+

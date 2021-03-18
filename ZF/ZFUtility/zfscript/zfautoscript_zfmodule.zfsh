@@ -1,0 +1,24 @@
+<ZF_COMMENT> ============================================================
+<ZF_COMMENT> how to use:
+<ZF_COMMENT> 1. use zfproj_creator.sh to create "lib" or "impl" type module
+<ZF_COMMENT>    https://github.com/ZFFramework/ZFFramework/blob/master/tools/zfproj_creator/zfproj_creator.sh
+<ZF_COMMENT>    result structure should be:
+<ZF_COMMENT>        ZFModule/ZF/YourLibName/
+<ZF_COMMENT>            .git/
+<ZF_COMMENT>            zfproj/
+<ZF_COMMENT>            zfres/
+<ZF_COMMENT>            zfsrc/
+<ZF_COMMENT> 2. push the "YourLibName" dir to your git repo, let's say:
+<ZF_COMMENT>    https://github.com/YourUserName/YourLibName
+<ZF_COMMENT> 3. clone your libs like below
+<ZF_COMMENT>        sh zfmodule.sh https://github.com/YourUserName/YourLibName YourLibName YourLibBranch
+<ZF_COMMENT>        (YourLibName and YourLibBranch are optional)
+<ZF_COMMENT>    the lib would be built when needed,
+<ZF_COMMENT>    and would be installed to
+<ZF_COMMENT>        ZFFramework/_release
+<ZF_COMMENT> 4. use zfproj_creator.sh to create "app" type project files for your app
+<ZF_COMMENT> ============================================================
+
+
+<ZF_COMMENT> <ZF_SH> "<ZF_ROOT_PATH>\tools\util\zfmodule.<ZF_SH_EXT>" https://github.com/YourUserName/YourLibName
+

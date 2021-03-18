@@ -1,0 +1,78 @@
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/LuaDist/lua" lua-5.3 "<ZF_WORK_DIR>\_repo\lua"
+
+
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\luaconf.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_luaconf.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\luaconf.h.orig" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+
+
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lapi.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lapi.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lauxlib.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lauxlib.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lcode.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lcode.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lctype.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lctype.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\ldebug.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\ldebug.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\ldo.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\ldo.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lfunc.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lfunc.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lgc.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lgc.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\llex.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\llex.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\llimits.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\llimits.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lmem.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lmem.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lobject.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lobject.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lopcodes.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lopcodes.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lparser.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lparser.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lprefix.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lprefix.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lstate.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lstate.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lstring.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lstring.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\ltable.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\ltable.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\ltm.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\ltm.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lua.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lualib.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lualib.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lundump.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lundump.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lvm.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lvm.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lzio.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_prefix.h" "<ZF_WORK_DIR>\_repo\lua\src\lzio.h" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_header_postfix.h"
+
+
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_src_prefix.h"
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lapi.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lauxlib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lbaselib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lbitlib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lcode.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lcorolib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lctype.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ldblib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ldebug.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ldo.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ldump.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lfunc.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lgc.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\linit.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\liolib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\llex.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lmathlib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lmem.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\loadlib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lobject.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lopcodes.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\loslib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lparser.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lstate.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lstring.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lstrlib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ltable.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ltablib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\ltm.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lundump.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lutf8lib.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lvm.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\_repo\lua\src\lzio.c"
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_append.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua\lua.cpp" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_src_postfix.h"
+
+
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_tmp\lua" "<ZF_WORK_DIR>\..\zfsrc\ZFImpl\ZFLua\_impl\lua"
+

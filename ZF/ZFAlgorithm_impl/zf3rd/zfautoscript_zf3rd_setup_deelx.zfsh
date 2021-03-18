@@ -1,0 +1,3 @@
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/sswater/deelx" master "<ZF_WORK_DIR>\_repo\deelx"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\deelx\deelx.h" "<ZF_WORK_DIR>\..\zfsrc\ZFImpl\_repo\deelx\deelx.h"
+

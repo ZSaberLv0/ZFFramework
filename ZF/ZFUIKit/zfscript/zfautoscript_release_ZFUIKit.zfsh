@@ -1,0 +1,11 @@
+<ZF_SET> ZF_PLATFORM=<ZF_P1>
+
+<ZF_COMMENT> ZF dependency
+<ZF_COMMENT> <ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh_recursive.<ZF_SH_EXT>" "<ZF_ROOT_PATH>" "zfautoscript_release_ZFDependencyLib.zfsh" <ZF_PL>ZF_PLATFORM<ZF_PR>
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh_recursive.<ZF_SH_EXT>" "<ZF_ROOT_PATH>" "zfautoscript_release_ZFCore.zfsh" <ZF_PL>ZF_PLATFORM<ZF_PR>
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh_recursive.<ZF_SH_EXT>" "<ZF_ROOT_PATH>" "zfautoscript_release_ZFAlgorithm.zfsh" <ZF_PL>ZF_PLATFORM<ZF_PR>
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh_recursive.<ZF_SH_EXT>" "<ZF_ROOT_PATH>" "zfautoscript_release_ZFUtility.zfsh" <ZF_PL>ZF_PLATFORM<ZF_PR>
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\spec\releaselib_<ZF_PL>ZF_PLATFORM<ZF_PR>.<ZF_SH_EXT>" ZFUIKit <ZF_WORK_DIR>\..
+

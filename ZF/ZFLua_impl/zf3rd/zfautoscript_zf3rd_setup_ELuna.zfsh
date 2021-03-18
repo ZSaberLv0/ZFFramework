@@ -1,0 +1,5 @@
+<ZF_COMMENT> <ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/radiotail/eluna" master "<ZF_WORK_DIR>\_repo\eluna"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/ZFFramework/eluna" master "<ZF_WORK_DIR>\_repo\eluna"
+
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\eluna\eluna\ELuna.h" "<ZF_WORK_DIR>\..\zfsrc\ZFImpl\ZFLua\_impl\lua\ELuna.h"
+

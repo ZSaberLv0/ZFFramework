@@ -1,0 +1,9 @@
+ZF_NAME = ZFLua
+ZF_TYPE = lib
+
+ZF_OUTPUT = ..
+ZF_INPLACE = 1
+ZF_INPLACE_SRC = ZFModule/ZF/$ZF_NAME
+
+ZF_LIB += ZFCore
+

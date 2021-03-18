@@ -1,0 +1,3 @@
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\cleanup_proj.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfproj" "ZFUIKit_impl"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\cleanup_proj.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfproj" "ZFUIKit_impl_jni"
+

@@ -1,0 +1,9 @@
+#include "ZFTimeLineCurve_common.h"
+
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFOBJECT_REGISTER(ZFTimeLineCurveLinear)
+ZFOBJECT_SINGLETON_DEFINE_DETAIL(ZFTimeLineCurveLinear, ZFTimeLineCurveLinear, ZFTimeLineCurveLinear, instance, ZFLevelZFFrameworkHigh)
+
+ZF_NAMESPACE_GLOBAL_END
+

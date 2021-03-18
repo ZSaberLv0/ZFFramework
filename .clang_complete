@@ -1,0 +1,17 @@
+-DZF_ENV_NAMESPACE_GLOBAL_DISABLE=1
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+
+-I../ZFFramework/ZF/ZFCore/zfsrc
+-I../ZFFramework/ZF/ZFAlgorithm/zfsrc
+-I../ZFFramework/ZF/ZFUtility/zfsrc
+-I../ZFFramework/ZF/ZFUIKit/zfsrc
+-I../ZFFramework/ZF/ZFUIWidget/zfsrc
+-I../ZFFramework/ZF/ZFLua/zfsrc
+-I../ZFFramework/ZF/ZFUIWebKit/zfsrc
+-I../ZFFramework/ZF/ZF_impl/zfsrc
+-I../ZFFramework/ZF/ZFCore_impl/zfsrc
+-I../ZFFramework/ZF/ZFAlgorithm_impl/zfsrc
+-I../ZFFramework/ZF/ZFUIKit_impl/zfsrc
+-I../ZFFramework/ZF/ZFLua_impl/zfsrc
+-I../ZFFramework/ZF/ZFUIWebKit_impl/zfsrc
+
