@@ -234,7 +234,7 @@ ZFMETHOD_DEFINE_2(ZFUITextEdit, void, measureTextEdit,
 {
     const ZFUIMargin &nativeImplViewMargin = this->nativeImplViewMargin();
     ZFUISizeApplyScaleReversely(ret, ZFPROTOCOL_ACCESS(ZFUITextEdit)->measureNativeTextEdit(this,
-        ZFUISizeApplyScale(ZFUIViewLayoutParam::sizeHintOffset(sizeHint, ZFUISizeMake(
+        ZFUISizeApplyScale(ZFUILayoutParam::sizeHintOffset(sizeHint, ZFUISizeMake(
                     0 - ZFUIMarginGetWidth(nativeImplViewMargin),
                     0 - ZFUIMarginGetHeight(nativeImplViewMargin)
                 )),

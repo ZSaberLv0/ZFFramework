@@ -271,12 +271,12 @@ static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFUIOnScreenKeyboardAutoResize_windowOnS
 static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFUIOnScreenKeyboardAutoResize_windowLayoutMarginChange)
 {
     const ZFProperty *property = listenerData.param0<v_ZFProperty *>()->zfv;
-    if(property != ZFPropertyAccess(ZFUIViewLayoutParam, layoutMargin))
+    if(property != ZFPropertyAccess(ZFUILayoutParam, layoutMargin))
     {
         return ;
     }
 
-    ZFUIViewLayoutParam *layoutParam = listenerData.sender<ZFUIViewLayoutParam *>();
+    ZFUILayoutParam *layoutParam = listenerData.sender<ZFUILayoutParam *>();
     ZFUIWindow *window = userData->objectHolded();
     _ZFP_I_ZFUIOnScreenKeyboardAutoResizeTaskData *taskData = ZFAny(window->objectTag(
         _ZFP_I_ZFUIOnScreenKeyboardAutoResizeTaskData::ClassData()->classNameFull()));

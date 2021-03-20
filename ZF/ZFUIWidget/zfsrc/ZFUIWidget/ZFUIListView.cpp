@@ -139,7 +139,7 @@ public:
         this->pimplOwner->childAdd(child);
         this->childAddOverrideFlag = zffalse;
     }
-    void childAdd(ZF_IN ZFUIView *child, ZFUIViewLayoutParam *layoutParam, ZF_IN zfindex index)
+    void childAdd(ZF_IN ZFUIView *child, ZFUILayoutParam *layoutParam, ZF_IN zfindex index)
     {
         this->childAddOverrideFlag = zftrue;
         this->pimplOwner->childAdd(child, layoutParam, index);

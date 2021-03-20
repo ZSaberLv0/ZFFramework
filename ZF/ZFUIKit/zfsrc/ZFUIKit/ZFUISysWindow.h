@@ -266,7 +266,7 @@ public:
     /**
      * @brief get window's layout param, fill parent by default
      */
-    ZFMETHOD_DECLARE_0(ZFUIViewLayoutParam *, sysWindowLayoutParam)
+    ZFMETHOD_DECLARE_0(ZFUILayoutParam *, sysWindowLayoutParam)
 
     /**
      * @brief access the root view of the window

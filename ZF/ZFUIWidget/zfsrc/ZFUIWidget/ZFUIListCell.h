@@ -36,12 +36,12 @@ zfclass ZF_ENV_EXPORT ZFUIListCell : zfextends ZFUIView
      *   to achieve additional features,
      *   fill parent and align center by default
      */
-    ZFPROPERTY_RETAIN_READONLY(ZFUIViewLayoutParam *, cellViewLayoutParam,
+    ZFPROPERTY_RETAIN_READONLY(ZFUILayoutParam *, cellViewLayoutParam,
                                ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIViewLayoutParam *, cellViewLayoutParam)
+    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUILayoutParam *, cellViewLayoutParam)
     {
         propertyValue = this->layoutParamCreate();
-        ZFUIViewLayoutParam *value = propertyValue.to<ZFUIViewLayoutParam *>();
+        ZFUILayoutParam *value = propertyValue.to<ZFUILayoutParam *>();
         value->sizeParam(ZFUISizeParamFillFill());
         value->layoutAlign(ZFUIAlign::e_Center);
     }

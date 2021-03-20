@@ -13,7 +13,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief auto resize #ZFUIWindow according to #ZFUIOnScreenKeyboardState
  *
- * resize logic are done by changing window's #ZFUIViewLayoutParam::layoutMargin\n
+ * resize logic are done by changing window's #ZFUILayoutParam::layoutMargin\n
  * \n
  * #ZFUIOnScreenKeyboardAutoResizeStop would be applied automatically when owner window destroyed
  */

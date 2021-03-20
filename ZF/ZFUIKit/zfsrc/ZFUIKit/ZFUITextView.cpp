@@ -138,7 +138,7 @@ ZFMETHOD_DEFINE_2(ZFUITextView, void, measureTextView,
 {
     const ZFUIMargin &nativeImplViewMargin = this->nativeImplViewMargin();
     ZFUISizeApplyScaleReversely(ret, ZFPROTOCOL_ACCESS(ZFUITextView)->measureNativeTextView(this,
-        ZFUISizeApplyScale(ZFUIViewLayoutParam::sizeHintOffset(sizeHint, ZFUISizeMake(
+        ZFUISizeApplyScale(ZFUILayoutParam::sizeHintOffset(sizeHint, ZFUISizeMake(
                     0 - ZFUIMarginGetWidth(nativeImplViewMargin),
                     0 - ZFUIMarginGetHeight(nativeImplViewMargin)
                 )),

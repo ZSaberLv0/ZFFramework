@@ -15,13 +15,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief layout param for #ZFUILinearLayout
  *
  * for #ZFUILinearLayout,
- * #ZFUIViewLayoutParam::layoutAlign and #ZFUIViewLayoutParam::layoutMargin
+ * #ZFUILayoutParam::layoutAlign and #ZFUILayoutParam::layoutMargin
  * would be relative to sibling child,
  * instead of the container view
  */
-zfclass ZF_ENV_EXPORT ZFUILinearLayoutParam : zfextends ZFUIViewLayoutParam
+zfclass ZF_ENV_EXPORT ZFUILinearLayoutParam : zfextends ZFUILayoutParam
 {
-    ZFOBJECT_DECLARE(ZFUILinearLayoutParam, ZFUIViewLayoutParam)
+    ZFOBJECT_DECLARE(ZFUILinearLayoutParam, ZFUILayoutParam)
 
     /**
      * @brief weight for the view, 0 by default

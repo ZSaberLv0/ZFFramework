@@ -118,12 +118,12 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *
         zfint marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
         child->layoutMeasure(
             ZFUISizeMake(
-                ZFUIViewLayoutParam::sizeHintMerge(
+                ZFUILayoutParam::sizeHintMerge(
                     layoutParam->sizeHint().width,
-                    ZFUIViewLayoutParam::sizeHintOffset(sizeHint.width, 0 - parentMarginX - marginX)),
-                ZFUIViewLayoutParam::sizeHintMerge(
+                    ZFUILayoutParam::sizeHintOffset(sizeHint.width, 0 - parentMarginX - marginX)),
+                ZFUILayoutParam::sizeHintMerge(
                     layoutParam->sizeHint().height,
-                    ZFUIViewLayoutParam::sizeHintOffset(sizeHint.height, 0 - parentMarginY - marginY))),
+                    ZFUILayoutParam::sizeHintOffset(sizeHint.height, 0 - parentMarginY - marginY))),
             ZFUISizeParamWrapWrap());
         ret.width += prevSpace + child->layoutMeasuredSize().width + marginX;
         ret.height = zfmMax(ret.height, child->layoutMeasuredSize().height + parentMarginY + marginY);
@@ -168,12 +168,12 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *pa
         zfint marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
         child->layoutMeasure(
             ZFUISizeMake(
-                ZFUIViewLayoutParam::sizeHintMerge(
+                ZFUILayoutParam::sizeHintMerge(
                     layoutParam->sizeHint().width,
-                    ZFUIViewLayoutParam::sizeHintOffset(sizeHint.width, 0 - parentMarginX - marginX)),
-                ZFUIViewLayoutParam::sizeHintMerge(
+                    ZFUILayoutParam::sizeHintOffset(sizeHint.width, 0 - parentMarginX - marginX)),
+                ZFUILayoutParam::sizeHintMerge(
                     layoutParam->sizeHint().height,
-                    ZFUIViewLayoutParam::sizeHintOffset(sizeHint.height, 0 - parentMarginY - marginY))),
+                    ZFUILayoutParam::sizeHintOffset(sizeHint.height, 0 - parentMarginY - marginY))),
             ZFUISizeParamWrapWrap());
         ret.width = zfmMax(ret.width, child->layoutMeasuredSize().width + parentMarginX + marginX);
         ret.height += prevSpace + child->layoutMeasuredSize().height + marginY;

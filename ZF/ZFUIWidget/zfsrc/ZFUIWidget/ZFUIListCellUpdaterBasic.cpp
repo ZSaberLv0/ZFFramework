@@ -18,7 +18,7 @@ static ZFUIView *_ZFP_ZFUIListCellUpdaterBasic_setupSeparator(ZF_IN ZFUIListCell
         separatorViewHolder = separatorView;
         zfRelease(separatorView);
 
-        separatorView->layoutParam(zflineAlloc(ZFUIViewLayoutParam));
+        separatorView->layoutParam(zflineAlloc(ZFUILayoutParam));
         separatorView->layoutParam()->sizeParam(ZFUISizeParamFillFill());
 
         separatorView->viewUIEnableTree(zffalse);

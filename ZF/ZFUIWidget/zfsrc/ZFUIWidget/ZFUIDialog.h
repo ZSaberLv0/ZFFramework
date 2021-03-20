@@ -24,8 +24,8 @@ extern ZF_ENV_EXPORT ZFObjectCreator ZFUIDialogDefaultLayoutParamCreator;
  * @brief see #ZFUIDialogDefaultLayoutParamCreator
  *
  * by default, the layout param would be:
- * -  have #ZFUIAlign::e_Center as #ZFUIViewLayoutParam::layoutAlign
- * -  have #ZFUIGlobalStyle::itemMargin as #ZFUIViewLayoutParam::layoutMargin
+ * -  have #ZFUIAlign::e_Center as #ZFUILayoutParam::layoutAlign
+ * -  have #ZFUIGlobalStyle::itemMargin as #ZFUILayoutParam::layoutMargin
  */
 extern ZF_ENV_EXPORT zfautoObject ZFUIDialogDefaultLayoutParamCreatorDefault(void);
 /**
@@ -154,8 +154,8 @@ public:
     /**
      * @brief dialog's layout param, created by #ZFUIDialogDefaultLayoutParamCreator by default
      */
-    ZFPROPERTY_RETAIN_READONLY(ZFUIViewLayoutParam *, dialogLayoutParam,
-                               ZFUIDialogDefaultLayoutParamCreator().to<ZFUIViewLayoutParam *>())
+    ZFPROPERTY_RETAIN_READONLY(ZFUILayoutParam *, dialogLayoutParam,
+                               ZFUIDialogDefaultLayoutParamCreator().to<ZFUILayoutParam *>())
 
     /**
      * @brief dialog's show animation, #ZFUIDialogDefaultAniShowCreator by default

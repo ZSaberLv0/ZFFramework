@@ -213,7 +213,7 @@ public:
      *
      * default param is fill parent (with sizeWeight (1, 1) and all others zero)
      */
-    ZFMETHOD_DECLARE_0(ZFUIViewLayoutParam *, windowLayoutParam)
+    ZFMETHOD_DECLARE_0(ZFUILayoutParam *, windowLayoutParam)
 
 protected:
     /** @brief see #EventWindowOnShow */

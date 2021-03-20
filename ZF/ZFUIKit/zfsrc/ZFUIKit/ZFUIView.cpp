@@ -49,8 +49,8 @@ public:
 
     ZFUIView *viewParent;
     ZFUIViewChildLayerEnum viewLayer;
-    ZFUIViewLayoutParam *layoutParam; // retain
-    ZFUIViewLayoutParam *serializableRefLayoutParam; // retain
+    ZFUILayoutParam *layoutParam; // retain
+    ZFUILayoutParam *serializableRefLayoutParam; // retain
     zfautoObject serializableRefLayoutParamCache;
 
     _ZFP_ZFUIViewInternalViewAutoSerializeTagMapType internalViewAutoSerializeTags;
@@ -191,7 +191,7 @@ public:
 
         ZFBitUnset(this->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layouting);
     }
-    void layoutParamChange(ZF_IN ZFUIView *owner, ZF_IN ZFUIViewLayoutParam *newLayoutParam)
+    void layoutParamChange(ZF_IN ZFUIView *owner, ZF_IN ZFUILayoutParam *newLayoutParam)
     {
         ZF_GLOBAL_INITIALIZER_CLASS(ZFUIViewListenerHolder) *listenerHolder = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewListenerHolder);
         zfRetain(newLayoutParam);
@@ -260,7 +260,7 @@ public:
                   ZF_IN ZFUIViewChildLayerEnum childLayer,
                   ZF_IN _ZFP_ZFUIViewLayerData &layer,
                   ZF_IN ZFUIView *view,
-                  ZF_IN ZFUIViewLayoutParam *layoutParam,
+                  ZF_IN ZFUILayoutParam *layoutParam,
                   ZF_IN zfindex atIndex)
     {
         zfCoreAssertWithMessageTrim(!ZFBitTest(owner->objectInstanceState(), ZFObjectInstanceStateOnDealloc),
@@ -282,7 +282,7 @@ public:
         }
         if(layoutParam == zfnull)
         {
-            layoutParam = zfRetain(owner->layoutParamCreate().to<ZFUIViewLayoutParam *>());
+            layoutParam = zfRetain(owner->layoutParamCreate().to<ZFUILayoutParam *>());
             layoutParamNeedRelease = zftrue;
         }
         else
@@ -290,7 +290,7 @@ public:
             if(!layoutParam->classData()->classIsTypeOf(owner->layoutParamClass()))
             {
                 layoutParamNeedRelease = zftrue;
-                ZFUIViewLayoutParam *tmp = zfRetain(owner->layoutParamCreate().to<ZFUIViewLayoutParam *>());
+                ZFUILayoutParam *tmp = zfRetain(owner->layoutParamCreate().to<ZFUILayoutParam *>());
                 tmp->styleableCopyFrom(layoutParam);
                 layoutParam = tmp;
             }
@@ -507,7 +507,7 @@ public:
         }
         return zftrue;
     }
-    ZFUIViewLayoutParam *childLayoutParamAtIndex(ZF_IN _ZFP_ZFUIViewLayerData &layer,
+    ZFUILayoutParam *childLayoutParamAtIndex(ZF_IN _ZFP_ZFUIViewLayerData &layer,
                                                  ZF_IN zfindex index)
     {
         return layer.views.get(index)->layoutParam();
@@ -743,13 +743,13 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIView, ViewPropertyOnUpdate)
 
 // ============================================================
 // serialize
-void ZFUIView::serializableRefLayoutParam(ZF_IN ZFUIViewLayoutParam *serializableRefLayoutParam)
+void ZFUIView::serializableRefLayoutParam(ZF_IN ZFUILayoutParam *serializableRefLayoutParam)
 {
     zfRetain(serializableRefLayoutParam);
     zfRelease(d->serializableRefLayoutParam);
     d->serializableRefLayoutParam = serializableRefLayoutParam;
 }
-ZFUIViewLayoutParam *ZFUIView::serializableRefLayoutParam(void)
+ZFUILayoutParam *ZFUIView::serializableRefLayoutParam(void)
 {
     return d->serializableRefLayoutParam;
 }
@@ -811,11 +811,11 @@ zfbool ZFUIView::serializableOnSerializeFromData(ZF_IN const ZFSerializableData 
                     "null layoutParam");
                 return zffalse;
             }
-            if(!layoutParam.toObject()->classData()->classIsTypeOf(ZFUIViewLayoutParam::ClassData()))
+            if(!layoutParam.toObject()->classData()->classIsTypeOf(ZFUILayoutParam::ClassData()))
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                     "%s not type of %s",
-                    layoutParam.toObject()->objectInfoOfInstance().cString(), ZFUIViewLayoutParam::ClassData()->classNameFull());
+                    layoutParam.toObject()->objectInfoOfInstance().cString(), ZFUILayoutParam::ClassData()->classNameFull());
                 return zffalse;
             }
 
@@ -867,7 +867,7 @@ zfbool ZFUIView::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &ser
     // layoutParam
     if(d->layoutParam != zfnull && this->viewParent() != zfnull)
     {
-        ZFUIViewLayoutParam *refLayoutParam = ((ref == zfnull) ? zfnull : ref->d->layoutParam);
+        ZFUILayoutParam *refLayoutParam = ((ref == zfnull) ? zfnull : ref->d->layoutParam);
         if(refLayoutParam == zfnull)
         {
             refLayoutParam = d->serializableRefLayoutParam;
@@ -1274,7 +1274,7 @@ void ZFUIView::implChildOnRemoveAllForDealloc(void)
 // ============================================================
 // parent
 void ZFUIView::_ZFP_ZFUIView_parentChanged(ZF_IN ZFUIView *viewParent,
-                                           ZF_IN ZFUIViewLayoutParam *layoutParam,
+                                           ZF_IN ZFUILayoutParam *layoutParam,
                                            ZF_IN ZFUIViewChildLayerEnum viewLayer)
 {
     if(viewParent == zfnull)
@@ -1448,25 +1448,25 @@ void ZFUIView::_ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleFixed,
 ZFMETHOD_DEFINE_0(ZFUIView, zfautoObject, layoutParamCreate)
 {
     zfautoObject layoutParam = this->layoutParamClass()->newInstance();
-    if(layoutParam == zfnull || !layoutParam.toObject()->classData()->classIsTypeOf(ZFUIViewLayoutParam::ClassData()))
+    if(layoutParam == zfnull || !layoutParam.toObject()->classData()->classIsTypeOf(ZFUILayoutParam::ClassData()))
     {
         return zfnull;
     }
-    this->layoutParamOnUpdate(layoutParam.to<ZFUIViewLayoutParam *>());
+    this->layoutParamOnUpdate(layoutParam.to<ZFUILayoutParam *>());
     return layoutParam;
 }
 const ZFClass *ZFUIView::layoutParamClass(void)
 {
-    return ZFUIViewLayoutParam::ClassData();
+    return ZFUILayoutParam::ClassData();
 }
 
 ZFMETHOD_DEFINE_1(ZFUIView, void, layoutParam,
-                  ZFMP_IN(ZFUIViewLayoutParam *, layoutParam))
+                  ZFMP_IN(ZFUILayoutParam *, layoutParam))
 {
     if(this->viewParent() != zfnull && layoutParam != zfnull && !layoutParam->classData()->classIsTypeOf(this->layoutParamClass()))
     {
         zfautoObject layoutParamHolder = this->layoutParamCreate();
-        ZFUIViewLayoutParam *layoutParamTmp = layoutParamHolder.to<ZFUIViewLayoutParam *>();
+        ZFUILayoutParam *layoutParamTmp = layoutParamHolder.to<ZFUILayoutParam *>();
         layoutParamTmp->styleableCopyFrom(layoutParam);
         d->layoutParamChange(this, layoutParamTmp);
     }
@@ -1475,7 +1475,7 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, layoutParam,
         d->layoutParamChange(this, layoutParam);
     }
 }
-ZFMETHOD_DEFINE_0(ZFUIView, ZFUIViewLayoutParam *, layoutParam)
+ZFMETHOD_DEFINE_0(ZFUIView, ZFUILayoutParam *, layoutParam)
 {
     return d->layoutParam;
 }
@@ -1572,7 +1572,7 @@ ZFMETHOD_DEFINE_2(ZFUIView, const ZFUISize &, layoutMeasure,
             }
         }
 
-        ZFUIViewLayoutParam::sizeHintApply(d->measureResult->measuredSize, d->measureResult->measuredSize, sizeHint, sizeParam);
+        ZFUILayoutParam::sizeHintApply(d->measureResult->measuredSize, d->measureResult->measuredSize, sizeHint, sizeParam);
         ZFUISizeApplyRange(d->measureResult->measuredSize, d->measureResult->measuredSize, this->viewSizeMin(), this->viewSizeMax());
     }
     return d->measureResult->measuredSize;
@@ -1761,7 +1761,7 @@ void ZFUIView::layoutOnLayout(ZF_IN const ZFUIRect &bounds)
     {
         ZFUIView *child = this->childAtIndex(i);
         child->viewFrame(
-            ZFUIViewLayoutParam::layoutParamApply(
+            ZFUILayoutParam::layoutParamApply(
                 bounds,
                 child,
                 child->layoutParam()));
@@ -1839,7 +1839,7 @@ ZFMETHOD_DEFINE_3(ZFUIView, ZFUIView *, childFindById,
 
 ZFMETHOD_DEFINE_3(ZFUIView, void, childAdd,
                   ZFMP_IN(ZFUIView *, view),
-                  ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                  ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                   ZFMP_IN_OPT(zfindex, atIndex, zfindexMax()))
 {
     d->childAdd(this, ZFUIViewChildLayer::e_Normal, d->layerNormal, view, layoutParam, atIndex);
@@ -1850,7 +1850,7 @@ ZFMETHOD_DEFINE_3(ZFUIView, void, childAdd,
                   ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner))
 {
     this->childAdd(view);
-    ZFUIViewLayoutParam *lp = view->layoutParam();
+    ZFUILayoutParam *lp = view->layoutParam();
     lp->sizeParam(sizeParam);
     lp->layoutAlign(layoutAlign);
 }
@@ -1976,7 +1976,7 @@ void ZFUIView::viewOnRemoveFromParent(ZF_IN ZFUIView *parent)
 // internal impl views
 ZFMETHOD_DEFINE_3(ZFUIView, void, internalImplViewAdd,
                   ZFMP_IN(ZFUIView *, view),
-                  ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                  ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                   ZFMP_IN_OPT(zfbool, addAsTopMost, zftrue))
 {
     d->childAdd(this, ZFUIViewChildLayer::e_InternalImpl, d->layerInternalImpl, view, layoutParam, (addAsTopMost ? zfindexMax() : 0));
@@ -1998,7 +1998,7 @@ void ZFUIView::internalImplViewOnLayout(ZF_IN const ZFUIRect &bounds)
         if(this->internalViewShouldLayout(child))
         {
             child->viewFrame(
-                ZFUIViewLayoutParam::layoutParamApply(
+                ZFUILayoutParam::layoutParamApply(
                     bounds,
                     child,
                     d->childLayoutParamAtIndex(d->layerInternalImpl, i)));
@@ -2010,7 +2010,7 @@ void ZFUIView::internalImplViewOnLayout(ZF_IN const ZFUIRect &bounds)
 // internal background views
 ZFMETHOD_DEFINE_3(ZFUIView, void, internalBgViewAdd,
                   ZFMP_IN(ZFUIView *, view),
-                  ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                  ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                   ZFMP_IN_OPT(zfbool, addAsTopMost, zftrue))
 {
     d->childAdd(this, ZFUIViewChildLayer::e_InternalBg, d->layerInternalBg, view, layoutParam, (addAsTopMost ? zfindexMax() : 0));
@@ -2032,7 +2032,7 @@ void ZFUIView::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
         if(this->internalViewShouldLayout(child))
         {
             child->viewFrame(
-                ZFUIViewLayoutParam::layoutParamApply(
+                ZFUILayoutParam::layoutParamApply(
                     bounds,
                     child,
                     d->childLayoutParamAtIndex(d->layerInternalBg, i)));
@@ -2044,7 +2044,7 @@ void ZFUIView::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
 // internal foreground views
 ZFMETHOD_DEFINE_3(ZFUIView, void, internalFgViewAdd,
                   ZFMP_IN(ZFUIView *, view),
-                  ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                  ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                   ZFMP_IN_OPT(zfbool, addAsTopMost, zftrue))
 {
     d->childAdd(this, ZFUIViewChildLayer::e_InternalFg, d->layerInternalFg, view, layoutParam, (addAsTopMost ? zfindexMax() : 0));
@@ -2066,7 +2066,7 @@ void ZFUIView::internalFgViewOnLayout(ZF_IN const ZFUIRect &bounds)
         if(this->internalViewShouldLayout(child))
         {
             child->viewFrame(
-                ZFUIViewLayoutParam::layoutParamApply(
+                ZFUILayoutParam::layoutParamApply(
                     bounds,
                     child,
                     d->childLayoutParamAtIndex(d->layerInternalFg, i)));

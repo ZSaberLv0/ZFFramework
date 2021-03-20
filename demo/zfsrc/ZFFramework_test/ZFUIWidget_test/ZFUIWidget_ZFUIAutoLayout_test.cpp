@@ -49,7 +49,7 @@ private:
 
         ZFUIKit_test_prepareSettingForLayoutRequest(settings, layout);
 
-        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout->layoutParam(), ZFUISizeParam, ZFPropertyAccess(ZFUIViewLayoutParam, sizeParam),
+        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout->layoutParam(), ZFUISizeParam, ZFPropertyAccess(ZFUILayoutParam, sizeParam),
             ZFCoreArrayPODCreate(ZFUISizeParam
                 , ZFUISizeParamWrapWrap()
                 , ZFUISizeParamFillWrap()

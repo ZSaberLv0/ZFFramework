@@ -206,9 +206,9 @@ public:
      * by default, all children would have it's parent's default layout param (#layoutParamCreate)
      * as the ref layout param, during adding to parent
      */
-    virtual void serializableRefLayoutParam(ZF_IN ZFUIViewLayoutParam *serializableRefLayoutParam);
+    virtual void serializableRefLayoutParam(ZF_IN ZFUILayoutParam *serializableRefLayoutParam);
     /** @brief see #serializableRefLayoutParam */
-    virtual ZFUIViewLayoutParam *serializableRefLayoutParam(void);
+    virtual ZFUILayoutParam *serializableRefLayoutParam(void);
 protected:
     zfoverride
     virtual zfbool serializableOnSerializeFromData(ZF_IN const ZFSerializableData &serializableData,
@@ -540,7 +540,7 @@ protected:
     // parent
 public:
     zffinal void _ZFP_ZFUIView_parentChanged(ZF_IN ZFUIView *parentView,
-                                             ZF_IN ZFUIViewLayoutParam *layoutParam,
+                                             ZF_IN ZFUILayoutParam *layoutParam,
                                              ZF_IN ZFUIViewChildLayerEnum viewLayer);
     /**
      * @brief parent view or null if none
@@ -643,7 +643,7 @@ protected:
     /**
      * @brief see #layoutParamCreate
      */
-    virtual inline void layoutParamOnUpdate(ZF_IN ZFUIViewLayoutParam *layoutParam)
+    virtual inline void layoutParamOnUpdate(ZF_IN ZFUILayoutParam *layoutParam)
     {
     }
 
@@ -657,14 +657,14 @@ public:
      * a new layout param would be created and applied style from the existing one
      */
     ZFMETHOD_DECLARE_1(void, layoutParam,
-                       ZFMP_IN(ZFUIViewLayoutParam *, layoutParam))
+                       ZFMP_IN(ZFUILayoutParam *, layoutParam))
     /**
      * @brief get self's layout param, valid only while the view has parent
      *
      * return null if the view has no parent,
      * automatically invoke the view's #layoutRequest if the layout param's property changed
      */
-    ZFMETHOD_DECLARE_0(ZFUIViewLayoutParam *, layoutParam)
+    ZFMETHOD_DECLARE_0(ZFUILayoutParam *, layoutParam)
     /**
      * @brief see #layoutParam
      */
@@ -741,7 +741,7 @@ protected:
      * @note there's some repeatly work that #layoutMeasure would have done for you,
      *   you should not repeat it again for performance:
      *   -  filter out the case that both sizeParam are fixed or fill parent
-     *   -  apply sizeHint by #ZFUIViewLayoutParam::sizeHintApply
+     *   -  apply sizeHint by #ZFUILayoutParam::sizeHintApply
      *   -  fix result size in range [viewSizeMin, viewSizeMax]
      * @note for impl views (such as text view),
      *   you should manually take care of #nativeImplViewMargin
@@ -802,7 +802,7 @@ public:
      */
     ZFMETHOD_DECLARE_3(void, childAdd,
                        ZFMP_IN(ZFUIView *, view),
-                       ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                       ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                        ZFMP_IN_OPT(zfindex, atIndex, zfindexMax()))
     /**
      * @brief util method for #childAdd
@@ -903,7 +903,7 @@ public:
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_3(void, internalImplViewAdd,
                        ZFMP_IN(ZFUIView *, view),
-                       ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                       ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                        ZFMP_IN_OPT(zfbool, addAsTopMost, zftrue))
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_1(void, internalImplViewRemove,
@@ -940,7 +940,7 @@ public:
      */
     ZFMETHOD_DECLARE_3(void, internalBgViewAdd,
                        ZFMP_IN(ZFUIView *, view),
-                       ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                       ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                        ZFMP_IN_OPT(zfbool, addAsTopMost, zftrue))
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_1(void, internalBgViewRemove,
@@ -959,7 +959,7 @@ public:
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_3(void, internalFgViewAdd,
                        ZFMP_IN(ZFUIView *, view),
-                       ZFMP_IN_OPT(ZFUIViewLayoutParam *, layoutParam, zfnull),
+                       ZFMP_IN_OPT(ZFUILayoutParam *, layoutParam, zfnull),
                        ZFMP_IN_OPT(zfbool, addAsTopMost, zftrue))
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_1(void, internalFgViewRemove,

@@ -30,9 +30,9 @@
  *           <ZFUITextView name="buttonLabelStyleNormal" >
  *               <zfstring name="text" value="button" />
  *           </ZFUITextView>
- *           <ZFUIViewLayoutParam category="layoutParam" >
+ *           <ZFUILayoutParam category="layoutParam" >
  *               <ZFUISizeParam name="sizeParam" value="(Fill, Fill)" />
- *           </ZFUIViewLayoutParam>
+ *           </ZFUILayoutParam>
  *       </ZFUIButtonBasic>
  *   </ZFUIView>
  *

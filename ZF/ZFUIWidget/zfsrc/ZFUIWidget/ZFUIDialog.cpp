@@ -8,7 +8,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFObjectCreator ZFUIDialogDefaultLayoutParamCreator = ZFUIDialogDefaultLayoutParamCreatorDefault;
 zfautoObject ZFUIDialogDefaultLayoutParamCreatorDefault(void)
 {
-    zfblockedAlloc(ZFUIViewLayoutParam, lp);
+    zfblockedAlloc(ZFUILayoutParam, lp);
     lp->layoutAlign(ZFUIAlign::e_Center);
     lp->layoutMargin(ZFUIMarginMake(ZFUIGlobalStyle::DefaultStyle()->itemMargin()));
     return lp;

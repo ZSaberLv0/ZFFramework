@@ -44,7 +44,7 @@ protected:
     }
 
     zfoverride
-    virtual void layoutParamOnUpdate(ZF_IN ZFUIViewLayoutParam *layoutParam)
+    virtual void layoutParamOnUpdate(ZF_IN ZFUILayoutParam *layoutParam)
     {
         zfsuper::layoutParamOnUpdate(layoutParam);
 

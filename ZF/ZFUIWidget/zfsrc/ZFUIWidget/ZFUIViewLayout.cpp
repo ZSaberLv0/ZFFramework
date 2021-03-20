@@ -6,7 +6,7 @@ void ZFUIViewLayout::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                      ZF_IN const ZFUISize &sizeHint,
                                      ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ZFUIViewLayoutParam::sizeHintApply(ret, this->viewSizeMin(), sizeHint, sizeParam);
+    ZFUILayoutParam::sizeHintApply(ret, this->viewSizeMin(), sizeHint, sizeParam);
     for(zfindex i = 0; i < this->childCount(); ++i)
     {
         ZFUIView *child = this->childAtIndex(i);

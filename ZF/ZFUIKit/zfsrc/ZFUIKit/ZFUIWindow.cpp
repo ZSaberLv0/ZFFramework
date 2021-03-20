@@ -13,7 +13,7 @@ zfclassNotPOD _ZFP_ZFUIWindowPrivate
 {
 public:
     ZFUISysWindow *windowOwnerSysWindow;
-    ZFUIViewLayoutParam *windowLayoutParam;
+    ZFUILayoutParam *windowLayoutParam;
     zfbool windowRemoveOverrideFlag;
 
 public:
@@ -70,7 +70,7 @@ void ZFUIWindow::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIWindowPrivate);
-    d->windowLayoutParam = zfAlloc(ZFUIViewLayoutParam);
+    d->windowLayoutParam = zfAlloc(ZFUILayoutParam);
     d->windowLayoutParam->sizeParam(ZFUISizeParamFillFill());
 }
 void ZFUIWindow::objectOnDealloc(void)
@@ -221,7 +221,7 @@ ZFMETHOD_DEFINE_0(ZFUIWindow, void, windowMoveToBottom)
     }
 }
 
-ZFMETHOD_DEFINE_0(ZFUIWindow, ZFUIViewLayoutParam *, windowLayoutParam)
+ZFMETHOD_DEFINE_0(ZFUIWindow, ZFUILayoutParam *, windowLayoutParam)
 {
     return d->windowLayoutParam;
 }

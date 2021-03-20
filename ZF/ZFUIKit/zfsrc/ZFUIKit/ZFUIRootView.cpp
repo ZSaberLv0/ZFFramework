@@ -51,7 +51,7 @@ void ZFUIRootView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
 static void _ZFP_ZFUIRootView_layoutParamApply(ZF_OUT ZFUIRect &ret,
                                                ZF_IN const ZFUIRect &rect,
                                                ZF_IN ZFUIView *child,
-                                               ZF_IN ZFUIViewLayoutParam *lp,
+                                               ZF_IN ZFUILayoutParam *lp,
                                                ZF_IN const ZFUIMargin &sysWindowMargin)
 {
     ZFUIMargin totalMargin = ZFUIMarginInc(lp->layoutMargin(), sysWindowMargin);
@@ -91,7 +91,7 @@ void ZFUIRootView::layoutOnLayout(ZF_IN const ZFUIRect &bounds)
         if(window == zfnull || !window->sysWindowMarginShouldApply())
         {
             child->viewFrame(
-                ZFUIViewLayoutParam::layoutParamApply(
+                ZFUILayoutParam::layoutParamApply(
                     bounds,
                     child,
                     child->layoutParam()));

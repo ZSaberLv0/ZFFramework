@@ -84,7 +84,7 @@ private:
                 , 24
                 ));
 
-        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout->layoutParam(), ZFUISizeParam, ZFPropertyAccess(ZFUIViewLayoutParam, sizeParam),
+        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout->layoutParam(), ZFUISizeParam, ZFPropertyAccess(ZFUILayoutParam, sizeParam),
             ZFCoreArrayPODCreate(ZFUISizeParam
                 , ZFUISizeParamWrapWrap()
                 , ZFUISizeParamFillWrap()

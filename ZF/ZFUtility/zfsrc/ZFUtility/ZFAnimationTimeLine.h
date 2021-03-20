@@ -62,13 +62,17 @@ public:
      */
     ZFPROPERTY_RETAIN(ZFTimeLineCurve *, aniCurve)
     /**
-     * @brief interval to update time line, in miliseconds, 30 by default
+     * @brief interval to update time line, in miliseconds, 0 by default
+     *
+     * when this value is 0, we would use special logic to achieve global time line control:
+     * -# calculate frame count by #aniDurationFixed/#ZFGlobalTimerIntervalDefault
+     * -# step each frame by #ZFGlobalTimerInterval, until reach the frame count
+     *
+     * for example, if you increace #ZFGlobalTimerInterval,
+     * the animation would looks slower\n
+     * this is useful to achieve accurate time line control
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zftimet, aniTimeLineInterval, 30)
-    /**
-     * @brief whether time line callback should be called in main thread, true by default
-     */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, aniTimeLineNotifyInMainThread, zftrue)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zftimet, aniTimeLineInterval, 0)
 
     // ============================================================
     // start stop

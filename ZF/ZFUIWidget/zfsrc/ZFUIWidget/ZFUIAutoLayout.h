@@ -84,9 +84,9 @@ ZFTYPEID_ACCESS_ONLY_DECLARE(ZFUIAutoLayoutRule, ZFUIAutoLayoutRule)
 // ZFUIAutoLayoutParam
 zfclassFwd ZFUIAutoLayout;
 /** @brief see #ZFUIAutoLayout */
-zfclass ZF_ENV_EXPORT ZFUIAutoLayoutParam : zfextends ZFUIViewLayoutParam
+zfclass ZF_ENV_EXPORT ZFUIAutoLayoutParam : zfextends ZFUILayoutParam
 {
-    ZFOBJECT_DECLARE(ZFUIAutoLayoutParam, ZFUIViewLayoutParam)
+    ZFOBJECT_DECLARE(ZFUIAutoLayoutParam, ZFUILayoutParam)
 
     /** @brief see #ZFUIAutoLayout */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, biasX, 0.5f)
@@ -160,7 +160,7 @@ zfclassFwd _ZFP_ZFUIAutoLayoutPrivate;
  * recommended to use #ZFUIAutoLayoutMaker to create rules\n
  * \n
  * for #ZFUIAutoLayout,
- * base class #ZFUIViewLayoutParam's params would take no effect\n
+ * base class #ZFUILayoutParam's params would take no effect\n
  * \n
  * serializable data:
  * @code

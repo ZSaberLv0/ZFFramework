@@ -190,7 +190,7 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::zfal_maker(ZF_IN ZFUIView *child, ZF_I
 ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::width(ZF_IN zfint size)
 {
     d->requireChild();
-    ZFUIViewLayoutParam *layoutParam = d->child->layoutParam();
+    ZFUILayoutParam *layoutParam = d->child->layoutParam();
     if(size < 0)
     {
         layoutParam->sizeHint(ZFUISizeMake(-1, layoutParam->sizeHint().height));
@@ -206,7 +206,7 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::width(ZF_IN zfint size)
 ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::height(ZF_IN zfint size)
 {
     d->requireChild();
-    ZFUIViewLayoutParam *layoutParam = d->child->layoutParam();
+    ZFUILayoutParam *layoutParam = d->child->layoutParam();
     if(size < 0)
     {
         layoutParam->sizeHint(ZFUISizeMake(layoutParam->sizeHint().width, -1));
@@ -226,7 +226,7 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::size(ZF_IN zfint size)
 ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::size(ZF_IN zfint width, ZF_IN zfint height)
 {
     d->requireChild();
-    ZFUIViewLayoutParam *layoutParam = d->child->layoutParam();
+    ZFUILayoutParam *layoutParam = d->child->layoutParam();
     if(width < 0)
     {
         layoutParam->sizeHint(ZFUISizeMake(-1, layoutParam->sizeHint().height));

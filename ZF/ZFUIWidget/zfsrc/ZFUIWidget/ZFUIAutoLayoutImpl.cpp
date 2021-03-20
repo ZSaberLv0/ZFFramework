@@ -72,7 +72,7 @@ public:
             ZFUIView *child = parent->childAtIndex(i);
             ZFUIAutoLayoutParam *layoutParam = child->layoutParam<ZFUIAutoLayoutParam *>();
             ZFUISize childSize = child->layoutMeasure(
-                ZFUIViewLayoutParam::sizeHintMerge(sizeHint, layoutParam->sizeHint()),
+                ZFUILayoutParam::sizeHintMerge(sizeHint, layoutParam->sizeHint()),
                 layoutParam->sizeParam());
             _childFrame[i].width = childSize.width;
             _childFrame[i].height = childSize.height;

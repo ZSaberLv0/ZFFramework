@@ -19,7 +19,7 @@ public:
     ZFUIOrientationFlags sysWindowOrientationFlags;
     ZFUISysWindow *modalWindowOwner;
     ZFUISysWindow *modalWindowShowing; // manually retain
-    ZFUIViewLayoutParam *sysWindowLayoutParam;
+    ZFUILayoutParam *sysWindowLayoutParam;
     ZFListener sysWindowLayoutParamOnChangeListener;
     zfbool nativeWindowCreated;
     zfbool nativeWindowResumed;
@@ -203,7 +203,7 @@ void ZFUISysWindow::objectOnInit(void)
     d = zfpoolNew(_ZFP_ZFUISysWindowPrivate);
     d->windowRootView = zfRetain(ZFUIRootView::ClassData()->newInstance().to<ZFUIRootView *>());
     d->windowRootView->_ZFP_ZFUIRootView_rootViewOwnerSysWindow = this;
-    d->sysWindowLayoutParam = zfAlloc(ZFUIViewLayoutParam);
+    d->sysWindowLayoutParam = zfAlloc(ZFUILayoutParam);
     d->sysWindowLayoutParam->sizeParam(ZFUISizeParamFillFill());
 }
 void ZFUISysWindow::objectOnInitFinish(void)
@@ -377,7 +377,7 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, modalWindowOwner)
     return d->modalWindowOwner;
 }
 
-ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIViewLayoutParam *, sysWindowLayoutParam)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUILayoutParam *, sysWindowLayoutParam)
 {
     return d->sysWindowLayoutParam;
 }
@@ -388,7 +388,7 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIRootView *, rootView)
 
 ZFUIRect ZFUISysWindow::_ZFP_ZFUISysWindow_measureWindow(ZF_IN const ZFUIRect &rootRefRect)
 {
-    return ZFUIRectApplyScale(ZFUIViewLayoutParam::layoutParamApply(
+    return ZFUIRectApplyScale(ZFUILayoutParam::layoutParamApply(
             ZFUIRectApplyScaleReversely(rootRefRect, this->rootView()->scaleFixed()),
             this->rootView(),
             this->sysWindowLayoutParam()),

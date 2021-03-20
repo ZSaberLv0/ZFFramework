@@ -119,45 +119,136 @@ void ZFTimer::_ZFP_ZFTimer_timerOnStop(void)
 }
 
 // ============================================================
-ZFTYPEID_ACCESS_ONLY_DEFINE(ZFTimerExecuteParam, ZFTimerExecuteParam)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, zftimet, timerInterval)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, zfbool, timerActivateInMainThread)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, ZFObject *, timerParam0)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, ZFObject *, timerParam1)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, ZFObject *, userData)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, ZFListener, timerCallback)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_SETTER_GETTER(v_ZFTimerExecuteParam, zfindex, timerActivateCountMax)
-
-ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFTimerExecute,
-                       ZFMP_IN(const ZFTimerExecuteParam &, param))
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFGlobalTimerDataHolder, ZFLevelZFFrameworkHigh)
 {
-    if(param.timerInterval() <= 0 || !param.timerCallback().callbackIsValid())
+    this->globalTimer = zfnull;
+    this->globalTimerIntervalDefault = 33;
+    this->globalTimerInterval = this->globalTimerIntervalDefault;
+}
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFGlobalTimerDataHolder)
+{
+    if(this->globalTimer != zfnull)
     {
-        return zfnull;
+        this->globalTimer->timerStop();
+        zfRetainChange(this->globalTimer, zfnull);
     }
-    zfblockedAlloc(ZFTimer, timer);
-    timer->timerInterval(param.timerInterval());
-    timer->timerDelay(param.timerDelay());
-    timer->timerActivateInMainThread(param.timerActivateInMainThread());
-    timer->timerParam0(param.timerParam0());
-    timer->timerParam1(param.timerParam1());
-    timer->observerAdd(ZFTimer::EventTimerOnActivate(), param.timerCallback(), param.userData());
-    if(param.timerActivateCountMax() > 0)
+}
+zftimet globalTimerIntervalDefault;
+zftimet globalTimerInterval;
+ZFTimer *globalTimer;
+void checkCleanup(void)
+{
+    if(!this->globalTimer->observerHasAdd(ZFTimer::EventTimerOnActivate()))
     {
-        ZFLISTENER_LOCAL(timerOnActivate, {
-            zfindex timerActivatedCountMax = userData->to<v_zfindex *>()->zfv;
-            ZFTimer *timer = listenerData.sender<ZFTimer *>();
-            if(timer->timerActivatedCount() > timerActivatedCountMax)
-            {
-                timer->timerStop();
-            }
-        })
-        timer->observerAdd(ZFTimer::EventTimerOnActivate(),
-            timerOnActivate,
-            zflineAlloc(v_zfindex, param.timerActivateCountMax()));
+        this->globalTimer->timerStop();
     }
-    timer->timerStart();
-    return timer;
+}
+ZF_GLOBAL_INITIALIZER_END(ZFGlobalTimerDataHolder)
+
+ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFGlobalTimerAttach,
+                       ZFMP_IN(const ZFListener &, timerCallback),
+                       ZFMP_IN_OPT(ZFObject *, timerCallbackUserData, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, owner, zfnull),
+                       ZFMP_IN_OPT(zfbool, autoRemoveAfterActivate, zffalse),
+                       ZFMP_IN_OPT(ZFLevel, observerLevel, ZFLevelAppNormal))
+{
+    if(ZFFrameworkStateCheck(ZFLevelZFFrameworkHigh) != ZFFrameworkStateAvailable || !timerCallback.callbackIsValid())
+    {
+        return zfidentityInvalid();
+    }
+    zfCoreMutexLocker();
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFGlobalTimerDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder);
+    if(d->globalTimer == zfnull)
+    {
+        d->globalTimer = zfAlloc(ZFTimer);
+        d->globalTimer->timerInterval(ZFGlobalTimerInterval());
+    }
+    if(!d->globalTimer->timerStarted())
+    {
+        d->globalTimer->timerInterval(ZFGlobalTimerInterval());
+        d->globalTimer->timerStart();
+    }
+    return d->globalTimer->observerAdd(ZFTimer::EventTimerOnActivate(), timerCallback, timerCallbackUserData, owner, autoRemoveAfterActivate, observerLevel);
+}
+ZFMETHOD_FUNC_DEFINE_2(void, ZFGlobalTimerDetach,
+                       ZFMP_IN(const ZFListener &, timerCallback),
+                       ZFMP_IN_OPT(ZFObject *, timerCallbackUserData, zfnull))
+{
+    zfCoreMutexLocker();
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFGlobalTimerDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder);
+    if(d->globalTimer == zfnull)
+    {
+        return;
+    }
+    d->globalTimer->observerRemove(ZFTimer::EventTimerOnActivate(), timerCallback, timerCallbackUserData);
+    d->checkCleanup();
+}
+ZFMETHOD_FUNC_DEFINE_1(void, ZFGlobalTimerDetachByTaskId,
+                       ZFMP_IN(zfidentity, taskId))
+{
+    zfCoreMutexLocker();
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFGlobalTimerDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder);
+    if(d->globalTimer == zfnull)
+    {
+        return;
+    }
+    d->globalTimer->observerRemoveByTaskId(taskId);
+    d->checkCleanup();
+}
+ZFMETHOD_FUNC_DEFINE_1(void, ZFGlobalTimerDetachByOwner,
+                       ZFMP_IN(ZFObject *, owner))
+{
+    zfCoreMutexLocker();
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFGlobalTimerDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder);
+    if(d->globalTimer == zfnull)
+    {
+        return;
+    }
+    d->globalTimer->observerRemoveByOwner(owner);
+    d->checkCleanup();
+}
+ZFMETHOD_FUNC_DEFINE_0(void, ZFGlobalTimerDetachAll)
+{
+    zfCoreMutexLocker();
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFGlobalTimerDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder);
+    if(d->globalTimer == zfnull)
+    {
+        return;
+    }
+    d->globalTimer->observerRemoveAll(ZFTimer::EventTimerOnActivate());
+    d->checkCleanup();
+}
+
+ZFMETHOD_FUNC_DEFINE_0(zftimet const &, ZFGlobalTimerIntervalDefault)
+{
+    return ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder)->globalTimerIntervalDefault;
+}
+ZFMETHOD_FUNC_DEFINE_1(void, ZFGlobalTimerIntervalDefault,
+                       ZFMP_IN(zftimet const &, timerIntervalDefault))
+{
+    zfCoreAssert(timerIntervalDefault > 0);
+    ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder)->globalTimerIntervalDefault = timerIntervalDefault;
+}
+ZFMETHOD_FUNC_DEFINE_0(zftimet const &, ZFGlobalTimerInterval)
+{
+    return ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder)->globalTimerInterval;
+}
+ZFMETHOD_FUNC_DEFINE_1(void, ZFGlobalTimerInterval,
+                       ZFMP_IN(zftimet const &, timerInterval))
+{
+    zfCoreAssert(timerInterval > 0);
+    zfCoreMutexLocker();
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFGlobalTimerDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFGlobalTimerDataHolder);
+    if(d->globalTimerInterval != timerInterval)
+    {
+        d->globalTimerInterval = timerInterval;
+        if(d->globalTimer != zfnull && d->globalTimer->timerStarted())
+        {
+            d->globalTimer->timerStop();
+            d->globalTimer->timerInterval(d->globalTimerInterval);
+            d->globalTimer->timerStart();
+        }
+    }
 }
 
 ZF_NAMESPACE_GLOBAL_END

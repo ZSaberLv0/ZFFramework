@@ -195,67 +195,43 @@ private:
 };
 
 // ============================================================
-// timer util
 /**
- * @brief see #ZFTimerExecute
- */
-zfclassLikePOD ZF_ENV_EXPORT ZFTimerExecuteParam
-{
-    ZFCORE_PARAM_DECLARE_SELF(ZFTimerExecuteParam)
-
-public:
-    /** @brief see #ZFTimer::timerInterval */
-    ZFCORE_PARAM_WITH_INIT(zftimet, timerInterval, 1000)
-    /** @brief see #ZFTimer::timerDelay */
-    ZFCORE_PARAM_WITH_INIT(zftimet, timerDelay, 0)
-    /** @brief see #ZFTimer::timerActivateInMainThread */
-    ZFCORE_PARAM_WITH_INIT(zfbool, timerActivateInMainThread, zftrue)
-    /** @brief see #ZFTimer::timerParam0 */
-    ZFCORE_PARAM_RETAIN_WITH_INIT(ZFObject *, timerParam0, zfnull)
-    /** @brief see #ZFTimer::timerParam1 */
-    ZFCORE_PARAM_RETAIN_WITH_INIT(ZFObject *, timerParam1, zfnull)
-    /** @brief see #ZFTimer */
-    ZFCORE_PARAM_RETAIN_WITH_INIT(ZFObject *, userData, zfnull)
-
-    /**
-     * @brief the timer callback to run
-     */
-    ZFCORE_PARAM(ZFListener, timerCallback)
-    /**
-     * @brief automatically stop timer when reach max count, 0 means no limit, 0 by default
-     */
-    ZFCORE_PARAM_WITH_INIT(zfindex, timerActivateCountMax, 0)
-
-public:
-    /** @cond ZFPrivateDoc */
-    zfbool operator == (ZF_IN const ZFTimerExecuteParam &ref) const
-    {
-        return (zftrue
-                && this->timerInterval() == ref.timerInterval()
-                && this->timerDelay() == ref.timerDelay()
-                && this->timerActivateInMainThread() == ref.timerActivateInMainThread()
-                && this->timerParam0() == ref.timerParam0()
-                && this->timerParam1() == ref.timerParam1()
-                && this->userData() == ref.userData()
-                && this->timerCallback() == ref.timerCallback()
-                && this->timerActivateCountMax() == ref.timerActivateCountMax()
-            );
-    }
-    zfbool operator != (ZF_IN const ZFTimerExecuteParam &ref) const
-    {
-        return !this->operator == (ref);
-    }
-    /** @endcond */
-};
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFTimerExecuteParam, ZFTimerExecuteParam)
-/**
- * @brief util method to start a timer
+ * @brief global timer util
  *
- * return the started timer if success or null otherwise,
- * the started timer would be released automatically when stopped
+ * you can attach any callbacks to same global timer instance,
+ * the global timer would be running if more than one timer callback attached,
+ * and would be stopped when all of them detached\n
+ * you can change timer interval by #ZFGlobalTimerInterval even when it's running
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFTimerExecute,
-                        ZFMP_IN(const ZFTimerExecuteParam &, param))
+ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFGlobalTimerAttach,
+                        ZFMP_IN(const ZFListener &, timerCallback),
+                        ZFMP_IN_OPT(ZFObject *, timerCallbackUserData, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, owner, zfnull),
+                        ZFMP_IN_OPT(zfbool, autoRemoveAfterActivate, zffalse),
+                        ZFMP_IN_OPT(ZFLevel, observerLevel, ZFLevelAppNormal))
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_2(void, ZFGlobalTimerDetach,
+                        ZFMP_IN(const ZFListener &, timerCallback),
+                        ZFMP_IN_OPT(ZFObject *, timerCallbackUserData, zfnull))
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerDetachByTaskId,
+                        ZFMP_IN(zfidentity, taskId))
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerDetachByOwner,
+                        ZFMP_IN(ZFObject *, owner))
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_0(void, ZFGlobalTimerDetachAll)
+
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_0(zftimet const &, ZFGlobalTimerIntervalDefault)
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerIntervalDefault,
+                        ZFMP_IN(zftimet const &, timerIntervalDefault))
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_0(zftimet const &, ZFGlobalTimerInterval)
+/** @brief see #ZFGlobalTimerAttach */
+ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerInterval,
+                        ZFMP_IN(zftimet const &, timerInterval))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFTimer_h_

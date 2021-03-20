@@ -71,9 +71,9 @@ public:
      * -  have #ZFUIView::viewUIEnableTree been disabled
      * -  have #ZFUIGlobalStyle::itemSizeText as #ZFUIView::viewSizeMin
      * -  have #ZFUIWindow::windowLayoutParam as:
-     *   -  #ZFUISizeParamWrapWrap as #ZFUIViewLayoutParam::sizeParam
-     *   -  #ZFUIAlign::e_Center as #ZFUIViewLayoutParam::layoutAlign
-     *   -  #ZFUIGlobalStyle::itemMargin as #ZFUIViewLayoutParam::layoutMargin
+     *   -  #ZFUISizeParamWrapWrap as #ZFUILayoutParam::sizeParam
+     *   -  #ZFUIAlign::e_Center as #ZFUILayoutParam::layoutAlign
+     *   -  #ZFUIGlobalStyle::itemMargin as #ZFUILayoutParam::layoutMargin
      *
      * you should update the layout param of the hint window instead of the hint view,
      * and the hint view would be layouted according the hintWindow's layout param
