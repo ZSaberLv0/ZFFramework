@@ -56,8 +56,10 @@ public:
     zfoverride
     virtual inline zfbool objectIsInternal(void) {return zftrue;}
 protected:
-    zfoverride virtual void objectOnInit(void) {zfsuper::objectOnInit();}
-    zfoverride virtual void objectOnInit(ZF_IN const zfchar *zfv) {this->objectOnInit(); this->zfv(zfv);}
+    zfoverride
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
+    /** @brief init with value */
+    virtual void objectOnInit(ZF_IN const zfchar *zfv) {this->objectOnInit(); this->zfv(zfv);}
 protected:
     zfoverride
     virtual void objectInfoT(ZF_IN_OUT zfstring &ret)

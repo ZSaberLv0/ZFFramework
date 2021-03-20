@@ -20,7 +20,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   during #ZFFrameworkCleanup as level #ZFLevelZFFrameworkHigh
  * @note it's ensured safe to unregister class even if
  *   allocated object instance still exists,
- *   at this case #ZFObject::classData would return parent class
+ *   at this case ZFObject::classData would return parent class
  *   after the class unregistered
  */
 extern ZF_ENV_EXPORT const ZFClass *ZFClassDynamicRegister(ZF_IN const zfchar *classNameFull,

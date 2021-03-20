@@ -236,6 +236,7 @@ public:
     static void zfAllocCacheRelease(ZF_IN ZFObject *obj)
     {
     }
+    /** @endcond */
 };
 
 /**

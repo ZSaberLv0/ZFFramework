@@ -763,7 +763,7 @@ protected:
     {
     }
     /**
-     * @brief called by #layout to layout the view and children
+     * @brief called by #viewFrame to layout the view and children
      *
      * it's valid for subclass to override without calling zfsuper::layoutOnLayout,
      * which means subclass would override all layout steps in parent\n

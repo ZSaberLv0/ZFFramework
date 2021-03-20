@@ -478,7 +478,7 @@ public:
     }
 protected:
     /**
-     * @brief see #assign
+     * @brief see #wrappedValueAssign
      */
     virtual void wrappedValueOnAssign(ZF_IN ZFTypeIdWrapper *ref) zfpurevirtual;
 
@@ -632,7 +632,7 @@ protected:
  *               ZF_IN Type const &to,
  *               ZF_IN zffloat progress);
  * @endcode
- * then use them by #ZFTypeInfo::typeIdProgressValue\n
+ * then use them by #ZFProgressable::progressUpdate\n
  * \n
  * to register:
  * @code

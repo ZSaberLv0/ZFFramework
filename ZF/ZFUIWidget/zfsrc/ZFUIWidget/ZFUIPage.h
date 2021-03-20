@@ -511,7 +511,7 @@ public:
     }
 
     /**
-     * @brief find page by #pageGroupId
+     * @brief find page by ZFUIPage::pageGroupId
      */
     ZFMETHOD_DECLARE_1(ZFCoreArrayPOD<ZFUIPage *>, pageListForGroupId,
                        ZFMP_IN(const zfchar *, pageGroupId))

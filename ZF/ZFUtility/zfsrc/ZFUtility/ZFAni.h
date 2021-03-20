@@ -23,7 +23,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @endcode
  * aniImpl's param0 is #v_zffloat that holds progress
  */
-ZFMETHOD_FUNC_DECLARE_3(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
+ZFMETHOD_FUNC_DECLARE_3(zfautoObject, ZFAni,
                         ZFMP_IN(ZFObject *, target),
                         ZFMP_IN(const ZFListener &, aniImpl),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull))
@@ -50,13 +50,13 @@ ZFMETHOD_FUNC_DECLARE_3(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
  *     #ZFTYPEID_PROGRESS_DEFINE
  *   -  string that can be serialized by #ZFSerializable::serializeFromString
  */
-ZFMETHOD_FUNC_DECLARE_4(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
+ZFMETHOD_FUNC_DECLARE_4(zfautoObject, ZFAni,
                         ZFMP_IN(ZFObject *, target),
                         ZFMP_IN(const zfchar *, name),
                         ZFMP_IN(const zfchar *, from),
                         ZFMP_IN(const zfchar *, to))
 /** @brief see #ZFAni */
-ZFMETHOD_FUNC_DECLARE_4(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
+ZFMETHOD_FUNC_DECLARE_4(zfautoObject, ZFAni,
                         ZFMP_IN(ZFObject *, target),
                         ZFMP_IN(const zfchar *, name),
                         ZFMP_IN(ZFObject *, from),
@@ -72,7 +72,7 @@ public:
     /**
      * @brief the custom ani callback
      *
-     * sender is the #ZFAnimationTimeLineForCustomAni,
+     * sender is the #ZFAniForCustomAni,
      * param0 is #v_zffloat holds progress of the ani,
      * userData is #customAniUserData
      */
@@ -111,9 +111,12 @@ zfclass ZFAniForObject : zfextends ZFAnimationTimeLine
 {
     ZFOBJECT_DECLARE(ZFAniForObject, ZFAnimationTimeLine)
 public:
-    ZFPROPERTY_ASSIGN(zfstring, name) /**< @brief name of property to animate, see #ZFAni */
-    ZFPROPERTY_RETAIN(ZFObject *, fromValue) /**< @brief from value of ani, see #ZFAni */
-    ZFPROPERTY_RETAIN(ZFObject *, toValue) /**< @brief to value of ani, see #ZFAni */
+    /** @brief name of property to animate, see #ZFAni */
+    ZFPROPERTY_ASSIGN(zfstring, name)
+    /** @brief from value of ani, see #ZFAni */
+    ZFPROPERTY_RETAIN(ZFObject *, fromValue)
+    /** @brief to value of ani, see #ZFAni */
+    ZFPROPERTY_RETAIN(ZFObject *, toValue)
 
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, name)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFObject *, fromValue)
@@ -140,9 +143,12 @@ zfclass ZFAniForGeneric : zfextends ZFAnimationTimeLine
 {
     ZFOBJECT_DECLARE(ZFAniForGeneric, ZFAnimationTimeLine)
 public:
-    ZFPROPERTY_ASSIGN(zfstring, name) /**< @brief name of property to animate, see #ZFAni */
-    ZFPROPERTY_ASSIGN(zfstring, fromValue) /**< @brief from value of ani, see #ZFAni */
-    ZFPROPERTY_ASSIGN(zfstring, toValue) /**< @brief to value of ani, see #ZFAni */
+    /** @brief name of property to animate, see #ZFAni */
+    ZFPROPERTY_ASSIGN(zfstring, name)
+    /** @brief from value of ani, see #ZFAni */
+    ZFPROPERTY_ASSIGN(zfstring, fromValue)
+    /** @brief to value of ani, see #ZFAni */
+    ZFPROPERTY_ASSIGN(zfstring, toValue)
 
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, name)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, fromValue)
