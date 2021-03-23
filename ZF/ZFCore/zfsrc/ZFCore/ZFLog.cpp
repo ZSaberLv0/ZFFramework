@@ -191,32 +191,5 @@ ZFMETHOD_FUNC_DEFINE_0(const zfchar *, zfLogCurTimeString)
     return zfLogCurTimeString();
 }
 
-// ============================================================
-ZFMETHOD_USER_REGISTER_8({
-        v_ZFCallback *owner = ZFCastZFObjectUnchecked(v_ZFCallback *, invokerObject);
-        zfstring buf;
-        zfstringAppend(buf, fmt
-                , param0
-                , param1
-                , param2
-                , param3
-                , param4
-                , param5
-                , param6
-            );
-        ZFOutput output = owner->zfv;
-        output.execute(buf.cString(), buf.length());
-        return owner;
-    }, v_ZFCallback, v_ZFCallback *, log
-    , ZFMP_IN(const zfchar *, fmt)
-    , ZFMP_IN_OPT(const zfchar *, param0, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, param1, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, param2, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, param3, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, param4, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, param5, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, param6, zfnull)
-    ) /** ZFMETHOD_MAX_PARAM */
-
 ZF_NAMESPACE_GLOBAL_END
 

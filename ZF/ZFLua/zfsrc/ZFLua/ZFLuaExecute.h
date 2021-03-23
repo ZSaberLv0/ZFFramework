@@ -99,9 +99,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *       button:observerAdd(ZFUIButton.EventButtonOnClick(), function (listenerData, userData)
  *           end)
  *     @endcode
- *   -  `output:log(fmt, ...)`\n
+ *   -  `output:output(text, size)`\n
  *     write to output callback, typically usage:\n
- *     `zfLogT():log(fmt, xxx):log(fmt, xxx)`
+ *     `zfLogT():output(xxx):output(xxx)`
+ *   -  `input:input(buf, size)`\n
+ *     read from input callback
  * -  array
  *   -  `ZFCoreArrayCreate([a, b, c, ...])`\n
  *     create a array, params support these types:
@@ -160,7 +162,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     or zfLogTrimT()\n
  *     return a output callback to output, see above
  *   -  `zfl_tableInfo(v)`
- *     or `zfl_tableInfoPrint`\n
+ *     or `zfl_tableInfoPrint(v)`\n
  *     return string that represents the table
  *
  *
