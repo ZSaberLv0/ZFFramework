@@ -29,6 +29,12 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_5(void, zfCoreDataEncode, ZFMP_OUT(zfstring
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, zfCoreDataDecode, ZFMP_OUT(zfstring &, result), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(zfchar, escapeToken, '%'))
 
 // ============================================================
+// zfCoreDataPairSplit
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(zfbool, zfCoreDataPairSplitString, ZFMP_IN_OUT(ZFCoreArray<ZFIndexRange> &, outData), ZFMP_IN(zfindex, desiredCountOrIndexMax), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(const zfchar *, separatorTokens, ","), ZFMP_IN_OPT(const zfchar *, leftTokens, "("), ZFMP_IN_OPT(const zfchar *, rightTokens, ")"), ZFMP_IN_OPT(zfbool, allowEmptyItem, zffalse))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(zfbool, zfCoreDataPairSplitInt, ZFMP_IN_OUT(ZFCoreArrayPOD<zfint> &, outData), ZFMP_IN(zfindex, desiredCountOrIndexMax), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(const zfchar *, separatorTokens, ","), ZFMP_IN_OPT(const zfchar *, leftTokens, "("), ZFMP_IN_OPT(const zfchar *, rightTokens, ")"), ZFMP_IN_OPT(zfbool, allowEmptyItem, zffalse))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(zfbool, zfCoreDataPairSplitFloat, ZFMP_IN_OUT(ZFCoreArrayPOD<zffloat> &, outData), ZFMP_IN(zfindex, desiredCountOrIndexMax), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(const zfchar *, separatorTokens, ","), ZFMP_IN_OPT(const zfchar *, leftTokens, "("), ZFMP_IN_OPT(const zfchar *, rightTokens, ")"), ZFMP_IN_OPT(zfbool, allowEmptyItem, zffalse))
+
+// ============================================================
 // ZFIdentityGenerator
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfidentity, zfidentityCalcString, ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfidentity, zfidentityCalcBuf, ZFMP_IN(const void *, src), ZFMP_IN(zfindex, srcLen))
@@ -136,6 +142,25 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFCompareResult, ZFIndexRangeIsEqual, ZFM
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfbool, ZFIndexRangeContain, ZFMP_IN(const ZFIndexRange &, range), ZFMP_IN(zfindex, index))
 
 ZFEXPORT_VAR_READONLY_DEFINE(ZFToken, ZFTokenInvalid, ZFTokenInvalid())
+
+// ============================================================
+// ZFCoreUtilMath
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfint, zfmMax, ZFMP_IN(zfint const &, n0), ZFMP_IN(zfint const &, n1))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zffloat, zfmMax, ZFMP_IN(zffloat const &, n0), ZFMP_IN(zffloat const &, n1))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfint, zfmMin, ZFMP_IN(zfint const &, n0), ZFMP_IN(zfint const &, n1))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zffloat, zfmMin, ZFMP_IN(zffloat const &, n0), ZFMP_IN(zffloat const &, n1))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zfint, zfmAbs, ZFMP_IN(zfint const &, n0))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zffloat, zfmAbs, ZFMP_IN(zffloat const &, n0))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfint, zfmApplyRange, ZFMP_IN(zfint const &, n), ZFMP_IN(zfint const &, nMin), ZFMP_IN(zfint const &, nMax))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zffloat, zfmApplyRange, ZFMP_IN(zffloat const &, n), ZFMP_IN(zffloat const &, nMin), ZFMP_IN(zffloat const &, nMax))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfint, zfmApplyProgress, ZFMP_IN(zfint const &, start), ZFMP_IN(zfint const &, end), ZFMP_IN(zffloat const &, progress))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zffloat, zfmApplyProgress, ZFMP_IN(zffloat const &, start), ZFMP_IN(zffloat const &, end), ZFMP_IN(zffloat const &, progress))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zffloat, zfmRoundUp, ZFMP_IN(zffloat const &, v))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zffloat, zfmRoundDown, ZFMP_IN(zffloat const &, v))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zffloat, zfmRound, ZFMP_IN(zffloat const &, v))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(zfuint, zfmRand)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zfint, zfmRand, ZFMP_IN(zfint, range))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfint, zfmRand, ZFMP_IN(zfint, start), ZFMP_IN(zfint, end))
 
 // ============================================================
 // zfVersion

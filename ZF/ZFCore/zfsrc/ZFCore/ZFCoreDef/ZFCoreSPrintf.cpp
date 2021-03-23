@@ -184,35 +184,19 @@ void zfstringAppendV(ZF_OUT zfstring &s,
             }
             if(!flags.success) {break;}
 
-            if(*p == '*')
+            while(*p >= '0' && *p <= '9')
             {
-                flags.width = va_arg(vaList, zft_zfindex);
+                flags.width = flags.width * 10 + (*p - '0');
                 ++p;
-            }
-            else
-            {
-                while(*p >= '0' && *p <= '9')
-                {
-                    flags.width = flags.width * 10 + (*p - '0');
-                    ++p;
-                }
             }
             if(*p == '.')
             {
                 ++p;
-                if(*p == '*')
+                flags.precision = 0;
+                while(*p >= '0' && *p <= '9')
                 {
-                    flags.precision = va_arg(vaList, zft_zfindex);
+                    flags.precision = flags.precision * 10 + (*p - '0');
                     ++p;
-                }
-                else
-                {
-                    flags.precision = 0;
-                    while(*p >= '0' && *p <= '9')
-                    {
-                        flags.precision = flags.precision * 10 + (*p - '0');
-                        ++p;
-                    }
                 }
             }
         } while(zffalse);

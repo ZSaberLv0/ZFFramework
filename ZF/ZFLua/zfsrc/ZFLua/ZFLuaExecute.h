@@ -122,8 +122,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * -  util
  *   -  `zfstringAppend(s, fmt, ...)`
  *     or `zfstringWithFormat(fmt, ...)`\n
- *     fmt can be #v_zfstring, or native lua string,
- *     while only "%s" supported\n
+ *     fmt can be #v_zfstring, or native lua string\n
  *     following va_args support:
  *     -  #ZFObject, would be converted by #ZFObject::objectInfo
  *     -  lua string type

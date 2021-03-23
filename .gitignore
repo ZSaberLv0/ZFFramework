@@ -3,11 +3,13 @@
 /master/ZF_docs/Doxygen/libclang.dll
 
 # common
+**/.project
+**/.settings
 **/.svn
+**/_impl
 **/_release
 **/_repo
 **/_tmp
-**/_impl
 **/zfgensrc_*
 
 # Android

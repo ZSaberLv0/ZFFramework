@@ -51,9 +51,7 @@ inline void zfstringAppendV(ZF_OUT_OPT zfstring *s, ZF_IN const zfchar *fmt, va_
  * -  "+": print plus if positive number
  * -  " ": print space if positive number
  * -  "m": minimum width
- * -  "*": same as "m" but scaned from vaList as a zfindex
  * -  ".n": decimal width for float types or max width for string types
- * -  ".*": same as ".n" but scaned from vaList as a zfindex
  *
  * note:
  * -  for special types such as zfflags or zftimet,
