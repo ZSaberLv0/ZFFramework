@@ -16,7 +16,8 @@ public:
     static ZFLISTENER_PROTOTYPE_EXPAND(imageNinePatchChanged)
     {
         const ZFProperty *property = listenerData.param0<v_ZFProperty *>()->zfv;
-        if(property == ZFPropertyAccess(ZFUIImage, imageNinePatch))
+        if(property == ZFPropertyAccess(ZFUIImage, imageNinePatch)
+            || property == ZFPropertyAccess(ZFUIImage, imageScale))
         {
             ZFUIImageView *imageView = userData->objectHolded();
             ZFUIImage *image = imageView->image();

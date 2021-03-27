@@ -315,8 +315,8 @@ void ZFUIPageManager::objectOnDealloc(void)
 
 void ZFUIPageManager::managerOnCreate(void)
 {
-    zfautoObject managerContainer = (this->managerContainerClass() != zfnull ? this->managerContainerClass() : ZFUIView::ClassData())->newInstance();
-    zfautoObject pageContainer = (this->pageContainerClass() != zfnull ? this->pageContainerClass() : ZFUIView::ClassData())->newInstance();
+    zfautoObjectT<ZFUIView *> managerContainer = (this->managerContainerClass() != zfnull ? this->managerContainerClass() : ZFUIView::ClassData())->newInstance();
+    zfautoObjectT<ZFUIView *> pageContainer = (this->pageContainerClass() != zfnull ? this->pageContainerClass() : ZFUIView::ClassData())->newInstance();
     d->managerContainer = managerContainer;
     d->pageContainer = pageContainer;
     zfCoreAssertWithMessage(d->managerContainer != zfnull, "managerContainerClass must be type of %s", ZFUIView::ClassData()->className());

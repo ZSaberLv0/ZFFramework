@@ -6,7 +6,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 // ZFUIImageScale
-ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageScale,
+ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageScale,
                        ZFMP_IN(ZFUIImage *, image),
                        ZFMP_IN(const ZFUISize &, newSize))
 {
@@ -25,7 +25,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageScale,
 
 // ============================================================
 // ZFUIImageLoadInFrame
-ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadInFrame,
+ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadInFrame,
                        ZFMP_IN(ZFUIImage *, image),
                        ZFMP_IN(const ZFUIRect &, frameInImage))
 {
@@ -49,19 +49,41 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadInFrame,
         scale,
         image->nativeImage(),
         ZFUIRectApplyScale(frameInImage, scale));
-    return ZFUIImageLoadFromNativeImage(nativeImage);
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImageLoadFromNativeImage(nativeImage);
+    if(ret == zfnull
+        || image->imageSerializableType() == zfnull // only store custom type for performance
+    ) {
+        return ret;
+    }
+
+    ZFSerializableData data;
+    data.itemClass(ZFSerializableKeyword_node);
+    ZFSerializableData refData;
+    ZFSerializableData frameData;
+    if(!image->serializeToData(refData) || !ZFUIRectToData(frameData, frame))
+    {
+        return ret;
+    }
+    refData.category(ZFSerializableKeyword_ZFUIImageIO_ref);
+    frameData.category(ZFSerializableKeyword_ZFUIImageIO_ref_frame);
+    data.elementAdd(refData);
+    data.elementAdd(frameData);
+    ret->imageSerializableType(ZFUIImageSerializeType_ref);
+    ret->imageSerializableData(&data);
+
+    return ret;
 }
 
 // ============================================================
 // ZFUIImageLoadFromNativeImage
-ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
+ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
                        ZFMP_IN(void *, nativeImage))
 {
     if(nativeImage == zfnull)
     {
         return zfnull;
     }
-    zfautoObject ret = ZFUIImage::ClassData()->newInstance();
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     ret.to<ZFUIImage *>()->nativeImage(nativeImage);
     ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
     return ret;
@@ -91,10 +113,10 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(input, ZFUIImageSerializeType_input)
     return zftrue;
 }
 
-ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInput,
+ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromInput,
                        ZFMP_IN(const ZFInput &, input))
 {
-    zfautoObject ret = ZFUIImage::ClassData()->newInstance();
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     ZFUIImage *image = ret;
     if(!ZFUIImageEncodeFromFile(image, input))
     {
@@ -182,7 +204,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(color, ZFUIImageSerializeType_color)
 
     return zftrue;
 }
-ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
+ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromColor,
                        ZFMP_IN(const ZFUIColor &, color),
                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 {
@@ -191,7 +213,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
         ZFUIGlobalStyle::DefaultStyle()->imageScale(),
         color,
         ZFUISizeApplyScale(sizeTmp, ZFUIGlobalStyle::DefaultStyle()->imageScale()));
-    zfautoObject ret = ZFUIImageLoadFromNativeImage(nativeImage);
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImageLoadFromNativeImage(nativeImage);
     ZFUIImage *image = ret;
     if(image == zfnull)
     {

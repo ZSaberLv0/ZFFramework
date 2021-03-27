@@ -3,7 +3,7 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-ZFMETHOD_FUNC_DEFINE_3(zfautoObject, ZFAni,
+ZFMETHOD_FUNC_DEFINE_3(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
                        ZFMP_IN(ZFObject *, target),
                        ZFMP_IN(const ZFListener &, aniImpl),
                        ZFMP_IN_OPT(ZFObject *, userData, zfnull))
@@ -22,7 +22,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfautoObject, ZFAni,
 }
 
 // ============================================================
-ZFMETHOD_FUNC_DEFINE_4(zfautoObject, ZFAni,
+ZFMETHOD_FUNC_DEFINE_4(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
                        ZFMP_IN(ZFObject *, target),
                        ZFMP_IN(const zfchar *, name),
                        ZFMP_IN(const zfchar *, from),
@@ -35,7 +35,7 @@ ZFMETHOD_FUNC_DEFINE_4(zfautoObject, ZFAni,
     ani->toValue(to);
     return ani;
 }
-ZFMETHOD_FUNC_DEFINE_4(zfautoObject, ZFAni,
+ZFMETHOD_FUNC_DEFINE_4(zfautoObjectT<ZFAnimationTimeLine *>, ZFAni,
                        ZFMP_IN(ZFObject *, target),
                        ZFMP_IN(const zfchar *, name),
                        ZFMP_IN(ZFObject *, from),

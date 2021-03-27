@@ -151,9 +151,9 @@ public:
         this->pimplOwner->childRemoveAtIndex(index);
         this->childAddOverrideFlag = zffalse;
     }
-    zfautoObject cellLoadAtIndex(ZF_IN zfindex index)
+    zfautoObjectT<ZFUIListCell *> cellLoadAtIndex(ZF_IN zfindex index)
     {
-        zfautoObject ret = this->listAdapter->cellCacheOnAccess(index);
+        zfautoObjectT<ZFUIListCell *> ret = this->listAdapter->cellCacheOnAccess(index);
         if(ret != zfnull)
         {
             zfCoreAssertWithMessage(ZFCastZFObject(ZFUIListCell *, ret.toObject()) != zfnull, "list cell %s not type of %s",

@@ -73,7 +73,7 @@ public:
     /** @brief change the aniTarget */
     const ZFAniBuilder &aniTarget(ZF_IN ZFObject *aniTarget) const;
     /** @brief get the impl animation */
-    zfautoObject toAnimation(void) const;
+    zfautoObjectT<ZFAnimation *> toAnimation(void) const;
 
 public:
     /** @brief construct with ani target */

@@ -152,7 +152,7 @@ int ZFMainEntry_sys_Qt_attach(ZF_IN QWidget *rootWindow,
 #endif
 
     ZFCoreArray<zfstring> params;
-    for(int i = 0; i < argc; ++i)
+    for(int i = 1; i < argc; ++i)
     {
         params.add(argv[i]);
     }

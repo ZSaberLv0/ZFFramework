@@ -149,7 +149,7 @@ const ZFAniBuilder &ZFAniBuilder::aniTarget(ZF_IN ZFObject *aniTarget) const
     zfRetainChange(d->aniTargetHolder, aniTarget ? aniTarget->objectHolder() : zfnull);
     return *this;
 }
-zfautoObject ZFAniBuilder::toAnimation(void) const
+zfautoObjectT<ZFAnimation *> ZFAniBuilder::toAnimation(void) const
 {
     return d->aniGroup;
 }
@@ -213,7 +213,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFAniBuilder, const ZFAniBuilder &, 
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFAniBuilder, ZFObject *, aniTarget)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFAniBuilder, const ZFAniBuilder &, aniTarget, ZFMP_IN(ZFObject *, aniTarget))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFAniBuilder, zfautoObject, toAnimation)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFAniBuilder, zfautoObjectT<ZFAnimation *>, toAnimation)
 
 ZF_NAMESPACE_GLOBAL_END
 

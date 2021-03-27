@@ -62,9 +62,9 @@ ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnPause)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnRotate)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowMarginOnUpdate)
 
-zfautoObject ZFUISysWindow::nativeWindowEmbed(ZF_IN ZFUISysWindowEmbedImpl *embedImpl)
+zfautoObjectT<ZFUISysWindow *> ZFUISysWindow::nativeWindowEmbed(ZF_IN ZFUISysWindowEmbedImpl *embedImpl)
 {
-    zfautoObject tmp = ZFUISysWindow::ClassData()->newInstance();
+    zfautoObjectT<ZFUISysWindow *> tmp = ZFUISysWindow::ClassData()->newInstance();
     ZFUISysWindow *ret = tmp.to<ZFUISysWindow *>();
     ret->d->embedImpl = zfRetain(embedImpl);
     embedImpl->_ZFP_ownerZFUISysWindow = ret;
@@ -333,7 +333,7 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, modalWindowShow)
 {
     zfCoreAssertWithMessage(d->modalWindowShowing == zfnull, "already has a showing modal window, you must finish it first");
 
-    zfautoObject modalWindow;
+    zfautoObjectT<ZFUISysWindow *> modalWindow;
     if(d->embedImpl != zfnull)
     {
         modalWindow = d->embedImpl->modalWindowShow(this);
@@ -520,7 +520,7 @@ void ZFUISysWindowEmbedImpl::nativeWindowRootViewOnRemove(ZF_IN ZFUISysWindow *s
 {
 }
 
-zfautoObject ZFUISysWindowEmbedImpl::modalWindowShow(ZF_IN ZFUISysWindow *sysWindowOwner)
+zfautoObjectT<ZFUISysWindow *> ZFUISysWindowEmbedImpl::modalWindowShow(ZF_IN ZFUISysWindow *sysWindowOwner)
 {
     return ZFPROTOCOL_ACCESS(ZFUISysWindow)->modalWindowShow(sysWindowOwner);
 }

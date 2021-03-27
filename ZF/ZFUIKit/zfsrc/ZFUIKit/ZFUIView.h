@@ -632,7 +632,7 @@ public:
      *   calling #layoutParamClass to create instance
      *   and #layoutParamOnUpdate to update
      */
-    ZFMETHOD_DECLARE_0(zfautoObject, layoutParamCreate)
+    ZFMETHOD_DECLARE_0(zfautoObjectT<ZFUILayoutParam *>, layoutParamCreate)
 protected:
     /**
      * @brief see #layoutParamCreate

@@ -6,7 +6,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // hint with simple text and icon
 ZFSTYLE_DEFAULT_DEFINE(ZFUIHintContentBasic)
 
-ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIHintMake,
+ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIHint *>, ZFUIHintMake,
                        ZFMP_IN(const zfchar *, text),
                        ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))
 {
@@ -26,7 +26,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIHintMake,
 
     return hint;
 }
-ZFMETHOD_FUNC_INLINE_DEFINE_2(zfautoObject, ZFUIHintShow,
+ZFMETHOD_FUNC_INLINE_DEFINE_2(zfautoObjectT<ZFUIHint *>, ZFUIHintShow,
                               ZFMP_IN(const zfchar *, text),
                               ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))
 

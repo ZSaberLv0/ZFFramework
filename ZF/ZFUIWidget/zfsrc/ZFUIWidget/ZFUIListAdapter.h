@@ -188,7 +188,7 @@ protected:
 
 public:
     /** @brief see #cellCacheOnRecycle */
-    ZFMETHOD_DECLARE_1(zfautoObject, cellCacheDefaultAccess,
+    ZFMETHOD_DECLARE_1(zfautoObjectT<ZFUIListCell *>, cellCacheDefaultAccess,
                        ZFMP_IN(const zfchar *, key))
     /** @brief see #cellCacheOnRecycle */
     ZFMETHOD_DECLARE_2(void, cellCacheDefaultRecycle,

@@ -409,14 +409,18 @@ const zfchar *ZFUIImage::imageSerializableType(void)
 }
 void ZFUIImage::imageSerializableData(ZF_IN const ZFSerializableData *serializableData)
 {
-    if(d->serializableData != zfnull)
-    {
-        zfdelete(d->serializableData);
-        d->serializableData = zfnull;
-    }
+    const ZFSerializableData *old = d->serializableData;
     if(serializableData != zfnull)
     {
         d->serializableData = zfnew(ZFSerializableData, *serializableData);
+    }
+    else
+    {
+        d->serializableData = zfnull;
+    }
+    if(old != zfnull)
+    {
+        zfdelete(old);
     }
 }
 const ZFSerializableData *ZFUIImage::imageSerializableData(void)
@@ -444,10 +448,10 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeFromBase64,
     }
     return zffalse;
 }
-ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageEncodeFromBase64,
+ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromBase64,
                        ZFMP_IN(const ZFInput &, inputCallback))
 {
-    zfautoObject ret = ZFUIImage::ClassData()->newInstance();
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     if(ZFUIImageEncodeFromBase64(ret, inputCallback))
     {
         return ret;
@@ -490,10 +494,10 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeFromFile,
     }
     return zffalse;
 }
-ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageEncodeFromFile,
+ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromFile,
                        ZFMP_IN(const ZFInput &, inputCallback))
 {
-    zfautoObject ret = ZFUIImage::ClassData()->newInstance();
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     if(ZFUIImageEncodeFromFile(ret, inputCallback))
     {
         return ret;

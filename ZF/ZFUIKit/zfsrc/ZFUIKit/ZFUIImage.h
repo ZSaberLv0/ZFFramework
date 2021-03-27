@@ -247,7 +247,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeFromBase64,
 /**
  * @brief see #ZFUIImageEncodeFromBase64
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageEncodeFromBase64,
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromBase64,
                         ZFMP_IN(const ZFInput &, inputCallback))
 /**
  * @brief save image as binary data (base64 encoded)
@@ -269,7 +269,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeFromFile,
 /**
  * @brief see #ZFUIImageEncodeFromFile
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageEncodeFromFile,
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromFile,
                         ZFMP_IN(const ZFInput &, inputCallback))
 /**
  * @brief save image as binary data

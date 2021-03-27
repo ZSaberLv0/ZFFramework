@@ -14,7 +14,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief capture ZFUIView to ZFUIImage
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIViewCapture,
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIViewCapture,
                         ZFMP_IN(ZFUIView *, view))
 
 ZF_NAMESPACE_GLOBAL_END

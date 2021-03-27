@@ -19,17 +19,35 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * return null if source image or newSize invalid\n
  * this method would create a new image even if size not changed
  */
-ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageScale,
+ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageScale,
                         ZFMP_IN(ZFUIImage *, image),
                         ZFMP_IN(const ZFUISize &, newSize))
 
 // ============================================================
 // ZFUIImageLoadInFrame
 /**
+ * @brief see #ZFUIIMAGE_SERIALIZE_TYPE_DEFINE
+ *
+ * serializable data:
+ * @code
+ *   <node ...>
+ *       <ZFUIImage category="ref" ... />
+ *       <ZFUIRect category="frame" ... />
+ *   </node>
+ * @endcode
+ */
+#define ZFUIImageSerializeType_ref "ref"
+
+/** @brief keyword for serialize */
+#define ZFSerializableKeyword_ZFUIImageIO_ref "ref"
+/** @brief keyword for serialize */
+#define ZFSerializableKeyword_ZFUIImageIO_ref_frame "frame"
+
+/**
  * @brief clip an exist image and sharing low level data if possible
  * @note this method has no cache logic
  */
-ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadInFrame,
+ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadInFrame,
                         ZFMP_IN(ZFUIImage *, image),
                         ZFMP_IN(const ZFUIRect &, frameInImage))
 
@@ -38,7 +56,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadInFrame,
 /**
  * @brief create image from native image
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
                         ZFMP_IN(void *, nativeImage))
 
 // ============================================================
@@ -53,14 +71,11 @@ ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
  */
 #define ZFUIImageSerializeType_input "input"
 
-/** @brief keyword for serialize */
-#define ZFSerializableKeyword_ZFUIImageIO_input "input"
-
 /**
  * @brief load image from input, input should contain the image's binary data
  * @note this method has no cache logic
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromInput,
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromInput,
                         ZFMP_IN(const ZFInput &, input))
 
 // ============================================================
@@ -89,7 +104,7 @@ ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromInput,
  * size is applied with #ZFUIGlobalStyle::imageScale
  * @note this method has no cache logic
  */
-ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadFromColor,
+ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromColor,
                         ZFMP_IN(const ZFUIColor &, color),
                         ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 

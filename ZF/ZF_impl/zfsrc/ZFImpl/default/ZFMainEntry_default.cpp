@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLin
     ZFFrameworkInit();
 
     ZFCoreArray<zfstring> params;
-    for(int i = 0; i < argc; ++i)
+    for(int i = 1; i < argc; ++i)
     {
         params.add(argv[i]);
     }
@@ -28,6 +28,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLin
 
     ZFCoreArray<zfstring> params;
     zfCoreArgSplit(params, zfstringToUTF8(lpCmdLine, ZFStringEncoding::e_UTF16).cString());
+    if(params.count() > 0)
+    {
+        params.removeFirst();
+    }
     zfint result = ZFMainExecute(params);
 
     ZFFrameworkCleanup();
