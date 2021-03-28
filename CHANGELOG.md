@@ -3,9 +3,11 @@
 * reduce property impl's complexity
 * change property setter name
 * change ZFUIRect's property
+* change lua to 5.4
 * add support for setter and getter method to simulate property
 * add lambda implemented by pure C++03
 * enhance view layout logic
+* optimize image impl
 * optimize page impl
 * remove view delegate support
 * remove some useless module

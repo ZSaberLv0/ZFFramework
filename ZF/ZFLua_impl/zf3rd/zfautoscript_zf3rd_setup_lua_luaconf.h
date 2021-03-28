@@ -10,6 +10,9 @@
     #define LUA_USE_LONGJMP 1
 #endif
 
+// no jump table support
+#define LUA_USE_JUMPTABLE 0
+
 // ignore MSVC warnings
 #if defined(_MSC_VER)
     // unsafe APIs
