@@ -234,52 +234,6 @@ private:
     _ZFP_ZFUIImagePrivate *d;
 };
 
-// ============================================================
-// image's binary load
-/**
- * @brief load image from binary data (base64 encoded)
- * @note this method have no serialize logic,
- *   result image would be serialized by base64 value while serializing to data
- */
-ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeFromBase64,
-                        ZFMP_IN_OUT(ZFUIImage *, image),
-                        ZFMP_IN(const ZFInput &, inputCallback))
-/**
- * @brief see #ZFUIImageEncodeFromBase64
- */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromBase64,
-                        ZFMP_IN(const ZFInput &, inputCallback))
-/**
- * @brief save image as binary data (base64 encoded)
- * @note this method have no serialize logic,
- *   result image would be serialized by base64 value while serializing to data
- */
-ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeToBase64,
-                        ZFMP_OUT(const ZFOutput &, outputCallback),
-                        ZFMP_IN(ZFUIImage *, image))
-
-/**
- * @brief load image from binary data
- * @note this method have no serialize logic,
- *   result image would be serialized by base64 value while serializing to data
- */
-ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeFromFile,
-                        ZFMP_IN_OUT(ZFUIImage *, image),
-                        ZFMP_IN(const ZFInput &, inputCallback))
-/**
- * @brief see #ZFUIImageEncodeFromFile
- */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromFile,
-                        ZFMP_IN(const ZFInput &, inputCallback))
-/**
- * @brief save image as binary data
- * @note this method have no serialize logic,
- *   result image would be serialized by base64 value while serializing to data
- */
-ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeToFile,
-                        ZFMP_OUT(const ZFOutput &, outputCallback),
-                        ZFMP_IN(ZFUIImage *, image))
-
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImage_h_
 

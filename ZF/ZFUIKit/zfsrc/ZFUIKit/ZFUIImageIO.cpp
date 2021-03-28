@@ -5,6 +5,94 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
+// raw image io
+ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromBase64,
+                       ZFMP_IN(const ZFInput &, inputCallback))
+{
+    ZFIOBufferedCallbackUsingTmpFile io;
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
+    ZFUIImage *image = ret;
+    if(image != zfnull && ZFBase64Decode(io.outputCallback(), inputCallback))
+    {
+        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(io.inputCallback());
+        if(nativeImage != zfnull)
+        {
+            image->nativeImage(nativeImage);
+            ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+            return ret;
+        }
+    }
+    return zfnull;
+}
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageSaveToBase64,
+                       ZFMP_OUT(const ZFOutput &, outputCallback),
+                       ZFMP_IN(ZFUIImage *, image))
+{
+    if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
+    {
+        ZFIOBufferedCallbackUsingTmpFile io;
+        if(!ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageToOutput(image->nativeImage(), io.outputCallback()))
+        {
+            return zffalse;
+        }
+        return ZFBase64Encode(outputCallback, io.inputCallback());
+    }
+    return zffalse;
+}
+ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromFile,
+                       ZFMP_IN(const ZFInput &, inputCallback))
+{
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
+    ZFUIImage *image = ret;
+    if(image != zfnull && inputCallback.callbackIsValid())
+    {
+        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(inputCallback);
+        if(nativeImage != zfnull)
+        {
+            image->nativeImage(nativeImage);
+            ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+            return ret;
+        }
+    }
+    return ret;
+}
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageSaveToFile,
+                       ZFMP_OUT(const ZFOutput &, outputCallback),
+                       ZFMP_IN(ZFUIImage *, image))
+{
+    if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
+    {
+        return ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageToOutput(image->nativeImage(), outputCallback);
+    }
+    return zffalse;
+}
+
+ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(input, ZFUIImageSerializeType_input)
+{
+    ZFCallback input;
+    if(!ZFCallbackFromData(input, serializableData, outErrorHint, outErrorPos))
+    {
+        return zffalse;
+    }
+    if(!input.callbackIsValid())
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+            "invalid callback");
+        return zffalse;
+    }
+    void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(input);
+    if(nativeImage == zfnull)
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+            "load image failed");
+        return zffalse;
+    }
+    ret->nativeImage(nativeImage);
+    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+    return zftrue;
+}
+
+// ============================================================
 // ZFUIImageScale
 ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageScale,
                        ZFMP_IN(ZFUIImage *, image),
@@ -124,53 +212,6 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
     }
     zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     ret.to<ZFUIImage *>()->nativeImage(nativeImage);
-    return ret;
-}
-
-// ============================================================
-// input
-ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(input, ZFUIImageSerializeType_input)
-{
-    ZFCallback input;
-    if(!ZFCallbackFromData(input, serializableData, outErrorHint, outErrorPos))
-    {
-        return zffalse;
-    }
-    if(!input.callbackIsValid())
-    {
-        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
-            "invalid callback");
-        return zffalse;
-    }
-    if(!ZFUIImageEncodeFromFile(ret, input))
-    {
-        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
-            "load image failed");
-        return zffalse;
-    }
-    return zftrue;
-}
-
-ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromInput,
-                       ZFMP_IN(const ZFInput &, input))
-{
-    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
-    ZFUIImage *image = ret;
-    if(!ZFUIImageEncodeFromFile(image, input))
-    {
-        return zfnull;
-    }
-
-    if(!input.callbackSerializeCustomDisabled())
-    {
-        ZFSerializableData inputData;
-        if(ZFCallbackToData(inputData, input))
-        {
-            image->imageSerializableType(ZFUIImageSerializeType_input);
-            image->imageSerializableData(&inputData);
-        }
-    }
-
     return ret;
 }
 

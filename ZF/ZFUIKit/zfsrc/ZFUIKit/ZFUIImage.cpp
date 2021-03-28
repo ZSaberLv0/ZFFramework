@@ -146,12 +146,22 @@ zfbool ZFUIImage::serializableOnSerializeFromData(ZF_IN const ZFSerializableData
         check, ZFSerializableKeyword_ZFUIImage_imageBin, zfstring, imageBin);
     if(imageBin != zfnull)
     {
-        if(!ZFUIImageEncodeFromBase64(this, ZFInputForBufferUnsafe(imageBin)))
+        ZFIOBufferedCallbackUsingTmpFile io;
+        if(!ZFBase64Decode(io.outputCallback(), ZFInputForBufferUnsafe(imageBin)))
+        {
+            ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+                "invalid base64 data: \"%s\"", imageBin);
+            return zffalse;
+        }
+        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(io.inputCallback());
+        if(nativeImage == zfnull)
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
                 "fail to load image from base64 data: \"%s\"", imageBin);
             return zffalse;
         }
+        this->nativeImage(nativeImage);
+        ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
         return zftrue;
     }
 
@@ -255,7 +265,7 @@ zfbool ZFUIImage::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &se
     else
     { // imageBin
         zfstring imageBin;
-        if(!ZFUIImageEncodeToBase64(ZFOutputForString(imageBin), this))
+        if(!ZFUIImageSaveToBase64(ZFOutputForString(imageBin), this))
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, "save image to base64 failed");
             return zffalse;
@@ -263,7 +273,7 @@ zfbool ZFUIImage::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &se
         zfstring imageBinRef;
         if(ref != zfnull)
         {
-            ZFUIImageEncodeToBase64(ZFOutputForString(imageBinRef), ref);
+            ZFUIImageSaveToBase64(ZFOutputForString(imageBinRef), ref);
         }
         ZFSerializableUtilSerializeCategoryToData(serializableData, outErrorHint, ref,
             ZFSerializableKeyword_ZFUIImage_imageBin, zfstring, imageBin, imageBinRef, zfstring());
@@ -426,96 +436,6 @@ void ZFUIImage::imageSerializableData(ZF_IN const ZFSerializableData *serializab
 const ZFSerializableData *ZFUIImage::imageSerializableData(void)
 {
     return d->serializableData;
-}
-
-// ============================================================
-ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeFromBase64,
-                       ZFMP_IN_OUT(ZFUIImage *, image),
-                       ZFMP_IN(const ZFInput &, inputCallback))
-{
-    ZFIOBufferedCallbackUsingTmpFile io;
-    if(image != zfnull && ZFBase64Decode(io.outputCallback(), inputCallback))
-    {
-        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(io.inputCallback());
-        if(nativeImage != zfnull)
-        {
-            image->imageSerializableType(zfnull);
-            image->imageSerializableData(zfnull);
-            image->nativeImage(nativeImage);
-            ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
-            return zftrue;
-        }
-    }
-    return zffalse;
-}
-ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromBase64,
-                       ZFMP_IN(const ZFInput &, inputCallback))
-{
-    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
-    if(ZFUIImageEncodeFromBase64(ret, inputCallback))
-    {
-        return ret;
-    }
-    else
-    {
-        return zfnull;
-    }
-}
-ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeToBase64,
-                       ZFMP_OUT(const ZFOutput &, outputCallback),
-                       ZFMP_IN(ZFUIImage *, image))
-{
-    if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
-    {
-        ZFIOBufferedCallbackUsingTmpFile io;
-        if(!ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageToOutput(image->nativeImage(), io.outputCallback()))
-        {
-            return zffalse;
-        }
-        return ZFBase64Encode(outputCallback, io.inputCallback());
-    }
-    return zffalse;
-}
-ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeFromFile,
-                       ZFMP_IN_OUT(ZFUIImage *, image),
-                       ZFMP_IN(const ZFInput &, inputCallback))
-{
-    if(image != zfnull && inputCallback.callbackIsValid())
-    {
-        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(inputCallback);
-        if(nativeImage != zfnull)
-        {
-            image->imageSerializableType(zfnull);
-            image->imageSerializableData(zfnull);
-            image->nativeImage(nativeImage);
-            ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
-            return zftrue;
-        }
-    }
-    return zffalse;
-}
-ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageEncodeFromFile,
-                       ZFMP_IN(const ZFInput &, inputCallback))
-{
-    zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
-    if(ZFUIImageEncodeFromFile(ret, inputCallback))
-    {
-        return ret;
-    }
-    else
-    {
-        return zfnull;
-    }
-}
-ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeToFile,
-                       ZFMP_OUT(const ZFOutput &, outputCallback),
-                       ZFMP_IN(ZFUIImage *, image))
-{
-    if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
-    {
-        return ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageToOutput(image->nativeImage(), outputCallback);
-    }
-    return zffalse;
 }
 
 ZF_NAMESPACE_GLOBAL_END

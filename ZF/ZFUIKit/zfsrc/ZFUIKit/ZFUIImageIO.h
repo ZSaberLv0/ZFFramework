@@ -10,6 +10,43 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
+// raw image io
+/**
+ * @brief load image from base64 data
+ * @note this method has no cache logic
+ */
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromBase64,
+                        ZFMP_IN(const ZFInput &, inputCallback))
+/**
+ * @brief save image to base64 data
+ */
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageSaveToBase64,
+                        ZFMP_OUT(const ZFOutput &, outputCallback),
+                        ZFMP_IN(ZFUIImage *, image))
+/**
+ * @brief load image from file
+ * @note this method has no cache logic
+ */
+ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromFile,
+                        ZFMP_IN(const ZFInput &, inputCallback))
+/**
+ * @brief save image to file
+ */
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageSaveToFile,
+                        ZFMP_OUT(const ZFOutput &, outputCallback),
+                        ZFMP_IN(ZFUIImage *, image))
+
+/**
+ * @brief see #ZFUIIMAGE_SERIALIZE_TYPE_DEFINE
+ *
+ * serializable data:
+ * @code
+ *   <ZFCallback ... />
+ * @endcode
+ */
+#define ZFUIImageSerializeType_input "input"
+
+// ============================================================
 // ZFUIImageScale
 /**
  * @brief scale and return the newly created scaled image
@@ -60,25 +97,6 @@ ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadInFrame,
  */
 ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
                         ZFMP_IN(void *, nativeImage))
-
-// ============================================================
-// input
-/**
- * @brief see #ZFUIIMAGE_SERIALIZE_TYPE_DEFINE
- *
- * serializable data:
- * @code
- *   <ZFCallback ... />
- * @endcode
- */
-#define ZFUIImageSerializeType_input "input"
-
-/**
- * @brief load image from input, input should contain the image's binary data
- * @note this method has no cache logic
- */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromInput,
-                        ZFMP_IN(const ZFInput &, input))
 
 // ============================================================
 // color
