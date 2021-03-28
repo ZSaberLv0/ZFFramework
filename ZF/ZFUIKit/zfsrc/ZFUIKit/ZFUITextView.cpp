@@ -3,8 +3,6 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFSTYLE_DEFAULT_DEFINE(ZFUITextView)
-
 // ============================================================
 static void _ZFP_ZFUITextView_updateSizeRelatedProperty(ZF_IN ZFUITextView *owner)
 {
@@ -18,6 +16,16 @@ static void _ZFP_ZFUITextView_updateSizeRelatedProperty(ZF_IN ZFUITextView *owne
 // ============================================================
 // ZFUITextView
 ZFOBJECT_REGISTER(ZFUITextView)
+ZFSTYLE_DEFAULT_DEFINE(ZFUITextView)
+
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextView, zfbool, viewUIEnable)
+{
+    propertyValue = zffalse;
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextView, zfbool, viewUIEnableTree)
+{
+    propertyValue = zffalse;
+}
 
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zfstring, text)
 {

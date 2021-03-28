@@ -77,12 +77,7 @@ public:
     ZFMETHOD_DECLARE_1(void, allKeyT,
                        ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, ret))
     /** @brief see #allKey */
-    ZFMETHOD_INLINE_0(ZFCoreArrayPOD<ZFObject *>, allKey)
-    {
-        ZFCoreArrayPOD<ZFObject *> ret;
-        this->allKeyT(ret);
-        return ret;
-    }
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFObject *>, allKey)
 
     /**
      * @brief get a copy of all value
@@ -90,12 +85,7 @@ public:
     ZFMETHOD_DECLARE_1(void, allValueT,
                        ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, ret))
     /** @brief see #allValue */
-    ZFMETHOD_INLINE_0(ZFCoreArrayPOD<ZFObject *>, allValue)
-    {
-        ZFCoreArrayPOD<ZFObject *> ret;
-        this->allValueT(ret);
-        return ret;
-    }
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFObject *>, allValue)
 
     /**
      * @brief get a copy of all key value pair
@@ -103,12 +93,7 @@ public:
     ZFMETHOD_DECLARE_1(void, allPairT,
                        ZFMP_IN_OUT(ZFCoreArray<ZFKeyValuePair> &, ret))
     /** @brief see #allPair */
-    ZFMETHOD_INLINE_0(ZFCoreArrayPOD<ZFKeyValuePair>, allPair)
-    {
-        ZFCoreArrayPOD<ZFKeyValuePair> ret;
-        this->allPairT(ret);
-        return ret;
-    }
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFKeyValuePair>, allPair)
 
 public:
     /**
@@ -213,11 +198,8 @@ public:
     ZFMETHOD_DECLARE_0(zfiterator, iterator)
 
     /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_1(zfiterator, iteratorFind,
-                      ZFMP_IN(ZFObject *, value))
-    {
-        return this->iteratorForKey(value);
-    }
+    ZFMETHOD_DECLARE_1(zfiterator, iteratorFind,
+                       ZFMP_IN(ZFObject *, value))
 
     /** @brief see #zfiterator */
     ZFMETHOD_DECLARE_1(zfbool, iteratorIsValid,

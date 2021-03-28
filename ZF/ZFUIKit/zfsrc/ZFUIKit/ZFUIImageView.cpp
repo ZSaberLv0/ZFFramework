@@ -4,8 +4,6 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFSTYLE_DEFAULT_DEFINE(ZFUIImageView)
-
 // ============================================================
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIImageViewListenerHolder, ZFLevelZFFrameworkEssential)
 {
@@ -32,6 +30,16 @@ ZF_GLOBAL_INITIALIZER_END(ZFUIImageViewListenerHolder)
 // ============================================================
 // ZFUIImageView
 ZFOBJECT_REGISTER(ZFUIImageView)
+ZFSTYLE_DEFAULT_DEFINE(ZFUIImageView)
+
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIImageView, zfbool, viewUIEnable)
+{
+    propertyValue = zffalse;
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIImageView, zfbool, viewUIEnableTree)
+{
+    propertyValue = zffalse;
+}
 
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
 {
@@ -68,6 +76,20 @@ ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
         this->image()->observerRemove(ZFObject::EventObjectPropertyValueOnUpdate(), listenerHolder->imageNinePatchChangedListener);
     }
 }
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIContentScaleTypeEnum, imageScaleType)
+{
+    if(propertyValue != propertyValueOld)
+    {
+        this->layoutRequest();
+    }
+}
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIMargin, imageMargin)
+{
+    if(propertyValue != propertyValueOld)
+    {
+        this->nativeImplViewMarginUpdate();
+    }
+}
 
 ZFMETHOD_DEFINE_1(ZFUIImageView, void, measureImageView,
                   ZFMP_OUT(ZFUISize &, ret))
@@ -76,6 +98,12 @@ ZFMETHOD_DEFINE_1(ZFUIImageView, void, measureImageView,
     ZFUISizeApplyMarginReversely(ret, ret, this->imageMargin());
 }
 
+ZFOBJECT_ON_INIT_DEFINE_1(ZFUIImageView,
+                          ZFMP_IN(ZFUIImage *, image))
+{
+    this->objectOnInit();
+    this->image(image);
+}
 void ZFUIImageView::objectOnInit(void)
 {
     zfsuper::objectOnInit();

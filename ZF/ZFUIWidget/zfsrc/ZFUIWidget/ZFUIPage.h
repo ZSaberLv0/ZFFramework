@@ -163,10 +163,7 @@ public:
     }
 
     /** @brief the page's container view, ensured not null */
-    ZFMETHOD_INLINE_0(ZFUIView *, pageView)
-    {
-        return _ZFP_ZFUIPage_pageView;
-    }
+    ZFMETHOD_DECLARE_0(ZFUIView *, pageView)
     /**
      * @brief #pageView's class, must set before base page's #pageOnCreate
      */
@@ -186,17 +183,11 @@ public:
     /**
      * @brief true if page created (true after #pageOnCreate called)
      */
-    ZFMETHOD_INLINE_0(zfbool, pageCreated)
-    {
-        return this->_ZFP_ZFUIPage_pageCreated;
-    }
+    ZFMETHOD_DECLARE_0(zfbool, pageCreated)
     /**
      * @brief true if page resumed (true after #pageOnResume called)
      */
-    ZFMETHOD_INLINE_0(zfbool, pageResumed)
-    {
-        return _ZFP_ZFUIPage_pageResumed;
-    }
+    ZFMETHOD_DECLARE_0(zfbool, pageResumed)
 
 public:
     /** @brief util to #ZFUIPageManager::pageResume */
@@ -244,16 +235,10 @@ public:
     ZFPROPERTY_ASSIGN(zfint, pageAniPriority)
 
     /** @brief see #pageAniOnPrepare */
-    ZFMETHOD_INLINE_1(void, pageAni,
-                      ZFMP_IN(ZFAnimation *, pageAni))
-    {
-        zfRetainChange(this->_ZFP_ZFUIPage_pageAni, pageAni);
-    }
+    ZFMETHOD_DECLARE_1(void, pageAni,
+                       ZFMP_IN(ZFAnimation *, pageAni))
     /** @brief see #pageAniOnPrepare */
-    ZFMETHOD_INLINE_0(ZFAnimation *, pageAni)
-    {
-        return this->_ZFP_ZFUIPage_pageAni;
-    }
+    ZFMETHOD_DECLARE_0(ZFAnimation *, pageAni)
 
 protected:
     /**
@@ -452,10 +437,7 @@ public:
     /**
      * @brief page count of this page manager
      */
-    ZFMETHOD_INLINE_0(zfindex, pageCount)
-    {
-        return this->pageList().count();
-    }
+    ZFMETHOD_DECLARE_0(zfindex, pageCount)
     /**
      * @brief directly access the page list
      *
@@ -469,11 +451,8 @@ public:
     /**
      * @brief page at index
      */
-    ZFMETHOD_INLINE_1(ZFUIPage *, pageAtIndex,
-                      ZFMP_IN(zfindex, index))
-    {
-        return this->pageList().get(index);
-    }
+    ZFMETHOD_DECLARE_1(ZFUIPage *, pageAtIndex,
+                       ZFMP_IN(zfindex, index))
     /**
      * @brief page at index
      */
@@ -485,14 +464,7 @@ public:
     /**
      * @brief return foreground page or null if no page
      */
-    ZFMETHOD_INLINE_0(ZFUIPage *, pageForeground)
-    {
-        if(!this->pageList().isEmpty())
-        {
-            return this->pageList().getLast();
-        }
-        return zfnull;
-    }
+    ZFMETHOD_DECLARE_0(ZFUIPage *, pageForeground)
     /**
      * @brief return foreground page or null if no page
      */
@@ -504,11 +476,8 @@ public:
     /**
      * @brief find page index
      */
-    ZFMETHOD_INLINE_1(zfindex, pageIndex,
-                      ZFMP_IN(ZFUIPage *, page))
-    {
-        return this->pageList().find(page);
-    }
+    ZFMETHOD_DECLARE_1(zfindex, pageIndex,
+                       ZFMP_IN(ZFUIPage *, page))
 
     /**
      * @brief find page by ZFUIPage::pageGroupId

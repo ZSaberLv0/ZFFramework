@@ -8,6 +8,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFOBJECT_REGISTER(ZFResCache)
 ZFOBJECT_SINGLETON_DEFINE_DETAIL(ZFResCache, ZFResCache, ZFResCache, instance, ZFLevelZFFrameworkEssential)
 
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFResCache, zfindex, cacheMaxSize)
+{
+    propertyValue = 100;
+}
+
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFResCacheAutoCleanup, ZFLevelZFFrameworkPostNormal)
 {
 }

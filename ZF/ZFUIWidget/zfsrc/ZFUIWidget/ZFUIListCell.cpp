@@ -20,6 +20,15 @@ ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIListCell, ZFUIView *, cellView)
         this->internalFgViewRemove(this->cellView());
     }
 }
+
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIListCell, ZFUILayoutParam *, cellViewLayoutParam)
+{
+    propertyValue = this->layoutParamCreate();
+    ZFUILayoutParam *value = propertyValue.to<ZFUILayoutParam *>();
+    value->sizeParam(ZFUISizeParamFillFill());
+    value->layoutAlign(ZFUIAlign::e_Center);
+}
+
 void ZFUIListCell::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                    ZF_IN const ZFUISize &sizeHint,
                                    ZF_IN const ZFUISizeParam &sizeParam)

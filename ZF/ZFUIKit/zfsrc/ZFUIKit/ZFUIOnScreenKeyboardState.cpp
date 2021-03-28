@@ -59,6 +59,12 @@ ZFMETHOD_DEFINE_1(ZFUIOnScreenKeyboardState, void, keyboardFixClientFrameT,
         clientFrame);
     ZFUIRectApplyScaleReversely(clientFrame, clientFrame, scale);
 }
+ZFMETHOD_DEFINE_0(ZFUIOnScreenKeyboardState, ZFUIRect, keyboardFixClientFrame)
+{
+    ZFUIRect ret = ZFUIRectZero();
+    this->keyboardFixClientFrameT(ret);
+    return ret;
+}
 
 void ZFUIOnScreenKeyboardState::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {

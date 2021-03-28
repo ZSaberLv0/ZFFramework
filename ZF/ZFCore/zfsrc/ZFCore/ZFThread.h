@@ -96,12 +96,7 @@ protected:
     /**
      * @brief init from listener
      */
-    ZFOBJECT_ON_INIT_INLINE_1(ZFMP_IN(const ZFListener &, runnable))
-    {
-        this->objectOnInit();
-        zfself::threadRunnable(runnable);
-    }
-
+    ZFOBJECT_ON_INIT_DECLARE_1(ZFMP_IN(const ZFListener &, runnable))
     zfoverride
     virtual void objectOnInit(void);
     zfoverride

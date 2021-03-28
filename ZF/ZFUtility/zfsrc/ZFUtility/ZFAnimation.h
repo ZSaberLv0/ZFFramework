@@ -62,14 +62,6 @@ public:
      */
     ZFOBSERVER_EVENT(AniOnStopOrInvalid)
 
-protected:
-    zfoverride
-    virtual void objectOnInit(void);
-    zfoverride
-    virtual void objectOnDealloc(void);
-    zfoverride
-    virtual void objectOnDeallocPrepare(void);
-
     // ============================================================
     // property
 public:
@@ -84,10 +76,7 @@ public:
     /**
      * @brief util method to #aniDuration
      */
-    ZFMETHOD_INLINE_0(zftimet, aniDurationFixed)
-    {
-        return (this->aniDuration() > 0 ? this->aniDuration() : ZFAnimationDurationDefault());
-    }
+    ZFMETHOD_DECLARE_0(zftimet, aniDurationFixed)
     /**
      * @brief whether automatically stop previous animation attached to #aniTarget,
      *   false by default
@@ -229,6 +218,14 @@ protected:
      * @brief subclass must notify after the animation stop
      */
     zffinal void aniImplNotifyStop(void);
+
+protected:
+    zfoverride
+    virtual void objectOnInit(void);
+    zfoverride
+    virtual void objectOnDealloc(void);
+    zfoverride
+    virtual void objectOnDeallocPrepare(void);
 
 private:
     _ZFP_ZFAnimationPrivate *d;

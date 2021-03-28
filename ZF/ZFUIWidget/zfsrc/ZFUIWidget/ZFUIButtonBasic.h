@@ -69,65 +69,35 @@ public:
     /** @brief label style in normal state */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, buttonLabelStyleNormal,
                                zflineAlloc(ZFUITextView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, buttonLabelStyleNormal)
-    {
-        ZFUITextView *v = propertyValue.to<ZFUITextView *>();
-        v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorNormal());
-
-        this->prepareButtonLabel();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
 
     /** @brief label style in highlighted state */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, buttonLabelStyleHighlighted,
                                zflineAlloc(ZFUITextView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, buttonLabelStyleHighlighted)
-    {
-        ZFUITextView *v = propertyValue.to<ZFUITextView *>();
-        v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorHighlighted());
-
-        this->prepareButtonLabel();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleHighlighted)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUITextView *, buttonLabelStyleHighlighted)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUITextView *, buttonLabelStyleHighlighted)
 
     /** @brief label style in checked state */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, buttonLabelStyleChecked,
                                zflineAlloc(ZFUITextView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, buttonLabelStyleChecked)
-    {
-        ZFUITextView *v = propertyValue.to<ZFUITextView *>();
-        v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorChecked());
-
-        this->prepareButtonLabel();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleChecked)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUITextView *, buttonLabelStyleChecked)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUITextView *, buttonLabelStyleChecked)
 
     /** @brief label style in checked highlighted state */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, buttonLabelStyleCheckedHighlighted,
                                zflineAlloc(ZFUITextView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, buttonLabelStyleCheckedHighlighted)
-    {
-        ZFUITextView *v = propertyValue.to<ZFUITextView *>();
-        v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorCheckedHighlighted());
-
-        this->prepareButtonLabel();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleCheckedHighlighted)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUITextView *, buttonLabelStyleCheckedHighlighted)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUITextView *, buttonLabelStyleCheckedHighlighted)
 
     /** @brief label style in disabled state */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, buttonLabelStyleDisabled,
                                zflineAlloc(ZFUITextView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, buttonLabelStyleDisabled)
-    {
-        ZFUITextView *v = propertyValue.to<ZFUITextView *>();
-        v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorDisabled());
-
-        this->prepareButtonLabel();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleDisabled)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUITextView *, buttonLabelStyleDisabled)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUITextView *, buttonLabelStyleDisabled)
 
@@ -136,50 +106,35 @@ public:
     /** @brief icon style in normal state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonIconStyleNormal,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleNormal)
-    {
-        this->prepareButtonIcon();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
 
     /** @brief icon style in highlighted state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonIconStyleHighlighted,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleHighlighted)
-    {
-        this->prepareButtonIcon();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
 
     /** @brief icon style in checked state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonIconStyleChecked,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleChecked)
-    {
-        this->prepareButtonIcon();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
 
     /** @brief icon style in checked highlighted state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonIconStyleCheckedHighlighted,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
-    {
-        this->prepareButtonIcon();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
 
     /** @brief icon style in disabled state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonIconStyleDisabled,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleDisabled)
-    {
-        this->prepareButtonIcon();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleDisabled)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonIconStyleDisabled)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonIconStyleDisabled)
 
@@ -188,50 +143,35 @@ public:
     /** @brief background style in normal state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonBackgroundStyleNormal,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonBackgroundStyleNormal)
-    {
-        this->prepareButtonBackground();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
 
     /** @brief background style in highlighted state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonBackgroundStyleHighlighted,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonBackgroundStyleHighlighted)
-    {
-        this->prepareButtonBackground();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleHighlighted)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleHighlighted)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleHighlighted)
 
     /** @brief background style in checked state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonBackgroundStyleChecked,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonBackgroundStyleChecked)
-    {
-        this->prepareButtonBackground();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleChecked)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleChecked)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleChecked)
 
     /** @brief background style in checked highlighted state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
-    {
-        this->prepareButtonBackground();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
 
     /** @brief background style in disabled state */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, buttonBackgroundStyleDisabled,
                                zflineAlloc(ZFUIImageView))
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonBackgroundStyleDisabled)
-    {
-        this->prepareButtonBackground();
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleDisabled)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleDisabled)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImageView *, buttonBackgroundStyleDisabled)
 
@@ -241,126 +181,54 @@ public:
     /**
      * @brief util method to get button label's style
      */
-    ZFMETHOD_INLINE_1(ZFUITextView *, buttonLabelStyle,
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        switch(forState)
-        {
-            case ZFUIButtonState::e_Normal:
-                return this->buttonLabelStyleNormal();
-            case ZFUIButtonState::e_Highlighted:
-                return this->buttonLabelStyleHighlighted();
-            case ZFUIButtonState::e_Checked:
-                return this->buttonLabelStyleChecked();
-            case ZFUIButtonState::e_CheckedHighlighted:
-                return this->buttonLabelStyleCheckedHighlighted();
-            case ZFUIButtonState::e_Disabled:
-                return this->buttonLabelStyleDisabled();
-            default:
-                zfCoreCriticalShouldNotGoHere();
-                return zfnull;
-        }
-    }
+    ZFMETHOD_DECLARE_1(ZFUITextView *, buttonLabelStyle,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     /**
      * @brief util method to get button icon's style
      */
-    ZFMETHOD_INLINE_1(ZFUIImageView *, buttonIconStyle,
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        switch(forState)
-        {
-            case ZFUIButtonState::e_Normal:
-                return this->buttonIconStyleNormal();
-            case ZFUIButtonState::e_Highlighted:
-                return this->buttonIconStyleHighlighted();
-            case ZFUIButtonState::e_Checked:
-                return this->buttonIconStyleChecked();
-            case ZFUIButtonState::e_CheckedHighlighted:
-                return this->buttonIconStyleCheckedHighlighted();
-            case ZFUIButtonState::e_Disabled:
-                return this->buttonIconStyleDisabled();
-            default:
-                zfCoreCriticalShouldNotGoHere();
-                return zfnull;
-        }
-    }
+    ZFMETHOD_DECLARE_1(ZFUIImageView *, buttonIconStyle,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     /**
      * @brief util method to get button icon's style
      */
-    ZFMETHOD_INLINE_1(ZFUIImageView *, buttonBackgroundStyle,
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        switch(forState)
-        {
-            case ZFUIButtonState::e_Normal:
-                return this->buttonBackgroundStyleNormal();
-            case ZFUIButtonState::e_Highlighted:
-                return this->buttonBackgroundStyleHighlighted();
-            case ZFUIButtonState::e_Checked:
-                return this->buttonBackgroundStyleChecked();
-            case ZFUIButtonState::e_CheckedHighlighted:
-                return this->buttonBackgroundStyleCheckedHighlighted();
-            case ZFUIButtonState::e_Disabled:
-                return this->buttonBackgroundStyleDisabled();
-            default:
-                zfCoreCriticalShouldNotGoHere();
-                return zfnull;
-        }
-    }
+    ZFMETHOD_DECLARE_1(ZFUIImageView *, buttonBackgroundStyle,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
 
     /**
      * @brief util method to get button label's text
      */
-    ZFMETHOD_INLINE_1(const zfchar *, buttonLabelText,
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        return this->buttonLabelStyle(forState)->text();
-    }
+    ZFMETHOD_DECLARE_1(const zfchar *, buttonLabelText,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     /**
      * @brief util method to set button label's text
      */
-    ZFMETHOD_INLINE_2(void, buttonLabelText,
-                      ZFMP_IN(const zfchar *, text),
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        this->buttonLabelStyle(forState)->text(text);
-    }
+    ZFMETHOD_DECLARE_2(void, buttonLabelText,
+                       ZFMP_IN(const zfchar *, text),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
 
     /**
      * @brief util method to get button icon's image
      */
-    ZFMETHOD_INLINE_1(ZFUIImage *, buttonIconImage,
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        return this->buttonIconStyle(forState)->image();
-    }
+    ZFMETHOD_DECLARE_1(ZFUIImage *, buttonIconImage,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     /**
      * @brief util method to set button icon's image
      */
-    ZFMETHOD_INLINE_2(void, buttonIconImage,
-                      ZFMP_IN(ZFUIImage *, image),
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        this->buttonIconStyle(forState)->image(image);
-    }
+    ZFMETHOD_DECLARE_2(void, buttonIconImage,
+                       ZFMP_IN(ZFUIImage *, image),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
 
     /**
      * @brief util method to get button background's image
      */
-    ZFMETHOD_INLINE_1(ZFUIImage *, buttonBackgroundImage,
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        return this->buttonBackgroundStyle(forState)->image();
-    }
+    ZFMETHOD_DECLARE_1(ZFUIImage *, buttonBackgroundImage,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     /**
      * @brief util method to set button background's image
      */
-    ZFMETHOD_INLINE_2(void, buttonBackgroundImage,
-                      ZFMP_IN(ZFUIImage *, image),
-                      ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        this->buttonBackgroundStyle(forState)->image(image);
-    }
+    ZFMETHOD_DECLARE_2(void, buttonBackgroundImage,
+                       ZFMP_IN(ZFUIImage *, image),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
 
 protected:
     zfoverride

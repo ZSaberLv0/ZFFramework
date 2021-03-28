@@ -177,6 +177,14 @@ ZFMETHOD_DEFINE_3(ZFContainer, void, objectInfoOfContentT,
     }
     ret += token.tokenRight;
 }
+ZFMETHOD_DEFINE_2(ZFContainer, zfstring, objectInfoOfContent,
+                  ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
+                  ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
+{
+    zfstring ret;
+    this->objectInfoOfContentT(ret, maxCount, token);
+    return ret;
+}
 
 zfidentity ZFContainer::objectHash(void)
 {

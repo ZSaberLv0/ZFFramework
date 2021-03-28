@@ -3,11 +3,24 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-ZFSTYLE_DEFAULT_DEFINE(ZFUITextEditWidget)
-
-// ============================================================
 // ZFUITextEditWidget
 ZFOBJECT_REGISTER(ZFUITextEditWidget)
+ZFSTYLE_DEFAULT_DEFINE(ZFUITextEditWidget)
+
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEditWidget, ZFUIImageView *, textEditBackgroundView)
+{
+    zfblockedAlloc(ZFUIImageView, textEditBackgroundView);
+    propertyValue = textEditBackgroundView;
+    textEditBackgroundView->image(zfRes("ZFUIWidget/ZFUITextEditWidget_background.xml"));
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEditWidget, ZFUIButtonBasic *, textEditClearButton)
+{
+    zfblockedAlloc(ZFUIButtonBasic, textEditClearButton);
+    propertyValue = textEditClearButton;
+    textEditClearButton->buttonIconImage(zfRes("ZFUIWidget/ZFUITextEditWidget_clearButton.xml"));
+    textEditClearButton->viewSizeMin(ZFUISizeZero());
+    textEditClearButton->viewVisible(zffalse);
+}
 
 static void _ZFP_ZFUITextEditWidget_updateClearButton(ZF_IN ZFUITextEditWidget *textEditWidget)
 {

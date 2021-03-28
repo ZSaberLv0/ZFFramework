@@ -38,13 +38,7 @@ zfclass ZF_ENV_EXPORT ZFUIListCell : zfextends ZFUIView
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUILayoutParam *, cellViewLayoutParam,
                                ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUILayoutParam *, cellViewLayoutParam)
-    {
-        propertyValue = this->layoutParamCreate();
-        ZFUILayoutParam *value = propertyValue.to<ZFUILayoutParam *>();
-        value->sizeParam(ZFUISizeParamFillFill());
-        value->layoutAlign(ZFUIAlign::e_Center);
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUILayoutParam *, cellViewLayoutParam)
 
 protected:
     zfoverride

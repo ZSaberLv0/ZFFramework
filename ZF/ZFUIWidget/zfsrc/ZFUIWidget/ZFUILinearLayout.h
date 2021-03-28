@@ -46,10 +46,7 @@ zfclass ZF_ENV_EXPORT ZFUILinearLayoutParam : zfextends ZFUILayoutParam
      */
     ZFPROPERTY_ASSIGN(zfbool, layoutReserveSpaceWhenNotVisible)
 
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIAlignFlags, layoutAlign)
-    {
-        propertyValue = ZFUIAlign::e_Center;
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIAlignFlags, layoutAlign)
 };
 
 // ============================================================

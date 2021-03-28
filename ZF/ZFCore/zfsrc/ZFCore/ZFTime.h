@@ -413,22 +413,13 @@ protected:
     /**
      * @brief init from time value
      */
-    ZFOBJECT_ON_INIT_INLINE_2(ZFMP_IN(const ZFTimeValue &, tv),
+    ZFOBJECT_ON_INIT_DECLARE_2(ZFMP_IN(const ZFTimeValue &, tv),
                               ZFMP_IN_OPT(const ZFTimeValue &, timeZone, ZFTime::timeZoneLocal)())
-    {
-        this->objectOnInit();
-        zfself::timeZone(timeZone);
-        zfself::timeValue(tv);
-    }
     /**
      * @brief init from time info, or zero time if invalid
      */
-    ZFOBJECT_ON_INIT_INLINE_2(ZFMP_IN(const ZFTimeInfo &, ti),
+    ZFOBJECT_ON_INIT_DECLARE_2(ZFMP_IN(const ZFTimeInfo &, ti),
                               ZFMP_IN_OPT(const ZFTimeValue &, timeZone, ZFTime::timeZoneLocal)())
-    {
-        this->objectOnInit();
-        zfself::timeInfo(ti, timeZone);
-    }
 
     zfoverride
     virtual void objectOnInit(void);

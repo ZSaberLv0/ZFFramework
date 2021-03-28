@@ -9,6 +9,30 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIListAdapter, ListCellOnUpdate)
 ZFOBSERVER_EVENT_REGISTER(ZFUIListAdapter, ListCellCacheOnRecycle)
 
 // ============================================================
+ZFMETHOD_DEFINE_0(ZFUIListAdapter, ZFUIOrientationEnum, listOrientation)
+{
+    return this->_ZFP_ZFUIListAdapter_listOrientation;
+}
+ZFMETHOD_DEFINE_0(ZFUIListAdapter, const ZFUISize &, listContainerSize)
+{
+    return this->_ZFP_ZFUIListAdapter_listContainerSize;
+}
+
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListAdapter, zfint, cellSizeHint)
+{
+    this->listAdapterNotifyReload();
+}
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListAdapter, zfbool, cellSizeFill)
+{
+    this->listAdapterNotifyReload();
+}
+
+ZFMETHOD_DEFINE_1(ZFUIListAdapter, void, listAdapterNotifyReload,
+                  ZFMP_IN_OPT(zfindex, atIndexOrMax, zfindexMax()))
+{
+    this->listAdapterOnReload(atIndexOrMax);
+}
+
 ZFMETHOD_DEFINE_2(ZFUIListAdapter, zfint, cellSizeAtIndex,
                   ZFMP_IN(zfindex, index),
                   ZFMP_IN(ZFUIListCell *, cell))

@@ -21,29 +21,10 @@ zfclass ZF_ENV_EXPORT ZFUIHintContentBasic : zfextends ZFUIButtonBasic
     ZFSTYLE_DEFAULT_DECLARE(ZFUIHintContentBasic)
 
 public:
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewUIEnableTree)
-    {
-        propertyValue = zffalse;
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUISize, viewSizeMin)
-    {
-        propertyValue = ZFUISizeMake(
-            ZFUIGlobalStyle::DefaultStyle()->itemSizeButtonWidth(),
-            ZFUIGlobalStyle::DefaultStyle()->itemSizeButton());
-    }
-
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, buttonLabelStyleNormal)
-    {
-        ZFUITextView *value = propertyValue.to<ZFUITextView *>();
-        value->textColor(ZFUIColorWhite());
-        value->textSingleLine(zffalse);
-        value->textSizeAutoChangeMinSize(0);
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonBackgroundStyleNormal)
-    {
-        ZFUIImageView *value = propertyValue;
-        value->image(zfRes("ZFUIWidget/ZFUIHintContentBasic_background.xml"));
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
 };
 
 /**

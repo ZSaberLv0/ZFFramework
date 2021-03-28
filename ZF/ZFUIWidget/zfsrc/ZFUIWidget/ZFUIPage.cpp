@@ -18,6 +18,19 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIPage, PageAniOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPage, PageAniOnStop)
 
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFUIPage, ZFUIPageManager *, pageManager)
+ZFMETHOD_DEFINE_0(ZFUIPage, ZFUIView *, pageView)
+{
+    return _ZFP_ZFUIPage_pageView;
+}
+
+ZFMETHOD_DEFINE_0(ZFUIPage, zfbool, pageCreated)
+{
+    return this->_ZFP_ZFUIPage_pageCreated;
+}
+ZFMETHOD_DEFINE_0(ZFUIPage, zfbool, pageResumed)
+{
+    return _ZFP_ZFUIPage_pageResumed;
+}
 
 ZFMETHOD_DEFINE_0(ZFUIPage, void, pageResume)
 {
@@ -27,6 +40,16 @@ ZFMETHOD_DEFINE_0(ZFUIPage, void, pageResume)
 ZFMETHOD_DEFINE_0(ZFUIPage, void, pageDestroy)
 {
     this->pageManager()->pageDestroy(this);
+}
+
+ZFMETHOD_DEFINE_1(ZFUIPage, void, pageAni,
+                  ZFMP_IN(ZFAnimation *, pageAni))
+{
+    zfRetainChange(this->_ZFP_ZFUIPage_pageAni, pageAni);
+}
+ZFMETHOD_DEFINE_0(ZFUIPage, ZFAnimation *, pageAni)
+{
+    return this->_ZFP_ZFUIPage_pageAni;
 }
 
 // ============================================================
@@ -482,6 +505,29 @@ ZFMETHOD_DEFINE_0(ZFUIPageManager, zfindex, managerUIBlockedCount)
 
 // ============================================================
 // page access
+ZFMETHOD_DEFINE_0(ZFUIPageManager, zfindex, pageCount)
+{
+    return this->pageList().count();
+}
+ZFMETHOD_DEFINE_1(ZFUIPageManager, ZFUIPage *, pageAtIndex,
+                  ZFMP_IN(zfindex, index))
+{
+    return this->pageList().get(index);
+}
+ZFMETHOD_DEFINE_0(ZFUIPageManager, ZFUIPage *, pageForeground)
+{
+    if(!this->pageList().isEmpty())
+    {
+        return this->pageList().getLast();
+    }
+    return zfnull;
+}
+ZFMETHOD_DEFINE_1(ZFUIPageManager, zfindex, pageIndex,
+                  ZFMP_IN(ZFUIPage *, page))
+{
+    return this->pageList().find(page);
+}
+
 ZFMETHOD_DEFINE_0(ZFUIPageManager, ZFCoreArrayPOD<ZFUIPage *> &, pageList)
 {
     return d->pageList;

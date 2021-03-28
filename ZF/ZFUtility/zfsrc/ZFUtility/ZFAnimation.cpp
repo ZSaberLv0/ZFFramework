@@ -71,22 +71,9 @@ ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnStop)
 ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnStopOrInvalid)
 
-void ZFAnimation::objectOnInit(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, zftimet, aniDurationFixed)
 {
-    zfsuper::objectOnInit();
-    d = zfpoolNew(_ZFP_ZFAnimationPrivate);
-}
-void ZFAnimation::objectOnDealloc(void)
-{
-    zfRetainChange(d->aniTargetHolder, zfnull);
-    zfpoolDelete(d);
-    d = zfnull;
-    zfsuper::objectOnDealloc();
-}
-void ZFAnimation::objectOnDeallocPrepare(void)
-{
-    this->aniStop();
-    zfsuper::objectOnDeallocPrepare();
+    return (this->aniDuration() > 0 ? this->aniDuration() : ZFAnimationDurationDefault());
 }
 
 ZFMETHOD_DEFINE_1(ZFAnimation, void, aniTarget,
@@ -274,6 +261,24 @@ void ZFAnimation::aniImplNotifyStop(void)
 
     zfRelease(aniTargetToRelease);
     zfRelease(this);
+}
+
+void ZFAnimation::objectOnInit(void)
+{
+    zfsuper::objectOnInit();
+    d = zfpoolNew(_ZFP_ZFAnimationPrivate);
+}
+void ZFAnimation::objectOnDealloc(void)
+{
+    zfRetainChange(d->aniTargetHolder, zfnull);
+    zfpoolDelete(d);
+    d = zfnull;
+    zfsuper::objectOnDealloc();
+}
+void ZFAnimation::objectOnDeallocPrepare(void)
+{
+    this->aniStop();
+    zfsuper::objectOnDeallocPrepare();
 }
 
 ZF_NAMESPACE_GLOBAL_END

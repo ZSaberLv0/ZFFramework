@@ -138,14 +138,9 @@ public:
                        ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
                        ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
     /** @brief see #objectInfoOfContentT */
-    ZFMETHOD_INLINE_2(zfstring, objectInfoOfContent,
-                      ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
-                      ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
-    {
-        zfstring ret;
-        this->objectInfoOfContentT(ret, maxCount, token);
-        return ret;
-    }
+    ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
+                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
 
 public:
     zfoverride

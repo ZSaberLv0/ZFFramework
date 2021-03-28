@@ -237,5 +237,28 @@ ZFMETHOD_FUNC_DEFINE_5(zfbool, ZFBase64Decode,
 // ============================================================
 ZFOBJECT_REGISTER(ZFBase64)
 
+ZFMETHOD_DEFINE_1(ZFBase64, zfindex, base64EncodeCalcSize, ZFMP_IN(zfindex, srcLen))
+{
+    return ZFBase64EncodeCalcSize(srcLen, this->base64LineBreakPos());
+}
+ZFMETHOD_DEFINE_3(ZFBase64, zfbool, base64Encode,
+                  ZFMP_IN_OUT(const ZFOutput &, output),
+                  ZFMP_IN(const ZFInput &, input),
+                  ZFMP_OUT_OPT(zfindex *, outResultSize, zfnull))
+{
+    return ZFBase64Encode(output, input, outResultSize, this->base64Table(), this->base64Pad(), this->base64LineBreakPos());
+}
+ZFMETHOD_DEFINE_1(ZFBase64, zfindex, base64DecodeCalcSize, ZFMP_IN(zfindex, srcLen))
+{
+    return ZFBase64DecodeCalcSize(srcLen, this->base64LineBreakPos());
+}
+ZFMETHOD_DEFINE_3(ZFBase64, zfbool, base64Decode,
+                  ZFMP_IN_OUT(const ZFOutput &, output),
+                  ZFMP_IN(const ZFInput &, input),
+                  ZFMP_OUT_OPT(zfindex *, outResultSize, zfnull))
+{
+    return ZFBase64Decode(output, input, outResultSize, this->base64Table(), this->base64Pad());
+}
+
 ZF_NAMESPACE_GLOBAL_END
 

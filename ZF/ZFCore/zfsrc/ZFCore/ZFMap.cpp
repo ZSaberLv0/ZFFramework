@@ -144,6 +144,13 @@ ZFMETHOD_DEFINE_1(ZFMap, void, allKeyT,
         }
     }
 }
+ZFMETHOD_DEFINE_0(ZFMap, ZFCoreArrayPOD<ZFObject *>, allKey)
+{
+    ZFCoreArrayPOD<ZFObject *> ret;
+    this->allKeyT(ret);
+    return ret;
+}
+
 ZFMETHOD_DEFINE_1(ZFMap, void, allValueT,
                   ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, ret))
 {
@@ -156,6 +163,13 @@ ZFMETHOD_DEFINE_1(ZFMap, void, allValueT,
         }
     }
 }
+ZFMETHOD_DEFINE_0(ZFMap, ZFCoreArrayPOD<ZFObject *>, allValue)
+{
+    ZFCoreArrayPOD<ZFObject *> ret;
+    this->allValueT(ret);
+    return ret;
+}
+
 ZFMETHOD_DEFINE_1(ZFMap, void, allPairT,
                   ZFMP_IN_OUT(ZFCoreArray<ZFKeyValuePair> &, ret))
 {
@@ -170,6 +184,12 @@ ZFMETHOD_DEFINE_1(ZFMap, void, allPairT,
             ret.add(pair);
         }
     }
+}
+ZFMETHOD_DEFINE_0(ZFMap, ZFCoreArrayPOD<ZFKeyValuePair>, allPair)
+{
+    ZFCoreArrayPOD<ZFKeyValuePair> ret;
+    this->allPairT(ret);
+    return ret;
 }
 
 void ZFMap::addFrom(ZF_IN ZFKeyValueContainer *another)
@@ -338,6 +358,11 @@ ZFMETHOD_DEFINE_0(ZFMap, zfiterator, iterator)
     return zfiterator(zfnew(_ZFP_ZFMapPrivate::MapType::iterator, d->data.begin()),
         _ZFP_ZFMap_iteratorDeleteCallback,
         _ZFP_ZFMap_iteratorCopyCallback);
+}
+ZFMETHOD_DEFINE_1(ZFMap, zfiterator, iteratorFind,
+                  ZFMP_IN(ZFObject *, value))
+{
+    return this->iteratorForKey(value);
 }
 
 ZFMETHOD_DEFINE_1(ZFMap, zfbool, iteratorIsValid,

@@ -428,6 +428,13 @@ ZF_GLOBAL_INITIALIZER_END(ZFThreadAutoReleasePoolDrainDataHolder)
 
 // ============================================================
 // thread instance method
+ZFOBJECT_ON_INIT_DEFINE_1(ZFThread,
+                          ZFMP_IN(const ZFListener &, runnable))
+{
+    this->objectOnInit();
+    zfself::threadRunnable(runnable);
+}
+
 void ZFThread::objectOnInit(void)
 {
     zfsuper::objectOnInit();

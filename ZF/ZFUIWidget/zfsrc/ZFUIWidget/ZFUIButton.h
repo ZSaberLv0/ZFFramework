@@ -115,14 +115,8 @@ public:
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewFocusable)
-    {
-        propertyValue = zftrue;
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUISize, viewSizeMin)
-    {
-        propertyValue = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeButton());
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewFocusable)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
 
     /**
      * @brief true if the button is enabled, true by default

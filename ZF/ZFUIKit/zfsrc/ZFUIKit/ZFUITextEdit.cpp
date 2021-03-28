@@ -51,6 +51,15 @@ ZFOBSERVER_EVENT_REGISTER(ZFUITextEdit, TextOnChange)
 ZFOBSERVER_EVENT_REGISTER(ZFUITextEdit, TextOnReturnClick)
 ZFOBSERVER_EVENT_REGISTER(ZFUITextEdit, TextOnEditConfirm)
 
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEdit, zfbool, viewFocusable)
+{
+    propertyValue = zftrue;
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEdit, ZFUISize, viewSizeMin)
+{
+    propertyValue = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeControl());
+}
+
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfbool, textEditEnable)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textEditEnable(this, this->textEditEnable());
@@ -66,6 +75,13 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardTypeEnum,
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardReturnTypeEnum, textEditKeyboardReturnType)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textEditKeyboardReturnType(this, this->textEditKeyboardReturnType());
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEdit, ZFUITextView *, textPlaceHolder)
+{
+    zfblockedAlloc(ZFUITextView, textPlaceHolder);
+    propertyValue = textPlaceHolder;
+    textPlaceHolder->textColor(ZFUIGlobalStyle::DefaultStyle()->textColorHint());
+    textPlaceHolder->textSize(ZFUIGlobalStyle::DefaultStyle()->textSizeSmall());
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFRegExp *, textEditFilter)
 {
@@ -154,6 +170,39 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfint, textSize)
     {
         this->layoutRequest();
     }
+}
+
+ZFMETHOD_DEFINE_1(ZFUITextEdit, void, textStyleCopyFrom,
+                  ZFMP_IN(ZFUITextView *, src))
+{
+    if(src == zfnull)
+    {
+        return ;
+    }
+
+    this->text(src->text());
+    this->textAppearance(src->textAppearance());
+    this->textAlign(src->textAlign());
+    this->textColor(src->textColor());
+    this->textShadowColor(src->textShadowColor());
+    this->textShadowOffset(src->textShadowOffset());
+    this->textSize(src->textSize());
+}
+ZFMETHOD_DEFINE_1(ZFUITextEdit, void, textStyleCopyTo,
+                  ZFMP_IN(ZFUITextView *, dst))
+{
+    if(dst == zfnull)
+    {
+        return ;
+    }
+
+    dst->text(this->text());
+    dst->textAppearance(this->textAppearance());
+    dst->textAlign(this->textAlign());
+    dst->textColor(this->textColor());
+    dst->textShadowColor(this->textShadowColor());
+    dst->textShadowOffset(this->textShadowOffset());
+    dst->textSize(this->textSize());
 }
 
 void ZFUITextEdit::objectOnInit(void)
@@ -413,6 +462,10 @@ void ZFUITextEdit::textOnReturnClick(void)
 void ZFUITextEdit::textOnEditConfirm(void)
 {
     this->observerNotify(ZFUITextEdit::EventTextOnEditConfirm());
+}
+ZFMETHOD_DEFINE_0(ZFUITextEdit, void, textEditNotifyConfirm)
+{
+    this->textOnEditConfirm();
 }
 
 void ZFUITextEdit::scaleOnChange(void)

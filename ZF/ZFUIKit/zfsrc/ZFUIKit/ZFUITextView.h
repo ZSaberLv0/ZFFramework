@@ -26,14 +26,8 @@ zfclass ZF_ENV_EXPORT ZFUITextView : zfextends ZFUIView
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewUIEnable)
-    {
-        propertyValue = zffalse;
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewUIEnableTree)
-    {
-        propertyValue = zffalse;
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnable)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
 
 public:
     /**

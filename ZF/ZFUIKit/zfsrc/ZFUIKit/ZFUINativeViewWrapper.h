@@ -31,11 +31,7 @@ protected:
     /**
      * @brief init with native view, see #ZFUINativeViewWrapper
      */
-    ZFOBJECT_ON_INIT_INLINE_1(ZFMP_IN(void *, wrappedNativeView))
-    {
-        this->objectOnInit();
-        zfself::wrappedNativeView(wrappedNativeView);
-    }
+    ZFOBJECT_ON_INIT_DECLARE_1(ZFMP_IN(void *, wrappedNativeView))
 
     zfoverride
     virtual void objectOnInit(void) {zfsuper::objectOnInit();}

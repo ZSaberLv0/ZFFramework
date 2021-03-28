@@ -87,10 +87,7 @@ public:
     ZFPROPERTY_RETAIN(ZFUIView *, hintContent)
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIView *, hintContent)
     ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIView *, hintContent)
-    /**
-     * @brief the animation to show the hint, null by default
-     */
-    ZFPROPERTY_RETAIN(ZFAnimation *, hintAniShow)
+
     /**
      * @brief hint duration in miliseconds, 0 to use #ZFUIHintDurationDefault, 0 by default
      *
@@ -98,10 +95,12 @@ public:
      */
     ZFPROPERTY_ASSIGN(zftimet, hintDuration)
     /** @brief util method to #hintDuration */
-    ZFMETHOD_INLINE_0(zftimet, hintDurationFixed)
-    {
-        return (this->hintDuration() > 0 ? this->hintDuration() : ZFUIHintDurationDefault());
-    }
+    ZFMETHOD_DECLARE_0(zftimet, hintDurationFixed)
+
+    /**
+     * @brief the animation to show the hint, null by default
+     */
+    ZFPROPERTY_RETAIN(ZFAnimation *, hintAniShow)
     /**
      * @brief the animation to hide the hint, null by default
      */

@@ -20,32 +20,12 @@ zfclass ZF_ENV_EXPORT ZFUIButtonCheckBox : zfextends ZFUIButtonBasic
     ZFSTYLE_DEFAULT_DECLARE(ZFUIButtonCheckBox)
 
 public:
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, buttonCheckable)
-    {
-        propertyValue = zftrue;
-    }
-
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIAlignFlags, buttonContentAlign)
-    {
-        propertyValue = ZFUIAlign::e_LeftInner;
-    }
-
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleNormal)
-    {
-        propertyValue.to<ZFUIImageView *>()->image(zfRes("ZFUIWidget/ZFUIButtonCheckBox_IconNormal.png"));
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleHighlighted)
-    {
-        propertyValue.to<ZFUIImageView *>()->image(zfRes("ZFUIWidget/ZFUIButtonCheckBox_IconHighlighted.png"));
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleChecked)
-    {
-        propertyValue.to<ZFUIImageView *>()->image(zfRes("ZFUIWidget/ZFUIButtonCheckBox_IconChecked.png"));
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
-    {
-        propertyValue.to<ZFUIImageView *>()->image(zfRes("ZFUIWidget/ZFUIButtonCheckBox_IconCheckedHighlighted.png"));
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, buttonCheckable)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIAlignFlags, buttonContentAlign)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
 };
 
 ZF_NAMESPACE_GLOBAL_END

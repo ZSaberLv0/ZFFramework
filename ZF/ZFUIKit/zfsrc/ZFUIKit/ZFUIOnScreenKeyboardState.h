@@ -68,12 +68,7 @@ public:
     /**
      * @brief see #keyboardFixClientFrame
      */
-    ZFMETHOD_INLINE_0(ZFUIRect, keyboardFixClientFrame)
-    {
-        ZFUIRect ret = ZFUIRectZero();
-        this->keyboardFixClientFrameT(ret);
-        return ret;
-    }
+    ZFMETHOD_DECLARE_0(ZFUIRect, keyboardFixClientFrame)
 
 protected:
     zfoverride

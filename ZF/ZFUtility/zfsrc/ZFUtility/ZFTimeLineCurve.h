@@ -29,11 +29,8 @@ public:
      * e.g. a linear time line would have same result as the time,
      * while a bounce time line may exceeds range [0, 1] as result
      */
-    ZFMETHOD_INLINE_1(zffloat, progressUpdate,
-                      ZFMP_IN(zffloat, time))
-    {
-        return this->progressOnUpdate(time);
-    }
+    ZFMETHOD_DECLARE_1(zffloat, progressUpdate,
+                       ZFMP_IN(zffloat, time))
 
 protected:
     /**

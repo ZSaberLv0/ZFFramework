@@ -338,25 +338,13 @@ public:
      *
      * positive if normal scroll, negative if bouncing
      */
-    ZFMETHOD_INLINE_0(zfint, scrollContentOffsetLeft)
-    {
-        return -this->scrollContentFrame().x;
-    }
+    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetLeft)
     /** @brief see #scrollContentOffsetLeft */
-    ZFMETHOD_INLINE_0(zfint, scrollContentOffsetTop)
-    {
-        return -this->scrollContentFrame().y;
-    }
+    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetTop)
     /** @brief see #scrollContentOffsetLeft */
-    ZFMETHOD_INLINE_0(zfint, scrollContentOffsetRight)
-    {
-        return this->scrollArea().width - ZFUIRectGetRight(this->scrollContentFrame());
-    }
+    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetRight)
     /** @brief see #scrollContentOffsetLeft */
-    ZFMETHOD_INLINE_0(zfint, scrollContentOffsetBottom)
-    {
-        return this->scrollArea().height - ZFUIRectGetBottom(this->scrollContentFrame());
-    }
+    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetBottom)
 
 public:
     /**

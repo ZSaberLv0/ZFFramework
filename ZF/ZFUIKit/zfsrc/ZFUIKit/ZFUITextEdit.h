@@ -142,14 +142,8 @@ public:
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewFocusable)
-    {
-        propertyValue = zftrue;
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUISize, viewSizeMin)
-    {
-        propertyValue = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeControl());
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewFocusable)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
 
 public:
     /**
@@ -180,13 +174,7 @@ public:
      * @brief text place holder
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, textPlaceHolder, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, textPlaceHolder)
-    {
-        zfblockedAlloc(ZFUITextView, textPlaceHolder);
-        propertyValue = textPlaceHolder;
-        textPlaceHolder->textColor(ZFUIGlobalStyle::DefaultStyle()->textColorHint());
-        textPlaceHolder->textSize(ZFUIGlobalStyle::DefaultStyle()->textSizeSmall());
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, textPlaceHolder)
 
     /**
      * @brief text filter, null by default
@@ -275,41 +263,13 @@ public:
     /**
      * @brief see #ZFUITextEdit
      */
-    ZFMETHOD_INLINE_1(void, textStyleCopyFrom,
-                      ZFMP_IN(ZFUITextView *, src))
-    {
-        if(src == zfnull)
-        {
-            return ;
-        }
-
-        this->text(src->text());
-        this->textAppearance(src->textAppearance());
-        this->textAlign(src->textAlign());
-        this->textColor(src->textColor());
-        this->textShadowColor(src->textShadowColor());
-        this->textShadowOffset(src->textShadowOffset());
-        this->textSize(src->textSize());
-    }
+    ZFMETHOD_DECLARE_1(void, textStyleCopyFrom,
+                       ZFMP_IN(ZFUITextView *, src))
     /**
      * @brief see #ZFUITextEdit
      */
-    ZFMETHOD_INLINE_1(void, textStyleCopyTo,
-                      ZFMP_IN(ZFUITextView *, dst))
-    {
-        if(dst == zfnull)
-        {
-            return ;
-        }
-
-        dst->text(this->text());
-        dst->textAppearance(this->textAppearance());
-        dst->textAlign(this->textAlign());
-        dst->textColor(this->textColor());
-        dst->textShadowColor(this->textShadowColor());
-        dst->textShadowOffset(this->textShadowOffset());
-        dst->textSize(this->textSize());
-    }
+    ZFMETHOD_DECLARE_1(void, textStyleCopyTo,
+                       ZFMP_IN(ZFUITextView *, dst))
 
 protected:
     zfoverride
@@ -377,10 +337,7 @@ protected:
     virtual void textOnEditConfirm(void);
 public:
     /** @brief see #EventTextOnEditConfirm */
-    ZFMETHOD_INLINE_0(void, textEditNotifyConfirm)
-    {
-        this->textOnEditConfirm();
-    }
+    ZFMETHOD_DECLARE_0(void, textEditNotifyConfirm)
 
     // ============================================================
     // override

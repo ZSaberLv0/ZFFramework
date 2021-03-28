@@ -6,6 +6,30 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // hint with simple text and icon
 ZFSTYLE_DEFAULT_DEFINE(ZFUIHintContentBasic)
 
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, zfbool, viewUIEnableTree)
+{
+    propertyValue = zffalse;
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUISize, viewSizeMin)
+{
+    propertyValue = ZFUISizeMake(
+        ZFUIGlobalStyle::DefaultStyle()->itemSizeButtonWidth(),
+        ZFUIGlobalStyle::DefaultStyle()->itemSizeButton());
+}
+
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUITextView *, buttonLabelStyleNormal)
+{
+    ZFUITextView *value = propertyValue.to<ZFUITextView *>();
+    value->textColor(ZFUIColorWhite());
+    value->textSingleLine(zffalse);
+    value->textSizeAutoChangeMinSize(0);
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUIImageView *, buttonBackgroundStyleNormal)
+{
+    ZFUIImageView *value = propertyValue;
+    value->image(zfRes("ZFUIWidget/ZFUIHintContentBasic_background.xml"));
+}
+
 ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIHint *>, ZFUIHintMake,
                        ZFMP_IN(const zfchar *, text),
                        ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))

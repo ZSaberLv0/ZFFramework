@@ -29,12 +29,7 @@ public:
      * note, image's nine patch would be added to #ZFUIView::nativeImplViewMargin
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUIImageView *, textEditBackgroundView, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIImageView *, textEditBackgroundView)
-    {
-        zfblockedAlloc(ZFUIImageView, textEditBackgroundView);
-        propertyValue = textEditBackgroundView;
-        textEditBackgroundView->image(zfRes("ZFUIWidget/ZFUITextEditWidget_background.xml"));
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, textEditBackgroundView)
 
     /**
      * @brief the clear button
@@ -42,14 +37,7 @@ public:
      * note, the clear button's size would be added to #ZFUIView::nativeImplViewMargin
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUIButtonBasic *, textEditClearButton, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIButtonBasic *, textEditClearButton)
-    {
-        zfblockedAlloc(ZFUIButtonBasic, textEditClearButton);
-        propertyValue = textEditClearButton;
-        textEditClearButton->buttonIconImage(zfRes("ZFUIWidget/ZFUITextEditWidget_clearButton.xml"));
-        textEditClearButton->viewSizeMin(ZFUISizeZero());
-        textEditClearButton->viewVisible(zffalse);
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIButtonBasic *, textEditClearButton)
 
     /**
      * @brief whether automatically show or hide clear button, false by default

@@ -5,6 +5,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFOBJECT_REGISTER(ZFUINativeViewWrapper)
 
+ZFOBJECT_ON_INIT_DEFINE_1(ZFUINativeViewWrapper,
+                          ZFMP_IN(void *, wrappedNativeView))
+{
+    this->objectOnInit();
+    zfself::wrappedNativeView(wrappedNativeView);
+}
+
 void ZFUINativeViewWrapper::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {
     zfsuper::objectInfoOnAppend(ret);

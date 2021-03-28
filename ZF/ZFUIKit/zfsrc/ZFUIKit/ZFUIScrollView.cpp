@@ -1155,6 +1155,23 @@ ZFMETHOD_DEFINE_0(ZFUIScrollView, const ZFClass *, scrollerClass)
     return ZFUIScrollerClass();
 }
 
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetLeft)
+{
+    return -this->scrollContentFrame().x;
+}
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetTop)
+{
+    return -this->scrollContentFrame().y;
+}
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetRight)
+{
+    return this->scrollArea().width - ZFUIRectGetRight(this->scrollContentFrame());
+}
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetBottom)
+{
+    return this->scrollArea().height - ZFUIRectGetBottom(this->scrollContentFrame());
+}
+
 ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollContentFrameAnimated,
                   ZFMP_IN(const ZFUIRect &, scrollContentFrame))
 {

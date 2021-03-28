@@ -150,10 +150,8 @@ public:
      *
      * ensured to be (#imageScale * #ZFUIGlobalStyle::imageScale)
      */
-    ZFMETHOD_INLINE_0(zffloat, imageScaleFixed)
-    {
-        return (this->imageScale() * ZFUIGlobalStyle::DefaultStyle()->imageScale());
-    }
+    ZFMETHOD_DECLARE_0(zffloat, imageScaleFixed)
+
     /**
      * @brief get size of the image
      * @note #ZFUIImage always use custom scale value, see #ZFUIImage::imageScale

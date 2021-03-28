@@ -288,6 +288,11 @@ ZFMETHOD_DEFINE_0(ZFUIHint, ZFUIWindow *, hintWindow)
     return d->hintWindow;
 }
 
+ZFMETHOD_DEFINE_0(ZFUIHint, zftimet, hintDurationFixed)
+{
+    return (this->hintDuration() > 0 ? this->hintDuration() : ZFUIHintDurationDefault());
+}
+
 ZFMETHOD_DEFINE_0(ZFUIHint, void, hintShow)
 {
     zfsynchronize(_ZFP_ZFUIHintSyncObj);

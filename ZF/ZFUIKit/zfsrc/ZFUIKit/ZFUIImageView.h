@@ -23,14 +23,8 @@ zfclass ZF_ENV_EXPORT ZFUIImageView : zfextends ZFUIView
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewUIEnable)
-    {
-        propertyValue = zffalse;
-    }
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewUIEnableTree)
-    {
-        propertyValue = zffalse;
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnable)
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
 
     /**
      * @brief image for this view
@@ -44,25 +38,13 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIContentScaleTypeEnum, imageScaleType,
                                 ZFUIContentScaleType::EnumDefault())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_INLINE(ZFUIContentScaleTypeEnum, imageScaleType)
-    {
-        if(propertyValue != propertyValueOld)
-        {
-            this->layoutRequest();
-        }
-    }
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIContentScaleTypeEnum, imageScaleType)
 
     /**
      * @brief margin of the content image
      */
     ZFPROPERTY_ASSIGN(ZFUIMargin, imageMargin)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_INLINE(ZFUIMargin, imageMargin)
-    {
-        if(propertyValue != propertyValueOld)
-        {
-            this->nativeImplViewMarginUpdate();
-        }
-    }
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIMargin, imageMargin)
 
 public:
     /**
@@ -75,12 +57,7 @@ protected:
     /**
      * @brief init with image
      */
-    ZFOBJECT_ON_INIT_INLINE_1(ZFMP_IN(ZFUIImage *, image))
-    {
-        this->objectOnInit();
-        this->image(image);
-    }
-
+    ZFOBJECT_ON_INIT_DECLARE_1(ZFMP_IN(ZFUIImage *, image))
     zfoverride
     virtual void objectOnInit(void);
     zfoverride

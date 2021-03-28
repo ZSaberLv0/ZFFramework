@@ -22,35 +22,19 @@ zfclass ZF_ENV_EXPORT ZFUIDialogContentBasic : zfextends ZFUIView, zfimplements 
     ZFSTYLE_DEFAULT_DECLARE(ZFUIDialogContentBasic)
 
 public:
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUISize, viewSizeMin)
-    {
-        propertyValue = ZFUISizeMake(
-            ZFUIGlobalStyle::DefaultStyle()->itemSizeDialogWidth(),
-            ZFUIGlobalStyle::DefaultStyle()->itemSizeDialog());
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
 
     /**
      * @brief dialog title view
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, titleTextView, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, titleTextView)
-    {
-        zfblockedAlloc(ZFUITextView, titleTextView);
-        propertyValue = titleTextView;
-        titleTextView->textSize(ZFUIGlobalStyle::DefaultStyle()->textSizeBig());
-        titleTextView->textAppearance(ZFUITextAppearance::e_Bold);
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, titleTextView)
 
     /**
      * @brief dialog content view
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, contentTextView, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUITextView *, contentTextView)
-    {
-        zfblockedAlloc(ZFUITextView, contentTextView);
-        propertyValue = contentTextView;
-        contentTextView->textSingleLine(zffalse);
-    }
+    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, contentTextView)
 
 public:
     // ============================================================

@@ -2,15 +2,19 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFSTYLE_DEFAULT_DEFINE(ZFUILinearLayout)
-
 // ============================================================
 // ZFUILinearLayoutParam
 ZFOBJECT_REGISTER(ZFUILinearLayoutParam)
 
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUILinearLayoutParam, ZFUIAlignFlags, layoutAlign)
+{
+    propertyValue = ZFUIAlign::e_Center;
+}
+
 // ============================================================
 // ZFUILinearLayout
 ZFOBJECT_REGISTER(ZFUILinearLayout)
+ZFSTYLE_DEFAULT_DEFINE(ZFUILinearLayout)
 
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, ZFUIOrientationEnum, layoutOrientation)
 {

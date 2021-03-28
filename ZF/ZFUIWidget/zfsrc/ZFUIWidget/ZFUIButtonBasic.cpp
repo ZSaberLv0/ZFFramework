@@ -204,6 +204,178 @@ _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, Checke
 _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, CheckedHighlighted)
 _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, Disabled)
 
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleNormal)
+{
+    ZFUITextView *v = propertyValue.to<ZFUITextView *>();
+    v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorNormal());
+
+    this->prepareButtonLabel();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleHighlighted)
+{
+    ZFUITextView *v = propertyValue.to<ZFUITextView *>();
+    v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorHighlighted());
+
+    this->prepareButtonLabel();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleChecked)
+{
+    ZFUITextView *v = propertyValue.to<ZFUITextView *>();
+    v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorChecked());
+
+    this->prepareButtonLabel();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleCheckedHighlighted)
+{
+    ZFUITextView *v = propertyValue.to<ZFUITextView *>();
+    v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorCheckedHighlighted());
+
+    this->prepareButtonLabel();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleDisabled)
+{
+    ZFUITextView *v = propertyValue.to<ZFUITextView *>();
+    v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorDisabled());
+
+    this->prepareButtonLabel();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleNormal)
+{
+    this->prepareButtonIcon();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleHighlighted)
+{
+    this->prepareButtonIcon();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleChecked)
+{
+    this->prepareButtonIcon();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleCheckedHighlighted)
+{
+    this->prepareButtonIcon();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleDisabled)
+{
+    this->prepareButtonIcon();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleNormal)
+{
+    this->prepareButtonBackground();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleHighlighted)
+{
+    this->prepareButtonBackground();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleChecked)
+{
+    this->prepareButtonBackground();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
+{
+    this->prepareButtonBackground();
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleDisabled)
+{
+    this->prepareButtonBackground();
+}
+
+ZFMETHOD_DEFINE_1(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyle,
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    switch(forState)
+    {
+        case ZFUIButtonState::e_Normal:
+            return this->buttonLabelStyleNormal();
+        case ZFUIButtonState::e_Highlighted:
+            return this->buttonLabelStyleHighlighted();
+        case ZFUIButtonState::e_Checked:
+            return this->buttonLabelStyleChecked();
+        case ZFUIButtonState::e_CheckedHighlighted:
+            return this->buttonLabelStyleCheckedHighlighted();
+        case ZFUIButtonState::e_Disabled:
+            return this->buttonLabelStyleDisabled();
+        default:
+            zfCoreCriticalShouldNotGoHere();
+            return zfnull;
+    }
+}
+ZFMETHOD_DEFINE_1(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyle,
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    switch(forState)
+    {
+        case ZFUIButtonState::e_Normal:
+            return this->buttonIconStyleNormal();
+        case ZFUIButtonState::e_Highlighted:
+            return this->buttonIconStyleHighlighted();
+        case ZFUIButtonState::e_Checked:
+            return this->buttonIconStyleChecked();
+        case ZFUIButtonState::e_CheckedHighlighted:
+            return this->buttonIconStyleCheckedHighlighted();
+        case ZFUIButtonState::e_Disabled:
+            return this->buttonIconStyleDisabled();
+        default:
+            zfCoreCriticalShouldNotGoHere();
+            return zfnull;
+    }
+}
+ZFMETHOD_DEFINE_1(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyle,
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    switch(forState)
+    {
+        case ZFUIButtonState::e_Normal:
+            return this->buttonBackgroundStyleNormal();
+        case ZFUIButtonState::e_Highlighted:
+            return this->buttonBackgroundStyleHighlighted();
+        case ZFUIButtonState::e_Checked:
+            return this->buttonBackgroundStyleChecked();
+        case ZFUIButtonState::e_CheckedHighlighted:
+            return this->buttonBackgroundStyleCheckedHighlighted();
+        case ZFUIButtonState::e_Disabled:
+            return this->buttonBackgroundStyleDisabled();
+        default:
+            zfCoreCriticalShouldNotGoHere();
+            return zfnull;
+    }
+}
+ZFMETHOD_DEFINE_1(ZFUIButtonBasic, const zfchar *, buttonLabelText,
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    return this->buttonLabelStyle(forState)->text();
+}
+ZFMETHOD_DEFINE_2(ZFUIButtonBasic, void, buttonLabelText,
+                  ZFMP_IN(const zfchar *, text),
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    this->buttonLabelStyle(forState)->text(text);
+}
+
+ZFMETHOD_DEFINE_1(ZFUIButtonBasic, ZFUIImage *, buttonIconImage,
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    return this->buttonIconStyle(forState)->image();
+}
+ZFMETHOD_DEFINE_2(ZFUIButtonBasic, void, buttonIconImage,
+                  ZFMP_IN(ZFUIImage *, image),
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    this->buttonIconStyle(forState)->image(image);
+}
+
+ZFMETHOD_DEFINE_1(ZFUIButtonBasic, ZFUIImage *, buttonBackgroundImage,
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    return this->buttonBackgroundStyle(forState)->image();
+}
+ZFMETHOD_DEFINE_2(ZFUIButtonBasic, void, buttonBackgroundImage,
+                  ZFMP_IN(ZFUIImage *, image),
+                  ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
+{
+    this->buttonBackgroundStyle(forState)->image(image);
+}
+
 void ZFUIButtonBasic::objectOnInit(void)
 {
     zfsuper::objectOnInit();

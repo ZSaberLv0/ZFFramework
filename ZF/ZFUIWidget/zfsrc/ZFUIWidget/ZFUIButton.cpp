@@ -369,6 +369,15 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIButton, ButtonMouseOnMoveOutside)
 ZFOBSERVER_EVENT_REGISTER(ZFUIButton, ButtonMouseOnUpInside)
 ZFOBSERVER_EVENT_REGISTER(ZFUIButton, ButtonMouseOnUp)
 
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButton, zfbool, viewFocusable)
+{
+    propertyValue = zftrue;
+}
+ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButton, ZFUISize, viewSizeMin)
+{
+    propertyValue = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeButton());
+}
+
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonEnable)
 {
     d->buttonEnable(this->buttonEnable());

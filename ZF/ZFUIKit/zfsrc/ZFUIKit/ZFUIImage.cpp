@@ -314,6 +314,11 @@ static ZFLISTENER_PROTOTYPE_EXPAND(globalImageScaleOnChange)
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIImageScaleChangeListenerHolder)
 
+ZFMETHOD_DEFINE_0(ZFUIImage, zffloat, imageScaleFixed)
+{
+    return (this->imageScale() * ZFUIGlobalStyle::DefaultStyle()->imageScale());
+}
+
 ZFMETHOD_DEFINE_0(ZFUIImage, const ZFUISize &, imageSize)
 {
     return d->imageSize;
