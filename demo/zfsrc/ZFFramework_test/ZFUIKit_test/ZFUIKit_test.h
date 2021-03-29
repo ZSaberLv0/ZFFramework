@@ -123,14 +123,14 @@ protected:
 extern zfautoObject ZFUIKit_test_prepareSettingButton(ZF_IN ZFArray *settings);
 extern void ZFUIKit_test_prepareSettingButtonWithTestWindow(ZF_IN ZFUIWindow *window,
                                                             ZF_IN ZFArray *settings);
-extern void ZFUIKit_test_prepareSettingForProperty(ZF_IN_OUT ZFArrayEditable *settings,
+extern void ZFUIKit_test_prepareSettingForProperty(ZF_IN_OUT ZFArray *settings,
                                                    ZF_IN ZFObject *obj,
                                                    ZF_IN const ZFProperty *property,
                                                    ZF_IN const ZFListener &nextCallback,
                                                    ZF_IN ZFObject *userData);
 
 // ============================================================
-extern void ZFUIKit_test_prepareSettingForBoolProperty(ZF_IN_OUT ZFArrayEditable *settings,
+extern void ZFUIKit_test_prepareSettingForBoolProperty(ZF_IN_OUT ZFArray *settings,
                                                        ZF_IN ZFObject *obj,
                                                        ZF_IN const ZFProperty *property);
 
@@ -180,10 +180,10 @@ protected:
         ZFUIKit_test_prepareSettingForProperty(settings, userData->obj, userData->property, nextCallback, userData); \
     } while(zffalse)
 
-extern void ZFUIKit_test_prepareSettingForLayoutRequest(ZF_IN_OUT ZFArrayEditable *settings,
+extern void ZFUIKit_test_prepareSettingForLayoutRequest(ZF_IN_OUT ZFArray *settings,
                                                         ZF_IN ZFUIView *view);
 
-extern void ZFUIKit_test_prepareSettingForResetProperty(ZF_IN_OUT ZFArrayEditable *settings,
+extern void ZFUIKit_test_prepareSettingForResetProperty(ZF_IN_OUT ZFArray *settings,
                                                         ZF_IN ZFObject *obj,
                                                         ZF_IN const ZFCoreArrayPOD<const ZFProperty *> &propertyList);
 

@@ -109,8 +109,8 @@ public:
     /**
      * @brief ani frames, holds #ZFUIAnimatedImageAniFrame
      */
-    ZFPROPERTY_RETAIN_DETAIL(ZFArrayEditable *, aniFrames,
-                             zflineAlloc(ZFArrayEditable),
+    ZFPROPERTY_RETAIN_DETAIL(ZFArray *, aniFrames,
+                             zflineAlloc(ZFArray),
                              protected, protected)
 
 public:

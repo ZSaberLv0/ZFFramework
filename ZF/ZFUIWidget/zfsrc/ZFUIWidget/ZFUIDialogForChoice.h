@@ -103,14 +103,14 @@ public:
      * @brief list of choice items, empty by default,
      *   use #choiceAdd/#choiceRemove to access the choice list
      */
-    ZFPROPERTY_RETAIN_DETAIL(ZFArrayEditable *, list, zflineAlloc(ZFArrayEditable),
+    ZFPROPERTY_RETAIN_DETAIL(ZFArray *, list, zflineAlloc(ZFArray),
                              private, protected)
 
     /**
      * @brief list of selected items' index, empty by default,
      *   holds #v_zfindex
      */
-    ZFPROPERTY_RETAIN_DETAIL(ZFArrayEditable *, selected, zflineAlloc(ZFArrayEditable),
+    ZFPROPERTY_RETAIN_DETAIL(ZFArray *, selected, zflineAlloc(ZFArray),
                              private, protected)
 
 public:

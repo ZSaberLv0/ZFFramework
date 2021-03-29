@@ -66,7 +66,7 @@ ZFMETHOD_DEFINE_1(ZFUIListAdapter, zfautoObjectT<ZFUIListCell *>, cellCacheDefau
                   ZFMP_IN(const zfchar *, key))
 {
     _ZFP_ZFUIListAdapter_cacheKey(cacheKey, key);
-    ZFArrayEditable *cacheList = this->toObject()->objectTag<ZFArrayEditable *>(cacheKey);
+    ZFArray *cacheList = this->toObject()->objectTag<ZFArray *>(cacheKey);
     if(cacheList != zfnull && !cacheList->isEmpty())
     {
         zfautoObjectT<ZFUIListCell *> ret = cacheList->getLast();
@@ -83,10 +83,10 @@ ZFMETHOD_DEFINE_2(ZFUIListAdapter, void, cellCacheDefaultRecycle,
                   ZFMP_IN(ZFUIListCell *, cell))
 {
     _ZFP_ZFUIListAdapter_cacheKey(cacheKey, key);
-    ZFArrayEditable *cacheList = this->toObject()->objectTag<ZFArrayEditable *>(cacheKey);
+    ZFArray *cacheList = this->toObject()->objectTag<ZFArray *>(cacheKey);
     if(cacheList == zfnull)
     {
-        cacheList = zfAlloc(ZFArrayEditable);
+        cacheList = zfAlloc(ZFArray);
         this->toObject()->objectTag(cacheKey, cacheList);
         zfRelease(cacheList);
     }

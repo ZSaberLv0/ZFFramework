@@ -71,6 +71,42 @@ public:
      */
     ZFOBSERVER_EVENT(ContentOnRemove)
 
+public:
+    /**
+     * @brief add data from another container
+     */
+    virtual void addFrom(ZF_IN ZFContainer *another) zfpurevirtual;
+
+public:
+    /**
+     * @brief return a short string describe the content
+     */
+    ZFMETHOD_DECLARE_3(void, objectInfoOfContentT,
+                       ZFMP_IN_OUT(zfstring &, ret),
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
+                       ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
+    /** @brief see #objectInfoOfContentT */
+    ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
+                       ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
+
+protected:
+    /** @brief see #EventContentOnChange */
+    virtual inline void contentOnChange(void)
+    {
+        this->observerNotify(ZFContainer::EventContentOnChange());
+    }
+    /** @brief see #EventContentOnAdd */
+    virtual inline void contentOnAdd(ZF_IN ZFObject *element)
+    {
+        this->observerNotify(ZFContainer::EventContentOnAdd(), element);
+    }
+    /** @brief see #EventContentOnRemove */
+    virtual inline void contentOnRemove(ZF_IN ZFObject *element)
+    {
+        this->observerNotify(ZFContainer::EventContentOnRemove(), element);
+    }
+
 protected:
     zfoverride
     virtual zfbool serializableOnCheck(void);
@@ -102,6 +138,10 @@ protected:
                                                         ZF_OUT_OPT zfstring *outErrorHint = zfnull);
 
 protected:
+    zfoverride
+    virtual void copyableOnCopyFrom(ZF_IN ZFObject *anotherObj);
+
+protected:
     /** @brief see #ZFObject::objectOnDeallocPrepare, remove all contents before dealloc */
     zfoverride
     virtual void objectOnDeallocPrepare(void);
@@ -113,46 +153,10 @@ protected:
     }
 
 public:
-    /**
-     * @brief return a short string describe the content
-     */
-    ZFMETHOD_DECLARE_3(void, objectInfoOfContentT,
-                       ZFMP_IN_OUT(zfstring &, ret),
-                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
-                       ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
-    /** @brief see #objectInfoOfContentT */
-    ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
-                      ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
-                      ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
-
-public:
     zfoverride
     virtual zfidentity objectHash(void);
     zfoverride
     virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj);
-
-protected:
-    /** @brief see #EventContentOnChange */
-    virtual inline void contentOnChange(void)
-    {
-        this->observerNotify(ZFContainer::EventContentOnChange());
-    }
-    /** @brief see #EventContentOnAdd */
-    virtual inline void contentOnAdd(ZF_IN ZFObject *element)
-    {
-        this->observerNotify(ZFContainer::EventContentOnAdd(), element);
-    }
-    /** @brief see #EventContentOnRemove */
-    virtual inline void contentOnRemove(ZF_IN ZFObject *element)
-    {
-        this->observerNotify(ZFContainer::EventContentOnRemove(), element);
-    }
-
-protected:
-    /**
-     * @brief add data from another container
-     */
-    virtual void addFrom(ZF_IN ZFContainer *another) zfpurevirtual;
 };
 
 ZF_NAMESPACE_GLOBAL_END

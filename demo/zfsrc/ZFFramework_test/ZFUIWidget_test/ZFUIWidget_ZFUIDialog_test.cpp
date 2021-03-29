@@ -44,7 +44,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIDialog *dialog)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
         ZFUIKit_test_prepareSettingForBoolProperty(settings, dialog, ZFPropertyAccess(ZFUIDialog, dialogHideWhenTouchOutside));
         ZFUIKit_test_prepareSettingForBoolProperty(settings, dialog, ZFPropertyAccess(ZFUIDialog, dialogHideWhenClickBack));
 

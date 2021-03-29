@@ -19,7 +19,7 @@ static ZFArray *_ZFP_ZFUIHint_hintListForRead(ZF_IN ZFUISysWindow *inSysWindow)
     }
     return inSysWindow->objectTag<ZFArray *>("_ZFP_ZFUIHint_hintList");
 }
-static ZFArrayEditable *_ZFP_ZFUIHint_hintListForWrite(ZF_IN ZFUISysWindow *inSysWindow)
+static ZFArray *_ZFP_ZFUIHint_hintListForWrite(ZF_IN ZFUISysWindow *inSysWindow)
 {
     if(inSysWindow == zfnull)
     {
@@ -29,10 +29,10 @@ static ZFArrayEditable *_ZFP_ZFUIHint_hintListForWrite(ZF_IN ZFUISysWindow *inSy
     {
         return zfnull;
     }
-    ZFArrayEditable *hintList = inSysWindow->objectTag<ZFArrayEditable *>("_ZFP_ZFUIHint_hintList");
+    ZFArray *hintList = inSysWindow->objectTag<ZFArray *>("_ZFP_ZFUIHint_hintList");
     if(hintList == zfnull)
     {
-        zfblockedAlloc(ZFArrayEditable, hintListTmp);
+        zfblockedAlloc(ZFArray, hintListTmp);
         hintList = hintListTmp;
         inSysWindow->objectTag("_ZFP_ZFUIHint_hintList", hintList);
     }
@@ -191,7 +191,7 @@ public:
     {
         this->hintShowing = zffalse;
         zfRetainChange(this->hintAnimating, zfnull);
-        ZFArrayEditable *hintList = _ZFP_ZFUIHint_hintListForWrite(this->pimplOwner->hintWindow()->windowOwnerSysWindow());
+        ZFArray *hintList = _ZFP_ZFUIHint_hintListForWrite(this->pimplOwner->hintWindow()->windowOwnerSysWindow());
         zfRetain(this->pimplOwner);
         zfblockedRelease(this->pimplOwner);
         hintList->removeElement(this->pimplOwner, ZFComparerCheckEqual);
@@ -303,7 +303,7 @@ ZFMETHOD_DEFINE_0(ZFUIHint, void, hintShow)
     d->hintShowing = zftrue;
     zfRetain(this);
 
-    ZFArrayEditable *hintList = _ZFP_ZFUIHint_hintListForWrite(this->hintWindow()->windowOwnerSysWindow());
+    ZFArray *hintList = _ZFP_ZFUIHint_hintListForWrite(this->hintWindow()->windowOwnerSysWindow());
     hintList->add(this);
     if(hintList->count() == 1)
     {
@@ -325,7 +325,7 @@ ZFMETHOD_DEFINE_0(ZFUIHint, void, hintHide)
             d->hintDelaying = zffalse;
             zfRetain(this);
             zfblockedRelease(this);
-            ZFArrayEditable *hintList = _ZFP_ZFUIHint_hintListForWrite(this->hintWindow()->windowOwnerSysWindow());
+            ZFArray *hintList = _ZFP_ZFUIHint_hintListForWrite(this->hintWindow()->windowOwnerSysWindow());
             hintList->removeElement(this, ZFComparerCheckEqual);
             zfRelease(this);
         }
@@ -381,8 +381,8 @@ void ZFUIHint::objectOnInit(void)
         ZFUIHint *hint = userData->objectHolded();
         zfCoreAssertWithMessage(!hint->hintShowing(), "you must not change ZFUIHint's window while it's showing or delaying");
         ZFUISysWindow *sysWindowOld = listenerData.param0<ZFUISysWindow *>();
-        ZFArrayEditable *hintListOld = _ZFP_ZFUIHint_hintListForWrite(sysWindowOld);
-        ZFArrayEditable *hintListNew = _ZFP_ZFUIHint_hintListForWrite(hint->hintWindow()->windowOwnerSysWindow());
+        ZFArray *hintListOld = _ZFP_ZFUIHint_hintListForWrite(sysWindowOld);
+        ZFArray *hintListNew = _ZFP_ZFUIHint_hintListForWrite(hint->hintWindow()->windowOwnerSysWindow());
         hintListNew->add(hint);
         hintListOld->removeElement(hint, ZFComparerCheckEqual);
         if(!hintListOld->isEmpty())

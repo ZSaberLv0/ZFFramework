@@ -718,7 +718,7 @@ zfbool ZFJsonItem::jsonItemIteratorIsValid(ZF_IN const zfiterator &it) const
 zfbool ZFJsonItem::jsonItemIteratorIsEqual(ZF_IN const zfiterator &it0,
                                            ZF_IN const zfiterator &it1) const
 {
-    return zfiterator::iteratorIsEqual<zfstlsize *>(it0, it1);
+    return zfiterator::iteratorEqual<zfstlsize *>(it0, it1);
 }
 
 void ZFJsonItem::jsonItemIteratorValue(ZF_IN_OUT zfiterator &it, ZF_IN const ZFJsonItem &jsonItem)

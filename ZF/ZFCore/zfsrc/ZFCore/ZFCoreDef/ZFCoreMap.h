@@ -187,9 +187,9 @@ public:
     void allValueT(ZF_IN_OUT ZFCoreArray<T_Element> &ret) const
     {
         ret.capacity(ret.count() + this->count());
-        for(zfiterator it = this->iterator(); this->iteratorIsValid(it); )
+        for(zfiterator it = this->iterator(); this->iteratorValid(it); this->iteratorNext(it))
         {
-            ret.add(this->iteratorNextValue<T_Element>(it));
+            ret.add(this->iteratorValue<T_Element>(it));
         }
     }
 
@@ -210,13 +210,23 @@ public:
     zffinal zfiterator iterator(void) const;
 
     /** @brief see #zfiterator */
-    zffinal zfiterator iteratorForKey(ZF_IN const zfchar *key) const;
+    zffinal zfiterator iteratorFind(ZF_IN const zfchar *key) const;
 
     /** @brief see #zfiterator */
-    zffinal zfbool iteratorIsValid(ZF_IN const zfiterator &it) const;
+    zffinal zfbool iteratorValid(ZF_IN const zfiterator &it) const;
     /** @brief see #zfiterator */
-    zffinal zfbool iteratorIsEqual(ZF_IN const zfiterator &it0,
-                                   ZF_IN const zfiterator &it1) const;
+    zffinal zfbool iteratorEqual(ZF_IN const zfiterator &it0,
+                                 ZF_IN const zfiterator &it1) const;
+
+    /** @brief see #zfiterator */
+    zffinal void iteratorNext(ZF_IN_OUT zfiterator &it) const;
+    /** @brief see #zfiterator */
+    zffinal void iteratorPrev(ZF_IN_OUT zfiterator &it) const;
+
+    /** @brief see #zfiterator */
+    zffinal ZFCorePointerBase *iteratorValue(ZF_IN const zfiterator &it) const;
+    /** @brief see #zfiterator */
+    zffinal ZFCoreMapPair iteratorPair(ZF_IN const zfiterator &it) const;
 
     /** @brief see #zfiterator */
     zffinal void iteratorValue(ZF_IN_OUT zfiterator &it,
@@ -225,61 +235,14 @@ public:
     zffinal void iteratorRemove(ZF_IN_OUT zfiterator &it);
 
     /** @brief see #zfiterator */
-    zffinal const zfchar *iteratorKey(ZF_IN const zfiterator &it) const;
-    /** @brief see #zfiterator */
-    zffinal ZFCorePointerBase *iteratorValue(ZF_IN const zfiterator &it) const;
-    /** @brief see #zfiterator */
-    zffinal ZFCoreMapPair iteratorPair(ZF_IN const zfiterator &it) const;
-
-    /** @brief see #zfiterator */
-    zffinal const zfchar *iteratorNextKey(ZF_IN_OUT zfiterator &it) const;
-    /** @brief see #zfiterator */
-    zffinal ZFCorePointerBase *iteratorNextValue(ZF_IN_OUT zfiterator &it) const;
-    /** @brief see #zfiterator */
-    zffinal ZFCoreMapPair iteratorNextPair(ZF_IN_OUT zfiterator &it) const;
-
-    /** @brief see #zfiterator */
-    zffinal const zfchar *iteratorPrevKey(ZF_IN_OUT zfiterator &it) const;
-    /** @brief see #zfiterator */
-    zffinal ZFCorePointerBase *iteratorPrevValue(ZF_IN_OUT zfiterator &it) const;
-    /** @brief see #zfiterator */
-    zffinal ZFCoreMapPair iteratorPrevPair(ZF_IN_OUT zfiterator &it) const;
-
-    /** @brief see #zfiterator */
-    zffinal void iteratorAddKeyValue(ZF_IN const zfchar *key,
-                                     ZF_IN const ZFCorePointerBase &value);
-    /** @brief see #zfiterator */
-    zffinal void iteratorAddKeyValue(ZF_IN const zfchar *key,
-                                     ZF_IN const ZFCorePointerBase &value,
-                                     ZF_IN_OUT zfiterator &it);
+    zffinal void iteratorAdd(ZF_IN const zfchar *key,
+                             ZF_IN const ZFCorePointerBase &value);
 
     /** @brief see #zfiterator */
     template<typename T_Element>
     T_Element iteratorValue(ZF_IN const zfiterator &it) const
     {
         ZFCorePointerBase *t = this->iteratorValue(it);
-        if(t != zfnull)
-        {
-            return t->pointerValueT<T_Element>();
-        }
-        return zfnull;
-    }
-    /** @brief see #zfiterator */
-    template<typename T_Element>
-    T_Element iteratorNextValue(ZF_IN_OUT zfiterator &it) const
-    {
-        ZFCorePointerBase *t = this->iteratorNextValue(it);
-        if(t != zfnull)
-        {
-            return t->pointerValueT<T_Element>();
-        }
-        return zfnull;
-    }
-    /** @brief see #zfiterator */
-    template<typename T_Element>
-    T_Element iteratorPrevValue(ZF_IN_OUT zfiterator &it) const
-    {
-        ZFCorePointerBase *t = this->iteratorPrevValue(it);
         if(t != zfnull)
         {
             return t->pointerValueT<T_Element>();

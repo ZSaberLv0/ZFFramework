@@ -89,6 +89,50 @@ public:
      */
     ZFOBSERVER_EVENT(ContentOnRemove)
 
+public:
+    /**
+     * @brief add data from another container
+     */
+    virtual void addFrom(ZF_IN ZFKeyValueContainer *another) zfpurevirtual;
+
+    /** @cond ZFPrivateDoc */
+    virtual void iteratorAdd(ZF_IN ZFObject *value) {zfCoreCriticalNotSupported();}
+    virtual void iteratorAdd(ZF_IN ZFObject *value,
+                             ZF_IN_OUT zfiterator &it) {zfCoreCriticalNotSupported();}
+    virtual void iteratorAdd(ZF_IN ZFObject *key,
+                             ZF_IN ZFObject *value) zfpurevirtual;
+    /** @endcond */
+
+public:
+    /**
+     * @brief return a short string describe the content
+     */
+    ZFMETHOD_DECLARE_3(void, objectInfoOfContentT,
+                       ZFMP_IN_OUT(zfstring &, ret),
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
+                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
+    /** @brief see #objectInfoOfContentT */
+    ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
+                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
+
+protected:
+    /** @brief see #EventContentOnChange */
+    virtual inline void contentOnChange(void)
+    {
+        this->observerNotify(ZFKeyValueContainer::EventContentOnChange());
+    }
+    /** @brief see #EventContentOnAdd */
+    virtual inline void contentOnAdd(ZF_IN ZFObject *key, ZF_IN ZFObject *value)
+    {
+        this->observerNotify(ZFKeyValueContainer::EventContentOnAdd(), key, value);
+    }
+    /** @brief see #EventContentOnRemove */
+    virtual inline void contentOnRemove(ZF_IN ZFObject *key, ZF_IN ZFObject *value)
+    {
+        this->observerNotify(ZFKeyValueContainer::EventContentOnRemove(), key, value);
+    }
+
 protected:
     zfoverride
     virtual zfbool serializableOnCheck(void);
@@ -121,6 +165,10 @@ protected:
 
 protected:
     zfoverride
+    virtual void copyableOnCopyFrom(ZF_IN ZFObject *anotherObj);
+
+protected:
+    zfoverride
     virtual void objectOnDeallocPrepare(void);
 
     zfoverride
@@ -130,46 +178,10 @@ protected:
     }
 
 public:
-    /**
-     * @brief return a short string describe the content
-     */
-    ZFMETHOD_DECLARE_3(void, objectInfoOfContentT,
-                       ZFMP_IN_OUT(zfstring &, ret),
-                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
-                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
-    /** @brief see #objectInfoOfContentT */
-    ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
-                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
-                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
-
-public:
     zfoverride
     virtual zfidentity objectHash(void);
     zfoverride
     virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj);
-
-protected:
-    /** @brief see #EventContentOnChange */
-    virtual inline void contentOnChange(void)
-    {
-        this->observerNotify(ZFKeyValueContainer::EventContentOnChange());
-    }
-    /** @brief see #EventContentOnAdd */
-    virtual inline void contentOnAdd(ZF_IN ZFObject *key, ZF_IN ZFObject *value)
-    {
-        this->observerNotify(ZFKeyValueContainer::EventContentOnAdd(), key, value);
-    }
-    /** @brief see #EventContentOnRemove */
-    virtual inline void contentOnRemove(ZF_IN ZFObject *key, ZF_IN ZFObject *value)
-    {
-        this->observerNotify(ZFKeyValueContainer::EventContentOnRemove(), key, value);
-    }
-
-protected:
-    /**
-     * @brief add data from another container
-     */
-    virtual void addFrom(ZF_IN ZFKeyValueContainer *another) zfpurevirtual;
 };
 
 ZF_NAMESPACE_GLOBAL_END

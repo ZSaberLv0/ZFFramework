@@ -38,7 +38,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIOnScreenKeyboardAutoFitLayout *layout)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         ZFUIKit_test_prepareSettingForBoolProperty(settings, layout, ZFPropertyAccess(ZFUIOnScreenKeyboardAutoFitLayout, autoFitEnable));
         ZFUIKit_test_prepareSettingForBoolProperty(settings, layout, ZFPropertyAccess(ZFUIOnScreenKeyboardAutoFitLayout, autoFitFocusedViewToVisible));

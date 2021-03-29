@@ -103,8 +103,8 @@ void ZFCoreMap::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
     if(!this->isEmpty())
     {
         for(zfiterator it = this->iterator();
-            this->iteratorIsValid(it) && count < maxCount;
-            this->iteratorNextValue(it), ++count)
+            this->iteratorValid(it) && count < maxCount;
+            this->iteratorNext(it), ++count)
         {
             if(count > 0)
             {
@@ -114,7 +114,7 @@ void ZFCoreMap::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
             ret += token.tokenPairLeft;
             {
                 ret += token.tokenKeyLeft;
-                ret += this->iteratorKey(it);
+                ret += this->iteratorPair(it).key;
                 ret += token.tokenKeyRight;
             }
             ret += token.tokenPairSeparator;
@@ -182,9 +182,9 @@ void ZFCoreMap::addFrom(ZF_IN const ZFCoreMap &ref)
 {
     if(d != ref.d && !ref.isEmpty())
     {
-        for(zfiterator it = ref.iterator(); this->iteratorIsValid(it); this->iteratorNextValue(it))
+        for(zfiterator it = ref.iterator(); this->iteratorValid(it); this->iteratorNext(it))
         {
-            this->set(this->iteratorKey(it), *(this->iteratorValue(it)));
+            this->set(this->iteratorPair(it).key, *(this->iteratorValue(it)));
         }
     }
 }
@@ -296,7 +296,7 @@ zfiterator ZFCoreMap::iterator(void) const
         _ZFP_ZFCoreMap_iteratorCopyCallback);
 }
 
-zfiterator ZFCoreMap::iteratorForKey(ZF_IN const zfchar *key) const
+zfiterator ZFCoreMap::iteratorFind(ZF_IN const zfchar *key) const
 {
     if(key == zfnull)
     {
@@ -308,15 +308,53 @@ zfiterator ZFCoreMap::iteratorForKey(ZF_IN const zfchar *key) const
         _ZFP_ZFCoreMap_iteratorCopyCallback);
 }
 
-zfbool ZFCoreMap::iteratorIsValid(ZF_IN const zfiterator &it) const
+zfbool ZFCoreMap::iteratorValid(ZF_IN const zfiterator &it) const
 {
     _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
     return (data != zfnull && *data != d->m.end());
 }
-zfbool ZFCoreMap::iteratorIsEqual(ZF_IN const zfiterator &it0,
+zfbool ZFCoreMap::iteratorEqual(ZF_IN const zfiterator &it0,
                                   ZF_IN const zfiterator &it1) const
 {
-    return zfiterator::iteratorIsEqual<_ZFP_ZFCoreMapPrivate::MapType::iterator *>(it0, it1);
+    return zfiterator::iteratorEqual<_ZFP_ZFCoreMapPrivate::MapType::iterator *>(it0, it1);
+}
+
+void ZFCoreMap::iteratorNext(ZF_IN_OUT zfiterator &it) const
+{
+    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
+    if(data)
+    {
+        data->operator ++ ();
+    }
+}
+void ZFCoreMap::iteratorPrev(ZF_IN_OUT zfiterator &it) const
+{
+#if ZF_ENV_ZFCOREMAP_USE_HASHMAP
+    zfCoreCriticalNotSupported();
+#else
+    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
+    if(data)
+    {
+        data->operator -- ();
+    }
+#endif
+}
+
+ZFCorePointerBase *ZFCoreMap::iteratorValue(ZF_IN const zfiterator &it) const
+{
+    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
+    return ((data != zfnull) ? (*data)->second : zfnull);
+}
+ZFCoreMapPair ZFCoreMap::iteratorPair(ZF_IN const zfiterator &it) const
+{
+    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
+    ZFCoreMapPair ret = ZFCoreMapPairZero;
+    if(data)
+    {
+        ret.key = (*data)->first.c_str();
+        ret.value = (*data)->second;
+    }
+    return ret;
 }
 
 void ZFCoreMap::iteratorValue(ZF_IN_OUT zfiterator &it,
@@ -341,118 +379,8 @@ void ZFCoreMap::iteratorRemove(ZF_IN_OUT zfiterator &it)
     }
 }
 
-const zfchar *ZFCoreMap::iteratorKey(ZF_IN const zfiterator &it) const
-{
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    return ((data != zfnull) ? (*data)->first.c_str() : zfnull);
-}
-ZFCorePointerBase *ZFCoreMap::iteratorValue(ZF_IN const zfiterator &it) const
-{
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    return ((data != zfnull) ? (*data)->second : zfnull);
-}
-ZFCoreMapPair ZFCoreMap::iteratorPair(ZF_IN const zfiterator &it) const
-{
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    ZFCoreMapPair ret = ZFCoreMapPairZero;
-    if(data)
-    {
-        ret.key = (*data)->first.c_str();
-        ret.value = (*data)->second;
-    }
-    return ret;
-}
-
-const zfchar *ZFCoreMap::iteratorNextKey(ZF_IN_OUT zfiterator &it) const
-{
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    if(data)
-    {
-        const zfchar *ret = (*data)->first.c_str();
-        data->operator ++ ();
-        return ret;
-    }
-    return zfnull;
-}
-ZFCorePointerBase *ZFCoreMap::iteratorNextValue(ZF_IN_OUT zfiterator &it) const
-{
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    if(data)
-    {
-        ZFCorePointerBase *ret = (*data)->second;
-        data->operator ++ ();
-        return ret;
-    }
-    return zfnull;
-}
-ZFCoreMapPair ZFCoreMap::iteratorNextPair(ZF_IN_OUT zfiterator &it) const
-{
-    ZFCoreMapPair ret = ZFCoreMapPairZero;
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    if(data)
-    {
-        ret.key = (*data)->first.c_str();
-        ret.value = (*data)->second;
-        data->operator ++ ();
-    }
-    return ret;
-}
-
-const zfchar *ZFCoreMap::iteratorPrevKey(ZF_IN_OUT zfiterator &it) const
-{
-#if ZF_ENV_ZFCOREMAP_USE_HASHMAP
-    zfCoreCriticalNotSupported();
-#else
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    if(data)
-    {
-        const zfchar *ret = (*data)->first;
-        data->operator -- ();
-        return ret;
-    }
-#endif
-    return zfnull;
-}
-ZFCorePointerBase *ZFCoreMap::iteratorPrevValue(ZF_IN_OUT zfiterator &it) const
-{
-#if ZF_ENV_ZFCOREMAP_USE_HASHMAP
-    zfCoreCriticalNotSupported();
-#else
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    if(data)
-    {
-        ZFCorePointerBase *ret = (*data)->second;
-        data->operator -- ();
-        return ret;
-    }
-#endif
-    return zfnull;
-}
-ZFCoreMapPair ZFCoreMap::iteratorPrevPair(ZF_IN_OUT zfiterator &it) const
-{
-    ZFCoreMapPair ret = ZFCoreMapPairZero;
-#if ZF_ENV_ZFCOREMAP_USE_HASHMAP
-    zfCoreCriticalNotSupported();
-#else
-    _ZFP_ZFCoreMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFCoreMapPrivate::MapType::iterator *>();
-    if(data)
-    {
-        ret.key = (*data)->first;
-        ret.value = (*data)->second;
-        data->operator -- ();
-    }
-#endif
-    return ret;
-}
-
-void ZFCoreMap::iteratorAddKeyValue(ZF_IN const zfchar *key,
-                                    ZF_IN const ZFCorePointerBase &value)
-{
-    this->set(key, value);
-}
-void ZFCoreMap::iteratorAddKeyValue(ZF_IN const zfchar *key,
-                                    ZF_IN const ZFCorePointerBase &value,
-                                    ZF_IN_OUT zfiterator &it)
+void ZFCoreMap::iteratorAdd(ZF_IN const zfchar *key,
+                            ZF_IN const ZFCorePointerBase &value)
 {
     this->set(key, value);
 }

@@ -691,9 +691,9 @@ void ZFMethodGetAllT(ZF_IN_OUT ZFCoreArray<const ZFMethod *> &ret,
     const ZFCoreMap &m = _ZFP_ZFMethodMap;
     if(methodFilter != zfnull)
     {
-        for(zfiterator it = m.iterator(); m.iteratorIsValid(it); )
+        for(zfiterator it = m.iterator(); m.iteratorValid(it); m.iteratorNext(it))
         {
-            _ZFP_ZFMethodMapData *v = m.iteratorNextValue<_ZFP_ZFMethodMapData *>(it);
+            _ZFP_ZFMethodMapData *v = m.iteratorValue<_ZFP_ZFMethodMapData *>(it);
             if(methodFilter->filterCheckActive(v->method))
             {
                 ret.add(v->method);
@@ -702,9 +702,9 @@ void ZFMethodGetAllT(ZF_IN_OUT ZFCoreArray<const ZFMethod *> &ret,
     }
     else
     {
-        for(zfiterator it = m.iterator(); m.iteratorIsValid(it); )
+        for(zfiterator it = m.iterator(); m.iteratorValid(it); m.iteratorNext(it))
         {
-            _ZFP_ZFMethodMapData *v = m.iteratorNextValue<_ZFP_ZFMethodMapData *>(it);
+            _ZFP_ZFMethodMapData *v = m.iteratorValue<_ZFP_ZFMethodMapData *>(it);
             ret.add(v->method);
         }
     }

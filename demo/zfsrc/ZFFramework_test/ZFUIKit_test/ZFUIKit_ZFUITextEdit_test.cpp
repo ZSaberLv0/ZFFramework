@@ -44,7 +44,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUITextEdit *view)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
         ZFUIKit_test_prepareSettingForBoolProperty(settings, view, ZFPropertyAccess(ZFUITextEdit, textEditEnable));
 
         ZFUIKit_test_prepareSettingButtonWithTestWindow(window, settings);

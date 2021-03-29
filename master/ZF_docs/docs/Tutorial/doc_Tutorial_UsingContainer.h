@@ -28,12 +28,11 @@
  *   container as ZFObject,
  *   can hold ZFObject types only\n
  *   typically we have ZFArray, ZFSet, ZFHashSet as container,
- *   and ZFMap, ZFHashMap as key value container,
- *   and XxxEditable as editable version container\n
+ *   and ZFMap, ZFHashMap as key value container\n
  *   all container would automatically retain elements when add,
  *   and release when remove
  *   @code
- *     zfblockedAlloc(ZFArrayEditable, array);
+ *     zfblockedAlloc(ZFArray, array);
  *
  *     // can hold ZFObject types only
  *     array->add(zflineAlloc(v_zfstring));

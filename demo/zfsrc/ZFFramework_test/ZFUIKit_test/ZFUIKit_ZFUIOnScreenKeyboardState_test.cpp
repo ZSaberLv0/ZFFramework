@@ -4,7 +4,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZF_GLOBAL_INITIALIZER_INIT(ZFUIOnScreenKeyboardState_test)
 {
-    this->observerOwner = zflineAlloc(ZFArrayEditable);
+    this->observerOwner = zflineAlloc(ZFArray);
 
     ZFLISTENER_LOCAL(sysWindowOnCreate, {
         ZFLISTENER_LOCAL(action, {
@@ -16,7 +16,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUIOnScreenKeyboardState_test)
                 .observer(action)
                 .owner(userData)
             );
-        userData->to<ZFArrayEditable *>()->add(state->objectHolder());
+        userData->to<ZFArray *>()->add(state->objectHolder());
     })
     ZFObjectGlobalEventObserver().observerAdd(ZFObserverAddParam()
             .eventId(ZFUISysWindow::EventSysWindowOnCreate())
@@ -28,7 +28,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUIOnScreenKeyboardState_test)
     ZFLISTENER_LOCAL(sysWindowOnDestroy, {
         ZFUIOnScreenKeyboardState *state = ZFUIOnScreenKeyboardState::instanceForSysWindow(listenerData.sender()->toAny());
         state->observerRemoveByOwner(userData);
-        userData->to<ZFArrayEditable *>()->removeElement(state->objectHolder());
+        userData->to<ZFArray *>()->removeElement(state->objectHolder());
     })
     ZFObjectGlobalEventObserver().observerAdd(ZFObserverAddParam()
             .eventId(ZFUISysWindow::EventSysWindowOnDestroy())

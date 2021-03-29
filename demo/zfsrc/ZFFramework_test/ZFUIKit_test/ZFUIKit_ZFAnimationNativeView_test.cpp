@@ -42,7 +42,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFAnimationNativeView *ani)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         ZFUIKit_test_prepareSettingForResetProperty(settings, ani, ZFCoreArrayPODCreate(const ZFProperty *
                 , ZFPropertyAccess(ZFAnimationNativeView, aniCurve)

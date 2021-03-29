@@ -107,51 +107,55 @@ public:
             }
         }
     }
-    ZFMETHOD_INLINE_2(zfindex, onOutput,
+    ZFMETHOD_DECLARE_2(zfindex, onOutput,
                       ZFMP_IN(const void *, s),
                       ZFMP_IN(zfindex, count))
-    {
-        if(!this->output.callbackIsValid())
-        {
-            return 0;
-        }
-
-        if(count == zfindexMax())
-        {
-            count = zfslen((const zfchar *)s);
-        }
-        else
-        {
-            count /= sizeof(zfchar);
-        }
-
-        zfstring buf;
-        this->format->_ZFP_format(
-            buf,
-            ZFOutputFormatStep::e_OnOutput,
-            (const zfchar *)s,
-            count,
-            this->outputCount,
-            this->writtenLen,
-            this->state);
-        ++(this->outputCount);
-        if(buf.isEmpty())
-        {
-            return count * sizeof(zfchar);
-        }
-
-        zfindex written = this->output.execute(buf.cString(), buf.length() * sizeof(zfchar));
-        this->writtenLen += written;
-        if(written == buf.length() * sizeof(zfchar))
-        {
-            return count * sizeof(zfchar);
-        }
-        else
-        {
-            return 0;
-        }
-    }
 };
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFOutputForFormatOwner, zfindex, onOutput,
+                  ZFMP_IN(const void *, s),
+                  ZFMP_IN(zfindex, count))
+{
+    if(!this->output.callbackIsValid())
+    {
+        return 0;
+    }
+
+    if(count == zfindexMax())
+    {
+        count = zfslen((const zfchar *)s);
+    }
+    else
+    {
+        count /= sizeof(zfchar);
+    }
+
+    zfstring buf;
+    this->format->_ZFP_format(
+        buf,
+        ZFOutputFormatStep::e_OnOutput,
+        (const zfchar *)s,
+        count,
+        this->outputCount,
+        this->writtenLen,
+        this->state);
+    ++(this->outputCount);
+    if(buf.isEmpty())
+    {
+        return count * sizeof(zfchar);
+    }
+
+    zfindex written = this->output.execute(buf.cString(), buf.length() * sizeof(zfchar));
+    this->writtenLen += written;
+    if(written == buf.length() * sizeof(zfchar))
+    {
+        return count * sizeof(zfchar);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 
 ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFOutputForFormatT,
                        ZFMP_OUT(ZFCallback &, ret),

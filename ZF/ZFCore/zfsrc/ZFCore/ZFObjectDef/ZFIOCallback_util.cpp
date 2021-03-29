@@ -44,6 +44,7 @@ public:
     ZFMETHOD_DECLARE_0(zfindex, ioTell)
     ZFMETHOD_DECLARE_0(zfindex, ioSize)
 };
+
 zfclass _ZFP_ZFIOBufferedCallbackUsingBufferPrivate : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_ZFIOBufferedCallbackUsingBufferPrivate, ZFObject)
@@ -73,52 +74,67 @@ protected:
     }
 
 public:
-    ZFMETHOD_INLINE_2(zfindex, onInput,
-                      ZFMP_IN(void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        if(buf == zfnull)
-        {
-            return this->ioBuf.length() - this->inputIndex;
-        }
-        else
-        {
-            count = zfmMin(count, this->ioBuf.length() - this->inputIndex);
-            zfmemcpy(buf, this->ioBuf.cString() + this->inputIndex, count);
-            this->inputIndex += count;
-            return count;
-        }
-    }
-    ZFMETHOD_INLINE_2(zfindex, onOutput,
-                      ZFMP_IN(const void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        if(count == zfindexMax())
-        {
-            count = zfslen((const zfchar *)buf) * sizeof(zfchar);
-        }
-        this->ioBuf.replace(this->outputIndex, zfmMin(count, this->ioBuf.length() - this->outputIndex), (const zfchar *)buf, count);
-        this->outputIndex += count;
-        return count;
-    }
+    ZFMETHOD_DECLARE_2(zfindex, onInput,
+                       ZFMP_IN(void *, buf),
+                       ZFMP_IN(zfindex, count))
+    ZFMETHOD_DECLARE_2(zfindex, onOutput,
+                       ZFMP_IN(const void *, buf),
+                       ZFMP_IN(zfindex, count))
 
     // input IO
-    ZFMETHOD_INLINE_2(zfbool, ioSeek,
-                      ZFMP_IN(zfindex, byteSize),
-                      ZFMP_IN(ZFSeekPos, pos))
-    {
-        this->inputIndex = ZFIOCallbackCalcFSeek(0, this->ioBuf.length(), this->inputIndex, byteSize, pos);
-        return zftrue;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioTell)
-    {
-        return this->inputIndex;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioSize)
-    {
-        return this->ioBuf.length();
-    }
+    ZFMETHOD_DECLARE_2(zfbool, ioSeek,
+                       ZFMP_IN(zfindex, byteSize),
+                       ZFMP_IN(ZFSeekPos, pos))
+    ZFMETHOD_DECLARE_0(zfindex, ioTell)
+    ZFMETHOD_DECLARE_0(zfindex, ioSize)
 };
+
+ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingBufferPrivate, zfindex, onInput,
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    if(buf == zfnull)
+    {
+        return this->ioBuf.length() - this->inputIndex;
+    }
+    else
+    {
+        count = zfmMin(count, this->ioBuf.length() - this->inputIndex);
+        zfmemcpy(buf, this->ioBuf.cString() + this->inputIndex, count);
+        this->inputIndex += count;
+        return count;
+    }
+}
+ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingBufferPrivate, zfindex, onOutput,
+                  ZFMP_IN(const void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    if(count == zfindexMax())
+    {
+        count = zfslen((const zfchar *)buf) * sizeof(zfchar);
+    }
+    this->ioBuf.replace(this->outputIndex, zfmMin(count, this->ioBuf.length() - this->outputIndex), (const zfchar *)buf, count);
+    this->outputIndex += count;
+    return count;
+}
+
+// input IO
+ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingBufferPrivate, zfbool, ioSeek,
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN(ZFSeekPos, pos))
+{
+    this->inputIndex = ZFIOCallbackCalcFSeek(0, this->ioBuf.length(), this->inputIndex, byteSize, pos);
+    return zftrue;
+}
+ZFMETHOD_DEFINE_0(_ZFP_ZFIOBufferedCallbackUsingBufferPrivate, zfindex, ioTell)
+{
+    return this->inputIndex;
+}
+ZFMETHOD_DEFINE_0(_ZFP_ZFIOBufferedCallbackUsingBufferPrivate, zfindex, ioSize)
+{
+    return this->ioBuf.length();
+}
+
 // output IO
 ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingBufferOutputIOOwner, zfbool, ioSeek,
                   ZFMP_IN(zfindex, byteSize),

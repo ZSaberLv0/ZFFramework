@@ -191,7 +191,7 @@ zfclassFwd ZFObjectHolder;
  * -  (ZFTAG_LIMITATION) due to some limitation, you should always use ZFObject as a pointer
  *   but without const qualifier,
  *   for const operations, use the const version objects,
- *   such as ZFArray instead of ZFArrayEditable
+ *   such as ZFArray instead of ZFArray
  *   for const arrays
  * -  you can access class info by:
  *   @code

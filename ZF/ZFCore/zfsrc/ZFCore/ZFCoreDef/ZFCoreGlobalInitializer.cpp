@@ -600,8 +600,8 @@ static void _ZFP_GI_dataUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
     zfstring key;
     _ZFP_GI_keyForName(key, name, level);
 
-    zfiterator it = dataMap.iteratorForKey(key.cString());
-    if(!dataMap.iteratorIsValid(it))
+    zfiterator it = dataMap.iteratorFind(key.cString());
+    if(!dataMap.iteratorValid(it))
     {
         zfCoreCriticalShouldNotGoHere();
         return ;

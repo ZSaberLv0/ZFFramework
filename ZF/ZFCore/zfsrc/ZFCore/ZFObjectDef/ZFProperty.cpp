@@ -125,9 +125,9 @@ void ZFPropertyGetAllT(ZF_IN_OUT ZFCoreArray<const ZFProperty *> &ret,
     const ZFCoreMap &m = _ZFP_ZFPropertyMap;
     if(propertyFilter != zfnull)
     {
-        for(zfiterator it = m.iterator(); m.iteratorIsValid(it); )
+        for(zfiterator it = m.iterator(); m.iteratorValid(it); m.iteratorNext(it))
         {
-            _ZFP_ZFPropertyMapData *v = m.iteratorNextValue<_ZFP_ZFPropertyMapData *>(it);
+            _ZFP_ZFPropertyMapData *v = m.iteratorValue<_ZFP_ZFPropertyMapData *>(it);
             if(propertyFilter->filterCheckActive(&(v->propertyInfo)))
             {
                 ret.add(&(v->propertyInfo));
@@ -136,9 +136,9 @@ void ZFPropertyGetAllT(ZF_IN_OUT ZFCoreArray<const ZFProperty *> &ret,
     }
     else
     {
-        for(zfiterator it = m.iterator(); m.iteratorIsValid(it); )
+        for(zfiterator it = m.iterator(); m.iteratorValid(it); m.iteratorNext(it))
         {
-            _ZFP_ZFPropertyMapData *v = m.iteratorNextValue<_ZFP_ZFPropertyMapData *>(it);
+            _ZFP_ZFPropertyMapData *v = m.iteratorValue<_ZFP_ZFPropertyMapData *>(it);
             ret.add(&(v->propertyInfo));
         }
     }

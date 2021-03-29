@@ -49,7 +49,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIButtonGroup *layout)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         ZFUIKit_test_prepareSettingForBoolProperty(settings, layout->toObject(), ZFPropertyAccess(ZFUIButtonGroup, buttonTabAllowUnchecked));
 

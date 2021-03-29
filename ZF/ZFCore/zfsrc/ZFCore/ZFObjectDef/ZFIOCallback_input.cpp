@@ -354,38 +354,46 @@ protected:
     }
 
 public:
-    ZFMETHOD_INLINE_2(zfindex, onInput,
-                      ZFMP_IN(void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        if(buf == zfnull)
-        {
-            return src.execute(buf, count);
-        }
-        if(curPos - srcStart + count > srcCount)
-        {
-            count = srcCount - curPos + srcStart;
-        }
-        count = src.execute(buf, count);
-        curPos += count;
-        return count;
-    }
-    ZFMETHOD_INLINE_2(zfbool, ioSeek,
-                      ZFMP_IN(zfindex, byteSize),
-                      ZFMP_IN(ZFSeekPos, pos))
-    {
-        curPos = ZFIOCallbackCalcFSeek(srcStart, srcCount, curPos, byteSize, pos);
-        return zftrue;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioTell)
-    {
-        return curPos - srcStart;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioSize)
-    {
-        return srcStart + srcCount - curPos;
-    }
+    ZFMETHOD_DECLARE_2(zfindex, onInput,
+                       ZFMP_IN(void *, buf),
+                       ZFMP_IN(zfindex, count))
+    ZFMETHOD_DECLARE_2(zfbool, ioSeek,
+                       ZFMP_IN(zfindex, byteSize),
+                       ZFMP_IN(ZFSeekPos, pos))
+    ZFMETHOD_DECLARE_0(zfindex, ioTell)
+    ZFMETHOD_DECLARE_0(zfindex, ioSize)
 };
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFInputForInputInRangeOwner, zfindex, onInput,
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    if(buf == zfnull)
+    {
+        return src.execute(buf, count);
+    }
+    if(curPos - srcStart + count > srcCount)
+    {
+        count = srcCount - curPos + srcStart;
+    }
+    count = src.execute(buf, count);
+    curPos += count;
+    return count;
+}
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFInputForInputInRangeOwner, zfbool, ioSeek,
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN(ZFSeekPos, pos))
+{
+    curPos = ZFIOCallbackCalcFSeek(srcStart, srcCount, curPos, byteSize, pos);
+    return zftrue;
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFInputForInputInRangeOwner, zfindex, ioTell)
+{
+    return curPos - srcStart;
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFInputForInputInRangeOwner, zfindex, ioSize)
+{
+    return srcStart + srcCount - curPos;
+}
 ZFInput ZFInputForInputInRange(ZF_IN const ZFInput &inputCallback,
                                ZF_IN_OPT zfindex start /* = 0 */,
                                ZF_IN_OPT zfindex count /* = zfindexMax() */,
@@ -559,38 +567,46 @@ public:
     })
 
 public:
-    ZFMETHOD_INLINE_2(zfindex, onInput,
-                      ZFMP_IN(void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        if(buf == zfnull)
-        {
-            return pEnd - p;
-        }
-        if(p + count > pEnd)
-        {
-            count = pEnd - p;
-        }
-        zfmemcpy(buf, p, count);
-        p += count;
-        return count;
-    }
-    ZFMETHOD_INLINE_2(zfbool, ioSeek,
-                      ZFMP_IN(zfindex, byteSize),
-                      ZFMP_IN(ZFSeekPos, pos))
-    {
-        p = pStart + ZFIOCallbackCalcFSeek(0, pEnd - pStart, p - pStart, byteSize, pos);
-        return zftrue;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioTell)
-    {
-        return p - pStart;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioSize)
+    ZFMETHOD_DECLARE_2(zfindex, onInput,
+                       ZFMP_IN(void *, buf),
+                       ZFMP_IN(zfindex, count))
+    ZFMETHOD_DECLARE_2(zfbool, ioSeek,
+                       ZFMP_IN(zfindex, byteSize),
+                       ZFMP_IN(ZFSeekPos, pos))
+    ZFMETHOD_DECLARE_0(zfindex, ioTell)
+    ZFMETHOD_DECLARE_0(zfindex, ioSize)
+};
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFInputForBufferUnsafeOwner, zfindex, onInput,
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    if(buf == zfnull)
     {
         return pEnd - p;
     }
-};
+    if(p + count > pEnd)
+    {
+        count = pEnd - p;
+    }
+    zfmemcpy(buf, p, count);
+    p += count;
+    return count;
+}
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFInputForBufferUnsafeOwner, zfbool, ioSeek,
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN(ZFSeekPos, pos))
+{
+    p = pStart + ZFIOCallbackCalcFSeek(0, pEnd - pStart, p - pStart, byteSize, pos);
+    return zftrue;
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFInputForBufferUnsafeOwner, zfindex, ioTell)
+{
+    return p - pStart;
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFInputForBufferUnsafeOwner, zfindex, ioSize)
+{
+    return pEnd - p;
+}
 static ZFInput _ZFP_ZFInputForBuffer(ZF_IN zfbool copy,
                                      ZF_IN const void *src,
                                      ZF_IN_OPT zfindex count /* = zfindexMax() */)

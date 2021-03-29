@@ -222,8 +222,8 @@ void ZFTextTemplateParam::replaceDataAdd(ZF_IN const zfchar *key, ZF_IN const zf
     {
         return ;
     }
-    zfiterator it = d->replaceDataMap.iteratorForKey(key);
-    if(d->replaceDataMap.iteratorIsValid(it))
+    zfiterator it = d->replaceDataMap.iteratorFind(key);
+    if(d->replaceDataMap.iteratorValid(it))
     {
         _ZFP_ZFTextTemplateReplaceData *replaceData = d->replaceDataMap.iteratorValue<_ZFP_ZFTextTemplateReplaceData *>(it);
         if(value == zfnull)
@@ -274,8 +274,8 @@ const zfchar *ZFTextTemplateParam::replaceDataAtIndex(ZF_IN zfindex index) const
 }
 void ZFTextTemplateParam::replaceDataRemove(ZF_IN const zfchar *key)
 {
-    zfiterator it = d->replaceDataMap.iteratorForKey(key);
-    if(d->replaceDataMap.iteratorIsValid(it))
+    zfiterator it = d->replaceDataMap.iteratorFind(key);
+    if(d->replaceDataMap.iteratorValid(it))
     {
         d->replaceDataList.removeElement(d->replaceDataMap.iteratorValue<_ZFP_ZFTextTemplateReplaceData *>(it));
         d->replaceDataMap.iteratorRemove(it);
@@ -309,8 +309,8 @@ void ZFTextTemplateParam::enableDataAdd(ZF_IN const zfchar *key, ZF_IN zfbool va
     {
         return ;
     }
-    zfiterator it = d->enableDataMap.iteratorForKey(key);
-    if(d->enableDataMap.iteratorIsValid(it))
+    zfiterator it = d->enableDataMap.iteratorFind(key);
+    if(d->enableDataMap.iteratorValid(it))
     {
         _ZFP_ZFTextTemplateEnableData *enableData = d->enableDataMap.iteratorValue<_ZFP_ZFTextTemplateEnableData *>(it);
         enableData->value = value;
@@ -362,8 +362,8 @@ zfbool ZFTextTemplateParam::enableDataAtIndex(ZF_IN zfindex index) const
 }
 void ZFTextTemplateParam::enableDataRemove(ZF_IN const zfchar *key)
 {
-    zfiterator it = d->enableDataMap.iteratorForKey(key);
-    if(d->enableDataMap.iteratorIsValid(it))
+    zfiterator it = d->enableDataMap.iteratorFind(key);
+    if(d->enableDataMap.iteratorValid(it))
     {
         d->enableDataList.removeElement(d->enableDataMap.iteratorValue<_ZFP_ZFTextTemplateEnableData *>(it));
         d->enableDataMap.iteratorRemove(it);
@@ -397,8 +397,8 @@ void ZFTextTemplateParam::indexDataAdd(ZF_IN const zfchar *key, ZF_IN const ZFTe
     {
         return ;
     }
-    zfiterator it = d->indexDataMap.iteratorForKey(key);
-    if(d->indexDataMap.iteratorIsValid(it))
+    zfiterator it = d->indexDataMap.iteratorFind(key);
+    if(d->indexDataMap.iteratorValid(it))
     {
         _ZFP_ZFTextTemplateIndexData *indexData = d->indexDataMap.iteratorValue<_ZFP_ZFTextTemplateIndexData *>(it);
         indexData->value = value;
@@ -454,8 +454,8 @@ ZFTextTemplateIndexData *ZFTextTemplateParam::indexDataAtIndex(ZF_IN zfindex ind
 }
 void ZFTextTemplateParam::indexDataRemove(ZF_IN const zfchar *key)
 {
-    zfiterator it = d->indexDataMap.iteratorForKey(key);
-    if(d->indexDataMap.iteratorIsValid(it))
+    zfiterator it = d->indexDataMap.iteratorFind(key);
+    if(d->indexDataMap.iteratorValid(it))
     {
         d->indexDataList.removeElement(d->indexDataMap.iteratorValue<_ZFP_ZFTextTemplateIndexData *>(it));
         d->indexDataMap.iteratorRemove(it);

@@ -33,6 +33,7 @@ void ZFArray::objectOnDealloc(void)
     zfsuper::objectOnDealloc();
 }
 
+// ============================================================
 ZFMETHOD_DEFINE_0(ZFArray, zfindex, count)
 {
     return (zfindex)(d->data.size());
@@ -41,7 +42,14 @@ ZFMETHOD_DEFINE_0(ZFArray, zfbool, isEmpty)
 {
     return d->data.empty();
 }
-ZFMETHOD_DEFINE_1(ZFArray, ZFObject *, get, ZFMP_IN(zfindex, index))
+ZFMETHOD_DEFINE_2(ZFArray, zfbool, isContain,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN_OPT(ZFComparer<ZFObject *>::Comparer, comparer, ZFComparerCheckEqual))
+{
+    return (this->find(obj, comparer) != zfindexMax());
+}
+ZFMETHOD_DEFINE_1(ZFArray, ZFObject *, get,
+                  ZFMP_IN(zfindex, index))
 {
     if(index >= d->data.size())
     {
@@ -65,12 +73,6 @@ ZFMETHOD_DEFINE_0(ZFArray, ZFObject *, getLast)
         return zfnull;
     }
     return d->data[d->data.size() - 1];
-}
-ZFMETHOD_DEFINE_2(ZFArray, zfbool, isContain,
-                  ZFMP_IN(ZFObject *, obj),
-                  ZFMP_IN_OPT(ZFComparer<ZFObject *>::Comparer, comparer, ZFComparerCheckEqual))
-{
-    return (this->find(obj, comparer) != zfindexMax());
 }
 ZFMETHOD_DEFINE_2(ZFArray, zfindex, find,
                   ZFMP_IN(ZFObject *, obj),
@@ -106,8 +108,9 @@ ZFMETHOD_DEFINE_2(ZFArray, zfindex, findReversely,
     }
     return zfindexMax();
 }
-void ZFArray::add(ZF_IN zfindex indexAddTo,
-                  ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_2(ZFArray, void, add,
+                  ZFMP_IN(zfindex, indexAddTo),
+                  ZFMP_IN(ZFObject *, obj))
 {
     zfCoreAssertWithMessage(obj != zfnull, "insert null object");
     zfRetain(obj);
@@ -116,7 +119,8 @@ void ZFArray::add(ZF_IN zfindex indexAddTo,
     this->contentOnAdd(obj);
     this->contentOnChange();
 }
-void ZFArray::add(ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_1(ZFArray, void, add,
+                  ZFMP_IN(ZFObject *, obj))
 {
     zfCoreAssertWithMessage(obj != zfnull, "insert null object");
     zfRetain(obj);
@@ -125,47 +129,30 @@ void ZFArray::add(ZF_IN ZFObject *obj)
     this->contentOnAdd(obj);
     this->contentOnChange();
 }
-void ZFArray::addFrom(ZF_IN ZFContainer *another)
+ZFMETHOD_DEFINE_1(ZFArray, void, addFrom,
+                  ZFMP_IN(ZFContainer *, another))
 {
-    if(another == zfnull)
+    if(another == this || another == zfnull)
     {
         return ;
     }
-    if(this == another)
+    ZFObject *obj = zfnull;
+    for(zfiterator it = another->iterator(); another->iteratorValid(it); another->iteratorNext(it))
     {
-        zfstldeque<ZFObject *> tmp = d->data;
-        ZFObject *obj = zfnull;
-        for(zfstldeque<ZFObject *>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-        {
-            obj = *it;
-            zfRetain(obj);
-            d->data.push_back(obj);
-            this->contentOnAdd(obj);
-        }
-        if(obj != zfnull)
-        {
-            this->contentOnChange();
-        }
+        obj = another->iteratorValue(it);
+        zfRetain(obj);
+        d->data.push_back(obj);
+        this->contentOnAdd(obj);
     }
-    else
+    if(obj != zfnull)
     {
-        ZFObject *obj = zfnull;
-        for(zfiterator it = another->iterator(); another->iteratorIsValid(it);)
-        {
-            obj = another->iteratorNextValue(it);
-            zfRetain(obj);
-            d->data.push_back(obj);
-            this->contentOnAdd(obj);
-        }
-        if(obj != zfnull)
-        {
-            this->contentOnChange();
-        }
+        this->contentOnChange();
     }
 }
 
-void ZFArray::set(ZF_IN zfindex index,
-                  ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_2(ZFArray, void, set,
+                  ZFMP_IN(zfindex, index),
+                  ZFMP_IN(ZFObject *, obj))
 {
     zfCoreAssertWithMessage(obj != zfnull, "set null object");
     zfRetain(obj);
@@ -180,7 +167,8 @@ void ZFArray::set(ZF_IN zfindex index,
     zfRelease(old);
 }
 
-zfbool ZFArray::removeElement(ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_1(ZFArray, zfbool, removeElement,
+                  ZFMP_IN(ZFObject *, obj))
 {
     if(obj)
     {
@@ -204,7 +192,9 @@ zfbool ZFArray::removeElement(ZF_IN ZFObject *obj)
     }
     return zffalse;
 }
-zfbool ZFArray::removeElement(ZF_IN ZFObject *obj, ZF_IN ZFComparer<ZFObject *>::Comparer comparer)
+ZFMETHOD_DEFINE_2(ZFArray, zfbool, removeElement,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN(ZFComparer<ZFObject *>::Comparer, comparer))
 {
     if(obj && comparer)
     {
@@ -228,7 +218,8 @@ zfbool ZFArray::removeElement(ZF_IN ZFObject *obj, ZF_IN ZFComparer<ZFObject *>:
     }
     return zffalse;
 }
-zfbool ZFArray::removeElementRevsersely(ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_1(ZFArray, zfbool, removeElementRevsersely,
+                  ZFMP_IN(ZFObject *, obj))
 {
     if(obj)
     {
@@ -248,7 +239,9 @@ zfbool ZFArray::removeElementRevsersely(ZF_IN ZFObject *obj)
     }
     return zffalse;
 }
-zfbool ZFArray::removeElementRevsersely(ZF_IN ZFObject *obj, ZF_IN ZFComparer<ZFObject *>::Comparer comparer)
+ZFMETHOD_DEFINE_2(ZFArray, zfbool, removeElementRevsersely,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN(ZFComparer<ZFObject *>::Comparer, comparer))
 {
     if(obj && comparer)
     {
@@ -268,7 +261,8 @@ zfbool ZFArray::removeElementRevsersely(ZF_IN ZFObject *obj, ZF_IN ZFComparer<ZF
     }
     return zffalse;
 }
-zfindex ZFArray::removeElementAll(ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_1(ZFArray, zfindex, removeElementAll,
+                  ZFMP_IN(ZFObject *, obj))
 {
     zfindex removedCount = 0;
     if(obj)
@@ -296,7 +290,9 @@ zfindex ZFArray::removeElementAll(ZF_IN ZFObject *obj)
     }
     return removedCount;
 }
-zfindex ZFArray::removeElementAll(ZF_IN ZFObject *obj, ZF_IN ZFComparer<ZFObject *>::Comparer comparer)
+ZFMETHOD_DEFINE_2(ZFArray, zfindex, removeElementAll,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN(ZFComparer<ZFObject *>::Comparer, comparer))
 {
     zfindex removedCount = 0;
     if(obj && comparer)
@@ -325,8 +321,9 @@ zfindex ZFArray::removeElementAll(ZF_IN ZFObject *obj, ZF_IN ZFComparer<ZFObject
     return removedCount;
 }
 
-void ZFArray::remove(ZF_IN zfindex index,
-                     ZF_IN_OPT zfindex count /* = 1 */)
+ZFMETHOD_DEFINE_2(ZFArray, void, remove,
+                  ZFMP_IN(zfindex, index),
+                  ZFMP_IN_OPT(zfindex, count, 1))
 {
     if(count == 1)
     {
@@ -359,7 +356,7 @@ void ZFArray::remove(ZF_IN zfindex index,
         }
     }
 }
-void ZFArray::removeFirst(void)
+ZFMETHOD_DEFINE_0(ZFArray, void, removeFirst)
 {
     if(!d->data.empty())
     {
@@ -371,7 +368,7 @@ void ZFArray::removeFirst(void)
         this->contentOnChange();
     }
 }
-void ZFArray::removeLast(void)
+ZFMETHOD_DEFINE_0(ZFArray, void, removeLast)
 {
     if(!d->data.empty())
     {
@@ -383,7 +380,7 @@ void ZFArray::removeLast(void)
         this->contentOnChange();
     }
 }
-void ZFArray::removeAll(void)
+ZFMETHOD_DEFINE_0(ZFArray, void, removeAll)
 {
     if(!d->data.empty())
     {
@@ -400,7 +397,9 @@ void ZFArray::removeAll(void)
     }
 }
 
-void ZFArray::move(ZF_IN zfindex fromIndex, ZF_IN zfindex toIndexOrIndexMax)
+ZFMETHOD_DEFINE_2(ZFArray, void, move,
+                  ZFMP_IN(zfindex, fromIndex),
+                  ZFMP_IN(zfindex, toIndexOrIndexMax))
 {
     if(fromIndex >= (zfindex)d->data.size())
     {
@@ -440,10 +439,11 @@ void ZFArray::move(ZF_IN zfindex fromIndex, ZF_IN zfindex toIndexOrIndexMax)
     this->contentOnChange();
 }
 
-void ZFArray::sort(ZF_IN_OPT zfbool ascending /* = zftrue */,
-                   ZF_IN_OPT zfindex start /* = 0 */,
-                   ZF_IN_OPT zfindex count /* = zfindexMax() */,
-                   ZF_IN_OPT ZFComparer<ZFObject *>::Comparer comparer /* = ZFComparerCheckEqual */)
+ZFMETHOD_DEFINE_4(ZFArray, void, sort,
+                  ZFMP_IN_OPT(zfbool, ascending, zftrue),
+                  ZFMP_IN_OPT(zfindex, start, 0),
+                  ZFMP_IN_OPT(zfindex, count, zfindexMax()),
+                  ZFMP_IN_OPT(ZFComparer<ZFObject *>::Comparer, comparer, ZFComparerCheckEqual))
 {
     if(d->data.size() > 0 && start + 1 < d->data.size() && count > 1)
     {
@@ -475,18 +475,6 @@ ZFMETHOD_DEFINE_1(ZFArray, zfiterator, iteratorForIndex,
         _ZFP_ZFArray_iteratorDeleteCallback,
         _ZFP_ZFArray_iteratorCopyCallback);
 }
-ZFMETHOD_DEFINE_2(ZFArray, zfiterator, iteratorFind,
-                  ZFMP_IN(ZFObject *, value),
-                  ZFMP_IN(ZFComparer<ZFObject *>::Comparer, comparer))
-{
-    return this->iteratorForIndex(this->find(value, comparer));
-}
-ZFMETHOD_DEFINE_2(ZFArray, zfiterator, iteratorFindReversely,
-                  ZFMP_IN(ZFObject *, value),
-                  ZFMP_IN_OPT(ZFComparer<ZFObject *>::Comparer, comparer, ZFComparerCheckEqual))
-{
-    return this->iteratorForIndex(this->findReversely(value, comparer));
-}
 
 ZFMETHOD_DEFINE_0(ZFArray, zfiterator, iterator)
 {
@@ -496,22 +484,41 @@ ZFMETHOD_DEFINE_0(ZFArray, zfiterator, iterator)
 }
 
 ZFMETHOD_DEFINE_1(ZFArray, zfiterator, iteratorFind,
-                  ZFMP_IN(ZFObject *, value))
+                  ZFMP_IN(ZFObject *, element))
 {
-    return this->iteratorForIndex(this->find(value));
+    return this->iteratorForIndex(this->find(element));
 }
 
-ZFMETHOD_DEFINE_1(ZFArray, zfbool, iteratorIsValid,
+ZFMETHOD_DEFINE_1(ZFArray, zfbool, iteratorValid,
                   ZFMP_IN(const zfiterator &, it))
 {
     zfindex *index = it.data<zfindex *>();
     return (index != zfnull && *index < d->data.size());
 }
-ZFMETHOD_DEFINE_2(ZFArray, zfbool, iteratorIsEqual,
+ZFMETHOD_DEFINE_2(ZFArray, zfbool, iteratorEqual,
                   ZFMP_IN(const zfiterator &, it0),
                   ZFMP_IN(const zfiterator &, it1))
 {
-    return zfiterator::iteratorIsEqual<zfindex *>(it0, it1);
+    return zfiterator::iteratorEqual<zfindex *>(it0, it1);
+}
+
+ZFMETHOD_DEFINE_1(ZFArray, void, iteratorNext,
+                  ZFMP_IN_OUT(zfiterator &, it))
+{
+    zfindex *index = it.data<zfindex *>();
+    if(index != zfnull && *index < d->data.size())
+    {
+        ++(*index);
+    }
+}
+ZFMETHOD_DEFINE_1(ZFArray, void, iteratorPrev,
+                  ZFMP_IN_OUT(zfiterator &, it))
+{
+    zfindex *index = it.data<zfindex *>();
+    if(index != zfnull && *index < d->data.size())
+    {
+        --(*index);
+    }
 }
 
 ZFMETHOD_DEFINE_1(ZFArray, ZFObject *, iteratorValue,
@@ -525,31 +532,9 @@ ZFMETHOD_DEFINE_1(ZFArray, ZFObject *, iteratorValue,
     return zfnull;
 }
 
-ZFMETHOD_DEFINE_1(ZFArray, ZFObject *, iteratorNextValue,
-                  ZFMP_IN_OUT(zfiterator &, it))
-{
-    zfindex *index = it.data<zfindex *>();
-    if(index != zfnull && *index < d->data.size())
-    {
-        ++(*index);
-        return d->data[*index - 1];
-    }
-    return zfnull;
-}
-ZFMETHOD_DEFINE_1(ZFArray, ZFObject *, iteratorPrevValue,
-                  ZFMP_IN_OUT(zfiterator &, it))
-{
-    zfindex *index = it.data<zfindex *>();
-    if(index != zfnull && *index < d->data.size())
-    {
-        --(*index);
-        return d->data[*index + 1];
-    }
-    return zfnull;
-}
-
-void ZFArray::iteratorValue(ZF_IN_OUT zfiterator &it,
-                            ZF_IN ZFObject *value)
+ZFMETHOD_DEFINE_2(ZFArray, void, iteratorValue,
+                  ZFMP_IN_OUT(zfiterator &, it),
+                  ZFMP_IN(ZFObject *, value))
 {
     zfindex *index = it.data<zfindex *>();
     if(index != zfnull && *index < d->data.size())
@@ -557,7 +542,8 @@ void ZFArray::iteratorValue(ZF_IN_OUT zfiterator &it,
         this->set(*index, value);
     }
 }
-void ZFArray::iteratorRemove(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFArray, void, iteratorRemove,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     zfindex *index = it.data<zfindex *>();
     if(index != zfnull && *index < d->data.size())
@@ -569,12 +555,14 @@ void ZFArray::iteratorRemove(ZF_IN_OUT zfiterator &it)
         }
     }
 }
-void ZFArray::iteratorAdd(ZF_IN ZFObject *value)
+ZFMETHOD_DEFINE_1(ZFArray, void, iteratorAdd,
+                  ZFMP_IN(ZFObject *, value))
 {
     this->add(value);
 }
-void ZFArray::iteratorAdd(ZF_IN ZFObject *value,
-                          ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_2(ZFArray, void, iteratorAdd,
+                  ZFMP_IN(ZFObject *, value),
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     zfindex *index = it.data<zfindex *>();
     if(index != zfnull && *index < d->data.size())

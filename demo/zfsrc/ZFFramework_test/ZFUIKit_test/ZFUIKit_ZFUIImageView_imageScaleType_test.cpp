@@ -66,7 +66,7 @@ protected:
         container->childAdd(layout);
         layout->layoutParam()->sizeParam(ZFUISizeParamFillFill());
 
-        zfblockedAlloc(ZFArrayEditable, imageViews);
+        zfblockedAlloc(ZFArray, imageViews);
         imageViews->add(layout->imageViewSmall());
         imageViews->add(layout->imageViewLarge());
         this->prepareSettingButton(window, imageViews);
@@ -87,7 +87,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFArray *imageViews)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         { // imageScaleType
             zfblockedAlloc(ZFUIKit_test_SettingData, setting);

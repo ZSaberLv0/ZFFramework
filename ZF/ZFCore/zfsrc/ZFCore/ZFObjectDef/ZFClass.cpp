@@ -1219,8 +1219,8 @@ void ZFClass::_ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN c
         cls->d->classDynamicRegisterObjectInstanceMap.clear();
     }
 
-    zfiterator itClass = _ZFP_ZFClassMap.iteratorForKey(cls->classNameFull());
-    if(!_ZFP_ZFClassMap.iteratorIsValid(itClass))
+    zfiterator itClass = _ZFP_ZFClassMap.iteratorFind(cls->classNameFull());
+    if(!_ZFP_ZFClassMap.iteratorValid(itClass))
     {
         zfCoreCriticalShouldNotGoHere();
         return ;
@@ -1486,9 +1486,11 @@ void ZFClass::_ZFP_ZFClassInitFinish_methodAndPropertyFindCache(ZF_IN ZFClass *c
         alreadyChecked[clsTmp] = zftrue;
 
         cls->d->methodAndPropertyFindCache.push_back(clsTmp);
-        for(zfiterator it = clsTmp->d->propertyMap.iterator(); clsTmp->d->propertyMap.iteratorIsValid(it); )
+        for(zfiterator it = clsTmp->d->propertyMap.iterator();
+            clsTmp->d->propertyMap.iteratorValid(it);
+            clsTmp->d->propertyMap.iteratorNext(it))
         {
-            const ZFProperty *zfproperty = clsTmp->d->propertyMap.iteratorNextValue<const ZFProperty *>(it);
+            const ZFProperty *zfproperty = clsTmp->d->propertyMap.iteratorValue<const ZFProperty *>(it);
             cls->d->propertyMapCache[zfproperty->propertyName()] = zfproperty;
         }
 
@@ -1810,9 +1812,9 @@ void ZFClassGetAllT(ZF_IN_OUT ZFCoreArray<const ZFClass *> &ret,
     else
     {
         const ZFCoreMap &m = _ZFP_ZFClassMap;
-        for(zfiterator it = m.iterator(); m.iteratorIsValid(it); )
+        for(zfiterator it = m.iterator(); m.iteratorValid(it); m.iteratorNext(it))
         {
-            ZFClass *v = m.iteratorNextValue<ZFClass *>(it);
+            ZFClass *v = m.iteratorValue<ZFClass *>(it);
             if(classFilter->filterCheckActive(v))
             {
                 ret.add(v);

@@ -45,7 +45,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIAutoLayout *layout)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         ZFUIKit_test_prepareSettingForLayoutRequest(settings, layout);
 

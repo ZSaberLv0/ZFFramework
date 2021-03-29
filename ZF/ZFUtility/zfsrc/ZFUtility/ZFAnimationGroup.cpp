@@ -36,14 +36,14 @@ zfclass _ZFP_ZFAnimationGroupPrivate : zfextends ZFObject
 
 public:
     ZFAnimationGroup *pimplOwner;
-    ZFArrayEditable *childAnis; // ZFAnimationGroupChildData *
+    ZFArray *childAnis; // ZFAnimationGroupChildData *
 private:
     /*
      * ZFAnimationGroupChildData *
      * for parallel group, stores all running child
      * for serial group, stores running child and all child to run
      */
-    ZFArrayEditable *childBuf;
+    ZFArray *childBuf;
     zfbool cachedParallel;
     ZFListener cachedOnStartListener;
     ZFListener cachedOnStopListener;
@@ -54,8 +54,8 @@ protected:
     virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
-        this->childAnis = zfAlloc(ZFArrayEditable);
-        this->childBuf = zfAlloc(ZFArrayEditable);
+        this->childAnis = zfAlloc(ZFArray);
+        this->childBuf = zfAlloc(ZFArray);
     }
     zfoverride
     virtual void objectOnDealloc(void)
@@ -109,7 +109,7 @@ public:
         }
         if(!this->childBuf->isEmpty())
         {
-            zfblockedAlloc(ZFArrayEditable, childToStop, this->childBuf);
+            zfblockedAlloc(ZFArray, childToStop, this->childBuf);
             this->childBuf->removeAll();
             if(this->cachedParallel)
             {
@@ -136,7 +136,7 @@ private:
     void doStartParallel(void)
     {
         zfidentity aniId = this->pimplOwner->aniId();
-        zfblockedAlloc(ZFArrayEditable, tmpArray, this->childAnis);
+        zfblockedAlloc(ZFArray, tmpArray, this->childAnis);
         this->childBuf->addFrom(this->childAnis);
         for(zfindex i = 0; aniId == this->pimplOwner->aniId() && i < tmpArray->count(); ++i)
         {

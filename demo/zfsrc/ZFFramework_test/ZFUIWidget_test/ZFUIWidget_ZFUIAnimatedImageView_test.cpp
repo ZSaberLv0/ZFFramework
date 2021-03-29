@@ -68,7 +68,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIAnimatedImageView *animatedImageView)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         ZFUIKit_test_prepareSettingForBoolProperty(settings, animatedImageView, ZFPropertyAccess(ZFUIAnimatedImageView, animatedImageWrapToImage));
 

@@ -35,9 +35,9 @@ zfclassFwd _ZFP_ZFUIListViewPrivate;
  * @code
  *   <ZFUIListView>
  *       <ListAdapterClass category="listAdapter" /> // used only if #listAdapterSerializable
- *       <ZFArrayEditable name="cellUpdater"> // all cell updater
+ *       <ZFArray name="cellUpdater"> // all cell updater
  *           ...
- *       </ZFArrayEditable>
+ *       </ZFArray>
  *   </ZFUIListView>
  * @endcode
  */
@@ -106,7 +106,7 @@ public:
     /**
      * @brief list updater to update list cells, holds #ZFUIListCellUpdater
      */
-    ZFPROPERTY_RETAIN_READONLY(ZFArrayEditable *, cellUpdater, zflineAlloc(ZFArrayEditable))
+    ZFPROPERTY_RETAIN_READONLY(ZFArray *, cellUpdater, zflineAlloc(ZFArray))
 
     /**
      * @brief direction to layout children, #ZFUIOrientation::e_Top by default

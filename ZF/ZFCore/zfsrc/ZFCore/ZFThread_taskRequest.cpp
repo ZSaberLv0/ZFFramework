@@ -17,7 +17,7 @@ static ZFListener *_ZFP_ZFThread_mergeCallbackIgnoreOldTask = zfnull;
 static ZFListener *_ZFP_ZFThread_mergeCallbackIgnoreNewTask = zfnull;
 static ZFListener *_ZFP_ZFThread_mergeCallbackDoNotMerge = zfnull;
 static zfbool _ZFP_ZFThread_taskRunning = zffalse;
-static ZFArrayEditable *_ZFP_ZFThread_taskDatas = zfnull;
+static ZFArray *_ZFP_ZFThread_taskDatas = zfnull;
 
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFThreadTaskRequestDataHolder, ZFLevelZFFrameworkEssential)
 {
@@ -29,7 +29,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFThreadTaskRequestDataHolder, ZFLevelZFFr
     *_ZFP_ZFThread_mergeCallbackIgnoreNewTask = ZFCallbackForFunc(_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask_action);
     _ZFP_ZFThread_mergeCallbackDoNotMerge = zfnew(ZFListener);
     *_ZFP_ZFThread_mergeCallbackDoNotMerge = ZFCallbackForFunc(_ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge_action);
-    _ZFP_ZFThread_taskDatas = zfAlloc(ZFArrayEditable);
+    _ZFP_ZFThread_taskDatas = zfAlloc(ZFArray);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFThreadTaskRequestDataHolder)
 {

@@ -126,7 +126,7 @@ protected:
 private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         { // auto scroll x
             zfblockedAlloc(ZFUIKit_test_SettingData, setting);

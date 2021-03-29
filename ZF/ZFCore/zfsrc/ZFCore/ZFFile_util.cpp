@@ -599,53 +599,66 @@ public:
     }
 
 public:
-    ZFMETHOD_INLINE_2(zfindex, onInput,
-                      ZFMP_IN(void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        if(buf == zfnull)
-        {
-            return this->fileSize - this->inputIndex;
-        }
-        else
-        {
-            ZFFileFileSeek(this->token, this->inputIndex);
-            zfindex read = ZFFileFileRead(this->token, buf, zfmMin(count, this->fileSize - this->inputIndex));
-            this->inputIndex += read;
-            return read;
-        }
-    }
-    ZFMETHOD_INLINE_2(zfindex, onOutput,
-                      ZFMP_IN(const void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        ZFFileFileSeek(this->token, this->outputIndex);
-        zfindex written = ZFFileFileWrite(this->token, buf, count);
-        this->outputIndex += written;
-        if(this->outputIndex > this->fileSize)
-        {
-            this->fileSize = this->outputIndex;
-        }
-        return written;
-    }
+    ZFMETHOD_DECLARE_2(zfindex, onInput,
+                       ZFMP_IN(void *, buf),
+                       ZFMP_IN(zfindex, count))
+    ZFMETHOD_DECLARE_2(zfindex, onOutput,
+                       ZFMP_IN(const void *, buf),
+                       ZFMP_IN(zfindex, count))
 
     // input IO
-    ZFMETHOD_INLINE_2(zfbool, ioSeek,
-                      ZFMP_IN(zfindex, byteSize),
-                      ZFMP_IN(ZFSeekPos, pos))
-    {
-        this->inputIndex = ZFIOCallbackCalcFSeek(0, this->fileSize, this->inputIndex, byteSize, pos);
-        return zftrue;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioTell)
-    {
-        return this->inputIndex;
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioSize)
-    {
-        return this->fileSize;
-    }
+    ZFMETHOD_DECLARE_2(zfbool, ioSeek,
+                       ZFMP_IN(zfindex, byteSize),
+                       ZFMP_IN(ZFSeekPos, pos))
+    ZFMETHOD_DECLARE_0(zfindex, ioTell)
+    ZFMETHOD_DECLARE_0(zfindex, ioSize)
 };
+ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate, zfindex, onInput,
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    if(buf == zfnull)
+    {
+        return this->fileSize - this->inputIndex;
+    }
+    else
+    {
+        ZFFileFileSeek(this->token, this->inputIndex);
+        zfindex read = ZFFileFileRead(this->token, buf, zfmMin(count, this->fileSize - this->inputIndex));
+        this->inputIndex += read;
+        return read;
+    }
+}
+ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate, zfindex, onOutput,
+                  ZFMP_IN(const void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    ZFFileFileSeek(this->token, this->outputIndex);
+    zfindex written = ZFFileFileWrite(this->token, buf, count);
+    this->outputIndex += written;
+    if(this->outputIndex > this->fileSize)
+    {
+        this->fileSize = this->outputIndex;
+    }
+    return written;
+}
+
+// input IO
+ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate, zfbool, ioSeek,
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN(ZFSeekPos, pos))
+{
+    this->inputIndex = ZFIOCallbackCalcFSeek(0, this->fileSize, this->inputIndex, byteSize, pos);
+    return zftrue;
+}
+ZFMETHOD_DEFINE_0(_ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate, zfindex, ioTell)
+{
+    return this->inputIndex;
+}
+ZFMETHOD_DEFINE_0(_ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate, zfindex, ioSize)
+{
+    return this->fileSize;
+}
 // output IO
 ZFMETHOD_DEFINE_2(_ZFP_ZFIOBufferedCallbackUsingTmpFileOutputIOOwner, zfbool, ioSeek,
                   ZFMP_IN(zfindex, byteSize),

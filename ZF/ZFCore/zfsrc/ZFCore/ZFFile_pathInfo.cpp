@@ -583,26 +583,14 @@ public:
         return (this->token != ZFTokenInvalid());
     }
 
-    ZFMETHOD_INLINE_2(zfindex, onInput,
-                      ZFMP_IN(void *, buf),
-                      ZFMP_IN(zfindex, count))
-    {
-        return this->impl->callbackRead(this->token, buf, count);
-    }
-    ZFMETHOD_INLINE_2(zfbool, ioSeek,
-                      ZFMP_IN(zfindex, byteSize),
-                      ZFMP_IN(ZFSeekPos, pos))
-    {
-        return this->impl->callbackSeek(this->token, byteSize, pos);
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioTell)
-    {
-        return this->impl->callbackTell(this->token);
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioSize)
-    {
-        return this->impl->callbackSize(this->token) - this->impl->callbackTell(this->token);
-    }
+    ZFMETHOD_DECLARE_2(zfindex, onInput,
+                       ZFMP_IN(void *, buf),
+                       ZFMP_IN(zfindex, count))
+    ZFMETHOD_DECLARE_2(zfbool, ioSeek,
+                       ZFMP_IN(zfindex, byteSize),
+                       ZFMP_IN(ZFSeekPos, pos))
+    ZFMETHOD_DECLARE_0(zfindex, ioTell)
+    ZFMETHOD_DECLARE_0(zfindex, ioSize)
 
 private:
     const ZFFilePathInfoData *impl;
@@ -614,6 +602,26 @@ protected:
     {
     }
 };
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFInputForPathInfoOwner, zfindex, onInput,
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, count))
+{
+    return this->impl->callbackRead(this->token, buf, count);
+}
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFInputForPathInfoOwner, zfbool, ioSeek,
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN(ZFSeekPos, pos))
+{
+    return this->impl->callbackSeek(this->token, byteSize, pos);
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFInputForPathInfoOwner, zfindex, ioTell)
+{
+    return this->impl->callbackTell(this->token);
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFInputForPathInfoOwner, zfindex, ioSize)
+{
+    return this->impl->callbackSize(this->token) - this->impl->callbackTell(this->token);
+}
 ZFMETHOD_FUNC_DEFINE_2(ZFInput, ZFInputForPathInfo,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read))
@@ -785,26 +793,14 @@ public:
         return (this->token != ZFTokenInvalid());
     }
 
-    ZFMETHOD_INLINE_2(zfindex, onOutput,
-                      ZFMP_IN(const void *, s),
-                      ZFMP_IN(zfindex, count))
-    {
-        return this->impl->callbackWrite(this->token, s, count);
-    }
-    ZFMETHOD_INLINE_2(zfbool, ioSeek,
-                      ZFMP_IN(zfindex, byteSize),
-                      ZFMP_IN(ZFSeekPos, pos))
-    {
-        return this->impl->callbackSeek(this->token, byteSize, pos);
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioTell)
-    {
-        return this->impl->callbackTell(this->token);
-    }
-    ZFMETHOD_INLINE_0(zfindex, ioSize)
-    {
-        return this->impl->callbackSize(this->token) - this->impl->callbackTell(this->token);
-    }
+    ZFMETHOD_DECLARE_2(zfindex, onOutput,
+                       ZFMP_IN(const void *, s),
+                       ZFMP_IN(zfindex, count))
+    ZFMETHOD_DECLARE_2(zfbool, ioSeek,
+                       ZFMP_IN(zfindex, byteSize),
+                       ZFMP_IN(ZFSeekPos, pos))
+    ZFMETHOD_DECLARE_0(zfindex, ioTell)
+    ZFMETHOD_DECLARE_0(zfindex, ioSize)
 
 private:
     const ZFFilePathInfoData *impl;
@@ -816,6 +812,26 @@ protected:
     {
     }
 };
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFOutputForPathInfoOwner, zfindex, onOutput,
+                  ZFMP_IN(const void *, s),
+                  ZFMP_IN(zfindex, count))
+{
+    return this->impl->callbackWrite(this->token, s, count);
+}
+ZFMETHOD_DEFINE_2(_ZFP_I_ZFOutputForPathInfoOwner, zfbool, ioSeek,
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN(ZFSeekPos, pos))
+{
+    return this->impl->callbackSeek(this->token, byteSize, pos);
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFOutputForPathInfoOwner, zfindex, ioTell)
+{
+    return this->impl->callbackTell(this->token);
+}
+ZFMETHOD_DEFINE_0(_ZFP_I_ZFOutputForPathInfoOwner, zfindex, ioSize)
+{
+    return this->impl->callbackSize(this->token) - this->impl->callbackTell(this->token);
+}
 ZFMETHOD_FUNC_DEFINE_2(ZFOutput, ZFOutputForPathInfo,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create))

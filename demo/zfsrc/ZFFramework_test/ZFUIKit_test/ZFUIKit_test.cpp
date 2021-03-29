@@ -116,7 +116,7 @@ void ZFUIKit_test_prepareSettingButtonWithTestWindow(ZF_IN ZFUIWindow *window,
     button->layoutParam()->layoutAlign(ZFUIAlign::e_TopInner);
 }
 
-void ZFUIKit_test_prepareSettingForProperty(ZF_IN_OUT ZFArrayEditable *settings,
+void ZFUIKit_test_prepareSettingForProperty(ZF_IN_OUT ZFArray *settings,
                                             ZF_IN ZFObject *obj,
                                             ZF_IN const ZFProperty *property,
                                             ZF_IN const ZFListener &nextCallback,
@@ -146,7 +146,7 @@ void ZFUIKit_test_prepareSettingForProperty(ZF_IN_OUT ZFArrayEditable *settings,
     settings->add(zflineAlloc(ZFUIKit_test_SettingData, buttonTextGetter, buttonClickListener, holder));
 }
 
-void ZFUIKit_test_prepareSettingForBoolProperty(ZF_IN_OUT ZFArrayEditable *settings,
+void ZFUIKit_test_prepareSettingForBoolProperty(ZF_IN_OUT ZFArray *settings,
                                                 ZF_IN ZFObject *obj,
                                                 ZF_IN const ZFProperty *property)
 {
@@ -159,7 +159,7 @@ void ZFUIKit_test_prepareSettingForBoolProperty(ZF_IN_OUT ZFArrayEditable *setti
     ZFUIKit_test_prepareSettingForNormalProperty(settings, obj, zfbool, property, ZFCoreArrayPODCreate(zfbool, value, !value));
 }
 
-void ZFUIKit_test_prepareSettingForLayoutRequest(ZF_IN_OUT ZFArrayEditable *settings,
+void ZFUIKit_test_prepareSettingForLayoutRequest(ZF_IN_OUT ZFArray *settings,
                                                  ZF_IN ZFUIView *view)
 {
     zfCoreAssert(settings != zfnull);
@@ -176,7 +176,7 @@ void ZFUIKit_test_prepareSettingForLayoutRequest(ZF_IN_OUT ZFArrayEditable *sett
     settings->add(zflineAlloc(ZFUIKit_test_SettingData, buttonTextGetter, buttonClickListener, view->objectHolder()));
 }
 
-void ZFUIKit_test_prepareSettingForResetProperty(ZF_IN_OUT ZFArrayEditable *settings,
+void ZFUIKit_test_prepareSettingForResetProperty(ZF_IN_OUT ZFArray *settings,
                                                  ZF_IN ZFObject *obj,
                                                  ZF_IN const ZFCoreArrayPOD<const ZFProperty *> &propertyList)
 {

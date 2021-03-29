@@ -18,30 +18,6 @@ zfclass ZF_ENV_EXPORT ZFMap: zfextends ZFKeyValueContainer
 {
     ZFOBJECT_DECLARE(ZFMap, ZFKeyValueContainer)
 
-protected:
-    zfoverride
-    virtual void copyableOnCopyFrom(ZF_IN ZFObject *anotherObj)
-    {
-        zfsuperI(ZFCopyable)::copyableOnCopyFrom(anotherObj);
-        this->removeAll();
-        this->addFrom(ZFCastZFObjectUnchecked(zfself *, anotherObj));
-    }
-
-protected:
-    /**
-     * @brief init from a existing container
-     */
-    ZFOBJECT_ON_INIT_DECLARE_1(ZFMP_IN(ZFKeyValueContainer *, another))
-
-    zfoverride
-    virtual void objectOnInit(void);
-    zfoverride
-    virtual void objectOnDealloc(void);
-
-public:
-    zfoverride
-    virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj);
-
 public:
     /**
      * @brief return number of content
@@ -111,9 +87,9 @@ public:
     void allKeyT(ZF_IN_OUT ZFCoreArray<T_ZFObject> &ret)
     {
         ret.capacity(ret.count() + this->count());
-        for(zfiterator it = this->iterator(); this->iteratorIsValid(it); )
+        for(zfiterator it = this->iterator(); this->iteratorValid(it); this->iteratorNext(it))
         {
-            ret.add(this->iteratorNextKey(it)->to<T_ZFObject *>());
+            ret.add(this->iteratorPair(it).key->to<T_ZFObject *>());
         }
     }
     /** @brief see #allKey */
@@ -130,9 +106,9 @@ public:
     void allValueT(ZF_IN_OUT ZFCoreArray<T_ZFObject> &ret)
     {
         ret.capacity(ret.count() + this->count());
-        for(zfiterator it = this->iterator(); this->iteratorIsValid(it); )
+        for(zfiterator it = this->iterator(); this->iteratorValid(it); this->iteratorNext(it))
         {
-            ret.add(this->iteratorNextValue(it)->to<T_ZFObject *>());
+            ret.add(this->iteratorValue(it)->to<T_ZFObject *>());
         }
     }
     /** @brief see #allValue */
@@ -144,11 +120,12 @@ public:
         return ret;
     }
 
-protected:
+public:
     /**
      * @brief add data from another container
      */
-    virtual void addFrom(ZF_IN ZFKeyValueContainer *another);
+    ZFMETHOD_DECLARE_1(void, addFrom,
+                       ZFMP_IN(ZFKeyValueContainer *, another))
 
     /**
      * @brief set a key value pair
@@ -158,30 +135,34 @@ protected:
      * null key is not allowed,
      * use null value to remove the pair
      */
-    virtual void set(ZF_IN ZFObject *pKey,
-                     ZF_IN ZFObject *pValue);
+    ZFMETHOD_DECLARE_2(void, set,
+                       ZFMP_IN(ZFObject *, pKey),
+                       ZFMP_IN(ZFObject *, pValue))
 
     /**
      * @brief remove value associated with pKey
      */
-    virtual void remove(ZF_IN ZFObject *pKey);
+    ZFMETHOD_DECLARE_1(void, remove,
+                       ZFMP_IN(ZFObject *, pKey))
     /**
      * @brief remove and return removed value or null if not exist
      *
      * use this method for performance, instead of "get then remove",
      * since the latter one have two search step
      */
-    virtual zfautoObject removeAndGet(ZF_IN ZFObject *pKey);
+    ZFMETHOD_DECLARE_1(zfautoObject, removeAndGet,
+                       ZFMP_IN(ZFObject *, pKey))
     /**
      * @brief remove and get pair
      */
-    virtual ZFKeyValuePairHolder removeAndGetPair(ZF_IN ZFObject *pKey);
+    ZFMETHOD_DECLARE_1(ZFKeyValuePairHolder, removeAndGetPair,
+                       ZFMP_IN(ZFObject *, pKey))
     /**
      * @brief remove all content
      */
-    virtual void removeAll(void);
+    ZFMETHOD_DECLARE_0(void, removeAll)
 
-protected:
+public:
     /**
      * @brief util method to get and cast to desired type
      */
@@ -199,193 +180,61 @@ public:
 
     /** @brief see #zfiterator */
     ZFMETHOD_DECLARE_1(zfiterator, iteratorFind,
-                       ZFMP_IN(ZFObject *, value))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(zfbool, iteratorIsValid,
-                       ZFMP_IN(const zfiterator &, it))
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_2(zfbool, iteratorIsEqual,
-                       ZFMP_IN(const zfiterator &, it0),
-                       ZFMP_IN(const zfiterator &, it1))
-
-protected:
-    /** @brief see #zfiterator */
-    virtual void iteratorValue(ZF_IN_OUT zfiterator &it,
-                               ZF_IN ZFObject *value);
-    /** @brief see #zfiterator */
-    virtual void iteratorRemove(ZF_IN_OUT zfiterator &it);
-
-    /** @brief see #zfiterator */
-    virtual void iteratorAdd(ZF_IN ZFObject *value)
-    {
-        zfCoreCriticalNotSupported();
-    }
-    /** @brief see #zfiterator */
-    virtual void iteratorAdd(ZF_IN ZFObject *value,
-                             ZF_IN_OUT zfiterator &it)
-    {
-        zfCoreCriticalNotSupported();
-    }
-
-    // ============================================================
-    // ZFIterableKeyValue
-public:
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(zfiterator, iteratorForKey,
                        ZFMP_IN(ZFObject *, key))
 
     /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFObject *, iteratorKey,
+    ZFMETHOD_DECLARE_1(zfbool, iteratorValid,
                        ZFMP_IN(const zfiterator &, it))
+    /** @brief see #zfiterator */
+    ZFMETHOD_DECLARE_2(zfbool, iteratorEqual,
+                       ZFMP_IN(const zfiterator &, it0),
+                       ZFMP_IN(const zfiterator &, it1))
+
+    /** @brief see #zfiterator */
+    ZFMETHOD_DECLARE_1(void, iteratorNext,
+                       ZFMP_IN_OUT(zfiterator &, it))
+
+    /** @brief see #zfiterator */
+    ZFMETHOD_DECLARE_1(void, iteratorPrev,
+                       ZFMP_IN_OUT(zfiterator &, it))
 
     /** @brief see #zfiterator */
     ZFMETHOD_DECLARE_1(ZFObject *, iteratorValue,
                        ZFMP_IN(const zfiterator &, it))
 
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorPair,
-                       ZFMP_IN(const zfiterator &, it))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFObject *, iteratorNextKey,
-                       ZFMP_IN_OUT(zfiterator &, it))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFObject *, iteratorNextValue,
-                       ZFMP_IN_OUT(zfiterator &, it))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorNextPair,
-                       ZFMP_IN_OUT(zfiterator &, it))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFObject *, iteratorPrevKey,
-                       ZFMP_IN_OUT(zfiterator &, it))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFObject *, iteratorPrevValue,
-                       ZFMP_IN_OUT(zfiterator &, it))
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorPrevPair,
-                       ZFMP_IN_OUT(zfiterator &, it))
-
-protected:
-    /** @brief see #zfiterator */
-    virtual void iteratorAddKeyValue(ZF_IN ZFObject *key,
-                                     ZF_IN ZFObject *value);
-    /** @brief see #zfiterator */
-    virtual void iteratorAddKeyValue(ZF_IN ZFObject *key,
-                                     ZF_IN ZFObject *value,
-                                     ZF_IN_OUT zfiterator &it);
-
-private:
-    _ZFP_ZFMapPrivate *d;
-};
-
-// ============================================================
-/**
- * @brief editable container
- */
-zfclass ZF_ENV_EXPORT ZFMapEditable : zfextends ZFMap, zfimplements ZFIterableEditable, zfimplements ZFIterableKeyValueEditable
-{
-    ZFOBJECT_DECLARE(ZFMapEditable, ZFMap)
-    ZFIMPLEMENTS_DECLARE(ZFIterableEditable, ZFIterableKeyValueEditable)
-
-public:
-    ZFMETHOD_INLINE_1(void, addFrom,
-                      ZFMP_IN(ZFKeyValueContainer *, another))
-    {
-        zfsuper::addFrom(another);
-    }
-
-    ZFMETHOD_INLINE_2(void, set,
-                      ZFMP_IN(ZFObject *, pKey),
-                      ZFMP_IN(ZFObject *, pValue))
-    {
-        zfsuper::set(pKey, pValue);
-    }
-
-    ZFMETHOD_INLINE_1(void, remove,
-                      ZFMP_IN(ZFObject *, pKey))
-    {
-        zfsuper::remove(pKey);
-    }
-    ZFMETHOD_INLINE_1(zfautoObject, removeAndGet,
-                      ZFMP_IN(ZFObject *, pKey))
-    {
-        return zfsuper::removeAndGet(pKey);
-    }
-    ZFMETHOD_INLINE_1(ZFKeyValuePairHolder, removeAndGetPair,
-                      ZFMP_IN(ZFObject *, pKey))
-    {
-        return zfsuper::removeAndGetPair(pKey);
-    }
-    ZFMETHOD_INLINE_0(void, removeAll)
-    {
-        zfsuper::removeAll();
-    }
-
-public:
-    /**
-     * @brief util method to get and cast to desired type
-     */
-    template<typename T_ZFObject>
-    T_ZFObject removeAndGet(ZF_IN ZFObject *pKey)
-    {
-        return zfsuper::removeAndGet<T_ZFObject>(pKey);
-    }
-
-    // ============================================================
-    // ZFIterable
 public:
     /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_2(void, iteratorValue,
-                      ZFMP_IN_OUT(zfiterator &, it),
-                      ZFMP_IN(ZFObject *, value))
-    {
-        zfsuper::iteratorValue(it, value);
-    }
+    ZFMETHOD_DECLARE_2(void, iteratorValue,
+                       ZFMP_IN_OUT(zfiterator &, it),
+                       ZFMP_IN(ZFObject *, value))
     /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_1(void, iteratorRemove,
-                      ZFMP_IN_OUT(zfiterator &, it))
-    {
-        zfsuper::iteratorRemove(it);
-    }
-
-    /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_1(void, iteratorAdd,
-                      ZFMP_IN(ZFObject *, value))
-    {
-        zfsuper::iteratorAdd(value);
-    }
-    /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_2(void, iteratorAdd,
-                      ZFMP_IN(ZFObject *, value),
-                      ZFMP_IN_OUT(zfiterator &, it))
-    {
-        zfsuper::iteratorAdd(value, it);
-    }
+    ZFMETHOD_DECLARE_1(void, iteratorRemove,
+                       ZFMP_IN_OUT(zfiterator &, it))
 
     // ============================================================
     // ZFIterableKeyValue
 public:
     /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_2(void, iteratorAddKeyValue,
-                      ZFMP_IN(ZFObject *, key),
-                      ZFMP_IN(ZFObject *, value))
-    {
-        zfsuper::iteratorAddKeyValue(key, value);
-    }
+    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorPair,
+                       ZFMP_IN(const zfiterator &, it))
+
     /** @brief see #zfiterator */
-    ZFMETHOD_INLINE_3(void, iteratorAddKeyValue,
-                      ZFMP_IN(ZFObject *, key),
-                      ZFMP_IN(ZFObject *, value),
-                      ZFMP_IN_OUT(zfiterator &, it))
-    {
-        zfsuper::iteratorAddKeyValue(key, value, it);
-    }
+    ZFMETHOD_DECLARE_2(void, iteratorAdd,
+                       ZFMP_IN(ZFObject *, key),
+                       ZFMP_IN(ZFObject *, value))
+
+protected:
+    /**
+     * @brief init from a existing container
+     */
+    ZFOBJECT_ON_INIT_DECLARE_1(ZFMP_IN(ZFKeyValueContainer *, another))
+    zfoverride
+    virtual void objectOnInit(void);
+    zfoverride
+    virtual void objectOnDealloc(void);
+
+private:
+    _ZFP_ZFMapPrivate *d;
 };
 
 ZF_NAMESPACE_GLOBAL_END

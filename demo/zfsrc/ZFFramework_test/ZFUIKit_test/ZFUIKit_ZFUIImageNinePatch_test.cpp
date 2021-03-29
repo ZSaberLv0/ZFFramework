@@ -31,7 +31,7 @@ private:
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIImageView *imageView)
     {
-        zfblockedAlloc(ZFArrayEditable, settings);
+        zfblockedAlloc(ZFArray, settings);
 
         { // wrap or fill
             zfblockedAlloc(ZFUIKit_test_SettingData, setting);

@@ -82,7 +82,7 @@ public:
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIButtonGroupTypeEnum, buttonGroupType)
 
 private:
-    ZFPROPERTY_RETAIN_WITH_INIT(ZFArrayEditable *, _ZFP_ZFUIButtonGroup_buttons, zflineAlloc(ZFArrayEditable))
+    ZFPROPERTY_RETAIN_WITH_INIT(ZFArray *, _ZFP_ZFUIButtonGroup_buttons, zflineAlloc(ZFArray))
 public:
     /**
      * @brief button count

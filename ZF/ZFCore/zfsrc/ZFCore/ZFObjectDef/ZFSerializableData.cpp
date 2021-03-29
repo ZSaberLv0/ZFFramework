@@ -458,7 +458,7 @@ zfbool ZFSerializableData::attributeIteratorIsValid(ZF_IN const zfiterator &it) 
 zfbool ZFSerializableData::attributeIteratorIsEqual(ZF_IN const zfiterator &it0,
                                                     ZF_IN const zfiterator &it1) const
 {
-    return zfiterator::iteratorIsEqual<_ZFP_ZFSerializableDataAttributeMapType::iterator *>(it0, it1);
+    return zfiterator::iteratorEqual<_ZFP_ZFSerializableDataAttributeMapType::iterator *>(it0, it1);
 }
 void ZFSerializableData::attributeIteratorValue(ZF_IN_OUT zfiterator &it,
                                                 ZF_IN const zfchar *value)
