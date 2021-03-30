@@ -48,6 +48,7 @@ zfclassNotPOD _ZFP_ZFUIImagePrivate
 public:
     ZFUIImage *pimplOwner;
     void *nativeImage;
+    zffloat imageScaleFixed;
     ZFUISize imageSizeFixed;
     ZFUISize imageSize;
 
@@ -58,10 +59,11 @@ public:
 public:
     void imageSizeUpdate(void)
     {
+        this->imageScaleFixed = this->pimplOwner->imageScale() * ZFUIGlobalStyle::DefaultStyle()->imageScale();
         if(this->nativeImage != zfnull)
         {
             this->imageSizeFixed = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageSize(this->nativeImage);
-            this->imageSize = ZFUISizeApplyScaleReversely(this->imageSizeFixed, this->pimplOwner->imageScaleFixed());
+            this->imageSize = ZFUISizeApplyScaleReversely(this->imageSizeFixed, this->imageScaleFixed);
         }
         else
         {
@@ -101,6 +103,7 @@ public:
     _ZFP_ZFUIImagePrivate(void)
     : pimplOwner(zfnull)
     , nativeImage(zfnull)
+    , imageScaleFixed(ZFUIGlobalStyle::DefaultStyle()->imageScale())
     , imageSizeFixed(ZFUISizeZero())
     , imageSize(ZFUISizeZero())
     , serializableType(zfnull)
@@ -314,9 +317,9 @@ static ZFLISTENER_PROTOTYPE_EXPAND(globalImageScaleOnChange)
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIImageScaleChangeListenerHolder)
 
-ZFMETHOD_DEFINE_0(ZFUIImage, zffloat, imageScaleFixed)
+ZFMETHOD_DEFINE_0(ZFUIImage, zffloat const &, imageScaleFixed)
 {
-    return (this->imageScale() * ZFUIGlobalStyle::DefaultStyle()->imageScale());
+    return d->imageScaleFixed;
 }
 
 ZFMETHOD_DEFINE_0(ZFUIImage, const ZFUISize &, imageSize)

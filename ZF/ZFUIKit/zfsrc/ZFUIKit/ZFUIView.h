@@ -807,10 +807,11 @@ public:
     /**
      * @brief util method for #childAdd
      */
-    ZFMETHOD_DECLARE_3(void, childAdd,
+    ZFMETHOD_DECLARE_4(void, childAdd,
                        ZFMP_IN(ZFUIView *, view),
                        ZFMP_IN(const ZFUISizeParam &, sizeParam),
-                       ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner))
+                       ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner),
+                       ZFMP_IN_OPT(ZFUIMargin const &, layoutMargin, ZFUIMarginZero()))
     /**
      * @brief remove view or do nothing if view isn't added to this view
      */

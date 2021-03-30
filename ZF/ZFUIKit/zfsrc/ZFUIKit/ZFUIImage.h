@@ -150,7 +150,7 @@ public:
      *
      * ensured to be (#imageScale * #ZFUIGlobalStyle::imageScale)
      */
-    ZFMETHOD_DECLARE_0(zffloat, imageScaleFixed)
+    ZFMETHOD_DECLARE_0(zffloat const &, imageScaleFixed)
 
     /**
      * @brief get size of the image

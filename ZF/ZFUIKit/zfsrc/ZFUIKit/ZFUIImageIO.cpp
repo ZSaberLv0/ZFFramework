@@ -117,29 +117,31 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageScale,
 // ZFUIImageLoadInFrame
 static zfbool _ZFP_ZFUIImageLoadInFrame(ZF_IN_OUT ZFUIImage *ret,
                                         ZF_IN ZFUIImage *image,
-                                        ZF_IN const ZFUIRect &frameInImage)
+                                        ZF_IN const ZFUIRect &framePixel)
 {
-    if(ret == zfnull
-        || image == zfnull
-        || frameInImage.x < 0 || frameInImage.x >= image->imageSize().width
-        || frameInImage.y < 0 || frameInImage.y >= image->imageSize().height
-    ) {
+    if(ret == zfnull || image == zfnull)
+    {
         return zffalse;
     }
-    ZFUIRect frame = frameInImage;
-    if(frame.width <= 0 || frame.x + frame.width > image->imageSize().width)
+    const ZFUISize &imageSizeFixed = image->imageSizeFixed();
+    if(framePixel.x < 0 || framePixel.x >= imageSizeFixed.width
+        || framePixel.y < 0 || framePixel.y >= imageSizeFixed.height)
     {
-        frame.width = image->imageSize().width - frame.x;
+        return zffalse;
     }
-    if(frame.height <= 0 || frame.y + frame.height > image->imageSize().height)
+    ZFUIRect frame = framePixel;
+    if(frame.width <= 0 || frame.x + frame.width > imageSizeFixed.width)
     {
-        frame.height = image->imageSize().height - frame.y;
+        frame.width = imageSizeFixed.width - frame.x;
     }
-    zffloat scale = image->imageScaleFixed();
+    if(frame.height <= 0 || frame.y + frame.height > imageSizeFixed.height)
+    {
+        frame.height = imageSizeFixed.height - frame.y;
+    }
     void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImageIO)->imageLoadInFrame(
-        scale,
+        image->imageScaleFixed(),
         image->nativeImage(),
-        ZFUIRectApplyScale(frameInImage, scale));
+        framePixel);
     ret->nativeImage(nativeImage);
     ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
 
@@ -175,7 +177,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ref, ZFUIImageSerializeType_ref)
         return zffalse;
     }
 
-    ZFUIRect frame = ZFUIRectMake(ZFUIPointZero(), ref->imageSize());
+    ZFUIRect frame = ZFUIRectMake(ZFUIPointZero(), ref->imageSizeFixed());
     const ZFSerializableData *frameData = ZFSerializableUtil::checkElementByCategory(
         serializableData, ZFSerializableKeyword_ZFUIImageIO_ref_frame);
     if(frameData == zfnull || !ZFUIRectFromData(frame, *frameData, outErrorHint, outErrorPos))
@@ -188,10 +190,10 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ref, ZFUIImageSerializeType_ref)
 
 ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadInFrame,
                        ZFMP_IN(ZFUIImage *, image),
-                       ZFMP_IN(const ZFUIRect &, frameInImage))
+                       ZFMP_IN(const ZFUIRect &, framePixel))
 {
     zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
-    if(_ZFP_ZFUIImageLoadInFrame(ret, image, frameInImage))
+    if(_ZFP_ZFUIImageLoadInFrame(ret, image, framePixel))
     {
         return ret;
     }

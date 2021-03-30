@@ -168,45 +168,6 @@ private:
     _ZFP_ZFTimerPrivate *d;
 };
 
-// ============================================================
-/**
- * @brief global timer util
- *
- * you can attach any callbacks to same global timer instance,
- * the global timer would be running if more than one timer callback attached,
- * and would be stopped when all of them detached\n
- * you can change timer interval by #ZFGlobalTimerInterval even when it's running
- */
-ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFGlobalTimerAttach,
-                        ZFMP_IN(const ZFListener &, timerCallback),
-                        ZFMP_IN_OPT(ZFObject *, timerCallbackUserData, zfnull),
-                        ZFMP_IN_OPT(ZFObject *, owner, zfnull),
-                        ZFMP_IN_OPT(zfbool, autoRemoveAfterActivate, zffalse),
-                        ZFMP_IN_OPT(ZFLevel, observerLevel, ZFLevelAppNormal))
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_2(void, ZFGlobalTimerDetach,
-                        ZFMP_IN(const ZFListener &, timerCallback),
-                        ZFMP_IN_OPT(ZFObject *, timerCallbackUserData, zfnull))
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerDetachByTaskId,
-                        ZFMP_IN(zfidentity, taskId))
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerDetachByOwner,
-                        ZFMP_IN(ZFObject *, owner))
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_0(void, ZFGlobalTimerDetachAll)
-
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_0(zftimet const &, ZFGlobalTimerIntervalDefault)
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerIntervalDefault,
-                        ZFMP_IN(zftimet const &, timerIntervalDefault))
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_0(zftimet const &, ZFGlobalTimerInterval)
-/** @brief see #ZFGlobalTimerAttach */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFGlobalTimerInterval,
-                        ZFMP_IN(zftimet const &, timerInterval))
-
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFTimer_h_
 

@@ -1844,15 +1844,17 @@ ZFMETHOD_DEFINE_3(ZFUIView, void, childAdd,
 {
     d->childAdd(this, ZFUIViewChildLayer::e_Normal, d->layerNormal, view, layoutParam, atIndex);
 }
-ZFMETHOD_DEFINE_3(ZFUIView, void, childAdd,
+ZFMETHOD_DEFINE_4(ZFUIView, void, childAdd,
                   ZFMP_IN(ZFUIView *, view),
                   ZFMP_IN(const ZFUISizeParam &, sizeParam),
-                  ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner))
+                  ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner),
+                  ZFMP_IN_OPT(ZFUIMargin const &, layoutMargin, ZFUIMarginZero()))
 {
     this->childAdd(view);
     ZFUILayoutParam *lp = view->layoutParam();
     lp->sizeParam(sizeParam);
     lp->layoutAlign(layoutAlign);
+    lp->layoutMargin(layoutMargin);
 }
 ZFMETHOD_DEFINE_1(ZFUIView, void, childRemove,
                   ZFMP_IN(ZFUIView *, view))
