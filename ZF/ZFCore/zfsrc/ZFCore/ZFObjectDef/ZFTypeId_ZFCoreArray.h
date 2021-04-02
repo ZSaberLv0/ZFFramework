@@ -75,6 +75,7 @@ protected:
     /** @brief init with value */
     void objectOnInit(ZF_IN const ZFCoreArray<zfautoObject> &v)
     {
+        this->objectOnInit();
         this->zfv.copyFrom(v);
     }
 
@@ -513,7 +514,7 @@ zfbool ZFCoreArrayToString(ZF_OUT zfstring &s,
     {
         if(i != 0)
         {
-            s += ", ";
+            s += ",";
         }
 
         zfstring elementString;

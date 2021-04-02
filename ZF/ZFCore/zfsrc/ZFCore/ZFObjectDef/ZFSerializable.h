@@ -117,10 +117,6 @@ zfclassFwd _ZFP_I_ZFSerializablePropertyTypeHolder;
  * -  "category":
  *   if exist this attribute,
  *   ZFSerializable would ignore this node and leave it to subclass to decode
- * -  "editMode":
- *   if exist this attribute,
- *   ZFSerializable would ignore this node and store it as raw data for future process,
- *   see #ZFSerializable::editModeData
  *
  * \n
  * a simplest way to implement ZFSerializable is:
@@ -136,6 +132,7 @@ zfclassFwd _ZFP_I_ZFSerializablePropertyTypeHolder;
  *   -  #serializableOnSerializeFromData / #serializableOnSerializeToData
  * -  take care of referencedOwnerOrNull while serialize to data,
  *   where you should implement reference logic for your custom serialize step\n
+ *   see #ZFStyleSet for more info\n
  *   by default, serializable property and embeded property's reference logic
  *   would be done by ZFSerializable automatically,
  *   but you should take care of category's reference logic manually
@@ -157,48 +154,6 @@ zfclassFwd _ZFP_I_ZFSerializablePropertyTypeHolder;
 zfinterface ZF_ENV_EXPORT ZFSerializable : zfextends ZFInterface
 {
     ZFINTERFACE_DECLARE(ZFSerializable, ZFInterface)
-
-    // ============================================================
-    // edit mode
-public:
-    /** @brief see #ZFSerializable::editModeData */
-    zfclassLikePOD ZF_ENV_EXPORT EditModeData
-    {
-    public:
-        /** @brief see #ZFSerializable::editModeData */
-        const ZFClass *wrappedClass;
-    };
-    /**
-     * @brief internal use only
-     *
-     * map of <classNameFull, #ZFSerializable::EditModeData>\n
-     * used to store class data that currently not registered,
-     * so that it can be serialized to data without data loss\n
-     * \n
-     * for normal serialize logic, we will reflect class type by #ZFClass::classForName,
-     * so if the class is not registered currently,
-     * we are unable to find it,
-     * such as some plugin designed module,
-     * can't be found until plugin has been loaded\n
-     * to resolve the problem, we introduced this editMode,
-     * which can map unknown type to existing class,
-     * so that unknown type's serialize step can be done normally
-     * with the logic of existing class\n
-     * \n
-     * edit mode data stores unresolved class name and serializable data to
-     * #editModeWrappedClassName and #editModeWrappedElementDatas,
-     * which should be resolved later
-     */
-    static ZFCoreMap &editModeData(void);
-    /** @brief see #ZFSerializable::editModeData */
-    static zfbool &editMode(void);
-public:
-    /** @brief see #ZFSerializable::editModeData */
-    virtual const zfchar *editModeWrappedClassName(void);
-    /** @brief see #ZFSerializable::editModeData */
-    virtual void editModeWrappedClassName(ZF_IN const zfchar *value);
-    /** @brief see #ZFSerializable::editModeData */
-    virtual ZFCoreArray<ZFSerializableData> &editModeWrappedElementDatas(void);
 
     // ============================================================
 public:
@@ -440,17 +395,6 @@ public:
         this->serializableInfoT(ret);
         return ret;
     }
-
-public:
-    /**
-     * @brief internal use only
-     *
-     * used to copy serializable info from another serializable,
-     * so that this object can serialize to data with the same behavior
-     * of the source serializable object\n
-     * the anotherSerializable must be same as this object
-     */
-    virtual void serializableCopyInfoFrom(ZF_IN ZFSerializable *anotherSerializable);
 };
 
 // ============================================================

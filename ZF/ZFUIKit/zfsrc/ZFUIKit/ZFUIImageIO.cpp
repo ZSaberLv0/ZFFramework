@@ -44,14 +44,25 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromFile,
 {
     zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     ZFUIImage *image = ret;
-    if(image != zfnull && inputCallback.callbackIsValid())
+    if(image == zfnull || !inputCallback.callbackIsValid())
     {
-        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(inputCallback);
-        if(nativeImage != zfnull)
+        return zfnull;
+    }
+    void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(inputCallback);
+    if(nativeImage == zfnull)
+    {
+        return zfnull;
+    }
+    image->nativeImage(nativeImage);
+    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+
+    if(!inputCallback.callbackSerializeCustomDisabled())
+    {
+        ZFSerializableData inputData;
+        if(ZFCallbackToData(inputData, inputCallback))
         {
-            image->nativeImage(nativeImage);
-            ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
-            return ret;
+            image->imageSerializableType(ZFUIImageSerializeType_input);
+            image->imageSerializableData(&inputData);
         }
     }
     return ret;

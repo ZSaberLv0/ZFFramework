@@ -28,8 +28,7 @@ inline ZFObject *ZFObjectToObject(ZF_IN T_ZFObject *obj)
  *   return #ZFCompareUncomparable if one null but the other is not null,
  *   return compare result by #ZFObject::objectCompare if both not null
  */
-template<typename T_ZFObject0, typename T_ZFObject1>
-inline ZFCompareResult ZFObjectCompare(ZF_IN T_ZFObject0 * const &e0, ZF_IN T_ZFObject1 * const &e1)
+inline ZFCompareResult ZFObjectCompare(ZF_IN ZFObject *const &e0, ZF_IN ZFObject *const &e1)
 {
     if(e0 == zfnull)
     {
@@ -54,10 +53,6 @@ inline ZFCompareResult ZFObjectCompare(ZF_IN T_ZFObject0 * const &e0, ZF_IN T_ZF
         }
     }
 }
-/**
- * @brief default comparer for ZFObject types, compare by #ZFObjectCompare, see #ZFComparer
- */
-#define ZFComparerForZFObject ZFObjectCompare
 
 // ============================================================
 /** @brief see #ZFObjectInfoOfInstance */
@@ -127,7 +122,7 @@ zfclassNotPOD ZFComparerDefaultHolder<T0, T1
 public:
     static ZFCompareResult comparer(ZF_IN T0 const &e0, ZF_IN T1 const &e1)
     {
-        return ZFComparerForZFObject(e0, e1);
+        return ZFObjectCompare(ZFObjectToObject(e0), ZFObjectToObject(e1));
     }
 };
 /** @endcond */
@@ -150,6 +145,18 @@ public:
 ZFCOMPARER_DEFAULT_DECLARE(zfautoObject, zfautoObject, {
         return ZFObjectCompare(v0.toObject(), v1.toObject());
     })
+
+/** @cond ZFPrivateDoc */
+template<typename T_ZFObject0, typename T_ZFObject1>
+zfclassNotPOD ZFComparerDefaultHolder<zfautoObjectT<T_ZFObject0>, zfautoObjectT<T_ZFObject1> >
+{
+public:
+    static ZFCompareResult comparer(ZF_IN zfautoObjectT<T_ZFObject0> const &v0, ZF_IN zfautoObjectT<T_ZFObject1> const &v1)
+    {
+        return ZFObjectCompare(v0.toObject(), v1.toObject());
+    }
+};
+/** @endcond */
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFObjectUtil_h_

@@ -387,12 +387,35 @@ extern ZF_ENV_EXPORT void ZFStyleDefaultApplyAutoCopy(ZF_IN ZFStyleable *style);
  * \n
  * the style logic can also be used during serialization,
  * when serializable contains key #ZFSerializableKeyword_styleKey,
- * the style would be copied during serialization, example:
+ * the style would be copied during serialization,
+ * and restored when serialized back to data,
+ * a typical workflow:
  * @code
- *   <MyStyleObject styleKey="MyStyle/MyStyleObject" />
+ *   // original src data
+ *   <MyStyleObject styleKey="MyStyle/MyStyleObject" overridedProp="overridedValue" />
+ *
+ *   // serialize from data
+ *   // step 1: load style and copy style to target object
+ *   <MyStyleObject someProp="styledValue" overridedProp="styledValue" />
+ *   // step 2: serialize as normal
+ *   <MyStyleObject someProp="styledValue" overridedProp="overridedValue" />
+ *
+ *   // serialize back to data
+ *   // step 1: serialize as normal
+ *   <MyStyleObject someProp="styledValue" overridedProp="overridedValue" />
+ *   // step 2: load referenced style object if exists
+ *   <ReferencedStyle someProp="styledValue" overridedProp="styledValue" />
+ *   // step 3: compare the target and referenced style object,
+ *   //         remove duplicate attributes
+ *   <MyStyleObject overridedProp="overridedValue" />
+ *   // step 4: finally restore the styleKey
+ *   <MyStyleObject styleKey="MyStyle/MyStyleObject" overridedProp="overridedValue" />
+ *
+ *   // note the final data is identical with original src data,
+ *   // and impl only needs to take care of referencedOwnerOrNull
+ *   // during #ZFSerializable::serializeToData
  * @endcode
- * during serialization, the styleKey would be stored as #ZFStyleable::styleKey,
- * causing the referenced style copied to the target object\n
+ * \n
  * \n
  * by default, all #ZFStyleable supports style logic,
  * for non-ZFStyleable types, #zfint for example,

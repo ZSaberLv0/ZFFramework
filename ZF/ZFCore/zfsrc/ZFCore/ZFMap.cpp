@@ -42,10 +42,7 @@ ZFOBJECT_ON_INIT_DEFINE_1(ZFMap,
                           ZFMP_IN(ZFKeyValueContainer *, another))
 {
     this->objectOnInit();
-    if(another != zfnull)
-    {
-        zfself::addFrom(another);
-    }
+    zfself::addFrom(another);
 }
 void ZFMap::objectOnInit(void)
 {

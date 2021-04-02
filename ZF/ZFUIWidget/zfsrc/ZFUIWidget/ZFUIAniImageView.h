@@ -9,6 +9,75 @@
 #include "ZFUIWidgetDef.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+zfclassFwd _ZFP_ZFUIAniImageDataPrivate;
+/** @brief see #ZFUIAniImageView */
+zffinal zfclass ZF_ENV_EXPORT ZFUIAniImageData : zfextends ZFStyleableObject
+{
+    ZFOBJECT_DECLARE(ZFUIAniImageData, ZFStyleableObject)
+
+public:
+    /**
+     * @brief see #ZFObject::observerNotify
+     *
+     * called when internal data changed by #aniLoad
+     */
+    ZFOBSERVER_EVENT(AniDataOnUpdate)
+
+public:
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_4(zfbool, aniLoad,
+                       ZFMP_IN(ZFUIImage *, frameSrc),
+                       ZFMP_IN(const ZFUISize &, frameSizePixel),
+                       ZFMP_IN_OPT(zfindex, frameCount, zfindexMax()),
+                       ZFMP_IN_OPT(ZFCoreArrayPOD<zftimet> const &, frameDurations, ZFCoreArrayPOD<zftimet>()))
+
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_0(zfautoObjectT<ZFUIImage *> const &, frameSrc)
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_0(ZFUISize const &, frameSizePixel)
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_0(zfindex const &, frameCount)
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<zftimet> const &, frameDurations)
+
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_0(ZFCoreArray<zfautoObjectT<ZFUIImage *> > const &, frameImages)
+    /** @brief see #ZFUIAniImageView */
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<zfuint> const &, frameTimers)
+
+protected:
+    /**
+     * @brief construct by #aniLoad
+     */
+    ZFOBJECT_ON_INIT_DECLARE_4(ZFMP_IN(ZFUIImage *, frameSrc),
+                               ZFMP_IN(const ZFUISize &, frameSizePixel),
+                               ZFMP_IN_OPT(zfindex, frameCount, zfindexMax()),
+                               ZFMP_IN_OPT(ZFCoreArrayPOD<zftimet> const &, frameDurations, ZFCoreArrayPOD<zftimet>()))
+    zfoverride
+    virtual void objectOnInit(void);
+    zfoverride
+    virtual void objectOnDealloc(void);
+    zfoverride
+    virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
+    zfoverride
+    virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj);
+
+    zfoverride
+    virtual void styleableOnCopyFrom(ZF_IN ZFStyleable *anotherStyleable);
+
+    zfoverride
+    virtual zfbool serializableOnSerializeFromData(ZF_IN const ZFSerializableData &serializableData,
+                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
+    zfoverride
+    virtual zfbool serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &serializableData,
+                                                 ZF_IN ZFSerializable *referencedOwnerOrNull,
+                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull);
+
+private:
+    _ZFP_ZFUIAniImageDataPrivate *d;
+};
+
 // ============================================================
 // ZFUIAniImageView
 zfclassFwd _ZFP_ZFUIAniImageViewPrivate;
@@ -18,8 +87,13 @@ zfclassFwd _ZFP_ZFUIAniImageViewPrivate;
  * typical usage:
  * @code
  *   zfblockedAlloc(ZFUIAniImageView, aniImg);
- *   aniImg->aniLoad(srcImg, frameSizePixel, frameCount, frameDurations);
+ *   aniImg->aniLoad(frameSrc, frameSizePixel, frameCount, frameDurations);
  *   aniImg->aniStart();
+ *
+ *   // or, share same aniData
+ *   zfblockedAlloc(ZFUIAniImageView, aniImg2);
+ *   aniImg2->aniData(aniImg->aniData());
+ *   aniImg2->aniStart();
  * @endcode
  *
  * how it works:
@@ -30,13 +104,16 @@ zfclassFwd _ZFP_ZFUIAniImageViewPrivate;
  * serializable data:
  * @code
  *   <ZFUIAniImageView>
- *       <ZFUIImage category="src" // the referenced large image
- *           frameSizePixel="(40,60)" // size of each frame (in pixel)
- *           frameCount="123" // optional, total frame count
- *           frameDurations="[33,1000]" // optional, list of duration of each frame
- *                                      // use prev item if less than frameCount
- *                                      // use ZFGlobalTimerIntervalDefault if not specified
- *           />
+ *       <ZFUIAniImageData name="aniData"
+ *               frameSizePixel="(40,60)" // size of each frame (in pixel)
+ *               frameCount="123" // optional, total frame count
+ *               frameDurations="[33,1000]" // optional, list of duration of each frame
+ *                                          // use prev item if less than frameCount
+ *                                          // use ZFGlobalTimerIntervalDefault if not specified
+ *           >
+ *           <ZFUIImage category="frameSrc" // the referenced large image
+ *               />
+ *       </ZFUIAniImageData>
  *   </ZFUIAniImageView>
  * @endcode
  */
@@ -78,13 +155,23 @@ public:
     // frame control
 public:
     /**
-     * @brief util to load with fixed frameSizePixel
+     * @brief util to load #aniData
      */
     ZFMETHOD_DECLARE_4(zfbool, aniLoad,
-                       ZFMP_IN(ZFUIImage *, src),
+                       ZFMP_IN(ZFUIImage *, frameSrc),
                        ZFMP_IN(const ZFUISize &, frameSizePixel),
-                       ZFMP_IN(zfindex, frameCount),
+                       ZFMP_IN_OPT(zfindex, frameCount, zfindexMax()),
                        ZFMP_IN_OPT(ZFCoreArrayPOD<zftimet> const &, frameDurations, ZFCoreArrayPOD<zftimet>()))
+
+    /**
+     * @brief the animation data, see #ZFUIAniImageView
+     */
+    ZFPROPERTY_RETAIN(ZFUIAniImageData *, aniData)
+
+    /**
+     * @brief true if #aniData is not null and valid
+     */
+    ZFMETHOD_DECLARE_0(zfbool, aniDataValid)
 
 public:
     /** @brief true if #aniStart running */
@@ -145,25 +232,13 @@ protected:
     zfoverride
     virtual void observerOnRemove(ZF_IN zfidentity eventId);
 
-    // ============================================================
-    // frame impl
-public:
-    /** @brief see #ZFUIAniImageView */
-    ZFMETHOD_DECLARE_0(ZFCoreArray<zfautoObjectT<ZFUIImage *> > const &, frameImages)
-    /** @brief see #ZFUIAniImageView */
-    ZFMETHOD_DECLARE_0(ZFUISize const &, frameSizePixel)
-    /** @brief see #ZFUIAniImageView */
-    ZFMETHOD_DECLARE_0(zfindex const &, frameCount)
-    /** @brief see #ZFUIAniImageView */
-    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<zftimet> const &, frameDurations)
-
 protected:
     /**
      * @brief construct by #aniLoad
      */
-    ZFOBJECT_ON_INIT_DECLARE_4(ZFMP_IN(ZFUIImage *, src),
+    ZFOBJECT_ON_INIT_DECLARE_4(ZFMP_IN(ZFUIImage *, frameSrc),
                                ZFMP_IN(const ZFUISize &, frameSizePixel),
-                               ZFMP_IN(zfindex, frameCount),
+                               ZFMP_IN_OPT(zfindex, frameCount, zfindexMax()),
                                ZFMP_IN_OPT(ZFCoreArrayPOD<zftimet> const &, frameDurations, ZFCoreArrayPOD<zftimet>()))
 
     zfoverride
@@ -174,20 +249,8 @@ protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 
-protected:
-    zfoverride
-    virtual void styleableOnCopyFrom(ZF_IN ZFStyleable *anotherStyleable);
     zfoverride
     virtual ZFSerializablePropertyType serializableOnCheckPropertyType(ZF_IN const ZFProperty *property);
-
-    zfoverride
-    virtual zfbool serializableOnSerializeFromData(ZF_IN const ZFSerializableData &serializableData,
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
-    zfoverride
-    virtual zfbool serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &serializableData,
-                                                 ZF_IN ZFSerializable *referencedOwnerOrNull,
-                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull);
 
     zfoverride
     virtual void layoutOnMeasure(ZF_OUT ZFUISize &ret,
@@ -200,7 +263,7 @@ private:
 };
 
 /** @brief keyword for serialize */
-#define ZFSerializableKeyword_ZFUIAniImageView_src "src"
+#define ZFSerializableKeyword_ZFUIAniImageView_frameSrc "frameSrc"
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFUIAniImageView_frameSizePixel "frameSizePixel"
 /** @brief keyword for serialize */

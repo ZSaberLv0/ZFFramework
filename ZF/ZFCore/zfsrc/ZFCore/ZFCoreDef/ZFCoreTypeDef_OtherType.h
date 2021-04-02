@@ -152,51 +152,6 @@ public:
 
 // ============================================================
 /**
- * @brief converter template typedef
- *
- * example:
- * @code
- *   static const zfint *MyConverter0(zfint const &v)
- *   {
- *       return &v;
- *   }
- *   static zfstring MyConverter1(const zfchar * const &v)
- *   {
- *       return zfstring(v);
- *   }
- *
- *   ZFTypeConverter<zfint, const zfint *>::TypeConverter converter0 = MyConverter0;
- *   zfint src0 = ...;
- *   const zfint *dst0 = ...;
- *   dst0 = converter0(src0);
- *
- *   ZFTypeConverter<const zfchar *, zfstring>::TypeConverter converter1 = MyConverter1;
- *   const zfchar *src1 = ...;
- *   zfstring dst0 = ...;
- *   dst1 = converter1(src1);
- * @endcode
- */
-template<typename T_Src, typename T_Dst>
-zfclassNotPOD ZFTypeConverter
-{
-public:
-    /**
-     * @brief see #ZFTypeConverter
-     */
-    typedef T_Dst (*TypeConverter)(ZF_IN T_Src const &);
-};
-
-/**
- * @brief dummy type converter that return the src itself
- */
-template<typename T_Type>
-T_Type ZFTypeConverterDummy(ZF_IN T_Type const &src)
-{
-    return src;
-}
-
-// ============================================================
-/**
  * @brief base type for info getter
  */
 template<typename T_Element>

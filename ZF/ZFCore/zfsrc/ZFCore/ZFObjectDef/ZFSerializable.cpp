@@ -39,58 +39,6 @@ public:
 
 // ============================================================
 // ZFSerializable
-ZFCoreMap &ZFSerializable::editModeData(void)
-{
-    static ZFCoreMap m;
-    return m;
-}
-zfbool &ZFSerializable::editMode(void)
-{
-    static zfbool v = zffalse;
-    return v;
-}
-const zfchar *ZFSerializable::editModeWrappedClassName(void)
-{
-    v_zfstring *d = this->toObject()->objectTag<v_zfstring *>("_ZFP_ZFSerializable_editModeWrappedClassName");
-    if(d != zfnull && !d->zfv.isEmpty())
-    {
-        return d->zfv.cString();
-    }
-    else
-    {
-        return zfnull;
-    }
-}
-void ZFSerializable::editModeWrappedClassName(ZF_IN const zfchar *value)
-{
-    if(zfsIsEmpty(value))
-    {
-        this->toObject()->objectTagRemove("_ZFP_ZFSerializable_editModeWrappedClassName");
-    }
-    else
-    {
-        this->toObject()->objectTag("_ZFP_ZFSerializable_editModeWrappedClassName", zflineAlloc(v_zfstring, value));
-    }
-}
-
-zfclass _ZFP_I_ZFSerializableEditModeWrappedElementDatas : zfextends ZFObject
-{
-    ZFOBJECT_DECLARE(_ZFP_I_ZFSerializableEditModeWrappedElementDatas, ZFObject)
-public:
-    ZFCoreArray<ZFSerializableData> d;
-};
-ZFCoreArray<ZFSerializableData> &ZFSerializable::editModeWrappedElementDatas(void)
-{
-    _ZFP_I_ZFSerializableEditModeWrappedElementDatas *d = this->toObject()->objectTag<_ZFP_I_ZFSerializableEditModeWrappedElementDatas *>("_ZFP_ZFSerializable_editModeWrappedElementDatas");
-    if(d == zfnull)
-    {
-        zfblockedAlloc(_ZFP_I_ZFSerializableEditModeWrappedElementDatas, dTmp);
-        d = dTmp;
-        this->toObject()->objectTag("_ZFP_ZFSerializable_editModeWrappedElementDatas", d);
-    }
-    return d->d;
-}
-
 zfbool ZFSerializable::serializable(void)
 {
     return this->serializableOnCheck();
@@ -113,25 +61,6 @@ zfbool ZFSerializable::serializeFromData(ZF_IN const ZFSerializableData &seriali
                 return zffalse;
             }
             styleable->styleKey(styleKey);
-        }
-    }
-
-    // editMode
-    if(ZFSerializable::editMode())
-    {
-        ZFSerializable::EditModeData *editModeData = ZFSerializable::editModeData().get<ZFSerializable::EditModeData *>(this->editModeWrappedClassName());
-        if(editModeData != zfnull)
-        {
-            ZFCoreArray<ZFSerializableData> &editModeWrappedElementDatas = this->editModeWrappedElementDatas();
-            for(zfindex i = 0; i < serializableData.elementCount(); ++i)
-            {
-                const ZFSerializableData &element = serializableData.elementAtIndex(i);
-                if(element.editMode())
-                {
-                    editModeWrappedElementDatas.add(element.copy());
-                    element.resolveMarkAll();
-                }
-            }
         }
     }
 
@@ -321,23 +250,7 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
         return zffalse;
     }
 
-    if(ZFSerializable::editMode() && this->editModeWrappedClassName() != zfnull)
-    {
-        serializableData.itemClass(this->editModeWrappedClassName());
-    }
-    else
-    {
-        serializableData.itemClass(this->classData()->classNameFull());
-    }
-
-    if(ZFSerializable::editMode())
-    {
-        ZFCoreArray<ZFSerializableData> &editModeWrappedElementDatas = this->editModeWrappedElementDatas();
-        for(zfindex i = 0; i < editModeWrappedElementDatas.count(); ++i)
-        {
-            serializableData.elementAdd(editModeWrappedElementDatas.get(i));
-        }
-    }
+    serializableData.itemClass(this->classData()->classNameFull());
 
     // dynamic
     const ZFMethod *dynamicMethod = this->classData()->methodForName("serializableOnSerializeToData");
@@ -697,31 +610,6 @@ void ZFSerializable::serializableInfoT(ZF_IN_OUT zfstring &ret)
     }
 }
 
-void ZFSerializable::serializableCopyInfoFrom(ZF_IN ZFSerializable *anotherSerializable)
-{
-    if(anotherSerializable == zfnull)
-    {
-        return ;
-    }
-
-    this->editModeWrappedClassName(anotherSerializable->editModeWrappedClassName());
-    _ZFP_I_ZFSerializableEditModeWrappedElementDatas *d = anotherSerializable->toObject()->objectTag<_ZFP_I_ZFSerializableEditModeWrappedElementDatas *>("_ZFP_ZFSerializable_editModeWrappedElementDatas");
-    if(d == zfnull)
-    {
-        this->toObject()->objectTag("_ZFP_ZFSerializable_editModeWrappedElementDatas", zfnull);
-    }
-    else
-    {
-        ZFCoreArray<ZFSerializableData> &editModeWrappedElementDatas = this->editModeWrappedElementDatas();
-        editModeWrappedElementDatas.removeAll();
-        editModeWrappedElementDatas.capacity(d->d.capacity());
-        for(zfindex i = 0; i < d->d.count(); ++i)
-        {
-            editModeWrappedElementDatas.add(d->d[i].copy());
-        }
-    }
-}
-
 // ============================================================
 zfbool ZFObjectIsSerializable(ZF_IN ZFObject *obj)
 {
@@ -756,18 +644,8 @@ zfbool ZFObjectFromData(ZF_OUT zfautoObject &result,
     }
 
     const ZFClass *cls = ZFClass::classForName(serializableClass);
-    zfbool editModeWrapped = zffalse;
     if(cls == zfnull)
     {
-        if(ZFSerializable::editMode())
-        {
-            ZFSerializable::EditModeData *editModeData = ZFSerializable::editModeData().get<ZFSerializable::EditModeData *>(serializableClass);
-            if(editModeData != zfnull)
-            {
-                editModeWrapped = zftrue;
-                cls = editModeData->wrappedClass;
-            }
-        }
         if(cls == zfnull)
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
@@ -795,10 +673,6 @@ zfbool ZFObjectFromData(ZF_OUT zfautoObject &result,
             "object %s not serializable",
             ZFObjectInfoOfInstance(obj.toObject()).cString());
         return zffalse;
-    }
-    if(editModeWrapped)
-    {
-        tmp->editModeWrappedClassName(serializableClass);
     }
     if(!tmp->serializeFromData(serializableData, outErrorHint, outErrorPos))
     {
@@ -931,7 +805,6 @@ ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableGet
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, ZFCoreArrayPOD<const ZFProperty *>, serializableGetAllSerializableEmbededProperty)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableInfoT, ZFMP_IN_OUT(zfstring &, ret))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, zfstring, serializableInfo)
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableCopyInfoFrom, ZFMP_IN(ZFSerializable *, anotherSerializable))
 
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zfbool, ZFObjectIsSerializable, ZFMP_IN(ZFObject *, obj))
 

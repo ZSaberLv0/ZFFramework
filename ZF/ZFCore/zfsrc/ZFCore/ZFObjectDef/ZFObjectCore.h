@@ -678,6 +678,10 @@ public:
     void _ZFP_ZFObjectUnlock(void);
     zfbool _ZFP_ZFObjectTryLock(void);
 
+    inline void _ZFP_ZFObject_objectOnInit(void)
+    {
+        this->objectOnInit();
+    }
     ZFObject *_ZFP_ZFObjectCheckOnInit(void);
     void _ZFP_ZFObjectCheckRelease(void);
 
@@ -707,8 +711,9 @@ protected:
      *       // custom init entry
      *       virtual void objectOnInit(Params...)
      *       {
-     *           this->objectOnInit(); // call objectOnInit with no params first
-     *           // your init steps
+     *           this->objectOnInit();
+     *           // your extra init steps
+     *           ...
      *       }
      *   };
      * @endcode

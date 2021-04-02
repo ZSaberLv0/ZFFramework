@@ -50,11 +50,6 @@ extern ZF_ENV_EXPORT zfbool ZFSerializableDataResolveCheckEnable;
  */
 #define ZFSerializableKeyword_category "category"
 /**
- * @brief keyword for #ZFSerializable's to hold whether it's under editMode,
- *   see #ZFSerializable::editModeData
- */
-#define ZFSerializableKeyword_editMode "editMode"
-/**
  * @brief used to declare a null object
  *
  * @code
@@ -186,16 +181,6 @@ public:
     inline const zfchar *category(void) const
     {
         return this->attributeForName(ZFSerializableKeyword_category);
-    }
-    /** @brief see #ZFSerializable, same as set value of attribute "editMode" */
-    inline void editMode(ZF_IN zfbool editMode)
-    {
-        this->attributeForName(ZFSerializableKeyword_editMode, editMode ? ZFTOKEN_zfbool_zftrue : zfnull);
-    }
-    /** @brief see #category */
-    inline zfbool editMode(void) const
-    {
-        return (this->attributeForName(ZFSerializableKeyword_editMode) != zfnull);
     }
 
     // ============================================================

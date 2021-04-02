@@ -660,10 +660,6 @@ zfbool ZFClass::newInstanceGenericCheck(ZF_IN ZFToken token
         return zffalse;
     }
     ZFObject *obj = (ZFObject *)token;
-    if(objectOnInitMethod->methodIsUserRegister() || objectOnInitMethod->methodIsDynamicRegister())
-    {
-        obj->objectOnInit();
-    }
     zfautoObject methodRetDummy;
     return objectOnInitMethod->methodGenericInvoker()(objectOnInitMethod, obj, zfnull, methodRetDummy, paramList);
 }

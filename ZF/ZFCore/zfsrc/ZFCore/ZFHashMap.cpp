@@ -46,10 +46,7 @@ ZFOBJECT_ON_INIT_DEFINE_1(ZFHashMap,
                           ZFMP_IN(ZFKeyValueContainer *, another))
 {
     this->objectOnInit();
-    if(another != zfnull)
-    {
-        zfself::addFrom(another);
-    }
+    zfself::addFrom(another);
 }
 void ZFHashMap::objectOnInit(void)
 {

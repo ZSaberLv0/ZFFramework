@@ -428,10 +428,15 @@ static int _ZFP_ZFImpl_ZFLua_metatableStoreResult(ZF_IN lua_State *L,
         ZFImpl_ZFLua_luaPush(L, ret);
         return 1;
     }
+    else if(paramClass0->classIsTypeOf(v_zfbyte::ClassData()) || paramClass1->classIsTypeOf(v_zfbyte::ClassData()))
+    {
+        zfblockedAllocWithCache(v_zfbyte, ret);
+        ret->zfv = (zfbyte)n;
+        ZFImpl_ZFLua_luaPush(L, ret);
+        return 1;
+    }
 
-    zfblockedAllocWithCache(v_zflongdouble, ret);
-    ret->zfv = (zflongdouble)n;
-    ZFImpl_ZFLua_luaPush(L, ret);
+    lua_pushnumber(L, n);
     return 1;
 }
 

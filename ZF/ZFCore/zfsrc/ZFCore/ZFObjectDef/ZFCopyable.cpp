@@ -12,10 +12,6 @@ zfautoObjectT<ZFCopyable *> ZFCopyable::copy(void)
     if(ret != zfnull)
     {
         ZFCastZFObjectUnchecked(zfself *, ret.toObject())->copyableOnCopyFrom(this->toObject());
-        if(ret.toObject()->classData()->classIsTypeOf(ZFSerializable::ClassData()))
-        {
-            ZFCastZFObjectUnchecked(ZFSerializable *, ret.toObject())->serializableCopyInfoFrom(ZFCastZFObjectUnchecked(ZFSerializable *, this));
-        }
     }
     return ret;
 }
@@ -25,10 +21,6 @@ void ZFCopyable::copyFrom(ZF_IN ZFObject *anotherObj)
     if(anotherObj != zfnull && anotherObj != this->toObject() && anotherObj->classData() == this->classData())
     {
         this->copyableOnCopyFrom(anotherObj);
-        if(this->classData()->classIsTypeOf(ZFSerializable::ClassData()))
-        {
-            ZFCastZFObjectUnchecked(ZFSerializable *, this)->serializableCopyInfoFrom(ZFCastZFObjectUnchecked(ZFSerializable *, anotherObj));
-        }
     }
 }
 
