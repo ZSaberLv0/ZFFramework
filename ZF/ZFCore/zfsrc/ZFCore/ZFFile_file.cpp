@@ -111,7 +111,7 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFFileFileFindClose,
     fd.implDetach();
 }
 
-ZFMETHOD_FUNC_DEFINE_3(ZFToken, ZFFileFileOpen,
+ZFMETHOD_FUNC_DEFINE_3(void *, ZFFileFileOpen,
                        ZFMP_IN(const zfchar *, filePath),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flag, ZFFileOpenOption::e_Read),
                        ZFMP_IN_OPT(zfbool, autoCreateParent, zftrue))
@@ -131,24 +131,24 @@ ZFMETHOD_FUNC_DEFINE_3(ZFToken, ZFFileFileOpen,
     return _ZFP_ZFFileReadWriteImpl->fileOpen(filePath, flag);
 }
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileFileClose,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileClose(token);
 }
 ZFMETHOD_FUNC_DEFINE_1(zfindex, ZFFileFileTell,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileTell(token);
 }
 ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFFileFileSeek,
-                       ZFMP_IN(ZFToken, token),
+                       ZFMP_IN(void *, token),
                        ZFMP_IN(zfindex, byteSize),
                        ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 {
     return _ZFP_ZFFileReadWriteImpl->fileSeek(token, byteSize, position);
 }
 ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFFileFileRead,
-                       ZFMP_IN(ZFToken, token),
+                       ZFMP_IN(void *, token),
                        ZFMP_IN(void *, buf),
                        ZFMP_IN(zfindex, maxByteSize))
 {
@@ -167,7 +167,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFFileFileRead,
     return _ZFP_ZFFileReadWriteImpl->fileRead(token, buf, maxByteSize);
 }
 ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFFileFileWrite,
-                       ZFMP_IN(ZFToken, token),
+                       ZFMP_IN(void *, token),
                        ZFMP_IN(const void *, src),
                        ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax()))
 {
@@ -179,24 +179,24 @@ ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFFileFileWrite,
         (maxByteSize == zfindexMax()) ? (sizeof(zfchar) * zfslen((const zfchar *)src)) : maxByteSize);
 }
 ZFMETHOD_FUNC_DEFINE_1(void, ZFFileFileFlush,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileFlush(token);
 }
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileFileIsEof,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileIsEof(token);
 }
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileFileIsError,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileIsError(token);
 }
 ZFMETHOD_FUNC_DEFINE_1(zfindex, ZFFileFileSize,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zfindexMax();
     }

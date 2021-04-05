@@ -109,24 +109,24 @@ ZFMETHOD_FUNC_DECLARE_1(void, ZFFileResFindClose,
  * it's your responsibility to make sure not to misuse it
  * @note path must be well formed, use #ZFFilePathFormat if necessary
  */
-ZFMETHOD_FUNC_DECLARE_1(ZFToken, ZFFileResOpen,
+ZFMETHOD_FUNC_DECLARE_1(void *, ZFFileResOpen,
                         ZFMP_IN(const zfchar *, resPath))
 /**
  * @brief see #ZFFileResOpen #ZFFileFileClose
  */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileResClose,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 /**
  * @brief see #ZFFileResOpen #ZFFileFileTell
  */
 ZFMETHOD_FUNC_DECLARE_1(zfindex, ZFFileResTell,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /**
  * @brief see #ZFFileResOpen #ZFFileFileSeek
  */
 ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFFileResSeek,
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(zfindex, byteSize),
                         ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 
@@ -134,7 +134,7 @@ ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFFileResSeek,
  * @brief see #ZFFileResOpen #ZFFileFileRead
  */
 ZFMETHOD_FUNC_DECLARE_3(zfindex, ZFFileResRead,
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(void *, buf),
                         ZFMP_IN(zfindex, maxByteSize))
 
@@ -142,18 +142,18 @@ ZFMETHOD_FUNC_DECLARE_3(zfindex, ZFFileResRead,
  * @brief see #ZFFileResOpen #ZFFileFileIsEof
  */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileResIsEof,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /**
  * @brief see #ZFFileResOpen #ZFFileFileIsEof
  */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileResIsError,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 /**
  * @brief see #ZFFileResOpen, #ZFFileFileSize
  */
 ZFMETHOD_FUNC_DECLARE_1(zfindex, ZFFileResSize,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFFile_res_h_

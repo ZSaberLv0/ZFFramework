@@ -49,8 +49,6 @@ ZFEXPORT_VAR_VALUEREF_DECLARE(ZFTokenForContainer, ZFTokenForContainerDefault, Z
 ZFEXPORT_VAR_READONLY_VALUEREF_DECLARE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerTrim, ZFTokenForKeyValueContainerTrim())
 ZFEXPORT_VAR_READONLY_VALUEREF_DECLARE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDetail, ZFTokenForKeyValueContainerDetail())
 ZFEXPORT_VAR_VALUEREF_DECLARE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDefault, ZFTokenForKeyValueContainerDefault())
-
-ZFEXPORT_VAR_READONLY_DECLARE(ZFToken, ZFTokenInvalid)
 /** @endcond */
 
 ZF_NAMESPACE_GLOBAL_END

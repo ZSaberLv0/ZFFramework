@@ -27,14 +27,14 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 #define ZF_NAMESPACE_REGISTER(NameSpace, ParentNameSpace) \
     _ZFP_ZF_NAMESPACE_REGISTER(NameSpace, ParentNameSpace)
 #define _ZFP_ZF_NAMESPACE_REGISTER(NameSpace, ParentNameSpace) \
-    const char *_ZFP_ZF_NAMESPACE_NOT_DECLARED(void) \
+    const char *_ZFP_ZF_NAMESPACE_NOT_REGISTERED(void) \
     { \
-        static _ZFP_ZFNamespaceHolder d(ParentNameSpace::_ZFP_ZF_NAMESPACE_NOT_DECLARED(), #NameSpace); \
+        static _ZFP_ZFNamespaceHolder d(ParentNameSpace::_ZFP_ZF_NAMESPACE_NOT_REGISTERED(), #NameSpace); \
         return d.ns.cString(); \
     } \
     ZF_STATIC_REGISTER_INIT(_ZFP_NSReg) \
     { \
-        _ZFP_ZF_NAMESPACE_NOT_DECLARED(); \
+        _ZFP_ZF_NAMESPACE_NOT_REGISTERED(); \
     } \
     ZF_STATIC_REGISTER_END(_ZFP_NSReg)
 extern ZF_ENV_EXPORT zfstring _ZFP_ZFNamespaceRegister(ZF_IN const char *parent,
@@ -67,7 +67,7 @@ public:
  *   the separator token can be accessed by #ZFNamespaceSeparator
  */
 #define ZF_NAMESPACE_CURRENT() \
-    _ZFP_ZF_NAMESPACE_NOT_DECLARED()
+    _ZFP_ZF_NAMESPACE_NOT_REGISTERED()
 
 // ============================================================
 /**

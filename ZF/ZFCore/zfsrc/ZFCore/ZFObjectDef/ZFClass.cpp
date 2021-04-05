@@ -618,7 +618,7 @@ zfautoObject ZFClass::newInstanceGeneric(
 
     ZFCoreArrayPOD<const ZFMethod *> objectOnInitMethodList;
     this->methodForNameGetAllT(objectOnInitMethodList, "objectOnInit");
-    ZFToken token = this->newInstanceGenericBegin();
+    void *token = this->newInstanceGenericBegin();
     if(token != zfnull)
     {
         zfautoObject paramList[ZFMETHOD_MAX_PARAM];
@@ -642,12 +642,12 @@ zfautoObject ZFClass::newInstanceGeneric(
     }
     return zfnull;
 }
-ZFToken ZFClass::newInstanceGenericBegin(void) const
+void *ZFClass::newInstanceGenericBegin(void) const
 {
     zfCoreMutexLocker();
-    return (ZFToken)d->objectConstruct();
+    return d->objectConstruct();
 }
-zfbool ZFClass::newInstanceGenericCheck(ZF_IN ZFToken token
+zfbool ZFClass::newInstanceGenericCheck(ZF_IN void *token
                                         , ZF_IN const ZFMethod *objectOnInitMethod
                                         , ZF_IN_OUT zfautoObject (&paramList)[ZFMETHOD_MAX_PARAM]
                                         ) const
@@ -663,7 +663,7 @@ zfbool ZFClass::newInstanceGenericCheck(ZF_IN ZFToken token
     zfautoObject methodRetDummy;
     return objectOnInitMethod->methodGenericInvoker()(objectOnInitMethod, obj, zfnull, methodRetDummy, paramList);
 }
-zfautoObject ZFClass::newInstanceGenericEnd(ZF_IN ZFToken token,
+zfautoObject ZFClass::newInstanceGenericEnd(ZF_IN void *token,
                                             ZF_IN zfbool objectOnInitMethodInvokeSuccess) const
 {
     ZFObject *obj = (ZFObject *)token;

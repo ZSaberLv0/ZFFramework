@@ -59,8 +59,8 @@ public class ZFUIView extends ViewGroup {
         return ret;
     }
     public static void native_nativeImplView(Object nativeView,
-                                                Object nativeImplView,
-                                                int virtualIndex) {
+                                             Object nativeImplView,
+                                             int virtualIndex) {
         ZFUIView nativeViewTmp = (ZFUIView)nativeView;
         View nativeImplViewOld = nativeViewTmp.nativeImplView;
         View nativeImplViewNew = (View)nativeImplView;

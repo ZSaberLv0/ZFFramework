@@ -71,13 +71,13 @@ public:
     static void callbackFindClose(ZF_IN_OUT ZFFileFindData &fd)
     {
     }
-    static ZFToken callbackOpen(ZF_IN const zfchar *pathData,
-                                ZF_IN_OPT ZFFileOpenOptionFlags flag,
-                                ZF_IN_OPT zfbool autoCreateParent)
+    static void *callbackOpen(ZF_IN const zfchar *pathData,
+                              ZF_IN_OPT ZFFileOpenOptionFlags flag,
+                              ZF_IN_OPT zfbool autoCreateParent)
     {
         if(flag != ZFFileOpenOption::e_Read)
         {
-            return ZFTokenInvalid();
+            return zfnull;
         }
         _Token *d = zfnew(_Token);
         d->bufSize = zfslen(pathData) * sizeof(zfchar);
@@ -85,17 +85,17 @@ public:
         zfmemcpy(d->buf, pathData, d->bufSize);
         return d;
     }
-    static zfbool callbackClose(ZF_IN ZFToken token)
+    static zfbool callbackClose(ZF_IN void *token)
     {
         zfdelete((_Token *)token);
         return zftrue;
     }
-    static zfindex callbackTell(ZF_IN ZFToken token)
+    static zfindex callbackTell(ZF_IN void *token)
     {
         _Token *d = (_Token *)token;
         return d->pos;
     }
-    static zfbool callbackSeek(ZF_IN ZFToken token,
+    static zfbool callbackSeek(ZF_IN void *token,
                                ZF_IN zfindex byteSize,
                                ZF_IN_OPT ZFSeekPos position)
     {
@@ -103,7 +103,7 @@ public:
         d->pos = ZFIOCallbackCalcFSeek(0, d->bufSize, d->pos, byteSize, position);
         return zftrue;
     }
-    static zfindex callbackRead(ZF_IN ZFToken token,
+    static zfindex callbackRead(ZF_IN void *token,
                                 ZF_IN void *buf,
                                 ZF_IN zfindex maxByteSize)
     {
@@ -115,25 +115,25 @@ public:
         zfmemcpy(buf, d->buf + d->pos, maxByteSize);
         return maxByteSize;
     }
-    static zfindex callbackWrite(ZF_IN ZFToken token,
+    static zfindex callbackWrite(ZF_IN void *token,
                                  ZF_IN const void *src,
                                  ZF_IN_OPT zfindex maxByteSize)
     {
         return 0;
     }
-    static void callbackFlush(ZF_IN ZFToken token)
+    static void callbackFlush(ZF_IN void *token)
     {
     }
-    static zfbool callbackIsEof(ZF_IN ZFToken token)
+    static zfbool callbackIsEof(ZF_IN void *token)
     {
         _Token *d = (_Token *)token;
         return (d->pos >= d->bufSize);
     }
-    static zfbool callbackIsError(ZF_IN ZFToken token)
+    static zfbool callbackIsError(ZF_IN void *token)
     {
         return zffalse;
     }
-    static zfindex callbackSize(ZF_IN ZFToken token)
+    static zfindex callbackSize(ZF_IN void *token)
     {
         _Token *d = (_Token *)token;
         return d->bufSize - d->pos;

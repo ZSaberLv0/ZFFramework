@@ -116,7 +116,7 @@ ZFMETHOD_FUNC_DECLARE_1(void, ZFFileFileFindClose,
  * @brief open a file for read or write
  * @note path must be well formed, use #ZFFilePathFormat if necessary
  */
-ZFMETHOD_FUNC_DECLARE_3(ZFToken, ZFFileFileOpen,
+ZFMETHOD_FUNC_DECLARE_3(void *, ZFFileFileOpen,
                         ZFMP_IN(const zfchar *, filePath),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flag, ZFFileOpenOption::e_Read),
                         ZFMP_IN_OPT(zfbool, autoCreateParent, zftrue))
@@ -124,18 +124,18 @@ ZFMETHOD_FUNC_DECLARE_3(ZFToken, ZFFileFileOpen,
  * @brief close and save the file if need, return false if save failed
  */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileFileClose,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 /**
  * @brief get current file's position or zfindexMax() if error
  */
 ZFMETHOD_FUNC_DECLARE_1(zfindex, ZFFileFileTell,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /**
  * @brief similar to fseek, return false if seek out of range
  */
 ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFFileFileSeek,
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(zfindex, byteSize),
                         ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 
@@ -169,7 +169,7 @@ ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFFileFileSeek,
  *   you must make sure the file is UTF8 encoded without BOM
  */
 ZFMETHOD_FUNC_DECLARE_3(zfindex, ZFFileFileRead,
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(void *, buf),
                         ZFMP_IN(zfindex, maxByteSize))
 
@@ -197,24 +197,24 @@ ZFMETHOD_FUNC_DECLARE_3(zfindex, ZFFileFileRead,
  * usually to output a UTF8 string
  */
 ZFMETHOD_FUNC_DECLARE_3(zfindex, ZFFileFileWrite,
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(const void *, src),
                         ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax()))
 /**
  * @brief flush the file, useful only for files opened for write
  */
 ZFMETHOD_FUNC_DECLARE_1(void, ZFFileFileFlush,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /**
  * @brief see #ZFFileFileRead
  */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileFileIsEof,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /**
  * @brief see #ZFFileFileRead
  */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileFileIsError,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 /**
  * @brief util method to get file's total size (not left size)
@@ -224,7 +224,7 @@ ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFFileFileIsError,
  * note that result is not ensured if file is opened in append mode
  */
 ZFMETHOD_FUNC_DECLARE_1(zfindex, ZFFileFileSize,
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFFile_file_h_

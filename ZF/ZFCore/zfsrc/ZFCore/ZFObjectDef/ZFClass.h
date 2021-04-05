@@ -288,7 +288,7 @@ public:
      *     ZFCoreArrayPOD<const ZFMethod *> objectOnInitMethodList;
      *     cls->methodForNameGetAllT(objectOnInitMethodList, "objectOnInit");
      *     // you may do your extra method filters before actual alloc the object
-     *     ZFToken token = cls->newInstanceGenericBegin();
+     *     void *token = cls->newInstanceGenericBegin();
      *     if(token != zfnull)
      *     {
      *         for(zfindex i = 0; i < objectOnInitMethodList.count(); ++i)
@@ -324,14 +324,14 @@ public:
                                     , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokerDefaultParam()
                                     ) const; /* ZFMETHOD_MAX_PARAM */
     /** @brief see #newInstanceGeneric */
-    ZFToken newInstanceGenericBegin(void) const;
+    void *newInstanceGenericBegin(void) const;
     /** @brief see #newInstanceGeneric */
-    zfbool newInstanceGenericCheck(ZF_IN ZFToken token
+    zfbool newInstanceGenericCheck(ZF_IN void *token
                                    , ZF_IN const ZFMethod *objectOnInitMethod
                                    , ZF_IN_OUT zfautoObject (&paramList)[ZFMETHOD_MAX_PARAM]
                                    ) const; /* ZFMETHOD_MAX_PARAM */
     /** @brief see #newInstanceGeneric */
-    zfautoObject newInstanceGenericEnd(ZF_IN ZFToken token,
+    zfautoObject newInstanceGenericEnd(ZF_IN void *token,
                                        ZF_IN zfbool objectOnInitMethodInvokeSuccess) const;
 
     /**

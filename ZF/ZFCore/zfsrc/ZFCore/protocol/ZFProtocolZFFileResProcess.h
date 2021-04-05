@@ -47,38 +47,38 @@ public:
     /**
      * @brief see #ZFFileResOpen
      */
-    virtual ZFToken resOpen(ZF_IN const zfchar *resPath);
+    virtual void *resOpen(ZF_IN const zfchar *resPath);
     /**
      * @brief see #ZFFileResClose
      */
-    virtual zfbool resClose(ZF_IN ZFToken token);
+    virtual zfbool resClose(ZF_IN void *token);
 
     /**
      * @brief see #ZFFileResTell
      */
-    virtual zfindex resTell(ZF_IN ZFToken token);
+    virtual zfindex resTell(ZF_IN void *token);
     /**
      * @brief see #ZFFileResSeek
      */
-    virtual zfbool resSeek(ZF_IN ZFToken token,
+    virtual zfbool resSeek(ZF_IN void *token,
                            ZF_IN zfindex byteSize,
                            ZF_IN_OPT ZFSeekPos position = ZFSeekPosBegin);
 
     /**
      * @brief see #ZFFileResRead
      */
-    virtual zfindex resRead(ZF_IN ZFToken token,
+    virtual zfindex resRead(ZF_IN void *token,
                             ZF_IN void *buf,
                             ZF_IN zfindex maxByteSize);
 
     /**
      * @brief see #ZFFileResIsEof
      */
-    virtual zfbool resIsEof(ZF_IN ZFToken token);
+    virtual zfbool resIsEof(ZF_IN void *token);
     /**
      * @brief see #ZFFileResIsError
      */
-    virtual zfbool resIsError(ZF_IN ZFToken token);
+    virtual zfbool resIsError(ZF_IN void *token);
 
     /**
      * @brief see #ZFFileResFindFirst, #ZFFileFileFindFirst

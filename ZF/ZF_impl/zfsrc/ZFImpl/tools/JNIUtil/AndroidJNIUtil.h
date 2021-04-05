@@ -10,9 +10,7 @@
 
 #include "JNIUtil.h"
 #if (defined(ANDROID) || defined(__ANDROID__))
-#include <jni.h>
 #include <android/log.h>
-#include <string>
 namespace AndroidJNIUtil {
 
 /** @brief verbose log level */

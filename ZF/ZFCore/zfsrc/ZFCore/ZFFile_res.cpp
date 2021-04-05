@@ -6,12 +6,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfclassLikePOD _ZFP_ZFFileTokenForRes
 {
 public:
-    ZFToken fd; // fd returned by ZFFileFileOpen or ZFFileResOpen
+    void *fd; // fd returned by ZFFileFileOpen or ZFFileResOpen
     zfstring resAdditionalPathWithSeparator; // not null if it's located in additional res path
 
 public:
     _ZFP_ZFFileTokenForRes(void)
-    : fd(ZFTokenInvalid())
+    : fd(zfnull)
     , resAdditionalPathWithSeparator()
     {
     }
@@ -255,12 +255,12 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFFileResFindClose,
     zfdelete(implUserData);
 }
 
-ZFMETHOD_FUNC_DEFINE_1(ZFToken, ZFFileResOpen,
+ZFMETHOD_FUNC_DEFINE_1(void *, ZFFileResOpen,
                        ZFMP_IN(const zfchar *, resPath))
 {
     if(resPath == zfnull)
     {
-        return ZFTokenInvalid();
+        return zfnull;
     }
 
     _ZFP_ZFFileTokenForRes *ret = zfnew(_ZFP_ZFFileTokenForRes);
@@ -278,17 +278,17 @@ ZFMETHOD_FUNC_DEFINE_1(ZFToken, ZFFileResOpen,
         resPathTmp += resPath;
         ret->fd = ZFFileFileOpen(resPathTmp, ZFFileOpenOption::e_Read);
     }
-    if(ret->fd == ZFTokenInvalid())
+    if(ret->fd == zfnull)
     {
         zfdelete(ret);
         ret = zfnull;
     }
-    return (ZFToken)ret;
+    return ret;
 }
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileResClose,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zffalse;
     }
@@ -305,9 +305,9 @@ ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileResClose,
     }
 }
 ZFMETHOD_FUNC_DEFINE_1(zfindex, ZFFileResTell,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zffalse;
     }
@@ -323,11 +323,11 @@ ZFMETHOD_FUNC_DEFINE_1(zfindex, ZFFileResTell,
     }
 }
 ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFFileResSeek,
-                       ZFMP_IN(ZFToken, token),
+                       ZFMP_IN(void *, token),
                        ZFMP_IN(zfindex, byteSize),
                        ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zffalse;
     }
@@ -343,11 +343,11 @@ ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFFileResSeek,
     }
 }
 ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFFileResRead,
-                       ZFMP_IN(ZFToken, token),
+                       ZFMP_IN(void *, token),
                        ZFMP_IN(void *, buf),
                        ZFMP_IN(zfindex, maxByteSize))
 {
-    if(token == ZFTokenInvalid() || maxByteSize == zfindexMax())
+    if(token == zfnull || maxByteSize == zfindexMax())
     {
         return 0;
     }
@@ -369,9 +369,9 @@ ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFFileResRead,
     return _ZFP_ZFFileResProcessImpl->resRead(resToken->fd, buf, maxByteSize);
 }
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileResIsEof,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zffalse;
     }
@@ -387,9 +387,9 @@ ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileResIsEof,
     }
 }
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileResIsError,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zffalse;
     }
@@ -406,9 +406,9 @@ ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFileResIsError,
 }
 
 ZFMETHOD_FUNC_DEFINE_1(zfindex, ZFFileResSize,
-                       ZFMP_IN(ZFToken, token))
+                       ZFMP_IN(void *, token))
 {
-    if(token == ZFTokenInvalid())
+    if(token == zfnull)
     {
         return zfindexMax();
     }

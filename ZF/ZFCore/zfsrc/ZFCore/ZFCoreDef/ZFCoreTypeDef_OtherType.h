@@ -169,16 +169,6 @@ public:
 
 // ============================================================
 /**
- * @brief dummy token holder for generic type
- */
-typedef void *ZFToken;
-/**
- * @brief invalid #ZFToken
- */
-#define ZFTokenInvalid() zfnull
-
-// ============================================================
-/**
  * @brief dummy function address type
  */
 typedef void (*ZFFuncAddrType)(void);

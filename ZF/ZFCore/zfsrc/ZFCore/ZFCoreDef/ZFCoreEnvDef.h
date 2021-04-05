@@ -14,7 +14,7 @@
 #define ZF_NAMESPACE_BEGIN(NameSpace) \
     /** @brief \n */ \
     namespace NameSpace { \
-        extern const char *_ZFP_ZF_NAMESPACE_NOT_DECLARED(void);
+        extern const char *_ZFP_ZF_NAMESPACE_NOT_REGISTERED(void);
 
 /**
  * @brief end namespace
@@ -70,7 +70,7 @@
     #define ZF_NAMESPACE_GLOBAL_BEGIN
     #define ZF_NAMESPACE_GLOBAL_END
     #define ZF_NAMESPACE_GLOBAL_USE
-    extern const char *_ZFP_ZF_NAMESPACE_NOT_DECLARED(void);
+    extern const char *_ZFP_ZF_NAMESPACE_NOT_REGISTERED(void);
 #endif
 
 ZF_NAMESPACE_GLOBAL_BEGIN

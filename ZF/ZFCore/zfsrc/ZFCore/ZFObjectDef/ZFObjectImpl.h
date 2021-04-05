@@ -23,6 +23,7 @@
 #include "ZFTypeHolder.h"
 #include "ZFObjectHolder.h"
 #include "ZFObjectUtil.h"
+#include "ZFExport.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 

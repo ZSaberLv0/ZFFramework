@@ -11,6 +11,7 @@
 #include "ZFUIKit/ZFObjectIO_image.h"
 #include "ZFUIKit/ZFTimeLineCurve_UI.h"
 #include "ZFUIKit/ZFUIColor_common.h"
+#include "ZFUIKit/ZFUIDraw.h"
 #include "ZFUIKit/ZFUIEvent.h"
 #include "ZFUIKit/ZFUIGlobalStyle.h"
 #include "ZFUIKit/ZFUIImage.h"

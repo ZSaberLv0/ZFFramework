@@ -478,7 +478,7 @@ zfbool ZFDI_alloc(ZF_OUT zfautoObject &ret
         return zffalse;
     }
 
-    ZFToken token = cls->newInstanceGenericBegin();
+    void *token = cls->newInstanceGenericBegin();
     if(token == zfnull)
     {
         if(errorHint != zfnull)

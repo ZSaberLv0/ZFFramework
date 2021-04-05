@@ -123,12 +123,13 @@ ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage
 /**
  * @brief load image from color
  *
- * size is applied with #ZFUIGlobalStyle::imageScale
+ * size is in pixel,
+ * invalid size is automatically convert to 1 pixel
  * @note this method has no cache logic
  */
 ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromColor,
                         ZFMP_IN(const ZFUIColor &, color),
-                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
+                        ZFMP_IN_OPT(const ZFUISize &, sizePixel, ZFUISizeZero()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImageIO_h_

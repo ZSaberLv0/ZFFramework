@@ -622,5 +622,134 @@ void ZFUIAniImageView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     }
 }
 
+// ============================================================
+static zfbool _ZFP_ZFUIAniImageCreate(ZF_IN const ZFClass *desiredClass,
+                                      ZF_IN const ZFPathInfo &pathInfo,
+                                      ZF_IN const ZFCoreArray<zfautoObjectT<ZFUIImage *> > &frameImages,
+                                      ZF_IN_OPT const ZFCoreArrayPOD<zftimet> &frameDurations = ZFCoreArrayPOD<zftimet>());
+ZFMETHOD_DEFINE_3(ZFUIAniImageData, zfbool, Create,
+                  ZFMP_IN(const ZFPathInfo &, pathInfo),
+                  ZFMP_IN(const ZFCoreArray<zfautoObjectT<ZFUIImage *> > &, frameImages),
+                  ZFMP_IN_OPT(const ZFCoreArrayPOD<zftimet> &, frameDurations, ZFCoreArrayPOD<zftimet>()))
+{
+    return _ZFP_ZFUIAniImageCreate(zfself::ClassData(), pathInfo, frameImages, frameDurations);
+}
+ZFMETHOD_DEFINE_3(ZFUIAniImageView, zfbool, Create,
+                  ZFMP_IN(const ZFPathInfo &, pathInfo),
+                  ZFMP_IN(const ZFCoreArray<zfautoObjectT<ZFUIImage *> > &, frameImages),
+                  ZFMP_IN_OPT(const ZFCoreArrayPOD<zftimet> &, frameDurations, ZFCoreArrayPOD<zftimet>()))
+{
+    return _ZFP_ZFUIAniImageCreate(zfself::ClassData(), pathInfo, frameImages, frameDurations);
+}
+static zfbool _ZFP_ZFUIAniImageCreate(ZF_IN const ZFClass *desiredClass,
+                                      ZF_IN const ZFPathInfo &pathInfo,
+                                      ZF_IN const ZFCoreArray<zfautoObjectT<ZFUIImage *> > &frameImages,
+                                      ZF_IN_OPT const ZFCoreArrayPOD<zftimet> &frameDurations /* = ZFCoreArrayPOD<zftimet>() */)
+{
+    if(frameImages.isEmpty())
+    {
+        return zffalse;
+    }
+    ZFOutput objOutput = ZFOutputForPathInfo(pathInfo);
+    if(!objOutput.callbackIsValid())
+    {
+        return zffalse;
+    }
+    ZFPathInfo imgPathInfo = pathInfo;
+    zfindex dotPos = zfstringFindReversely(imgPathInfo.pathData, '.');
+    if(dotPos == zfindexMax())
+    {
+        return zffalse;
+    }
+    ++dotPos;
+    imgPathInfo.pathData.replace(dotPos, imgPathInfo.pathData.length() - dotPos, "png");
+    ZFOutput imgOutput = ZFOutputForPathInfo(imgPathInfo);
+    if(!imgOutput.callbackIsValid())
+    {
+        return zffalse;
+    }
+    zfstring imgFileName;
+    if(!ZFFilePathInfoToFileName(imgPathInfo, imgFileName))
+    {
+        return zffalse;
+    }
+
+    const ZFUISize &frameSizePixel = frameImages[0]->imageSizeFixed();
+    zfindex frameCount = frameImages.count();
+
+    zfuint xCount = 1;
+    zfuint yCount = (zfuint)frameCount;
+    zfuint minSize = xCount * yCount;
+    zfuint minDiff = zfmAbs((zfint)(frameSizePixel.width * xCount) - (zfint)(frameSizePixel.height * yCount));
+    for(zfuint x = 2; x <= frameCount; ++x)
+    {
+        zfuint y = ((frameCount % x) == 0) ? (zfuint)(frameCount / x) : (zfuint)(frameCount / x + 1);
+        zfuint size = x * y;
+        zfuint diff = zfmAbs((zfint)(frameSizePixel.width * x) - (zfint)(frameSizePixel.height * y));
+        if(size <= minSize && diff <= minDiff)
+        {
+            xCount = x;
+            yCount = y;
+            minSize = size;
+            minDiff = diff;
+        }
+    }
+
+    void *context = ZFUIDraw::beginForImage(ZFUISizeMake(frameSizePixel.width * xCount, frameSizePixel.height * yCount));
+    for(zfuint y = 0, iFrame = 0; y < yCount; ++y)
+    {
+        for(zfuint x = 0; x < xCount; ++x, ++iFrame)
+        {
+            ZFUIDraw::drawImage(context, frameImages[iFrame], ZFUIRectZero(), ZFUIRectMake(
+                frameSizePixel.width * x,
+                frameSizePixel.height * y,
+                frameSizePixel.width,
+                frameSizePixel.height));
+        }
+    }
+    zfautoObjectT<ZFUIImage *> frameSrc = ZFUIDraw::endForImage(context);
+    if(frameSrc == zfnull || !ZFUIImageSaveToFile(imgOutput, frameSrc))
+    {
+        return zffalse;
+    }
+
+    imgOutput.callbackClear(); // clear to make the file readable
+    ZFInput imgInput = ZFInputForLocalFile(pathInfo, imgFileName);
+    if(!imgInput.callbackIsValid())
+    {
+        return zffalse;
+    }
+    ZFSerializableData imgInputData;
+    if(!ZFCallbackToData(imgInputData, imgInput))
+    {
+        return zffalse;
+    }
+    frameSrc->imageSerializableType(ZFUIImageSerializeType_input);
+    frameSrc->imageSerializableData(&imgInputData);
+
+    zfautoObject result = desiredClass->newInstance();
+    if(desiredClass->classIsTypeOf(ZFUIAniImageData::ClassData()))
+    {
+        if(!result.to<ZFUIAniImageData *>()->aniLoad(frameSrc, frameSizePixel, frameCount, frameDurations))
+        {
+            return zffalse;
+        }
+    }
+    else
+    {
+        if(!result.to<ZFUIAniImageView *>()->aniLoad(frameSrc, frameSizePixel, frameCount, frameDurations))
+        {
+            return zffalse;
+        }
+    }
+
+    if(!ZFObjectIOSave(objOutput, result))
+    {
+        return zffalse;
+    }
+
+    return zftrue;
+}
+
 ZF_NAMESPACE_GLOBAL_END
 

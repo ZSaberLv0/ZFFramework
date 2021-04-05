@@ -113,16 +113,16 @@ ZFMETHOD_FUNC_DECLARE_1(ZFCoreArray<zfstring>, ZFFilePathComponentsOf,
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFFileFileCloseHolder
 {
 public:
-    _ZFP_ZFFileFileCloseHolder(ZF_IN ZFToken token) : token(token) {}
+    _ZFP_ZFFileFileCloseHolder(ZF_IN void *token) : token(token) {}
     ~_ZFP_ZFFileFileCloseHolder(void)
     {
-        if(this->token != ZFTokenInvalid())
+        if(this->token != zfnull)
         {
             ZFFileFileClose(this->token);
         }
     }
 private:
-    ZFToken token;
+    void *token;
 };
 /**
  * @brief util method to call #ZFFileFileClose after code block
@@ -133,16 +133,16 @@ private:
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFFileResCloseHolder
 {
 public:
-    _ZFP_ZFFileResCloseHolder(ZF_IN ZFToken token) : token(token) {}
+    _ZFP_ZFFileResCloseHolder(ZF_IN void *token) : token(token) {}
     ~_ZFP_ZFFileResCloseHolder(void)
     {
-        if(this->token != ZFTokenInvalid())
+        if(this->token != zfnull)
         {
             ZFFileResClose(this->token);
         }
     }
 private:
-    ZFToken token;
+    void *token;
 };
 /**
  * @brief util method to call #ZFFileResClose after code block
@@ -153,17 +153,17 @@ private:
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFFilePathInfoCloseHolder
 {
 public:
-    _ZFP_ZFFilePathInfoCloseHolder(ZF_IN const ZFPathInfo &pathInfo, ZF_IN ZFToken token) : pathInfo(pathInfo), token(token) {}
+    _ZFP_ZFFilePathInfoCloseHolder(ZF_IN const ZFPathInfo &pathInfo, ZF_IN void *token) : pathInfo(pathInfo), token(token) {}
     ~_ZFP_ZFFilePathInfoCloseHolder(void)
     {
-        if(this->token != ZFTokenInvalid())
+        if(this->token != zfnull)
         {
             ZFFilePathInfoClose(this->pathInfo, this->token);
         }
     }
 private:
     const ZFPathInfo &pathInfo;
-    ZFToken token;
+    void *token;
 };
 /**
  * @brief util method to call #ZFFilePathInfoClose after code block

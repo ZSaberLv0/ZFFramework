@@ -5,13 +5,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFPATHTYPE_DEFINE(res)
 
 // ============================================================
-static ZFToken _ZFP_ZFFilePathInfoOpenForRes(ZF_IN const zfchar *filePath,
-                                             ZF_IN_OPT ZFFileOpenOptionFlags flag = ZFFileOpenOption::e_Read,
-                                             ZF_IN_OPT zfbool autoCreateParent = zftrue)
+static void *_ZFP_ZFFilePathInfoOpenForRes(ZF_IN const zfchar *filePath,
+                                           ZF_IN_OPT ZFFileOpenOptionFlags flag = ZFFileOpenOption::e_Read,
+                                           ZF_IN_OPT zfbool autoCreateParent = zftrue)
 {
     if(flag != ZFFileOpenOption::e_Read)
     {
-        return ZFTokenInvalid();
+        return zfnull;
     }
     return ZFFileResOpen(filePath);
 }

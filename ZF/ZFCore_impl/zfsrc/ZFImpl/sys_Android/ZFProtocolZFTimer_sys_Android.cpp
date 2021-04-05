@@ -9,7 +9,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 #define ZFImpl_sys_Android_JNI_NAME_ZFTimer ZFImpl_sys_Android_JNI_NAME(ZFCore_impl.ZFTimer)
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFTimerImpl_sys_Android, ZFTimer, ZFProtocolLevel::e_SystemNormal)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Android:Object_Timer")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Android:Object:Timer")
 
 public:
     zfoverride

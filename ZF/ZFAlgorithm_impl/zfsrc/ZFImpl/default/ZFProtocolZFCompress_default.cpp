@@ -29,13 +29,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFCompressImpl_default, ZFCompress, ZFProtocolLevel::e_Default)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("miniz")
 public:
-    virtual ZFToken compressBegin(ZF_IN_OUT const ZFOutput &outputZip,
-                                  ZF_IN ZFCompressLevelEnum compressLevel)
+    virtual void *compressBegin(ZF_IN_OUT const ZFOutput &outputZip,
+                                ZF_IN ZFCompressLevelEnum compressLevel)
     {
         if(!outputZip.ioSeek(0))
         {
             // output must support random access
-            return ZFTokenInvalid();
+            return zfnull;
         }
 
         mz_zip_archive *zip = (mz_zip_archive *)zfmalloc(sizeof(mz_zip_archive) + sizeof(ZFCompressLevelEnum));
@@ -48,14 +48,14 @@ public:
         {
             zfdelete((ZFOutput *)zip->m_pIO_opaque);
             zffree(zip);
-            return ZFTokenInvalid();
+            return zfnull;
         }
         else
         {
             return zip;
         }
     }
-    virtual zfbool compressEnd(ZF_IN_OUT ZFToken compressToken)
+    virtual zfbool compressEnd(ZF_IN_OUT void *compressToken)
     {
         mz_zip_archive *zip = (mz_zip_archive *)compressToken;
         zfbool success = zftrue;
@@ -65,7 +65,7 @@ public:
         zffree(zip);
         return success;
     }
-    virtual zfbool compressContent(ZF_IN_OUT ZFToken compressToken,
+    virtual zfbool compressContent(ZF_IN_OUT void *compressToken,
                                    ZF_IN_OUT const ZFInput &inputRaw,
                                    ZF_IN const zfchar *filePathInZip)
     {
@@ -97,7 +97,7 @@ public:
         }
         return this->compressAdd(*zip, inputRaw, filePathInZip, flags);
     }
-    virtual zfbool compressContentDir(ZF_IN_OUT ZFToken compressToken,
+    virtual zfbool compressContentDir(ZF_IN_OUT void *compressToken,
                                       ZF_IN const zfchar *filePathInZip)
     {
         mz_zip_archive *zip = (mz_zip_archive *)compressToken;
@@ -114,7 +114,7 @@ public:
         }
     }
 
-    virtual ZFToken decompressBegin(ZF_IN_OUT const ZFInput &inputZip)
+    virtual void *decompressBegin(ZF_IN_OUT const ZFInput &inputZip)
     {
         mz_zip_archive *zip = (mz_zip_archive *)zfmalloc(sizeof(mz_zip_archive));
         zfmemset(zip, 0, sizeof(mz_zip_archive));
@@ -127,7 +127,7 @@ public:
             {
                 zfdelete(pOpaque);
                 zffree(zip);
-                return ZFTokenInvalid();
+                return zfnull;
             }
             inputSize = pOpaque->zipBuffer.bufferSize();
             zip->m_pIO_opaque = pOpaque;
@@ -143,11 +143,11 @@ public:
         {
             zfdelete(pOpaque);
             zffree(zip);
-            return ZFTokenInvalid();
+            return zfnull;
         }
         return zip;
     }
-    virtual zfbool decompressEnd(ZF_IN_OUT ZFToken decompressToken)
+    virtual zfbool decompressEnd(ZF_IN_OUT void *decompressToken)
     {
         mz_zip_archive *zip = (mz_zip_archive *)decompressToken;
         zfbool success = mz_zip_reader_end(zip);
@@ -155,7 +155,7 @@ public:
         zffree(zip);
         return success;
     }
-    virtual zfbool decompressContent(ZF_IN_OUT ZFToken decompressToken,
+    virtual zfbool decompressContent(ZF_IN_OUT void *decompressToken,
                                      ZF_IN_OUT const ZFOutput &outputRaw,
                                      ZF_IN zfindex fileIndexInZip)
     {
@@ -168,12 +168,12 @@ public:
             &_outputRawTmp,
             MZ_ZIP_FLAG_CASE_SENSITIVE);
     }
-    virtual zfindex decompressContentCount(ZF_IN ZFToken decompressToken)
+    virtual zfindex decompressContentCount(ZF_IN void *decompressToken)
     {
         mz_zip_archive *zip = (mz_zip_archive *)decompressToken;
         return (zfindex)mz_zip_reader_get_num_files(zip);
     }
-    virtual zfindex decompressContentIndex(ZF_IN ZFToken decompressToken,
+    virtual zfindex decompressContentIndex(ZF_IN void *decompressToken,
                                            ZF_IN const zfchar *filePathInZip)
     {
         mz_zip_archive *zip = (mz_zip_archive *)decompressToken;
@@ -187,7 +187,7 @@ public:
             return (zfindex)ret;
         }
     }
-    virtual zfbool decompressContentPath(ZF_IN ZFToken decompressToken,
+    virtual zfbool decompressContentPath(ZF_IN void *decompressToken,
                                          ZF_IN_OUT zfstring &filePathInZip,
                                          ZF_IN zfindex fileIndexInZip)
     {

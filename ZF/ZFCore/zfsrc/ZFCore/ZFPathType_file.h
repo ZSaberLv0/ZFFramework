@@ -183,53 +183,53 @@ public:
     {
         ZFFileFileFindClose(fd);
     }
-    static ZFToken callbackOpen(ZF_IN const zfchar *pathData,
-                                ZF_IN_OPT ZFFileOpenOptionFlags flag,
-                                ZF_IN_OPT zfbool autoCreateParent)
+    static void *callbackOpen(ZF_IN const zfchar *pathData,
+                              ZF_IN_OPT ZFFileOpenOptionFlags flag,
+                              ZF_IN_OPT zfbool autoCreateParent)
     {
         zfstring pathDataAbs;
         T_Holder::pathConvert(pathDataAbs, pathData);
         return ZFFileFileOpen(pathDataAbs, flag, autoCreateParent);
     }
-    static zfbool callbackClose(ZF_IN ZFToken token)
+    static zfbool callbackClose(ZF_IN void *token)
     {
         return ZFFileFileClose(token);
     }
-    static zfindex callbackTell(ZF_IN ZFToken token)
+    static zfindex callbackTell(ZF_IN void *token)
     {
         return ZFFileFileTell(token);
     }
-    static zfbool callbackSeek(ZF_IN ZFToken token,
+    static zfbool callbackSeek(ZF_IN void *token,
                                ZF_IN zfindex byteSize,
                                ZF_IN_OPT ZFSeekPos position)
     {
         return ZFFileFileSeek(token, byteSize, position);
     }
-    static zfindex callbackRead(ZF_IN ZFToken token,
+    static zfindex callbackRead(ZF_IN void *token,
                                 ZF_IN void *buf,
                                 ZF_IN zfindex maxByteSize)
     {
         return ZFFileFileRead(token, buf, maxByteSize);
     }
-    static zfindex callbackWrite(ZF_IN ZFToken token,
+    static zfindex callbackWrite(ZF_IN void *token,
                                  ZF_IN const void *src,
                                  ZF_IN_OPT zfindex maxByteSize)
     {
         return ZFFileFileWrite(token, src, maxByteSize);
     }
-    static void callbackFlush(ZF_IN ZFToken token)
+    static void callbackFlush(ZF_IN void *token)
     {
         ZFFileFileFlush(token);
     }
-    static zfbool callbackIsEof(ZF_IN ZFToken token)
+    static zfbool callbackIsEof(ZF_IN void *token)
     {
         return ZFFileFileIsEof(token);
     }
-    static zfbool callbackIsError(ZF_IN ZFToken token)
+    static zfbool callbackIsError(ZF_IN void *token)
     {
         return ZFFileFileIsError(token);
     }
-    static zfindex callbackSize(ZF_IN ZFToken token)
+    static zfindex callbackSize(ZF_IN void *token)
     {
         return ZFFileFileSize(token);
     }

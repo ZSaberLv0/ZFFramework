@@ -253,7 +253,7 @@ public:
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUISize, textShadowOffset)
 
     /**
-     * @brief text size in pixel, #ZFUIGlobalStyle::textSizeNormal by default
+     * @brief text size, #ZFUIGlobalStyle::textSizeNormal by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSize,
                                 ZFUIGlobalStyle::DefaultStyle()->textSizeNormal())

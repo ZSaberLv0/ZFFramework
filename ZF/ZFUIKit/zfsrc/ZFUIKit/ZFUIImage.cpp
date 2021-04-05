@@ -64,6 +64,14 @@ public:
         {
             this->imageSizeFixed = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageSize(this->nativeImage);
             this->imageSize = ZFUISizeApplyScaleReversely(this->imageSizeFixed, this->imageScaleFixed);
+            if(this->imageSize.width <= 0)
+            {
+                this->imageSize.width = 1;
+            }
+            if(this->imageSize.height <= 0)
+            {
+                this->imageSize.height = 1;
+            }
         }
         else
         {

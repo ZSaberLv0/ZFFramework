@@ -6,10 +6,11 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 
+import com.ZFFramework.Android.ZF_impl.ZFMainEntry;
+
 public class ZFUIViewCapture {
-    @SuppressWarnings("deprecation")
     public static Object native_viewCapture(Object nativeView) {
-        View nativeViewTmp = (View)nativeView;
+        View nativeViewTmp = (View) nativeView;
         boolean drawingCacheEnabledSaved = nativeViewTmp.isDrawingCacheEnabled();
         int drawingCacheBackgroundColorSaved = nativeViewTmp.getDrawingCacheBackgroundColor();
         int drawingCacheQualitySaved = nativeViewTmp.getDrawingCacheQuality();
@@ -22,6 +23,6 @@ public class ZFUIViewCapture {
         nativeViewTmp.setDrawingCacheQuality(drawingCacheQualitySaved);
         nativeViewTmp.setDrawingCacheEnabled(drawingCacheEnabledSaved);
         nativeViewTmp.destroyDrawingCache();
-        return new BitmapDrawable(bmp);
+        return new BitmapDrawable(ZFMainEntry.appContext().getResources(), bmp);
     }
 }

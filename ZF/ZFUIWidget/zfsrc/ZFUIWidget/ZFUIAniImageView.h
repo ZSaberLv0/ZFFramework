@@ -24,6 +24,27 @@ public:
     ZFOBSERVER_EVENT(AniDataOnUpdate)
 
 public:
+    /**
+     * @brief util to create files for #ZFUIAniImageView
+     *
+     * usage:
+     * @code
+     *   ZFUIAniImageData::Create(
+     *       ZFPathInfo(ZFPathType_storageSharedPath, "yourFileName.xml"),
+     *       frameImages);
+     * @endcode
+     *
+     * how it works:
+     * -# merge large image from frameImages
+     * -# #ZFObjectIOSave according to pathInfo,
+     *   which would write "yourFileName.png" and "yourFileName.xml"
+     */
+    ZFMETHOD_DECLARE_STATIC_3(zfbool, Create,
+                              ZFMP_IN(const ZFPathInfo &, pathInfo),
+                              ZFMP_IN(const ZFCoreArray<zfautoObjectT<ZFUIImage *> > &, frameImages),
+                              ZFMP_IN_OPT(const ZFCoreArrayPOD<zftimet> &, frameDurations, ZFCoreArrayPOD<zftimet>()))
+
+public:
     /** @brief see #ZFUIAniImageView */
     ZFMETHOD_DECLARE_4(zfbool, aniLoad,
                        ZFMP_IN(ZFUIImage *, frameSrc),
@@ -150,6 +171,15 @@ public:
      * current frame can be obtained by #aniFrame
      */
     ZFOBSERVER_EVENT(AniOnFrame)
+
+public:
+    /**
+     * @brief see #ZFUIAniImageData::Create
+     */
+    ZFMETHOD_DECLARE_STATIC_3(zfbool, Create,
+                              ZFMP_IN(const ZFPathInfo &, pathInfo),
+                              ZFMP_IN(const ZFCoreArray<zfautoObjectT<ZFUIImage *> > &, frameImages),
+                              ZFMP_IN_OPT(const ZFCoreArrayPOD<zftimet> &, frameDurations, ZFCoreArrayPOD<zftimet>()))
 
     // ============================================================
     // frame control

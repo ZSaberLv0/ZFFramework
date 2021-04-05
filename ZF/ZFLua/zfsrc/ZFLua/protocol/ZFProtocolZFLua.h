@@ -36,7 +36,10 @@ public:
     /** @brief see #ZFLuaStateDetach */
     virtual void luaStateDetach(ZF_IN void *L) zfpurevirtual;
 
-    /** @brief see #ZFLuaExecute */
+    /**
+     * @brief see #ZFLuaExecute,
+     *   impl must supply all methods mentioned in #ZFLuaExecute
+     */
     virtual zfbool luaExecute(ZF_IN void *L,
                               ZF_IN const ZFPathInfo *pathInfoOrNull,
                               ZF_IN const ZFInput &input,

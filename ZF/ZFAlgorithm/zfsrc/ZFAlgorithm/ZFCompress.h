@@ -36,15 +36,15 @@ ZFENUM_END_WITH_DEFAULT(ZFCompressLevel, ZFCompressLevel::e_DefaultCompress)
  * typical usage:
  * @code
  *   // compress
- *   ZFToken compressToken = ZFCompressBegin(outputZip);
- *   zfbool success = (compressToken != ZFTokenInvalid());
+ *   void *compressToken = ZFCompressBegin(outputZip);
+ *   zfbool success = (compressToken != zfnull);
  *   success &= ZFCompressContent(compressToken, inputRaw0, filePathInZip0);
  *   success &= ZFCompressContent(compressToken, inputRaw1, filePathInZip1);
  *   success &= ZFCompressEnd(compressToken);
  *
  *   // decompress
- *   ZFToken decompressToken = ZFDecompressBegin(inputZip);
- *   zfbool success = (decompressToken != ZFTokenInvalid());
+ *   void *decompressToken = ZFDecompressBegin(inputZip);
+ *   zfbool success = (decompressToken != zfnull);
  *   success &= ZFDecompressContent(decompressToken, outputRaw0, filePathInZip0);
  *   success &= ZFDecompressContent(decompressToken, outputRaw1, filePathInZip1);
  *   success &= ZFDecompressContentAtIndex(decompressToken, outputRaw0, fileIndexInZip0);
@@ -72,53 +72,53 @@ ZFENUM_END_WITH_DEFAULT(ZFCompressLevel, ZFCompressLevel::e_DefaultCompress)
  *
  * note: which compress algorithm would be used, depends on impl
  */
-ZFMETHOD_FUNC_DECLARE_2(ZFToken, ZFCompressBegin,
+ZFMETHOD_FUNC_DECLARE_2(void *, ZFCompressBegin,
                         ZFMP_IN_OUT(const ZFOutput &, outputZip),
                         ZFMP_IN_OPT(ZFCompressLevelEnum, compressLevel, ZFCompressLevel::EnumDefault()))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFCompressEnd,
-                        ZFMP_IN_OUT(ZFToken &, compressToken))
+                        ZFMP_IN(void *, compressToken))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFCompressContent,
-                        ZFMP_IN_OUT(ZFToken, compressToken),
+                        ZFMP_IN_OUT(void *, compressToken),
                         ZFMP_IN_OUT(const ZFInput &, inputRaw),
                         ZFMP_IN(const zfchar *, filePathInZip))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFCompressContentDir,
-                        ZFMP_IN_OUT(ZFToken, compressToken),
+                        ZFMP_IN_OUT(void *, compressToken),
                         ZFMP_IN(const zfchar *, filePathInZip))
 
 /** @brief see #ZFCompressBegin */
-ZFMETHOD_FUNC_DECLARE_1(ZFToken, ZFDecompressBegin,
+ZFMETHOD_FUNC_DECLARE_1(void *, ZFDecompressBegin,
                         ZFMP_IN_OUT(const ZFInput &, inputZip))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFDecompressEnd,
-                        ZFMP_IN_OUT(ZFToken &, decompressToken))
+                        ZFMP_IN(void *, decompressToken))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFDecompressContentAtIndex,
-                        ZFMP_IN_OUT(ZFToken, decompressToken),
+                        ZFMP_IN_OUT(void *, decompressToken),
                         ZFMP_IN_OUT(const ZFOutput &, outputRaw),
                         ZFMP_IN(zfindex, fileIndexInZip))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFDecompressContent,
-                        ZFMP_IN_OUT(ZFToken, decompressToken),
+                        ZFMP_IN_OUT(void *, decompressToken),
                         ZFMP_IN_OUT(const ZFOutput &, outputRaw),
                         ZFMP_IN(const zfchar *, filePathInZip))
 /** @brief see #ZFCompressBegin, return #zfindexMax if fail */
 ZFMETHOD_FUNC_DECLARE_1(zfindex, ZFDecompressContentCount,
-                        ZFMP_IN(ZFToken, decompressToken))
+                        ZFMP_IN(void *, decompressToken))
 /** @brief see #ZFCompressBegin, return #zfindexMax if fail */
 ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFDecompressContentIndex,
-                        ZFMP_IN(ZFToken, decompressToken),
+                        ZFMP_IN(void *, decompressToken),
                         ZFMP_IN(const zfchar *, filePathInZip))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFDecompressContentPathT,
-                        ZFMP_IN(ZFToken, decompressToken),
+                        ZFMP_IN(void *, decompressToken),
                         ZFMP_IN_OUT(zfstring &, filePathInZip),
                         ZFMP_IN(zfindex, fileIndexInZip))
 /** @brief see #ZFCompressBegin */
 ZFMETHOD_FUNC_DECLARE_2(zfstring, ZFDecompressContentPath,
-                        ZFMP_IN(ZFToken, decompressToken),
+                        ZFMP_IN(void *, decompressToken),
                         ZFMP_IN(zfindex, fileIndexInZip))
 
 // ============================================================

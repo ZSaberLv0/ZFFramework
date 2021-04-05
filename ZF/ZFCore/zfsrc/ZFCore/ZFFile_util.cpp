@@ -548,7 +548,7 @@ zfclass _ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate : zfextends ZFObject
     ZFOBJECT_DECLARE(_ZFP_ZFIOBufferedCallbackUsingTmpFilePrivate, ZFObject)
 
 public:
-    ZFToken token;
+    void *token;
     zfstring tmpFilePath;
     zfindex outputIndex;
     zfindex inputIndex;
@@ -575,10 +575,10 @@ protected:
     zfoverride
     virtual void objectOnDealloc(void)
     {
-        if(this->token != ZFTokenInvalid())
+        if(this->token != zfnull)
         {
             ZFFileFileClose(this->token);
-            this->token = ZFTokenInvalid();
+            this->token = zfnull;
         }
         ZFFileFileRemove(this->tmpFilePath.cString(), zfHint("recursive")zffalse, zfHint("force")zftrue);
         this->outputIOOwner->d = zfnull;
@@ -701,7 +701,7 @@ ZFIOBufferedCallbackUsingTmpFile::~ZFIOBufferedCallbackUsingTmpFile(void)
 
 ZFInput ZFIOBufferedCallbackUsingTmpFile::inputCallback(void)
 {
-    if(d->token == ZFTokenInvalid())
+    if(d->token == zfnull)
     {
         return ZFCallbackNull();
     }
@@ -714,7 +714,7 @@ ZFInput ZFIOBufferedCallbackUsingTmpFile::inputCallback(void)
 }
 ZFOutput ZFIOBufferedCallbackUsingTmpFile::outputCallback(void)
 {
-    if(d->token == ZFTokenInvalid())
+    if(d->token == zfnull)
     {
         return ZFCallbackNull();
     }

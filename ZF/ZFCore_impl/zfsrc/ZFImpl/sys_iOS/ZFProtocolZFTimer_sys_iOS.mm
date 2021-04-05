@@ -117,7 +117,7 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFTimerImpl_sys_iOS, ZFTimer, ZFProtocolLevel::e_SystemNormal)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("iOS:NSObject_NSTimer")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("iOS:NSObject:NSTimer")
 public:
     virtual void *nativeTimerCreate(ZF_IN ZFTimer *timer)
     {

@@ -21,12 +21,12 @@ protected:
         ZFTestCaseAssert(value == testValue);
 
         zfstring tmpFilePath = this->testCaseUseTmpFile("ZFCrc32_Crc32.txt");
-        ZFToken fp = ZFFileFileOpen(tmpFilePath, ZFFileOpenOption::e_Write);
-        if(fp != ZFTokenInvalid())
+        void *fp = ZFFileFileOpen(tmpFilePath, ZFFileOpenOption::e_Write);
+        if(fp != zfnull)
         {
             ZFFileFileWrite(fp, testString);
             ZFFileFileClose(fp);
-            fp = ZFTokenInvalid();
+            fp = zfnull;
         }
         this->testCaseOutput("write it to file %s, file's CRC32: %x",
                 tmpFilePath.cString(),

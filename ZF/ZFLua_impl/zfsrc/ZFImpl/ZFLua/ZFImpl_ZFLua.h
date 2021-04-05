@@ -141,6 +141,10 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implSetupObject(ZF_IN_OUT lua_State *L, Z
 // ============================================================
 /**
  * @brief run lua code, L must be first initialized by #ZFImpl_ZFLua_luaStateAttach
+ *
+ * NOTE: the lua code can return any number of values (any type that #ZFImpl_ZFLua_toGeneric supports),
+ * when more than one value returned,
+ * the luaResult would holds a #v_ZFCoreArray
  */
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
                                                  ZF_IN const zfchar *buf,

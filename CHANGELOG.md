@@ -6,9 +6,11 @@
 * change lua to 5.4
 * add support for setter and getter method to simulate property
 * add lambda implemented by pure C++03
+* add basic graphics
 * enhance view layout logic
 * optimize image impl
 * optimize page impl
+* optimize ani image impl
 * remove view delegate support
 * remove some useless module
 

@@ -21,12 +21,12 @@ protected:
         ZFTestCaseAssert(value == testValue);
 
         zfstring tmpFilePath = this->testCaseUseTmpFile("ZFMd5_Md5.txt");
-        ZFToken fp = ZFFileFileOpen(tmpFilePath, ZFFileOpenOption::e_Write);
-        if(fp != ZFTokenInvalid())
+        void *fp = ZFFileFileOpen(tmpFilePath, ZFFileOpenOption::e_Write);
+        if(fp != zfnull)
         {
             ZFFileFileWrite(fp, testString);
             ZFFileFileClose(fp);
-            fp = ZFTokenInvalid();
+            fp = zfnull;
         }
         this->testCaseOutput("write it to file %s, file's MD5: %s",
                 tmpFilePath.cString(),

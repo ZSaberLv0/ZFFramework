@@ -41,33 +41,33 @@ typedef zfbool (*ZFFilePathInfoCallbackFindNext)(ZF_IN_OUT ZFFileFindData &fd);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 typedef void (*ZFFilePathInfoCallbackFindClose)(ZF_IN_OUT ZFFileFindData &fd);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef ZFToken (*ZFFilePathInfoCallbackOpen)(ZF_IN const zfchar *pathData,
-                                              ZF_IN_OPT ZFFileOpenOptionFlags flag,
-                                              ZF_IN_OPT zfbool autoCreateParent);
+typedef void *(*ZFFilePathInfoCallbackOpen)(ZF_IN const zfchar *pathData,
+                                            ZF_IN_OPT ZFFileOpenOptionFlags flag,
+                                            ZF_IN_OPT zfbool autoCreateParent);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfbool (*ZFFilePathInfoCallbackClose)(ZF_IN ZFToken token);
+typedef zfbool (*ZFFilePathInfoCallbackClose)(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfindex (*ZFFilePathInfoCallbackTell)(ZF_IN ZFToken token);
+typedef zfindex (*ZFFilePathInfoCallbackTell)(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfbool (*ZFFilePathInfoCallbackSeek)(ZF_IN ZFToken token,
+typedef zfbool (*ZFFilePathInfoCallbackSeek)(ZF_IN void *token,
                                              ZF_IN zfindex byteSize,
                                              ZF_IN_OPT ZFSeekPos position);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfindex (*ZFFilePathInfoCallbackRead)(ZF_IN ZFToken token,
+typedef zfindex (*ZFFilePathInfoCallbackRead)(ZF_IN void *token,
                                               ZF_IN void *buf,
                                               ZF_IN zfindex maxByteSize);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfindex (*ZFFilePathInfoCallbackWrite)(ZF_IN ZFToken token,
+typedef zfindex (*ZFFilePathInfoCallbackWrite)(ZF_IN void *token,
                                                ZF_IN const void *src,
                                                ZF_IN_OPT zfindex maxByteSize);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef void (*ZFFilePathInfoCallbackFlush)(ZF_IN ZFToken token);
+typedef void (*ZFFilePathInfoCallbackFlush)(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfbool (*ZFFilePathInfoCallbackIsEof)(ZF_IN ZFToken token);
+typedef zfbool (*ZFFilePathInfoCallbackIsEof)(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfbool (*ZFFilePathInfoCallbackIsError)(ZF_IN ZFToken token);
+typedef zfbool (*ZFFilePathInfoCallbackIsError)(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-typedef zfindex (*ZFFilePathInfoCallbackSize)(ZF_IN ZFToken token);
+typedef zfindex (*ZFFilePathInfoCallbackSize)(ZF_IN void *token);
 
 // ============================================================
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
@@ -101,33 +101,33 @@ extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackFindNextDefault(ZF_IN_OUT ZFFi
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 extern ZF_ENV_EXPORT void ZFFilePathInfoCallbackFindCloseDefault(ZF_IN_OUT ZFFileFindData &fd);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT ZFToken ZFFilePathInfoCallbackOpenDefault(ZF_IN const zfchar *pathData,
-                                                               ZF_IN_OPT ZFFileOpenOptionFlags flag = ZFFileOpenOption::e_Read,
-                                                               ZF_IN_OPT zfbool autoCreateParent = zftrue);
+extern ZF_ENV_EXPORT void *ZFFilePathInfoCallbackOpenDefault(ZF_IN const zfchar *pathData,
+                                                             ZF_IN_OPT ZFFileOpenOptionFlags flag = ZFFileOpenOption::e_Read,
+                                                             ZF_IN_OPT zfbool autoCreateParent = zftrue);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackCloseDefault(ZF_IN ZFToken token);
+extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackCloseDefault(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackTellDefault(ZF_IN ZFToken token);
+extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackTellDefault(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackSeekDefault(ZF_IN ZFToken token,
+extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackSeekDefault(ZF_IN void *token,
                                                               ZF_IN zfindex byteSize,
                                                               ZF_IN_OPT ZFSeekPos position = ZFSeekPosBegin);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackReadDefault(ZF_IN ZFToken token,
+extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackReadDefault(ZF_IN void *token,
                                                                ZF_IN void *buf,
                                                                ZF_IN zfindex maxByteSize);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackWriteDefault(ZF_IN ZFToken token,
+extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackWriteDefault(ZF_IN void *token,
                                                                 ZF_IN const void *src,
                                                                 ZF_IN_OPT zfindex maxByteSize = zfindexMax());
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT void ZFFilePathInfoCallbackFlushDefault(ZF_IN ZFToken token);
+extern ZF_ENV_EXPORT void ZFFilePathInfoCallbackFlushDefault(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackIsEofDefault(ZF_IN ZFToken token);
+extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackIsEofDefault(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackIsErrorDefault(ZF_IN ZFToken token);
+extern ZF_ENV_EXPORT zfbool ZFFilePathInfoCallbackIsErrorDefault(ZF_IN void *token);
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackSizeDefault(ZF_IN ZFToken token);
+extern ZF_ENV_EXPORT zfindex ZFFilePathInfoCallbackSizeDefault(ZF_IN void *token);
 
 // ============================================================
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
@@ -173,52 +173,52 @@ ZFMETHOD_FUNC_DECLARE_2(void, ZFFilePathInfoFindClose,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
                         ZFMP_IN_OUT(ZFFileFindData &, fd))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
-ZFMETHOD_FUNC_DECLARE_3(ZFToken, ZFFilePathInfoOpen,
+ZFMETHOD_FUNC_DECLARE_3(void *, ZFFilePathInfoOpen,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flag, ZFFileOpenOption::e_Read),
                         ZFMP_IN_OPT(zfbool, autoCreateParent, zftrue))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFFilePathInfoClose,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFFilePathInfoTell,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFFilePathInfoSeek,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(zfindex, byteSize),
                         ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_4(zfindex, ZFFilePathInfoRead,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(void *, buf),
                         ZFMP_IN(zfindex, maxByteSize))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_4(zfindex, ZFFilePathInfoWrite,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token),
+                        ZFMP_IN(void *, token),
                         ZFMP_IN(const void *, src),
                         ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax()))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_2(void, ZFFilePathInfoFlush,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFFilePathInfoIsEof,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFFilePathInfoIsError,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 /** @brief see #ZFPATHTYPE_FILEIO_REGISTER */
 ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFFilePathInfoSize,
                         ZFMP_IN(const ZFPathInfo &, pathInfo),
-                        ZFMP_IN(ZFToken, token))
+                        ZFMP_IN(void *, token))
 
 // ============================================================
 /** @brief callback data for #ZFPATHTYPE_FILEIO_REGISTER */

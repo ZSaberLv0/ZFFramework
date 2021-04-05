@@ -263,6 +263,10 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
                             ZF_OUT_OPT zfstring *errHint /* = zfnull */,
                             ZF_IN_OPT const zfchar *chunkInfo /* = zfnull */)
 {
+    #if ZF_ENV_DEBUG
+    int DEBUG_luaStackNum = lua_gettop(L);
+    #endif
+
     ZF_GLOBAL_INITIALIZER_CLASS(ZFImpl_ZFLua_luaStateGlobalHolder) *d
         = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFImpl_ZFLua_luaStateGlobalHolder);
     if(d->attachedState.find(L) == d->attachedState.end())
@@ -274,6 +278,7 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
         return zffalse;
     }
 
+    int luaStackNum = lua_gettop(L);
     int error = luaL_loadbuffer(L, buf, (bufLen == zfindexMax()) ? zfslen(buf) : bufLen, zfnull);
     if(error == 0)
     {
@@ -287,7 +292,7 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
         error = lua_pcall(
             L,
             (luaParams != zfnull ? (int)luaParams->count() : 0),
-            (luaResult != zfnull ? 1 : 0),
+            LUA_MULTRET,
             0);
     }
 
@@ -326,25 +331,42 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
         return zffalse;
     }
 
+    int luaResultNum = lua_gettop(L) - luaStackNum;
     if(luaResult != zfnull)
     {
-        if(lua_isuserdata(L, -1))
+        if(luaResultNum == 0)
         {
-            *luaResult = ZFImpl_ZFLua_luaGet(L, -1);
-            lua_pop(L, 1);
+            *luaResult = zfnull;
+        }
+        else if(luaResultNum == 1)
+        {
+            ZFImpl_ZFLua_toGeneric(*luaResult, L, -1);
         }
         else
         {
-            const zfchar *t = zfnull;
-            if(ZFImpl_ZFLua_toString(t, L, -1, zftrue))
+            zfblockedAlloc(v_ZFCoreArray, ret);
+            *luaResult = ret;
+            ret->zfv.capacity((zfindex)luaResultNum);
+            for(int i = 0; i < luaResultNum; ++i)
             {
-                zfblockedAlloc(v_zfstring, v);
-                v->zfv = t;
-                *luaResult = v;
-                lua_pop(L, 1);
+                zfautoObject tmp;
+                ZFImpl_ZFLua_toGeneric(tmp, L, -1 - (luaResultNum - 1 - i));
+                ret->zfv.add(tmp);
             }
         }
     }
+    if(luaResultNum > 0)
+    {
+        lua_pop(L, luaResultNum);
+    }
+
+    #if ZF_ENV_DEBUG
+    if(DEBUG_luaStackNum != lua_gettop(L))
+    {
+        zfCoreCriticalMessage("[ZFLua] stack messed up after execute: %d => %d",
+            (zfint)DEBUG_luaStackNum, (zfint)lua_gettop(L));
+    }
+    #endif
 
     return zftrue;
 }

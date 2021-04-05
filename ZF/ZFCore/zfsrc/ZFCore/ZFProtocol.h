@@ -609,8 +609,8 @@ private:
  *   such as "iOS:NSString"
  * -  if you need some native wrapper to hold native types,
  *   it's recommended to supply in this format:\n
- *   "framework or system or environment name" + ":" + "wrapper name" + "_" + "hint"\n
- *   such as "iOS:NSObject_NSString"\n
+ *   "framework or system or environment name" + ":" + "wrapper name" + ":" + "hint"\n
+ *   such as "iOS:NSObject:NSString"\n
  *   and in your wrapper object, supply a native method named "zfnativeImpl"
  *   to return the wrapped type,
  *   so that native code can use native code to reflect and access the internal types
