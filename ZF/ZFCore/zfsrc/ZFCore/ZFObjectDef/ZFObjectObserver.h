@@ -392,7 +392,7 @@ extern ZF_ENV_EXPORT ZFObserverHolder &_ZFP_ZFObjectGlobalEventObserverRef(void)
  * declared event name can be accessed by:
  * @code
  *   zfidentity eventId = YourClass::EventYourEvent();
- *   const zfchar *eventName = YourClass::EventYourEvent_name();
+ *   const zfchar *eventName = ZFIdMapNameForId(eventId);
  * @endcode
  * note that subclass may declare a event same as parent,
  * while the final event name is different:\n

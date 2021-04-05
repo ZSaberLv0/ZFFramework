@@ -21,6 +21,79 @@ ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFMethodInvokeData, zfautoObject, param5
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFMethodInvokeData, zfautoObject, param6)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFMethodInvokeData, zfautoObject, param7)
 
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFMethodInvokeData, void, callSuper)
+
+void ZFMethodInvokeData::CallSuper(ZFMETHOD_GENERIC_INVOKER_PARAMS)
+{
+    zfCoreAssertWithMessage(invokerMethod->methodIsDynamicRegister(),
+        "ZFMethodInvokeData::callSuper() only works for dynamic registered method");
+    zfCoreAssertWithMessage(invokerMethod->methodOwnerClass() != zfnull && invokerMethod->methodType() == ZFMethodTypeVirtual,
+        "ZFMethodInvokeData::callSuper() only works for class virtual method");
+    ZFCoreArrayPOD<const ZFMethod *> allMethods;
+    invokerMethod->methodOwnerClass()->methodForNameGetAllT(allMethods, invokerMethod->methodName());
+
+    zfautoObject dummyRet;
+    zfbool hasCalledNonDynamicMethod = zffalse;
+    for(zfindex i = 1; i < allMethods.count(); ++i)
+    {
+        const ZFMethod *m = allMethods[i];
+        if(m->methodParamTypeIdIsMatch(invokerMethod))
+        {
+            if(!m->methodIsDynamicRegister())
+            {
+                if(hasCalledNonDynamicMethod)
+                {
+                    continue;
+                }
+                else
+                {
+                    hasCalledNonDynamicMethod = zftrue;
+                }
+            }
+            m->methodGenericInvoker()(m, invokerObject, zfnull, dummyRet, paramList);
+        }
+    }
+}
+void ZFMethodInvokeData::callSuper(void)
+{
+    zfCoreAssertWithMessage(invokerMethod->methodIsDynamicRegister(),
+        "ZFMethodInvokeData::callSuper() only works for dynamic registered method");
+    zfCoreAssertWithMessage(invokerMethod->methodOwnerClass() != zfnull && invokerMethod->methodType() == ZFMethodTypeVirtual,
+        "ZFMethodInvokeData::callSuper() only works for class virtual method");
+    ZFCoreArrayPOD<const ZFMethod *> allMethods;
+    invokerMethod->methodOwnerClass()->methodForNameGetAllT(allMethods, invokerMethod->methodName());
+
+    zfbool hasCalledNonDynamicMethod = zffalse;
+    for(zfindex i = 1; i < allMethods.count(); ++i)
+    {
+        const ZFMethod *m = allMethods[i];
+        if(m->methodParamTypeIdIsMatch(invokerMethod))
+        {
+            if(!m->methodIsDynamicRegister())
+            {
+                if(hasCalledNonDynamicMethod)
+                {
+                    continue;
+                }
+                else
+                {
+                    hasCalledNonDynamicMethod = zftrue;
+                }
+            }
+            m->methodGenericInvoke(invokerObject
+                    , param0
+                    , param1
+                    , param2
+                    , param3
+                    , param4
+                    , param5
+                    , param6
+                    , param7
+                );
+        }
+    }
+}
+
 // ============================================================
 zfclassNotPOD _ZFP_ZFMethodDynamicRegisterParamPrivate
 {

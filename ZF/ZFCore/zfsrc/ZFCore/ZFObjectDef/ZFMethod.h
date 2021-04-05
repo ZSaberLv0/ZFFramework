@@ -29,12 +29,11 @@ typedef enum
 
 // ============================================================
 #define _ZFP_ZFMethodTypeText(t) ((const zfchar *)ZFM_TOSTRING(ZFM_CAT(_, t())) + 1)
-/** @brief see #ZFMethod */
+/** @cond ZFPrivateDoc */
 #define ZFMethodTypeNormal()
-/** @brief see #ZFMethod */
 #define ZFMethodTypeStatic() static
-/** @brief see #ZFMethod */
 #define ZFMethodTypeVirtual() virtual
+/** @endcond */
 
 /**
  * @brief the method type

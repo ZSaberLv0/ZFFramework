@@ -29,6 +29,17 @@ public:
     zfautoObject param5; /**< @brief data to hold params for #ZFMethodGenericInvoker */
     zfautoObject param6; /**< @brief data to hold params for #ZFMethodGenericInvoker */
     zfautoObject param7; /**< @brief data to hold params for #ZFMethodGenericInvoker */
+
+public:
+    /**
+     * @brief for dynamic registered method to call parent's method
+     */
+    zffinal static void CallSuper(ZFMETHOD_GENERIC_INVOKER_PARAMS);
+    /**
+     * @brief for dynamic registered method to call parent's method
+     */
+    zffinal void callSuper(void);
+
 protected:
     /** @cond ZFPrivateDoc */
     ZFMethodInvokeData(void)

@@ -621,7 +621,6 @@ public:
     void _ZFP_ZFClass_methodAndPropertyAutoRegister(void) const;
     void _ZFP_ZFClass_methodRegister(ZF_IN const ZFMethod *method) const;
     void _ZFP_ZFClass_methodUnregister(ZF_IN const ZFMethod *method) const;
-    void _ZFP_ZFClass_methodMapCacheUpdate(void) const;
     void _ZFP_ZFClass_propertyRegister(ZF_IN const ZFProperty *zfproperty) const;
     void _ZFP_ZFClass_propertyUnregister(ZF_IN const ZFProperty *zfproperty) const;
     void _ZFP_ZFClass_propertyAutoInitRegister(ZF_IN const ZFProperty *property) const;

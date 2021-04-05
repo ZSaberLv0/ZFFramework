@@ -80,7 +80,7 @@ public:
  * declared id can be accessed by:
  * @code
  *   zfidentity idValue = YourClass::IdYourSth();
- *   const zfchar *idName = YourClass::IdYourSth_name();
+ *   const zfchar *idName = ZFIdMapNameForId(idValue);
  * @endcode
  * note that subclass may declare an id same as parent,
  * while the final id name is different:\n
@@ -105,11 +105,6 @@ public:
         static zfidentity prefix##YourIdName(void) \
         { \
             return *(_ZFP_IM_##prefix##YourIdName().idValue); \
-        } \
-        /** @brief see @ref prefix##YourIdName */ \
-        static const zfchar *prefix##YourIdName##_name(void) \
-        { \
-            return _ZFP_IM_##prefix##YourIdName().idName; \
         } \
         static _ZFP_ZFIdMapHolder &_ZFP_IM_##prefix##YourIdName(void) \
         { \
@@ -158,11 +153,6 @@ public:
     inline zfidentity prefix##YourIdName(void) \
     { \
         return *(_ZFP_ZFIdMapHolder_##prefix##_##YourIdName::h().idValue); \
-    } \
-    /** @brief see @ref prefix##YourIdName, @ref ZFIDMAP_GLOBAL */ \
-    inline const zfchar *prefix##YourIdName##_name(void) \
-    { \
-        return _ZFP_ZFIdMapHolder_##prefix##_##YourIdName::h().idName; \
     }
 
 /** @brief see #ZFIDMAP */
@@ -180,13 +170,6 @@ public:
                 }, Scope::ClassData(), public, ZFMethodTypeStatic, \
                 zfidentity, ZFM_TOSTRING(prefix##YourIdName)); \
             this->m_id = resultMethod; \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_0(resultMethod, { \
-                    return Scope::prefix##YourIdName##_name(); \
-                }, Scope::ClassData(), public, ZFMethodTypeStatic, \
-                const zfchar *, ZFM_TOSTRING(prefix##YourIdName##_name)); \
-            this->m_idName = resultMethod; \
         } \
     } \
     const ZFMethod *m_id; \
@@ -212,12 +195,6 @@ public:
                     return prefix##YourIdName(); \
                 }, ZF_NAMESPACE_CURRENT(), Id, zfidentity, ZFM_TOSTRING(prefix##YourIdName)); \
             this->m_id = resultMethod; \
-        } \
-        { \
-            ZFMethodFuncUserRegisterDetail_0(resultMethod, { \
-                    return prefix##YourIdName##_name(); \
-                }, ZF_NAMESPACE_CURRENT(), Name, const zfchar *, ZFM_TOSTRING(prefix##YourIdName##_name)); \
-            this->m_idName = resultMethod; \
         } \
     } \
     ZF_STATIC_REGISTER_DESTROY(ZFIdMap_##YourIdName) \

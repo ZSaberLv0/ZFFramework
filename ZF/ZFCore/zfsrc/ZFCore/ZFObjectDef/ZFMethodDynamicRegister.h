@@ -21,6 +21,9 @@ zfclassFwd ZFListener;
  * -  use #ZFMethodGenericInvoker to implement,
  *   have lower performance (trade for flexibility)
  *
+ * @note you may override parent's method by registering a dynamic method in subclass,
+ *   at this case, you may use #ZFMethodInvokeData::callSuper
+ *   to call parent's method
  * @note dynamic registered contents would be removed automatically
  *   during #ZFFrameworkCleanup as level #ZFLevelZFFrameworkHigh
  * @warning (ZFTAG_LIMITATION) for dynamic registered method,
@@ -92,7 +95,9 @@ public:
     /** @brief see #ZFMethodDynamicRegister */
     ZFMethodGenericInvoker methodGenericInvoker(void) const;
 
-    /** @brief see #ZFMethodDynamicRegister */
+    /**
+     * @brief see #ZFMethodDynamicRegister, methodImpl's param0 is #ZFMethodInvokeData
+     */
     ZFMethodDynamicRegisterParam &methodImpl(ZF_IN const ZFListener &methodImpl);
     /** @brief see #ZFMethodDynamicRegister */
     const ZFListener &methodImpl(void) const;
