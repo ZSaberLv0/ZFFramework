@@ -13,8 +13,6 @@
 #include "ZFCoreDef/ZFCoreArray.h"
 #include "ZFCoreDef/ZFCoreDataEncode.h"
 #include "ZFCoreDef/ZFCoreDataPairSplit.h"
-#include "ZFCoreDef/ZFCoreElementInfoGetter.h"
-#include "ZFCoreDef/ZFCoreElementInfoGetter_common.h"
 #include "ZFCoreDef/ZFCoreEnvConfig.h"
 #include "ZFCoreDef/ZFCoreEnvDef.h"
 #include "ZFCoreDef/ZFCoreGlobalInitializer.h"

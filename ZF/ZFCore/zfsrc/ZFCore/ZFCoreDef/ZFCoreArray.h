@@ -10,7 +10,6 @@
 #include "ZFComparer.h"
 #include "ZFCoreUtilMath.h"
 #include "ZFToken.h"
-#include "ZFCoreElementInfoGetter.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -285,11 +284,11 @@ public:
     void objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
                               ZF_IN_OPT zfindex maxCount = zfindexMax(),
                               ZF_IN_OPT const ZFTokenForContainer &token = ZFTokenForContainerDefault(),
-                              ZF_IN_OPT typename ZFCoreInfoGetter<T_Element>::InfoGetter elementInfoGetter = zfnull) const
+                              ZF_IN_OPT typename ZFCoreInfoGetterType<T_Element>::InfoGetter infoGetter = zfnull) const
     {
-        if(elementInfoGetter == zfnull)
+        if(infoGetter == zfnull)
         {
-            elementInfoGetter = ZFCoreElementInfoGetter<T_Element>::elementInfoGetter;
+            infoGetter = ZFCoreInfoGetter<T_Element>::InfoGetter;
         }
 
         zfindex count = 0;
@@ -301,7 +300,7 @@ public:
                 ret += token.tokenSeparator;
             }
             ret += token.tokenValueLeft;
-            elementInfoGetter(ret, this->get(count));
+            infoGetter(ret, this->get(count));
             ret += token.tokenValueRight;
         }
         if(count < this->count())
@@ -317,10 +316,10 @@ public:
     /** @brief return content info */
     zfstring objectInfoOfContent(ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                  ZF_IN_OPT const ZFTokenForContainer &token = ZFTokenForContainerDefault(),
-                                 ZF_IN_OPT typename ZFCoreInfoGetter<T_Element>::InfoGetter elementInfoGetter = zfnull) const
+                                 ZF_IN_OPT typename ZFCoreInfoGetterType<T_Element>::InfoGetter infoGetter = zfnull) const
     {
         zfstring ret;
-        this->objectInfoOfContentT(ret, maxCount, token, elementInfoGetter);
+        this->objectInfoOfContentT(ret, maxCount, token, infoGetter);
         return ret;
     }
 

@@ -214,7 +214,7 @@ public:
         else
         {
             zfstring info;
-            ZFCoreElementInfoGetter<T_ReturnTypeTmp>::elementInfoGetter(info, retTmp);
+            ZFCoreInfoGetter<T_ReturnTypeTmp>::InfoGetter(info, retTmp);
             _ZFP_MtdGIRetError(errorHint,
                 ZFTypeId<T_ReturnTypeTmp>::TypeId(),
                 info);

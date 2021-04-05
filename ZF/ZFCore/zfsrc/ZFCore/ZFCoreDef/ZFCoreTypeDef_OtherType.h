@@ -152,20 +152,34 @@ public:
 
 // ============================================================
 /**
- * @brief base type for info getter
+ * @brief string if the content info not available
  */
-template<typename T_Element>
+#define ZFTOKEN_ZFCoreInfoGetterNotAvailable "N/A"
+
+/**
+ * @brief generic info getter
+ *
+ * use #ZFOUTPUT_TYPE to declare for your own type
+ */
+template<typename T_Element, typename T_ReservedFix = void>
 zfclassNotPOD ZF_ENV_EXPORT ZFCoreInfoGetter
 {
 public:
     /** @brief see #ZFCoreInfoGetter */
-    typedef void (*InfoGetter)(ZF_IN_OUT zfstring &ret, ZF_IN T_Element const &v);
+    static void InfoGetter(ZF_IN_OUT zfstring &ret, ZF_IN T_Element const &v)
+    {
+        ret += ZFTOKEN_ZFCoreInfoGetterNotAvailable;
+    }
 };
 
-/**
- * @brief string if the content info not available
- */
-#define ZFTOKEN_ZFCoreInfoGetterNotAvailable "N/A"
+/** @brief type for #ZFCoreInfoGetter */
+template<typename T_Element>
+zfclassNotPOD ZF_ENV_EXPORT ZFCoreInfoGetterType
+{
+public:
+    /** @brief type for #ZFCoreInfoGetter */
+    typedef void (*InfoGetter)(ZF_IN_OUT zfstring &ret, ZF_IN T_Element const &v);
+};
 
 // ============================================================
 /**

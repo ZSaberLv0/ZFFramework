@@ -6,7 +6,6 @@
 #define _ZFI_ZFCorePointer_h_
 
 #include "ZFCoreSPrintf.h"
-#include "ZFCoreElementInfoGetter.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -304,15 +303,15 @@ public:
         this->objectInfoOfContentT(ret, zfnull);
     }
     /** @brief see #objectInfoOfContent */
-    virtual void objectInfoOfContentT(ZF_IN_OUT zfstring &ret, ZF_IN typename ZFCoreInfoGetter<T_Pointer>::InfoGetter elementInfoGetter) const
+    virtual void objectInfoOfContentT(ZF_IN_OUT zfstring &ret, ZF_IN typename ZFCoreInfoGetterType<T_Pointer>::InfoGetter infoGetter) const
     {
-        if(elementInfoGetter != zfnull)
+        if(infoGetter != zfnull)
         {
-            elementInfoGetter(ret, d->pointerValue);
+            infoGetter(ret, d->pointerValue);
         }
         else
         {
-            ZFCoreElementInfoGetter<T_Pointer>::elementInfoGetter(ret, d->pointerValue);
+            ZFCoreInfoGetter<T_Pointer>::InfoGetter(ret, d->pointerValue);
         }
     }
 

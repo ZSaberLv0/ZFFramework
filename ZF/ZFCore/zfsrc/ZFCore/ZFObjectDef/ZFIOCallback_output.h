@@ -58,16 +58,12 @@ _ZFP_ZFCALLBACK_DECLARE_END_NO_ALIAS(ZFOutput, ZFIOCallback)
 // custom type output
 #define _ZFP_ZFOUTPUT_EXPAND(T_Type) \
     template<> \
-    zfclassNotPOD ZFCoreElementInfoGetter<T_Type> \
+    zfclassNotPOD ZFCoreInfoGetter<T_Type> \
     { \
     public: \
-        static void elementInfoGetter(ZF_IN_OUT zfstring &ret, ZF_IN T_Type const &v) \
+        static void InfoGetter(ZF_IN_OUT zfstring &ret, ZF_IN T_Type const &v) \
         { \
-            ZFCoreElementTokenGetter<T_Type>::elementTokenGetterLeft(ret, v); \
-            { \
-                ZFOutputForString(ret) << v; \
-            } \
-            ZFCoreElementTokenGetter<T_Type>::elementTokenGetterRight(ret, v); \
+            ZFOutputForString(ret) << v; \
         } \
     };
 /**
@@ -116,16 +112,12 @@ _ZFP_ZFCALLBACK_DECLARE_END_NO_ALIAS(ZFOutput, ZFIOCallback)
         return output; \
     } \
     template<templateList> \
-    zfclassNotPOD ZFCoreElementInfoGetter<T_Type> \
+    zfclassNotPOD ZFCoreInfoGetter<T_Type> \
     { \
     public: \
-        static void elementInfoGetter(ZF_IN_OUT zfstring &ret, ZF_IN T_Type const &v) \
+        static void InfoGetter(ZF_IN_OUT zfstring &ret, ZF_IN T_Type const &v) \
         { \
-            ZFCoreElementTokenGetter<T_Type>::elementTokenGetterLeft(ret, v); \
-            { \
-                ZFOutputForString(ret) << v; \
-            } \
-            ZFCoreElementTokenGetter<T_Type>::elementTokenGetterRight(ret, v); \
+            ZFOutputForString(ret) << v; \
         } \
     }; \
     /** @endcond */
