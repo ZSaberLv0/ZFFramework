@@ -600,7 +600,7 @@ public:
      * the #ZFListener would be executed\n
      * it's ensured the first added observer would be executed first
      * unless #observerMoveToFirst is called\n
-     * use #ZFGlobalEventCenter or #ZFObjectGlobalEventObserver for global observer\n
+     * use #ZFGlobalObserver for global observer\n
      * for instance observer:
      * @code
      *   zfclass YourClass

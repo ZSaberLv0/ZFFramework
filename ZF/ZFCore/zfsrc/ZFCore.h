@@ -15,7 +15,7 @@
 #include "ZFCore/ZFDynamicRegisterUtil.h"
 #include "ZFCore/ZFEnvInfo.h"
 #include "ZFCore/ZFFile.h"
-#include "ZFCore/ZFGlobalEventCenter_common.h"
+#include "ZFCore/ZFGlobalEvent_common.h"
 #include "ZFCore/ZFGlobalTimer.h"
 #include "ZFCore/ZFHashMap.h"
 #include "ZFCore/ZFHashSet.h"

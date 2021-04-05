@@ -18,13 +18,13 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaGCImmediately,
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFLuaGCHolder, ZFLevelZFFrameworkNormal)
 {
     this->luaStateOnDetachListener = ZFCallbackForFunc(luaStateOnDetach);
-    ZFGlobalEventCenter::instance()->observerAdd(
+    ZFGlobalObserver().observerAdd(
         ZFGlobalEvent::EventLuaStateOnDetach(),
         this->luaStateOnDetachListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFLuaGCHolder)
 {
-    ZFGlobalEventCenter::instance()->observerRemove(
+    ZFGlobalObserver().observerRemove(
         ZFGlobalEvent::EventLuaStateOnDetach(),
         this->luaStateOnDetachListener);
 }

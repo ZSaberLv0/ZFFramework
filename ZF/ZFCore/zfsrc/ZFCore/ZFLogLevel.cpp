@@ -14,7 +14,7 @@ void ZFLogLevelDefault(ZF_IN ZFLogLevelEnum level)
     _ZFP_ZFLogLevelGlobal = level;
     if(ZFFrameworkStateCheck(ZFLevelZFFrameworkEssential) == ZFFrameworkStateAvailable)
     {
-        ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventLogLevelOnChange());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventLogLevelOnChange());
     }
 }
 ZFLogLevelEnum ZFLogLevelDefault(void)

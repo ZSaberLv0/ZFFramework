@@ -56,7 +56,7 @@ ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
  *
  * notified after change, param0 is the old path value
  * (as #v_zfstring)\n
- * notified to #ZFGlobalEventCenter only
+ * notified to #ZFGlobalObserver only
  */
 ZFOBSERVER_EVENT_GLOBAL(ZFFilePathForSettingOnChange)
 ZF_NAMESPACE_END(ZFGlobalEvent)
@@ -82,7 +82,7 @@ ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
  *
  * notified after change, param0 is the old path value
  * (as #v_zfstring)\n
- * notified to #ZFGlobalEventCenter only
+ * notified to #ZFGlobalObserver only
  */
 ZFOBSERVER_EVENT_GLOBAL(ZFFilePathForStorageOnChange)
 ZF_NAMESPACE_END(ZFGlobalEvent)
@@ -108,7 +108,7 @@ ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
  *
  * notified after change, param0 is the old path value
  * (as #v_zfstring)\n
- * notified to #ZFGlobalEventCenter only
+ * notified to #ZFGlobalObserver only
  */
 ZFOBSERVER_EVENT_GLOBAL(ZFFilePathForStorageSharedOnChange)
 ZF_NAMESPACE_END(ZFGlobalEvent)
@@ -138,19 +138,19 @@ ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
  *
  * notified after change, param0 is the old path value
  * (as #v_zfstring)\n
- * notified to #ZFGlobalEventCenter only
+ * notified to #ZFGlobalObserver only
  */
 ZFOBSERVER_EVENT_GLOBAL(ZFFilePathForCacheOnChange)
 /**
  * @brief see #ZFObject::observerNotify
  *
- * notified to #ZFGlobalEventCenter only
+ * notified to #ZFGlobalObserver only
  */
 ZFOBSERVER_EVENT_GLOBAL(ZFFilePathForCacheBeforeClear)
 /**
  * @brief see #ZFObject::observerNotify
  *
- * notified to #ZFGlobalEventCenter only
+ * notified to #ZFGlobalObserver only
  */
 ZFOBSERVER_EVENT_GLOBAL(ZFFilePathForCacheAfterClear)
 ZF_NAMESPACE_END(ZFGlobalEvent)

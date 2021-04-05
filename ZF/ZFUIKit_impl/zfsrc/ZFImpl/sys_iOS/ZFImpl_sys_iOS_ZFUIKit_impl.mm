@@ -241,12 +241,12 @@ void ZFImpl_sys_iOS_ZFUIKit_impl_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN UIVi
             zfLogTrimT() << s;
         })
         this->windowOnPauseListener = windowOnPause;
-        ZFObjectGlobalEventObserver().observerAdd(
+        ZFGlobalObserver().observerAdd(
             ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
     }
     ZF_GLOBAL_INITIALIZER_DESTROY(ZFImpl_sys_iOS_autoPrintViewTree)
     {
-        ZFObjectGlobalEventObserver().observerRemove(
+        ZFGlobalObserver().observerRemove(
             ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
     }
     private:

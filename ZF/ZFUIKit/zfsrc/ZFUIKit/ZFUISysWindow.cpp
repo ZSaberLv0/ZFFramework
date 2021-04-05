@@ -127,7 +127,7 @@ void ZFUISysWindow::mainWindowRegister(ZF_IN ZFUISysWindow *window)
     _ZFP_ZFUISysWindow_mainWindowRegistered = zfRetain(window);
     _ZFP_ZFUISysWindow_mainWindow = _ZFP_ZFUISysWindow_mainWindowRegistered;
 
-    ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventSysWindowMainWindowOnAttach());
+    ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventSysWindowMainWindowOnAttach());
 }
 
 ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, mainWindow)
@@ -136,7 +136,7 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, mainWindow)
     {
         _ZFP_ZFUISysWindow_mainWindowBuiltin = ZFPROTOCOL_ACCESS(ZFUISysWindow)->mainWindow();
         _ZFP_ZFUISysWindow_mainWindow = _ZFP_ZFUISysWindow_mainWindowBuiltin;
-        ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventSysWindowMainWindowOnAttach());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventSysWindowMainWindowOnAttach());
     }
     return _ZFP_ZFUISysWindow_mainWindow;
 }

@@ -41,9 +41,9 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaStateAttach,
                        ZFMP_IN(void *, L))
 {
     ZFPROTOCOL_ACCESS(ZFLua)->luaStateAttach(L);
-    if(ZFGlobalEventCenter::instance()->observerHasAdd(ZFGlobalEvent::EventLuaStateOnAttach()))
+    if(ZFGlobalObserver().observerHasAdd(ZFGlobalEvent::EventLuaStateOnAttach()))
     {
-        ZFGlobalEventCenter::instance()->observerNotify(
+        ZFGlobalObserver().observerNotify(
             ZFGlobalEvent::EventLuaStateOnAttach(),
             zflineAlloc(v_VoidPointer, L));
     }
@@ -51,9 +51,9 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaStateAttach,
 ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaStateDetach,
                        ZFMP_IN(void *, L))
 {
-    if(ZFGlobalEventCenter::instance()->observerHasAdd(ZFGlobalEvent::EventLuaStateOnDetach()))
+    if(ZFGlobalObserver().observerHasAdd(ZFGlobalEvent::EventLuaStateOnDetach()))
     {
-        ZFGlobalEventCenter::instance()->observerNotify(
+        ZFGlobalObserver().observerNotify(
             ZFGlobalEvent::EventLuaStateOnDetach(),
             zflineAlloc(v_VoidPointer, L));
     }

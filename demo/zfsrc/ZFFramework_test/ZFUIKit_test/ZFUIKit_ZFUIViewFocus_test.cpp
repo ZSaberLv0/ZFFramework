@@ -6,11 +6,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_GLOBAL_INITIALIZER_INIT(ZFUIViewFocusState_test)
 {
     this->listener = ZFCallbackForFunc(zfself::viewFocusOnChange);
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewFocusOnChange(), this->listener);
+    ZFGlobalObserver().observerAdd(ZFUIView::EventViewFocusOnChange(), this->listener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewFocusState_test)
 {
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewFocusOnChange(), this->listener);
+    ZFGlobalObserver().observerRemove(ZFUIView::EventViewFocusOnChange(), this->listener);
 }
 private:
     ZFListener listener;

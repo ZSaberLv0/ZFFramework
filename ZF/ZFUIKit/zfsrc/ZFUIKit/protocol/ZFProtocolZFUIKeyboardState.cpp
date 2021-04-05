@@ -39,7 +39,7 @@ public:
         }
         this->implRegisterFlag = zftrue;
 
-        ZFObjectGlobalEventObserver().observerAdd(ZFObserverAddParam()
+        ZFGlobalObserver().observerAdd(ZFObserverAddParam()
                 .eventId(ZFUIView::EventViewOnEvent())
                 .observer(this->viewOnEventListener)
                 .observerLevel(ZFLevelZFFrameworkEssential)
@@ -53,7 +53,7 @@ public:
         }
         this->implRegisterFlag = zffalse;
 
-        ZFObjectGlobalEventObserver().observerRemove(
+        ZFGlobalObserver().observerRemove(
             ZFUIView::EventViewOnEvent(),
             this->viewOnEventListener);
     }

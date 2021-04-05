@@ -56,7 +56,7 @@ void ZFStyleable::styleKey(ZF_IN const zfchar *styleKey)
         if(_ZFP_styleKey != zfnull)
         {
             zfsChange(_ZFP_styleKey->styleKey, styleKey);
-            ZFObjectGlobalEventObserver().observerRemove(
+            ZFGlobalObserver().observerRemove(
                 ZFGlobalEvent::EventZFStyleOnChange(),
                 ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStyleChangeDataHolder)->styleOnChangeListener,
                 this->toObject()->objectHolder());
@@ -70,7 +70,7 @@ void ZFStyleable::styleKey(ZF_IN const zfchar *styleKey)
         }
         if(_ZFP_styleKey->styleKey == zfnull)
         {
-            ZFObjectGlobalEventObserver().observerAdd(
+            ZFGlobalObserver().observerAdd(
                 ZFGlobalEvent::EventZFStyleOnChange(),
                 ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStyleChangeDataHolder)->styleOnChangeListener,
                 this->toObject()->objectHolder());
@@ -84,7 +84,7 @@ void ZFStyleable::styleKey(ZF_IN const zfchar *styleKey)
             v_zfstring *param0 = zflockfree_zfAllocWithCache(v_zfstring);
             v_zfstring *param1 = zflockfree_zfAllocWithCache(v_zfstring);
             param1->zfv = styleKey;
-            ZFObjectGlobalEventObserver().observerNotifyWithCustomSender(
+            ZFGlobalObserver().observerNotifyWithCustomSender(
                 this->toObject(),
                 ZFGlobalEvent::EventZFStyleOnInvalid(),
                 param0,
@@ -173,7 +173,7 @@ void ZFStyleable::styleKeyForProperty(ZF_IN const zfchar *propertyName, ZF_IN co
             _ZFP_styleKey->stylePropertyKeyMap.erase(propertyName);
             if(_ZFP_styleKey->stylePropertyKeyMap.empty())
             {
-                ZFObjectGlobalEventObserver().observerRemove(
+                ZFGlobalObserver().observerRemove(
                     ZFGlobalEvent::EventZFStyleOnChange(),
                     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStylePropertyChangeDataHolder)->stylePropertyOnChangeListener,
                     this->toObject()->objectHolder());
@@ -190,7 +190,7 @@ void ZFStyleable::styleKeyForProperty(ZF_IN const zfchar *propertyName, ZF_IN co
         _ZFP_styleKey->stylePropertyKeyMap[propertyName] = styleKey;
         if(oldEmpty)
         {
-            ZFObjectGlobalEventObserver().observerAdd(
+            ZFGlobalObserver().observerAdd(
                 ZFGlobalEvent::EventZFStyleOnChange(),
                 ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStylePropertyChangeDataHolder)->stylePropertyOnChangeListener,
                 this->toObject()->objectHolder());
@@ -200,7 +200,7 @@ void ZFStyleable::styleKeyForProperty(ZF_IN const zfchar *propertyName, ZF_IN co
             _ZFP_styleKey->stylePropertyKeyMap.erase(propertyName);
             if(_ZFP_styleKey->stylePropertyKeyMap.empty())
             {
-                ZFObjectGlobalEventObserver().observerRemove(
+                ZFGlobalObserver().observerRemove(
                     ZFGlobalEvent::EventZFStyleOnChange(),
                     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStylePropertyChangeDataHolder)->stylePropertyOnChangeListener,
                     this->toObject()->objectHolder());
@@ -209,7 +209,7 @@ void ZFStyleable::styleKeyForProperty(ZF_IN const zfchar *propertyName, ZF_IN co
             param0->zfv = propertyName;
             v_zfstring *param1 = zflockfree_zfAllocWithCache(v_zfstring);
             param1->zfv = styleKey;
-            ZFObjectGlobalEventObserver().observerNotifyWithCustomSender(
+            ZFGlobalObserver().observerNotifyWithCustomSender(
                 this->toObject(),
                 ZFGlobalEvent::EventZFStyleOnInvalid(),
                 param0,
@@ -250,7 +250,7 @@ ZFINTERFACE_ON_DEALLOC_DEFINE(ZFStyleable)
     {
         if(_ZFP_styleKey->styleKey != zfnull)
         {
-            ZFObjectGlobalEventObserver().observerRemove(
+            ZFGlobalObserver().observerRemove(
                 ZFGlobalEvent::EventZFStyleOnChange(),
                 ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStyleChangeDataHolder)->styleOnChangeListener,
                 this->toObject()->objectHolder());
@@ -259,7 +259,7 @@ ZFINTERFACE_ON_DEALLOC_DEFINE(ZFStyleable)
         }
         if(!_ZFP_styleKey->stylePropertyKeyMap.empty())
         {
-            ZFObjectGlobalEventObserver().observerRemove(
+            ZFGlobalObserver().observerRemove(
                 ZFGlobalEvent::EventZFStyleOnChange(),
                 ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStylePropertyChangeDataHolder)->stylePropertyOnChangeListener,
                 this->toObject()->objectHolder());

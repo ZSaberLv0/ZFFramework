@@ -65,7 +65,7 @@ public:
 
         this->testCaseListPrepare();
 
-        ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventTestCaseRunAllOnStart());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventTestCaseRunAllOnStart());
 
         this->testCaseRunNext();
     }
@@ -86,7 +86,7 @@ public:
             toStop->testCaseStop(ZFResultType::e_Cancel);
         }
 
-        ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventTestCaseRunAllOnStop());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventTestCaseRunAllOnStop());
     }
 
     void testCaseRunNext(void)

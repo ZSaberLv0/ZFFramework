@@ -422,7 +422,7 @@ void ZFStyleChangeEnd()
 
     if(needNotify)
     {
-        ZFObjectGlobalEventObserver().observerNotify(ZFGlobalEvent::EventZFStyleOnChange());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventZFStyleOnChange());
     }
 }
 
@@ -458,14 +458,14 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFStyleInvalidAssert, ZFLevelZFFrameworkHi
                     propertyName);
             }
         })
-    this->taskId = ZFObjectGlobalEventObserver().observerAdd(
+    this->taskId = ZFGlobalObserver().observerAdd(
         ZFGlobalEvent::EventZFStyleOnInvalid(),
         action);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFStyleInvalidAssert)
 {
     _ZFP_ZFStyleInvalidCheckDisableFlag = zffalse;
-    ZFObjectGlobalEventObserver().observerRemoveByTaskId(this->taskId);
+    ZFGlobalObserver().observerRemoveByTaskId(this->taskId);
 }
 zfidentity taskId;
 ZF_GLOBAL_INITIALIZER_END(ZFStyleInvalidAssert)

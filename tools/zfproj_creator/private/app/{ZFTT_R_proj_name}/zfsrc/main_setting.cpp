@@ -23,12 +23,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             ZFUIViewTreePrint(sysWindow->rootView());
         })
         this->windowOnPauseListener = windowOnPause;
-        ZFObjectGlobalEventObserver().observerAdd(
+        ZFGlobalObserver().observerAdd(
             ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
     }
     ZF_GLOBAL_INITIALIZER_DESTROY(main_setting_autoPrintViewTree)
     {
-        ZFObjectGlobalEventObserver().observerRemove(
+        ZFGlobalObserver().observerRemove(
             ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
     }
     private:

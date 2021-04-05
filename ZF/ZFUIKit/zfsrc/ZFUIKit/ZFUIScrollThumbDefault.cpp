@@ -123,14 +123,14 @@ void ZFUIScrollThumbDefault::objectOnInitFinish(void)
         ZFCallbackForFunc(_ZFP_ZFUIScrollThumbDefaultPrivate::aniOnStop),
         this->objectHolder());
 
-    ZFObjectGlobalEventObserver().observerAdd(
+    ZFGlobalObserver().observerAdd(
         ZFUIWindow::EventWindowOnHide(),
         d->thumbHideAniAutoStopListener,
         this->objectHolder());
 }
 void ZFUIScrollThumbDefault::objectOnDeallocPrepare(void)
 {
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIWindow::EventWindowOnHide(), d->thumbHideAniAutoStopListener);
+    ZFGlobalObserver().observerRemove(ZFUIWindow::EventWindowOnHide(), d->thumbHideAniAutoStopListener);
     zfsuper::objectOnDeallocPrepare();
 }
 void ZFUIScrollThumbDefault::objectOnDealloc(void)

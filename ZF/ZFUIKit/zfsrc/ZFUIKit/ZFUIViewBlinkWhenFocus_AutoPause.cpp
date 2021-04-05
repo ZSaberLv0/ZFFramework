@@ -8,15 +8,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewBlinkWhenFocus_AutoPause_DataHolder, ZFLevelZFFrameworkLow)
 {
     this->doActionListener = ZFCallbackForFunc(zfself::doAction);
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIWindow::EventWindowOnShow(), this->doActionListener);
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIWindow::EventWindowOnHide(), this->doActionListener);
-    ZFObjectGlobalEventObserver().observerAdd(ZFUISysWindow::EventSysWindowOnResume(), this->doActionListener);
+    ZFGlobalObserver().observerAdd(ZFUIWindow::EventWindowOnShow(), this->doActionListener);
+    ZFGlobalObserver().observerAdd(ZFUIWindow::EventWindowOnHide(), this->doActionListener);
+    ZFGlobalObserver().observerAdd(ZFUISysWindow::EventSysWindowOnResume(), this->doActionListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewBlinkWhenFocus_AutoPause_DataHolder)
 {
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIWindow::EventWindowOnShow(), this->doActionListener);
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIWindow::EventWindowOnHide(), this->doActionListener);
-    ZFObjectGlobalEventObserver().observerRemove(ZFUISysWindow::EventSysWindowOnResume(), this->doActionListener);
+    ZFGlobalObserver().observerRemove(ZFUIWindow::EventWindowOnShow(), this->doActionListener);
+    ZFGlobalObserver().observerRemove(ZFUIWindow::EventWindowOnHide(), this->doActionListener);
+    ZFGlobalObserver().observerRemove(ZFUISysWindow::EventSysWindowOnResume(), this->doActionListener);
 }
 public:
     ZFListener doActionListener;

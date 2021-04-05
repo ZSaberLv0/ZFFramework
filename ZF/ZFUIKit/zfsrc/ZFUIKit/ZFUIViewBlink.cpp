@@ -136,13 +136,13 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
             ani->aniTarget(zfnull);
 
             ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->blinkingViews.removeElement(view);
-            ZFGlobalEventCenter::instance()->observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOff());
+            ZFGlobalObserver().observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOff());
         })
         view->observerAdd(ZFObject::EventObjectBeforeDealloc(), ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->viewOnDeallocListener);
         ani->observerAdd(ZFAnimation::EventAniOnStopOrInvalid(), aniOnStopListener, view->objectHolder());
         ani->aniTarget(blinkView);
 
-        ZFGlobalEventCenter::instance()->observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOn());
+        ZFGlobalObserver().observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOn());
         ani->aniStart();
     }
     else
@@ -161,7 +161,7 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
         })
         view->observerAdd(ZFObject::EventObjectBeforeDealloc(), ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->viewOnDeallocListener);
 
-        ZFGlobalEventCenter::instance()->observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOn());
+        ZFGlobalObserver().observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOn());
         zfidentity delayTaskId = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->delayTaskIdGenerator.idAcquire();
         zfblockedAlloc(v_zfidentity, delayTaskIdTag, delayTaskId);
         view->objectTag(_ZFP_ZFUIViewBlink_tag_delayTaskId, delayTaskIdTag);
@@ -189,7 +189,7 @@ static void _ZFP_ZFUIViewBlink_noAni_doOff(ZF_IN ZFUIView *view)
     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->blinkingViews.removeElement(view);
     view->objectTagRemove(_ZFP_ZFUIViewBlink_tag_delayTaskId);
     view->objectTagRemove(_ZFP_ZFUIViewBlink_tag_delayId);
-    ZFGlobalEventCenter::instance()->observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOff());
+    ZFGlobalObserver().observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOff());
 }
 static void _ZFP_ZFUIViewBlinkDoOff(ZF_IN ZFUIView *view)
 {

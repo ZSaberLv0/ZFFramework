@@ -1,6 +1,5 @@
 #include "ZFOutputDefault.h"
 #include "ZFObjectImpl.h"
-#include "ZFGlobalEventCenter.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 

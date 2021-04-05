@@ -64,7 +64,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUIWidget_ZFUIDialog_debug_LogEvent)
             << "BeforeShow";
     })
     this->dialogBeforeShowListener = dialogBeforeShow;
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIDialog::EventDialogBeforeShow(), this->dialogBeforeShowListener);
+    ZFGlobalObserver().observerAdd(ZFUIDialog::EventDialogBeforeShow(), this->dialogBeforeShowListener);
 
     ZFLISTENER_LOCAL(dialogAfterShow, {
         zfLogTrimT()
@@ -73,7 +73,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUIWidget_ZFUIDialog_debug_LogEvent)
             << "AfterShow";
     })
     this->dialogAfterShowListener = dialogAfterShow;
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIDialog::EventDialogAfterShow(), this->dialogAfterShowListener);
+    ZFGlobalObserver().observerAdd(ZFUIDialog::EventDialogAfterShow(), this->dialogAfterShowListener);
 
     ZFLISTENER_LOCAL(dialogBeforeHide, {
         zfLogTrimT()
@@ -82,7 +82,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUIWidget_ZFUIDialog_debug_LogEvent)
             << "BeforeHide";
     })
     this->dialogBeforeHideListener = dialogBeforeHide;
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIDialog::EventDialogBeforeHide(), this->dialogBeforeHideListener);
+    ZFGlobalObserver().observerAdd(ZFUIDialog::EventDialogBeforeHide(), this->dialogBeforeHideListener);
 
     ZFLISTENER_LOCAL(dialogAfterHide, {
         zfLogTrimT()
@@ -91,14 +91,14 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUIWidget_ZFUIDialog_debug_LogEvent)
             << "AfterHide";
     })
     this->dialogAfterHideListener = dialogAfterHide;
-    ZFObjectGlobalEventObserver().observerAdd(ZFUIDialog::EventDialogAfterHide(), this->dialogAfterHideListener);
+    ZFGlobalObserver().observerAdd(ZFUIDialog::EventDialogAfterHide(), this->dialogAfterHideListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIWidget_ZFUIDialog_debug_LogEvent)
 {
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIDialog::EventDialogBeforeShow(), this->dialogBeforeShowListener);
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIDialog::EventDialogAfterShow(), this->dialogAfterShowListener);
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIDialog::EventDialogBeforeHide(), this->dialogBeforeHideListener);
-    ZFObjectGlobalEventObserver().observerRemove(ZFUIDialog::EventDialogAfterHide(), this->dialogAfterHideListener);
+    ZFGlobalObserver().observerRemove(ZFUIDialog::EventDialogBeforeShow(), this->dialogBeforeShowListener);
+    ZFGlobalObserver().observerRemove(ZFUIDialog::EventDialogAfterShow(), this->dialogAfterShowListener);
+    ZFGlobalObserver().observerRemove(ZFUIDialog::EventDialogBeforeHide(), this->dialogBeforeHideListener);
+    ZFGlobalObserver().observerRemove(ZFUIDialog::EventDialogAfterHide(), this->dialogAfterHideListener);
 }
 private:
     ZFListener dialogBeforeShowListener;

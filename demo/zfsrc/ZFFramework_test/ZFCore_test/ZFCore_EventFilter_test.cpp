@@ -21,7 +21,7 @@ protected:
         ZFLISTENER_LOCAL(normalObserver, {
             zfLogT() << "normal observer";
         })
-        ZFGlobalEventCenter::instance()->observerAdd(
+        ZFGlobalObserver().observerAdd(
             ZFGlobalEvent::EventZFCore_EventFilter_test(),
             normalObserver);
 
@@ -29,23 +29,23 @@ protected:
             zfLogT() << "event filter";
             listenerData.eventFiltered(zftrue);
         })
-        ZFGlobalEventCenter::instance()->observerAdd(ZFObserverAddParam()
+        ZFGlobalObserver().observerAdd(ZFObserverAddParam()
             .eventId(ZFGlobalEvent::EventZFCore_EventFilter_test())
             .observer(eventFilter)
             .observerLevel(ZFLevelAppHigh));
 
         this->testCaseOutputSeparator();
         this->testCaseOutput("notify with event filter, only filter would be called");
-        ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventZFCore_EventFilter_test());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventZFCore_EventFilter_test());
 
         this->testCaseOutputSeparator();
         this->testCaseOutput("notify without event filter");
-        ZFGlobalEventCenter::instance()->observerRemove(
+        ZFGlobalObserver().observerRemove(
             ZFGlobalEvent::EventZFCore_EventFilter_test(),
             eventFilter);
-        ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventZFCore_EventFilter_test());
+        ZFGlobalObserver().observerNotify(ZFGlobalEvent::EventZFCore_EventFilter_test());
 
-        ZFGlobalEventCenter::instance()->observerRemoveAll(ZFGlobalEvent::EventZFCore_EventFilter_test());
+        ZFGlobalObserver().observerRemoveAll(ZFGlobalEvent::EventZFCore_EventFilter_test());
         this->testCaseStop();
     }
 };

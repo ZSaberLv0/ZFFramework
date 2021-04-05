@@ -28,7 +28,6 @@
 #include "ZFObjectDef/ZFFilterForZFMethod.h"
 #include "ZFObjectDef/ZFFilterForZFObject.h"
 #include "ZFObjectDef/ZFFilterForZFProperty.h"
-#include "ZFObjectDef/ZFGlobalEventCenter.h"
 #include "ZFObjectDef/ZFIOCallback.h"
 #include "ZFObjectDef/ZFIdMap.h"
 #include "ZFObjectDef/ZFListenerDeclare.h"

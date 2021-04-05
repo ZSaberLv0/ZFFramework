@@ -365,14 +365,13 @@ private:
 };
 
 // ============================================================
-extern ZF_ENV_EXPORT ZFObserverHolder &_ZFP_ZFObjectGlobalEventObserverRef(void);
 /**
  * @brief all event notified by #ZFObject::observerNotify would also be notified to the observers added by this method,
  *   see #ZFObject::observerNotify
  *
  * use only if necessary, which may cause performance issue
  */
-#define ZFObjectGlobalEventObserver() (_ZFP_ZFObjectGlobalEventObserverRef())
+extern ZF_ENV_EXPORT ZFObserverHolder &ZFGlobalObserver(void);
 
 // ============================================================
 // observer

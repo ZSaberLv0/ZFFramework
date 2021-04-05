@@ -26,7 +26,7 @@ public:
     {
         if(value)
         {
-            ZFObjectGlobalEventObserver().observerAdd(
+            ZFGlobalObserver().observerAdd(
                 ZFUIOnScreenKeyboardState::EventKeyboardStateOnChange(),
                 this->onScreenKeyboardStateOnChangeListener,
                 this->pimplOwner->objectHolder());
@@ -37,7 +37,7 @@ public:
         {
             this->scrollEnableFlag = zffalse;
             this->pimplOwner->scrollEnable(this->scrollEnableFlag && this->pimplOwner->autoFitScrollEnable());
-            ZFObjectGlobalEventObserver().observerRemove(
+            ZFGlobalObserver().observerRemove(
                 ZFUIOnScreenKeyboardState::EventKeyboardStateOnChange(),
                 this->onScreenKeyboardStateOnChangeListener);
 
@@ -57,14 +57,14 @@ public:
     {
         if(value)
         {
-            ZFObjectGlobalEventObserver().observerAdd(
+            ZFGlobalObserver().observerAdd(
                 ZFUIView::EventViewFocusOnChange(),
                 this->viewFocusOnChangeListener,
                 this->pimplOwner->objectHolder());
         }
         else
         {
-            ZFObjectGlobalEventObserver().observerRemove(
+            ZFGlobalObserver().observerRemove(
                 ZFUIView::EventViewFocusOnChange(),
                 this->viewFocusOnChangeListener);
             #if _ZFP_ZFUIOnScreenKeyboardAutoFitLayout_DEBUG

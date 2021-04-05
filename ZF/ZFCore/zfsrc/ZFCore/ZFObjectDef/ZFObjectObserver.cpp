@@ -538,7 +538,7 @@ zfbool ZFObserverHolder::observerHasAdd(void) const
     if(this->observerOwner() != zfnull)
     {
         return !d->observerMap.empty()
-            || !ZFObjectGlobalEventObserver().d->observerMap.empty();
+            || !ZFGlobalObserver().d->observerMap.empty();
     }
     else
     {
@@ -549,7 +549,7 @@ zfbool ZFObserverHolder::observerHasAdd(ZF_IN zfidentity eventId) const
 {
     if(this->observerOwner() != zfnull)
     {
-        zfstlmap<zfidentity, _ZFP_ZFObserverData *> &g = ZFObjectGlobalEventObserver().d->observerMap;
+        zfstlmap<zfidentity, _ZFP_ZFObserverData *> &g = ZFGlobalObserver().d->observerMap;
         return (d->observerMap.find(eventId) != d->observerMap.end())
             || (g.find(eventId) != g.end());
     }
@@ -578,7 +578,7 @@ void ZFObserverHolder::observerNotifyWithCustomSender(ZF_IN ZFObject *customSend
     if(this->observerOwner() != zfnull)
     {
         this->observerOwner()->observerOnEvent(listenerData);
-        ZFObjectGlobalEventObserver().d->observerNotifyPrepare(toNotify, toDelete, eventId, this->observerOwner());
+        ZFGlobalObserver().d->observerNotifyPrepare(toNotify, toDelete, eventId, this->observerOwner());
     }
     zfCoreMutexUnlock();
 
@@ -675,14 +675,14 @@ void ZFObserverHolder::_ZFP_ZFObserverHolder_observerOwner(ZF_IN ZFObject *obj) 
     /*
      * if observerOwner is not null,
      * means it belongs to a ZFObject, which would:
-     * * also send all events to ZFObjectGlobalEventObserver
+     * * also send all events to ZFGlobalObserver
      * * notify events to owner ZFObject, such as observerOnEvent
      */
     const_cast<ZFObserverHolder *>(this)->_observerOwner = obj;
 }
 
 // ============================================================
-ZFObserverHolder &_ZFP_ZFObjectGlobalEventObserverRef(void)
+ZFObserverHolder &ZFGlobalObserver(void)
 {
     static ZFObserverHolder d;
     return d;
@@ -696,7 +696,7 @@ ZF_NAMESPACE_GLOBAL_END
 #include "../ZFObject.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(ZFObserverHolder &, ZFObjectGlobalEventObserver)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(ZFObserverHolder &, ZFGlobalObserver)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif
