@@ -20,95 +20,101 @@ Homepage:
 
 # Quick overview
 
-* this piece of code shows how to show a hello world on UI and log output
+## cpp hello world
 
-    ```cpp
-    #include "ZFUIWidget.h" // for common UI module
-    ZFMAIN_ENTRY() // app starts from here
-    {
-        // show a hello world to log output
-        zfLogT() << "hello wolrd";
+this piece of code shows how to show a hello world on UI and log output
 
-        // show a window (full screen by default)
-        zfblockedAlloc(ZFUIWindow, window);
-        window->windowShow();
+```cpp
+#include "ZFUIWidget.h" // for common UI module
+ZFMAIN_ENTRY() // app starts from here
+{
+    // show a hello world to log output
+    zfLogT() << "hello wolrd";
 
-        // show a hello world as a text view
-        zfblockedAlloc(ZFUITextView, textView);
-        window->childAdd(textView);
-        textView->layoutParam()->layoutAlign(ZFUIAlign::e_LeftInner);
-        textView->text("hello world");
+    // show a window (full screen by default)
+    zfblockedAlloc(ZFUIWindow, window);
+    window->windowShow();
 
-        // button and click (as observer)
-        zfblockedAlloc(ZFUIButtonBasic, button);
-        window->childAdd(button);
-        button->layoutParam()->layoutAlign(ZFUIAlign::e_RightInner);
-        button->buttonLabelText("click me");
-        ZFLISTENER_LOCAL(onClick, {
-            ZFUIButtonBasic *button = userData->objectHolded();
-            zfLogTrimT() << "button clicked:" << button;
-            zfLogTrimT() << "sender:" << listenerData.sender();
-        })
-        button->onClick(onClick, button->objectHolder());
-    }
-    ```
+    // show a hello world as a text view
+    zfblockedAlloc(ZFUITextView, textView);
+    window->childAdd(textView);
+    textView->layoutParam()->layoutAlign(ZFUIAlign::e_LeftInner);
+    textView->text("hello world");
 
-* this piece of code shows equivalent lua code to use ZFFramework,
-    <b>all the lua bindings are automatically done by reflection!</b>
+    // button and click (as observer)
+    zfblockedAlloc(ZFUIButtonBasic, button);
+    window->childAdd(button);
+    button->layoutParam()->layoutAlign(ZFUIAlign::e_RightInner);
+    button->buttonLabelText("click me");
+    ZFLISTENER_LOCAL(onClick, {
+        ZFUIButtonBasic *button = userData->objectHolded();
+        zfLogTrimT() << "button clicked:" << button;
+        zfLogTrimT() << "sender:" << listenerData.sender();
+    })
+    button->onClick(onClick, button->objectHolder());
+}
+```
 
-    ```lua
-    zfLog('hello world')
+## lua hello world
 
-    local window = ZFUIWindow()
-    window:windowShow()
+this piece of code shows equivalent lua code to use ZFFramework,
+<b>all the lua bindings are automatically done by reflection!</b>
 
-    local textView = zfAlloc('ZFUITextView')
-    window:childAdd(textView)
-    textView:layoutParam():layoutAlign(ZFUIAlign.e_LeftInner())
-    textView:text('hello wolrd')
+```lua
+zfLog('hello world')
 
-    local button = ZFUIButtonBasic.ClassData():newInstance()
-    window:childAdd(button)
-    button:layoutParam():layoutAlign(ZFUIAlign.e_RightInner())
-    button:buttonLabelText('click me')
-    button:onClick(
-        function (listenerData, userData)
-            zfLog('button clicked: %s', userData:objectHolded())
-            zfLog('sender: %s', listenerData:sender())
-        end,
-        button:objectHolder())
-    ```
+local window = ZFUIWindow()
+window:windowShow()
 
-* this piece of code shows the powerful dynamic register logic
+local textView = zfAlloc('ZFUITextView')
+window:childAdd(textView)
+textView:layoutParam():layoutAlign(ZFUIAlign.e_LeftInner())
+textView:text('hello wolrd')
 
-    ```cpp
-    #include "ZFLua.h"
-    ZFMAIN_ENTRY()
-    {
-        ZFDynamic()
-            .classBegin("MyBaseView", "ZFUIView")
-                .method(ZFListenerForLambda({
-                    zfLogTrimT() << "MyBaseView::testFunc() called";
-                }), zfnull, "void", "testFunc")
-            .classEnd();
+local button = ZFUIButtonBasic.ClassData():newInstance()
+window:childAdd(button)
+button:layoutParam():layoutAlign(ZFUIAlign.e_RightInner())
+button:buttonLabelText('click me')
+button:onClick(
+    function (listenerData, userData)
+        zfLog('button clicked: %s', userData:objectHolded())
+        zfLog('sender: %s', listenerData:sender())
+    end,
+    button:objectHolder())
+```
 
-        ZFLuaExecute(
-            "ZFDynamic()\n"
-            "    :classBegin('MyChildView', 'MyBaseView')\n"
-            "        :method(function(listenerData, userData)\n"
-            "            listenerData:param0():callSuper()\n"
-            "            zfLog('MyChildView::testFunc() called')\n"
-            "        end, zfnull, 'void', 'testFunc')\n"
-            "    :classEnd()\n"
-            "\n"
-            "local myView = MyChildView()\n"
-            "myView:testFunc()\n"
-        );
+## powerful dynamic register
 
-        zfautoObject obj = ZFClass::classForName("MyChildView")->newInstance();
-        obj->invoke("testFunc");
-    }
-    ```
+this piece of code shows the powerful dynamic register logic
+
+```cpp
+#include "ZFLua.h"
+ZFMAIN_ENTRY()
+{
+    ZFDynamic()
+        .classBegin("MyBaseView", "ZFUIView")
+            .method(ZFListenerForLambda({
+                zfLogTrimT() << "MyBaseView::testFunc() called";
+            }), zfnull, "void", "testFunc")
+        .classEnd();
+
+    ZFLuaExecute(
+        "ZFDynamic()\n"
+        "    :classBegin('MyChildView', 'MyBaseView')\n"
+        "        :method(function(listenerData, userData)\n"
+        "            listenerData:param0():callSuper()\n"
+        "            zfLog('MyChildView::testFunc() called')\n"
+        "        end, zfnull, 'void', 'testFunc')\n"
+        "    :classEnd()\n"
+        "\n"
+        "local myView = MyChildView()\n"
+        "myView:testFunc()\n"
+    );
+
+    zfautoObject obj = ZFClass::classForName("MyChildView")->newInstance();
+    obj->invoke("testFunc");
+}
+```
 
 
 # Requirement
