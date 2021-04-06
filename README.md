@@ -1,4 +1,22 @@
 
+<!-- vim-markdown-toc GFM -->
+
+* [Introduction](#introduction)
+* [Quick overview](#quick-overview)
+    * [cpp hello world](#cpp-hello-world)
+    * [lua hello world](#lua-hello-world)
+    * [powerful dynamic register](#powerful-dynamic-register)
+* [Getting started](#getting-started)
+* [Detailed](#detailed)
+    * [Requirement](#requirement)
+    * [Main features](#main-features)
+    * [Current status](#current-status)
+    * [What we do](#what-we-do)
+    * [License](#license)
+
+<!-- vim-markdown-toc -->
+
+
 # Introduction
 
 welcome to ZFFramework, a cross-platform and powerful application framework in C++
@@ -55,6 +73,7 @@ ZFMAIN_ENTRY() // app starts from here
 }
 ```
 
+
 ## lua hello world
 
 this piece of code shows equivalent lua code to use ZFFramework,
@@ -82,6 +101,7 @@ button:onClick(
     end,
     button:objectHolder())
 ```
+
 
 ## powerful dynamic register
 
@@ -117,7 +137,17 @@ ZFMAIN_ENTRY()
 ```
 
 
-# Requirement
+# Getting started
+
+* [Download](https://zfframework.github.io/doc/_doc_tag__download.html) necessary files
+* [Setup](https://zfframework.github.io/doc/_doc_tag__setup.html) set up necessary environment for ZFFramework
+* [Tutorial](https://zfframework.github.io/doc/_doc_tag__tutorial.html) quick tutorial to code with ZFFramework
+* [FAQ](https://zfframework.github.io/doc/_doc_tag__f_a_q.html)
+
+
+# Detailed
+
+## Requirement
 
 * for the core modlue:
 
@@ -129,7 +159,7 @@ ZFMAIN_ENTRY()
     * depends on the actual platform implementation
 
 
-# Main features
+## Main features
 
 * minimum requirement
 * powerful reflection, serialzation, styleable logic
@@ -154,7 +184,7 @@ ZFMAIN_ENTRY()
     you have no need to write size-dependent code in both app and implementation
 
 
-# Current status
+## Current status
 
 * finished
     * core module (memory management, reflection, serialization)
@@ -172,7 +202,7 @@ ZFMAIN_ENTRY()
     * more platform implementations
 
 
-# What we do
+## What we do
 
 * aiming to be portable and can be ported easily,
     aiming to be lightweighted and able to be embeded easily,
@@ -180,15 +210,7 @@ ZFMAIN_ENTRY()
 * fully dynamic, extensible
 
 
-# Getting started
-
-* [Download](https://zfframework.github.io/doc/_doc_tag__download.html) necessary files
-* [Setup](https://zfframework.github.io/doc/_doc_tag__setup.html) set up necessary environment for ZFFramework
-* [Tutorial](https://zfframework.github.io/doc/_doc_tag__tutorial.html) quick tutorial to code with ZFFramework
-* [FAQ](https://zfframework.github.io/doc/_doc_tag__f_a_q.html)
-
-
-# License
+## License
 
 ZFFramework is under MIT license ([see here](https://github.com/ZFFramework/ZFFramework/blob/master/LICENSE)),
 feel free to copy or modify or use it
