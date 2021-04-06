@@ -15,8 +15,8 @@ public:
     zfchar *styleKey;
     zfstlmap<zfstlstringZ, zfstring> stylePropertyKeyMap;
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(styleOnChange);
-    static ZFLISTENER_PROTOTYPE_EXPAND(stylePropertyOnChange);
+    static void styleOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
+    static void stylePropertyOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
 };
 
 // ============================================================

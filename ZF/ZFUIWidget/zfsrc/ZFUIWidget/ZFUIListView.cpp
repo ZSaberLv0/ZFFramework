@@ -68,7 +68,7 @@ public:
     }
 
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(listAdapterOnReload)
+    static void listAdapterOnReload(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIListView *listView = userData->objectHolded();
         v_zfindex *atIndex = listenerData.param0<v_zfindex *>();

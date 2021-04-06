@@ -13,7 +13,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIKeyboardState_test)
 }
 private:
     ZFListener keyPressedOnChangeListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(keyPressedOnChange)
+    static void keyPressedOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfLogTrimT() << "[ZFUIKeyboardState]" << listenerData.sender();
     }

@@ -296,7 +296,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIDialogContentBasicDataHolder, ZFLevelZ
 public:
     ZFListener textChangeListener;
     ZFListener containerChildChangeListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(textChange)
+    static void textChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         const ZFProperty *property = listenerData.param0<v_ZFProperty *>()->zfv;
         if(property != ZFPropertyAccess(ZFUITextView, text))
@@ -306,7 +306,7 @@ public:
         ZFUITextView *textView = listenerData.sender<ZFUITextView *>();
         textView->viewVisible(!textView->text().isEmpty());
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(containerChildChange)
+    static void containerChildChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIView *containerView = listenerData.sender<ZFUIView *>();
         containerView->viewVisible(containerView->childCount() > 0);

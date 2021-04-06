@@ -49,12 +49,12 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIDialogBasicDataHolder, ZFLevelZFFramew
 public:
     ZFListener dialogButtonOnAddListener;
     ZFListener dialogButtonOnRemoveListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(dialogButtonOnAdd)
+    static void dialogButtonOnAdd(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         userData->objectHolded<ZFUIDialogBasic *>()
             ->_ZFP_ZFUIDialogBasic_dialogButtonOnAdd(listenerData.param0<ZFUIButton *>());
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(dialogButtonOnRemove)
+    static void dialogButtonOnRemove(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         userData->objectHolded<ZFUIDialogBasic *>()
             ->_ZFP_ZFUIDialogBasic_dialogButtonOnRemove(listenerData.param0<ZFUIButton *>());

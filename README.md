@@ -1,7 +1,7 @@
 
 # Introduction
 
-welcome to ZFFramework, a cross-platform, lightweight, mid-level application framework in C++
+welcome to ZFFramework, a cross-platform and powerful application framework in C++
 
 everything here starts with "ZF", which stands for "Zero Framework"
 
@@ -22,7 +22,7 @@ Homepage:
 
 * this piece of code shows how to show a hello world on UI and log output
 
-```cpp
+    ```cpp
     #include "ZFUIWidget.h" // for common UI module
     ZFMAIN_ENTRY() // app starts from here
     {
@@ -51,12 +51,12 @@ Homepage:
         })
         button->onClick(onClick, button->objectHolder());
     }
-```
+    ```
 
 * this piece of code shows equivalent lua code to use ZFFramework,
     <b>all the lua bindings are automatically done by reflection!</b>
 
-```lua
+    ```lua
     zfLog('hello world')
 
     local window = ZFUIWindow()
@@ -77,7 +77,38 @@ Homepage:
             zfLog('sender: %s', listenerData:sender())
         end,
         button:objectHolder())
-```
+    ```
+
+* this piece of code shows the powerful dynamic register logic
+
+    ```cpp
+    #include "ZFLua.h"
+    ZFMAIN_ENTRY()
+    {
+        ZFDynamic()
+            .classBegin("MyBaseView", "ZFUIView")
+                .method(ZFListenerForLambda({
+                    zfLogTrimT() << "MyBaseView::testFunc() called";
+                }), zfnull, "void", "testFunc")
+            .classEnd();
+
+        ZFLuaExecute(
+            "ZFDynamic()\n"
+            "    :classBegin('MyChildView', 'MyBaseView')\n"
+            "        :method(function(listenerData, userData)\n"
+            "            listenerData:param0():callSuper()\n"
+            "            zfLog('MyChildView::testFunc() called')\n"
+            "        end, zfnull, 'void', 'testFunc')\n"
+            "    :classEnd()\n"
+            "\n"
+            "local myView = MyChildView()\n"
+            "myView:testFunc()\n"
+        );
+
+        zfautoObject obj = ZFClass::classForName("MyChildView")->newInstance();
+        obj->invoke("testFunc");
+    }
+    ```
 
 
 # Requirement
@@ -99,9 +130,8 @@ Homepage:
 
     * for how powerful ZFFramework is, you may refer to [Feature page](https://zfframework.github.io/doc/_doc_tag__feature.html)
     * automatic lua binding, no extra bind code or config are necessary
-    * automatic UI serialization
-    * stateful property animation
-    * enhanced global event observer
+    * automatic serialization
+    * enhanced global event observer and event filter
 
 * fully modularization, "core + protocol + dynamic implementation" design
 
@@ -140,8 +170,8 @@ Homepage:
 
 * aiming to be portable and can be ported easily,
     aiming to be lightweighted and able to be embeded easily,
-    aiming to use 20% code to do 80% work
-* supply Java-like / ObjectC-like app level APIs to build up small/medium sized app easily
+    you may simply drag and drop all src files to your build system
+* fully dynamic, extensible
 
 
 # Getting started

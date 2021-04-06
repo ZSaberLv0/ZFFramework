@@ -22,7 +22,9 @@ protected:
     }
 
 private:
-    ZFLISTENER_INLINE(managerOnDestroy)
+    ZFMETHOD_INLINE_2(void, managerOnDestroy,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         this->testCaseStop(ZFResultType::e_Success);
         ZFLuaGC();

@@ -1208,6 +1208,8 @@ void ZFClass::_ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN c
 
     if(cls->classIsDynamicRegister())
     {
+        // remove all dynamic registered class info,
+        // the existing object instance would fallback to parent class
         for(zfstlmap<ZFObject *, zfbool>::iterator it = cls->d->classDynamicRegisterObjectInstanceMap.begin(); it != cls->d->classDynamicRegisterObjectInstanceMap.end(); ++it)
         {
             it->first->_ZFP_ZFObject_classData = zfnull;

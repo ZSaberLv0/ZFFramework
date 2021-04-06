@@ -332,7 +332,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFPropertyWeakDataHolder, ZFLevelZFFramewo
 }
 public:
     ZFListener propertyOnDeallocListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(propertyOnDealloc)
+    static void propertyOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         _ZFP_I_ZFPropertyWeakTaskData *taskData = userData->to<_ZFP_I_ZFPropertyWeakTaskData *>();
         taskData->property->callbackValueReset(

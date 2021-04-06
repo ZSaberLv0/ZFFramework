@@ -21,7 +21,7 @@ public:
     ZFCoreArrayPOD<ZFUIKeyCodeEnum> keyPressed;
     ZFCoreArrayPOD<zfflags> keyPressedRaw;
     ZFListener viewOnEventListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(viewOnEvent)
+    static void viewOnEvent(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIKeyEvent *event = listenerData.param0<ZFUIKeyEvent *>();
         if(event != zfnull)

@@ -187,7 +187,9 @@ private:
             }
         }
     }
-    ZFLISTENER_INLINE(onChildStartDelay)
+    ZFMETHOD_INLINE_2(void, onChildStartDelay,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         zfidentity aniId = listenerData.param0<v_zfidentity *>()->zfv;
         ZFAnimationGroupChildData *childData = listenerData.param1<ZFAnimationGroupChildData *>();
@@ -214,7 +216,9 @@ private:
         return zfnull;
     }
 private:
-    ZFLISTENER_INLINE(onChildStart_parallel)
+    ZFMETHOD_INLINE_2(void, onChildStart_parallel,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         ZFAnimationGroupChildData *childData = this->checkChild(listenerData.sender());
         if(childData == zfnull)
@@ -223,7 +227,9 @@ private:
         }
         this->pimplOwner->aniGroupOnChildStart(childData->childAni());
     }
-    ZFLISTENER_INLINE(onChildStop_parallel)
+    ZFMETHOD_INLINE_2(void, onChildStop_parallel,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         ZFAnimationGroupChildData *childData = this->checkChild(listenerData.sender(), zfHint("autoRemove")zftrue);
         if(childData == zfnull)
@@ -238,7 +244,9 @@ private:
             this->pimplOwner->aniImplNotifyStop();
         }
     }
-    ZFLISTENER_INLINE(onChildStart_serial)
+    ZFMETHOD_INLINE_2(void, onChildStart_serial,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         ZFAnimationGroupChildData *childData = this->childBuf->getFirst<ZFAnimationGroupChildData *>();
         if(childData == zfnull || childData->childAni() != listenerData.sender())
@@ -247,7 +255,9 @@ private:
         }
         this->pimplOwner->aniGroupOnChildStart(childData->childAni());
     }
-    ZFLISTENER_INLINE(onChildStop_serial)
+    ZFMETHOD_INLINE_2(void, onChildStop_serial,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         ZFAnimationGroupChildData *childData = this->childBuf->getFirst<ZFAnimationGroupChildData *>();
         if(childData == zfnull || childData->childAni() != listenerData.sender())

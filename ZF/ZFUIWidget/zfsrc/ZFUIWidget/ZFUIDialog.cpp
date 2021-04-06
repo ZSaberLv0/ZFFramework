@@ -153,14 +153,18 @@ public:
     }
 
 public:
-    ZFLISTENER_INLINE(dialogClickMaskOnClick)
+    ZFMETHOD_INLINE_2(void, dialogClickMaskOnClick,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         if(this->pimplOwner->dialogHideWhenTouchOutside())
         {
             this->pimplOwner->dialogHide();
         }
     }
-    ZFLISTENER_INLINE(aniShowOnStop)
+    ZFMETHOD_INLINE_2(void, aniShowOnStop,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         if(!this->dialogWindowAniShow->aniRunning()
             && !this->dialogWindowAniHide->aniRunning()
@@ -195,7 +199,9 @@ public:
             this->pimplOwner->dialogAfterShow();
         }
     }
-    ZFLISTENER_INLINE(aniHideOnStop)
+    ZFMETHOD_INLINE_2(void, aniHideOnStop,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         if(!this->dialogWindowAniShow->aniRunning()
             && !this->dialogWindowAniHide->aniRunning()

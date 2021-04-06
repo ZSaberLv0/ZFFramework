@@ -322,7 +322,7 @@ public:
     }
 
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(onTimer)
+    static void onTimer(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIAniImageView *pimplOwner = userData->objectHolded();
         _ZFP_ZFUIAniImageViewPrivate *d = pimplOwner->d;

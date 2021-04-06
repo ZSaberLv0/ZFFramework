@@ -314,7 +314,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIImageScaleChangeListenerHolder, ZFLeve
     this->globalImageScaleOnChangeListener = ZFCallbackForFunc(zfself::globalImageScaleOnChange);
 }
 ZFListener globalImageScaleOnChangeListener;
-static ZFLISTENER_PROTOTYPE_EXPAND(globalImageScaleOnChange)
+static void globalImageScaleOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     const ZFProperty *property = listenerData.param0<v_ZFProperty *>()->zfv;
     if(property == ZFPropertyAccess(ZFUIGlobalStyle, imageScale))

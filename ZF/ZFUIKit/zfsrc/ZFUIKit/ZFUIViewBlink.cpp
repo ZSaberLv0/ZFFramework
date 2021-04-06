@@ -37,7 +37,7 @@ public:
     ZFListener viewOnDeallocListener;
     ZFCoreArrayPOD<ZFUIView *> blinkingViews;
     ZFIdentityGenerator delayTaskIdGenerator;
-    static ZFLISTENER_PROTOTYPE_EXPAND(viewOnDealloc)
+    static void viewOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         _ZFP_ZFUIViewBlinkDoOff(listenerData.sender<ZFUIView *>());
     }

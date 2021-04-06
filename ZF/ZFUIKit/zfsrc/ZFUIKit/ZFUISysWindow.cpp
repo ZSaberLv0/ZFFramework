@@ -46,7 +46,7 @@ public:
     }
 
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(sysWindowLayoutParamOnChange)
+    static void sysWindowLayoutParamOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUISysWindow *sysWindow = userData->objectHolded();
         sysWindow->_ZFP_ZFUISysWindow_sysWindowLayoutUpdate();

@@ -21,7 +21,7 @@
  *               myParam1); // param1
  *       }
  *   };
- *   static ZFLISTENER_PROTOTYPE_EXPAND(testListener)
+ *   static void testListener(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
  *   {
  *       zfLogT()
  *           << listenerData.sender() // should be MyObject

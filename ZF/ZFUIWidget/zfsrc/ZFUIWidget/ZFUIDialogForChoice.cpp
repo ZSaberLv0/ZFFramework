@@ -30,7 +30,9 @@ public:
     ZFUISize measuredSize;
 
 public:
-    ZFLISTENER_INLINE(updateTask)
+    ZFMETHOD_INLINE_2(void, updateTask,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         this->buttonGroup->observerRemove(ZFUIButton::EventButtonOnClick(), this->buttonEventListener);
         this->updateTaskId = zfidentityInvalid();
@@ -128,7 +130,9 @@ private:
     }
 
 private:
-    ZFLISTENER_INLINE(buttonEvent)
+    ZFMETHOD_INLINE_2(void, buttonEvent,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         zfindex index = listenerData.param1<v_zfindex *>()->zfv;
         switch(this->pimplOwner->choiceMode())
@@ -198,7 +202,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIDialogForChoiceDataHolder, ZFLevelZFFr
 }
 public:
     ZFListener dialogOnConfirmListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(dialogOnConfirm)
+    static void dialogOnConfirm(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         userData->objectHolded<ZFUIDialogForChoice *>()->choiceConfirmNotify();
     }

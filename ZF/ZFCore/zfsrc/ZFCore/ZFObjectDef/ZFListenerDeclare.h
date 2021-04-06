@@ -12,40 +12,46 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 /**
- * @brief wrapper for #ZFMETHOD_INLINE_2, see #ZFListener
+ * @brief util to create #ZFListener "inline"
+ *   by using lambda,
+ *   require #ZF_ENV_LAMBDA
  *
- * proto type:\n
- * virtual void listenerName(ZF_IN const ZFListenerData &listenerData, ZFObject *userData);
+ * usage:
+ * @code
+ *   obj->observerAdd(eventId, ZFListenerForLambda({
+ *       zfLogT() << listenerData.sender();
+ *   }));
+ * @endcode
  */
-#define ZFLISTENER_INLINE(listenerName) \
-    ZFMETHOD_INLINE_2(void, listenerName, \
-                      ZFMP_IN(const ZFListenerData &, listenerData), \
-                      ZFMP_IN(ZFObject *, userData))
-/** @brief see #ZFLISTENER_INLINE */
-#define ZFLISTENER_DECLARE(listenerName) \
-    ZFMETHOD_DECLARE_2(void, listenerName, \
-                       ZFMP_IN(const ZFListenerData &, listenerData), \
-                       ZFMP_IN(ZFObject *, userData))
-/** @brief see #ZFLISTENER_INLINE */
-#define ZFLISTENER_DEFINE(OwnerClass, listenerName) \
-    ZFMETHOD_DEFINE_2(OwnerClass, void, listenerName, \
-                      ZFMP_IN(const ZFListenerData &, listenerData), \
-                      ZFMP_IN(ZFObject *, userData))
+#if ZF_ENV_LAMBDA
+    #define ZFListenerForLambda(content) \
+        ZFCallbackForFunc(((void (*)(const ZFListener &, ZFObject *))[](const ZFListener &, ZFObject *) {content}))
+#else
+    #define ZFListenerForLambda(content) ZF_ENV_LAMBDA_NOT_AVAILABLE
+#endif
 
+// ============================================================
 /**
- * @brief util macro to expand as\n
- *   void methodPlaceholder(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *, userData)
+ * @brief util method to declare a #ZFListener
+ *
+ * usage:
+ * @code
+ *   // proto type:\n
+ *   // void listenerName(ZF_IN const ZFListenerData &listenerData, ZFObject *userData);
+ *   ZFLISTENER_LOCAL_BEGIN(yourListener)
+ *   {
+ *       // your code
+ *   }
+ *   ZFLISTENER_LOCAL_END(yourListener)
+ *   obj->observerAdd(eventId, yourListener);
+ * @endcode
  */
-#define ZFLISTENER_PROTOTYPE_EXPAND(methodPlaceholder) \
-    void methodPlaceholder(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject * userData)
-
-/** @brief see #ZFLISTENER_INLINE */
 #define ZFLISTENER_LOCAL_BEGIN(listenerName) \
     ZFCALLBACK_LOCAL_BEGIN_2(void, listenerName, const ZFListenerData &, listenerData, ZFObject *, userData)
-/** @brief see #ZFLISTENER_INLINE */
+/** @brief see #ZFLISTENER_LOCAL_BEGIN */
 #define ZFLISTENER_LOCAL_END(listenerName) \
     ZFCALLBACK_LOCAL_END_WITH_TYPE(ZFListener, listenerName)
-/** @brief see #ZFLISTENER_INLINE */
+/** @brief see #ZFLISTENER_LOCAL_BEGIN */
 #define ZFLISTENER_LOCAL(listenerName, listenerContent) \
     ZFLISTENER_LOCAL_BEGIN(listenerName) \
     listenerContent \

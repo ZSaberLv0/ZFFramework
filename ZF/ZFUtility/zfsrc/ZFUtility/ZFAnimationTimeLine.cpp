@@ -67,7 +67,7 @@ public:
     }
 
 private:
-    static ZFLISTENER_PROTOTYPE_EXPAND(globalTimerOnActivate)
+    static void globalTimerOnActivate(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFAnimationTimeLine *owner = userData->objectHolded();
         ++(owner->d->globalTimerFrameIndex);
@@ -83,7 +83,7 @@ private:
             owner->aniImplNotifyStop();
         }
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(builtinTimerOnActivate)
+    static void builtinTimerOnActivate(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFAnimationTimeLine *owner = userData->objectHolded();
         zftimet curTime = ZFTime::timestamp();

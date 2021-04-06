@@ -14,7 +14,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewFocusState_test)
 }
 private:
     ZFListener listener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(viewFocusOnChange)
+    static void viewFocusOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfLogTrimT() << "[ZFUIViewFocus]"
             << listenerData.sender()

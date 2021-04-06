@@ -88,12 +88,16 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 /**
- * @brief true to enable RTTI, false by default
+ * @brief true to enable lambda (which require C++11), auto detect by default
  *
- * add -DZF_ENV_RTTI=1 to compiler to make this macro take effect
+ * add -DZF_ENV_LAMBDA=1 to compiler to override
  */
-#ifndef ZF_ENV_RTTI
-    #define ZF_ENV_RTTI 0
+#ifndef ZF_ENV_LAMBDA
+    #if defined(__cplusplus) && (__cplusplus >= 201103L)
+        #define ZF_ENV_LAMBDA 1
+    #else
+        #define ZF_ENV_LAMBDA 0
+    #endif
 #endif
 
 // ============================================================

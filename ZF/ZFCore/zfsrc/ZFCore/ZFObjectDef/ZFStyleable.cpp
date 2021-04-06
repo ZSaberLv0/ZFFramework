@@ -237,7 +237,7 @@ public:
     ZFListener styleOnDeallocListener;
     ZFListener defaultStyleOnChangeListener;
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(styleOnDealloc)
+    static void styleOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfCoreMutexLocker();
 
@@ -256,7 +256,7 @@ public:
                 ZF_GLOBAL_INITIALIZER_INSTANCE(ZFStyleDefaultApplyAutoCopyDataHolder)->defaultStyleOnChangeListener);
         }
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(defaultStyleOnChange)
+    static void defaultStyleOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfCoreMutexLocker();
 

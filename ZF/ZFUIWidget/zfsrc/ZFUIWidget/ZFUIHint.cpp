@@ -143,7 +143,7 @@ public:
             this->hintDoShowDelay();
         }
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(hintAniShowOnStop)
+    static void hintAniShowOnStop(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfsynchronize(_ZFP_ZFUIHintSyncObj);
         ZFUIHint *hint = userData->objectHolded();
@@ -157,7 +157,7 @@ public:
             this->hintShowDelayTimeoutListener,
             this->pimplOwner->objectHolder());
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(hintShowDelayTimeout)
+    static void hintShowDelayTimeout(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfsynchronize(_ZFP_ZFUIHintSyncObj);
         ZFUIHint *hint = userData->objectHolded();
@@ -181,7 +181,7 @@ public:
             this->hintDoFinish();
         }
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(hintAniHideOnStop)
+    static void hintAniHideOnStop(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfsynchronize(_ZFP_ZFUIHintSyncObj);
         ZFUIHint *hint = userData->objectHolded();

@@ -2,7 +2,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFCore_ZFTimer_test_timerEvent)
+static void _ZFP_ZFCore_ZFTimer_test_timerEvent(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     ZFTimer *timer = listenerData.sender<ZFTimer *>();
     zfLogTrim("timer event, current thread: %s", ZFThread::currentThread()->objectInfo().cString());

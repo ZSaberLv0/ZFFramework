@@ -131,7 +131,9 @@ public:
 private:
     zfstlmap<ZFObject *, zfbool> _objAttached;
     ZFListener _objOnDeallocListener;
-    ZFLISTENER_INLINE(_objOnDealloc)
+    ZFMETHOD_INLINE_2(void, _objOnDealloc,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         this->_objAttached.erase(listenerData.sender());
     }

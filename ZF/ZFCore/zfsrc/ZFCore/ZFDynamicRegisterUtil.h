@@ -53,13 +53,15 @@ zfclassFwd _ZFP_ZFDynamicPrivate;
  *           .event(eventName)
  *           .method(callback, userData, returnTypeId, methodName [, paramTypeId0, ...])
  *           .property(typeIdOrRetainClass, propertyName [, propertyInitValue])
+ *           .on(ZFObject::EventObjectAfterAlloc(), callback)
+ *           .onInit(callback)
+ *           .onDealloc(callback)
  *       .classEnd()
  *       .NSBegin([methodNamespace])
  *           .event(eventName)
  *           .method(callback, userData, returnTypeId, methodName [, paramTypeId0, ...])
  *       .NSEnd()
- *       .enumBegin(enumClassName)
- *           .enumIsFlags(isFlag)
+ *       .enumBegin(enumClassName) // or enumBeginFlags()
  *           .enumValue(enumName [, enumValue])
  *           .enumValue(enumName [, enumValue])
  *       .enumEnd([enumDefault])
@@ -152,11 +154,21 @@ public:
     ZFDynamic &classEnd(void);
 
     /** @brief see #ZFDynamic */
-    ZFDynamic &classOnInit(ZF_IN const ZFListener &classOnInitCallback,
-                           ZF_IN_OPT ZFObject *userData = zfnull);
+    ZFDynamic &on(ZF_IN zfidentity eventId,
+                  ZF_IN const ZFListener &callback,
+                  ZF_IN_OPT ZFObject *userData = zfnull);
     /** @brief see #ZFDynamic */
-    ZFDynamic &classOnDealloc(ZF_IN const ZFListener &classOnDeallocCallback,
-                              ZF_IN_OPT ZFObject *userData = zfnull);
+    ZFDynamic &onInit(ZF_IN const ZFListener &callback,
+                      ZF_IN_OPT ZFObject *userData = zfnull)
+    {
+        return this->on(ZFObject::EventObjectAfterAlloc(), callback, userData);
+    }
+    /** @brief see #ZFDynamic */
+    ZFDynamic &onDealloc(ZF_IN const ZFListener &callback,
+                         ZF_IN_OPT ZFObject *userData = zfnull)
+    {
+        return this->on(ZFObject::EventObjectBeforeDealloc(), callback, userData);
+    }
 
 public:
     /** @brief see #ZFDynamic */
@@ -168,7 +180,7 @@ public:
     /** @brief see #ZFDynamic */
     ZFDynamic &enumBegin(ZF_IN const zfchar *enumClassName);
     /** @brief see #ZFDynamic */
-    ZFDynamic &enumIsFlags(ZF_IN zfbool enumIsFlags);
+    ZFDynamic &enumBeginFlags(ZF_IN const zfchar *enumClassName);
     /** @brief see #ZFDynamic */
     ZFDynamic &enumValue(ZF_IN const zfchar *enumName,
                          ZF_IN_OPT zfuint enumValue = ZFEnumInvalid());

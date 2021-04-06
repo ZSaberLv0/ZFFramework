@@ -20,7 +20,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIKit_ZFUIView_debug_LogUIEvent)
 }
 private:
     ZFListener onUIEventListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(onUIEvent)
+    static void onUIEvent(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         zfLogTrimT() << listenerData.sender()->objectInfoOfInstance() << listenerData.param0();
     }

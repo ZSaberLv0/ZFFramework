@@ -2,6 +2,7 @@
 
 #include "ZFSTLWrapper/zfstl_string.h"
 #include "ZFSTLWrapper/zfstl_map.h"
+#include "ZFSTLWrapper/zfstl_deque.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 /* ZFMETHOD_MAX_PARAM */
@@ -506,20 +507,19 @@ ZFDynamic &ZFDynamic::classEnd(void)
     return *this;
 }
 
-zfclass _ZFP_I_ZFDynamicOnInitData : zfextends ZFObject
+// ============================================================
+// on()
+zfclassNotPOD _ZFP_ZFDynamicClassEventData
 {
-    ZFOBJECT_DECLARE(_ZFP_I_ZFDynamicOnInitData, ZFObject)
 public:
     ZFListener callback;
     zfautoObject userData;
 };
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFDynamicOnInit, ZFLevelZFFrameworkEssential)
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFDynamicClassEventDataHolder, ZFLevelZFFrameworkEssential)
 {
-    this->classOnInitListener = ZFCallbackForFunc(zfself::classOnInit);
-    this->classOnDeallocAttachListener = ZFCallbackForFunc(zfself::classOnDeallocAttach);
-    this->classOnDeallocListener = ZFCallbackForFunc(zfself::classOnDealloc);
+    this->instanceOnCreateListener = ZFCallbackForFunc(zfself::instanceOnCreate);
 }
-ZF_GLOBAL_INITIALIZER_DESTROY(ZFDynamicOnInit)
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFDynamicClassEventDataHolder)
 {
     if(this->classOnChangeListener.callbackIsValid())
     {
@@ -528,13 +528,10 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFDynamicOnInit)
             this->classOnChangeListener);
     }
 }
-zfstlmap<const ZFClass *, zfbool> classOnInitMap;
-zfstlmap<const ZFClass *, zfbool> classOnDeallocMap;
+zfstlmap<const ZFClass *, zfstlmap<zfidentity, zfstldeque<_ZFP_ZFDynamicClassEventData> > > classEventMap;
 ZFListener classOnChangeListener;
-ZFListener classOnInitListener;
-ZFListener classOnDeallocAttachListener;
-ZFListener classOnDeallocListener;
-void checkAttach(void)
+ZFListener instanceOnCreateListener; // userData: associated class
+void classOnChangeCheckAttach(void)
 {
     if(!this->classOnChangeListener.callbackIsValid())
     {
@@ -544,45 +541,39 @@ void checkAttach(void)
             this->classOnChangeListener);
     }
 }
-static ZFLISTENER_PROTOTYPE_EXPAND(classOnChange)
+static void classOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     const ZFClassDataChangeData *data = listenerData.param0<ZFPointerHolder *>()->holdedDataPointer<const ZFClassDataChangeData *>();
     if(data->changeType == ZFClassDataChangeTypeDetach && data->changedClass != zfnull)
     {
-        ZF_GLOBAL_INITIALIZER_CLASS(ZFDynamicOnInit) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicOnInit);
-        d->classOnInitMap.erase(data->changedClass);
-        d->classOnDeallocMap.erase(data->changedClass);
+        ZF_GLOBAL_INITIALIZER_CLASS(ZFDynamicClassEventDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicClassEventDataHolder);
+        d->classEventMap.erase(data->changedClass);
     }
 }
-static ZFLISTENER_PROTOTYPE_EXPAND(classOnInit)
+static void instanceOnCreate(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
-    _ZFP_I_ZFDynamicOnInitData *data = userData->to<_ZFP_I_ZFDynamicOnInitData *>();
-    if(data->callback.callbackIsValid())
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFDynamicClassEventDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicClassEventDataHolder);
+    const ZFClass *cls = userData->to<v_ZFClass *>()->zfv;
+    zfstlmap<const ZFClass *, zfstlmap<zfidentity, zfstldeque<_ZFP_ZFDynamicClassEventData> > >::iterator itClass = d->classEventMap.find(cls);
+    if(itClass == d->classEventMap.end())
     {
-        data->callback.execute(listenerData, data->userData);
+        return;
     }
-}
-static ZFLISTENER_PROTOTYPE_EXPAND(classOnDeallocAttach)
-{
-    listenerData.sender()->observerAdd(ZFObserverAddParam()
-        .eventId(ZFObject::EventObjectBeforeDealloc())
-        .observer(ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicOnInit)->classOnDeallocListener)
-        .userData(userData)
-        .observerLevel(ZFLevelZFFrameworkPostHigh)
-        );
-}
-static ZFLISTENER_PROTOTYPE_EXPAND(classOnDealloc)
-{
-    _ZFP_I_ZFDynamicOnInitData *data = userData->to<_ZFP_I_ZFDynamicOnInitData *>();
-    if(data->callback.callbackIsValid())
+    ZFObject *obj = listenerData.sender();
+    zfstlmap<zfidentity, zfstldeque<_ZFP_ZFDynamicClassEventData> > &eventMap = itClass->second;
+    for(zfstlmap<zfidentity, zfstldeque<_ZFP_ZFDynamicClassEventData> >::iterator itEvent = eventMap.begin(); itEvent != eventMap.end(); ++itEvent)
     {
-        data->callback.execute(listenerData, data->userData);
+        for(zfstlsize i = 0; i < itEvent->second.size(); ++i)
+        {
+            obj->observerAdd(itEvent->first, itEvent->second[i].callback, itEvent->second[i].userData, zfnull, zffalse, ZFLevelZFFrameworkNormal);
+        }
     }
 }
-ZF_GLOBAL_INITIALIZER_END(ZFDynamicOnInit)
+ZF_GLOBAL_INITIALIZER_END(ZFDynamicClassEventDataHolder)
 
-ZFDynamic &ZFDynamic::classOnInit(ZF_IN const ZFListener &classOnInitCallback,
-                                  ZF_IN_OPT ZFObject *userData /* = zfnull */)
+ZFDynamic &ZFDynamic::on(ZF_IN zfidentity eventId,
+                         ZF_IN const ZFListener &callback,
+                         ZF_IN_OPT ZFObject *userData /* = zfnull */)
 {
     if(d->errorOccurred) {return *this;}
     if(d->cls == zfnull)
@@ -592,61 +583,36 @@ ZFDynamic &ZFDynamic::classOnInit(ZF_IN const ZFListener &classOnInitCallback,
     }
     if(!d->cls->classIsDynamicRegister())
     {
-        d->error("only dynamic registered class can attach custom classOnInit");
+        d->error("only dynamic registered class can attach custom class event observer");
         return *this;
     }
-    if(!classOnInitCallback.callbackIsValid())
+    if(eventId == zfidentityInvalid())
+    {
+        d->error("invalid eventId");
+        return *this;
+    }
+    if(!callback.callbackIsValid())
     {
         d->error("invalid callback");
         return *this;
     }
-    ZF_GLOBAL_INITIALIZER_CLASS(ZFDynamicOnInit) *g = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicOnInit);
-    if(g->classOnInitMap.find(d->cls) != g->classOnInitMap.end())
+
+    _ZFP_ZFDynamicClassEventData eventData;
+    eventData.callback = callback;
+    eventData.userData = userData;
+
+    ZF_GLOBAL_INITIALIZER_CLASS(ZFDynamicClassEventDataHolder) *g = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicClassEventDataHolder);
+    zfstlmap<const ZFClass *, zfstlmap<zfidentity, zfstldeque<_ZFP_ZFDynamicClassEventData> > >::iterator it = g->classEventMap.find(d->cls);
+    if(it == g->classEventMap.end())
     {
-        d->error("class %s already register a custom classOnInit",
-            d->cls->classNameFull());
-        return *this;
+        g->classEventMap[d->cls][eventId].push_back(eventData);
+        d->cls->instanceObserverAdd(g->instanceOnCreateListener, zflineAlloc(v_ZFClass, d->cls), zfnull, ZFLevelZFFrameworkNormal);
     }
-    g->classOnInitMap[d->cls] = zftrue;
-    zfblockedAlloc(_ZFP_I_ZFDynamicOnInitData, data);
-    data->callback = classOnInitCallback;
-    data->userData = userData;
-    d->cls->instanceObserverAdd(g->classOnInitListener, data, zfnull, ZFLevelZFFrameworkHigh);
-    g->checkAttach();
-    return *this;
-}
-ZFDynamic &ZFDynamic::classOnDealloc(ZF_IN const ZFListener &classOnDeallocCallback,
-                                     ZF_IN_OPT ZFObject *userData /* = zfnull */)
-{
-    if(d->errorOccurred) {return *this;}
-    if(d->cls == zfnull)
+    else
     {
-        d->error("have you forgot classBegin?");
-        return *this;
+        it->second[eventId].push_back(eventData);
     }
-    if(!d->cls->classIsDynamicRegister())
-    {
-        d->error("only dynamic registered class can attach custom classOnDealloc");
-        return *this;
-    }
-    if(!classOnDeallocCallback.callbackIsValid())
-    {
-        d->error("invalid callback");
-        return *this;
-    }
-    ZF_GLOBAL_INITIALIZER_CLASS(ZFDynamicOnInit) *g = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFDynamicOnInit);
-    if(g->classOnDeallocMap.find(d->cls) != g->classOnDeallocMap.end())
-    {
-        d->error("class %s already register a custom classOnDealloc",
-            d->cls->classNameFull());
-        return *this;
-    }
-    g->classOnDeallocMap[d->cls] = zftrue;
-    zfblockedAlloc(_ZFP_I_ZFDynamicOnInitData, data);
-    data->callback = classOnDeallocCallback;
-    data->userData = userData;
-    d->cls->instanceObserverAdd(g->classOnDeallocAttachListener, data, zfnull, ZFLevelZFFrameworkHigh);
-    g->checkAttach();
+    g->classOnChangeCheckAttach();
     return *this;
 }
 
@@ -680,17 +646,15 @@ ZFDynamic &ZFDynamic::enumBegin(ZF_IN const zfchar *enumClassName)
     if(d->errorOccurred) {return *this;}
     if(!d->scopeBeginCheck()) {return *this;}
     d->enumClassName = enumClassName;
+    d->enumIsFlags = zffalse;
     return *this;
 }
-ZFDynamic &ZFDynamic::enumIsFlags(ZF_IN zfbool enumIsFlags)
+ZFDynamic &ZFDynamic::enumBeginFlags(ZF_IN const zfchar *enumClassName)
 {
     if(d->errorOccurred) {return *this;}
-    if(d->enumClassName.isEmpty())
-    {
-        d->error("have you forgot enumBegin?");
-        return *this;
-    }
-    d->enumIsFlags = enumIsFlags;
+    if(!d->scopeBeginCheck()) {return *this;}
+    d->enumClassName = enumClassName;
+    d->enumIsFlags = zftrue;
     return *this;
 }
 ZFDynamic &ZFDynamic::enumValue(ZF_IN const zfchar *enumName,
@@ -1080,12 +1044,13 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFDynamic, ZFDynamic &, classBegin, 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFDynamic, ZFDynamic &, classBegin, ZFMP_IN(const zfchar *, classNameFull), ZFMP_IN(const zfchar *, parentClassNameFull), ZFMP_IN_OPT(ZFObject *, classDynamicRegisterUserData, zfnull))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, classBegin, ZFMP_IN(const ZFClass *, cls))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFDynamic, ZFDynamic &, classEnd)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, classOnInit, ZFMP_IN(const ZFListener &, classOnInitCallback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, classOnDealloc, ZFMP_IN(const ZFListener &, classOnDeallocCallback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFDynamic, ZFDynamic &, on, ZFMP_IN(zfidentity, eventId), ZFMP_IN(const ZFListener &, callback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, onInit, ZFMP_IN(const ZFListener &, callback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, onDealloc, ZFMP_IN(const ZFListener &, callback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, NSBegin, ZFMP_IN_OPT(const zfchar *, methodNamespace, ZF_NAMESPACE_GLOBAL_NAME))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFDynamic, ZFDynamic &, NSEnd)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, enumBegin, ZFMP_IN(const zfchar *, enumClassName))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, enumIsFlags, ZFMP_IN(zfbool, enumIsFlags))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, enumBeginFlags, ZFMP_IN(const zfchar *, enumClassName))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, enumValue, ZFMP_IN(const zfchar *, enumName), ZFMP_IN_OPT(zfuint, enumValue, ZFEnumInvalid()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, enumEnd, ZFMP_IN_OPT(zfuint, enumDefault, ZFEnumInvalid()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, event, ZFMP_IN(const zfchar *, eventName))

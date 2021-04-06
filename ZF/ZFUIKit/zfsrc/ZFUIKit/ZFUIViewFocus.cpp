@@ -13,7 +13,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewFocusNextSetupDataHolder, ZFLevelZ
 }
 public:
     ZFListener nextFocusOnDeallocListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(nextFocusOnDealloc)
+    static void nextFocusOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFObjectHolder *nextFocusOwner = listenerData.sender()->objectTag<ZFObjectHolder *>(_ZFP_ZFUIViewFocus_tag_nextFocusOwner);
         if(nextFocusOwner == zfnull)

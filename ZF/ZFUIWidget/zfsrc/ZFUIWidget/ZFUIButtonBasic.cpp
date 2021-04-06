@@ -97,7 +97,7 @@ public:
 
 public:
     #define _ZFP_ZFUIButtonBasic_LISTENER_EXPAND_STYLE_CHANGED(T_Component, T_State) \
-        static ZFLISTENER_PROTOTYPE_EXPAND(button##T_Component##Style##T_State##Changed) \
+        static void button##T_Component##Style##T_State##Changed(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData) \
         { \
             const ZFProperty *property = listenerData.param0<v_ZFProperty *>()->zfv; \
             ZFUIButtonBasic *button = userData->objectHolded(); \

@@ -516,7 +516,7 @@ zfbool ZFImpl_ZFLua_toGeneric(ZF_OUT zfautoObject &param,
 }
 
 zfclassFwd _ZFP_I_ZFImpl_ZFLua_ZFCallbackForLuaHolder;
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFCallbackAutoClean_callback);
+static void _ZFP_ZFImpl_ZFLua_ZFCallbackAutoClean_callback(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFImpl_ZFLua_ZFCallbackAutoClean, ZFLevelZFFrameworkNormal)
 {
     this->luaStateOnDetachListener = ZFCallbackForFunc(_ZFP_ZFImpl_ZFLua_ZFCallbackAutoClean_callback);
@@ -540,7 +540,9 @@ public:
     zfstring luaFuncInfo;
 #endif
 
-    ZFLISTENER_INLINE(callback)
+    ZFMETHOD_INLINE_2(void, callback,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         if(L == zfnull)
         {
@@ -579,7 +581,7 @@ protected:
     }
 };
 
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFCallbackAutoClean_callback)
+static void _ZFP_ZFImpl_ZFLua_ZFCallbackAutoClean_callback(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     lua_State *L = (lua_State *)listenerData.param0<v_VoidPointer *>()->zfv;
     ZFCoreArrayPOD<_ZFP_I_ZFImpl_ZFLua_ZFCallbackForLuaHolder *> &attachList = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFImpl_ZFLua_ZFCallbackAutoClean)->attachList;

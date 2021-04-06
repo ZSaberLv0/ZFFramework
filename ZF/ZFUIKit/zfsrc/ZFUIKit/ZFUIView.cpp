@@ -21,11 +21,11 @@ public:
     ZFListener layoutParamChangedListener;
     ZFListener viewPropertyOnUpdateListener;
 private:
-    static ZFLISTENER_PROTOTYPE_EXPAND(layoutParamChanged)
+    static void layoutParamChanged(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         userData->objectHolded<ZFUIView *>()->layoutRequest();
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(viewPropertyOnUpdate)
+    static void viewPropertyOnUpdate(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         userData->objectHolded<ZFUIView *>()->_ZFP_ZFUIView_viewPropertyNotifyUpdate();
     }
@@ -1844,17 +1844,19 @@ ZFMETHOD_DEFINE_3(ZFUIView, void, childAdd,
 {
     d->childAdd(this, ZFUIViewChildLayer::e_Normal, d->layerNormal, view, layoutParam, atIndex);
 }
-ZFMETHOD_DEFINE_4(ZFUIView, void, childAdd,
+ZFMETHOD_DEFINE_5(ZFUIView, void, childAdd,
                   ZFMP_IN(ZFUIView *, view),
                   ZFMP_IN(const ZFUISizeParam &, sizeParam),
                   ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner),
-                  ZFMP_IN_OPT(ZFUIMargin const &, layoutMargin, ZFUIMarginZero()))
+                  ZFMP_IN_OPT(ZFUIMargin const &, layoutMargin, ZFUIMarginZero()),
+                  ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()))
 {
     this->childAdd(view);
     ZFUILayoutParam *lp = view->layoutParam();
     lp->sizeParam(sizeParam);
     lp->layoutAlign(layoutAlign);
     lp->layoutMargin(layoutMargin);
+    lp->sizeHint(sizeHint);
 }
 ZFMETHOD_DEFINE_1(ZFUIView, void, childRemove,
                   ZFMP_IN(ZFUIView *, view))

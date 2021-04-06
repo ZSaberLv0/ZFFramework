@@ -70,14 +70,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 /**
- * @brief same as dynamic_cast<Type>(obj), require #ZF_ENV_RTTI
- */
-#if ZF_ENV_RTTI
-    #define ZFCastDynamic(Type, obj) (dynamic_cast<Type>(obj))
-#else
-    #define ZFCastDynamic(Type, obj) "ZFCastDynamic depends on ZF_ENV_RTTI"
-#endif
-/**
  * @brief same as static_cast<Type>(obj)
  */
 #define ZFCastStatic(Type, obj) (static_cast<Type>(obj))

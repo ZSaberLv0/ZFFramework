@@ -48,14 +48,14 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFAnimationTaskHolder, ZFLevelZFFrameworkE
 }
 public:
     ZFListener delayOnFinishListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(delayOnFinish)
+    static void delayOnFinish(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFAnimation *ani = userData->objectHolded();
         v_zfidentity *taskId = listenerData.param0<v_zfidentity *>();
         ani->_ZFP_ZFAnimation_aniImplDelayNotifyFinish(taskId->zfv);
     }
     ZFListener dummyOnFinishListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(dummyOnFinish)
+    static void dummyOnFinish(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFAnimation *ani = userData->objectHolded();
         ani->_ZFP_ZFAnimation_aniDummyNotifyStop();

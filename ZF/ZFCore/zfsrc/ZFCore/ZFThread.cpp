@@ -175,7 +175,7 @@ static zfidentity _ZFP_ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnab
                                                   ZF_IN ZFObject *owner,
                                                   ZF_IN ZFThread *ownerZFThread,
                                                   ZF_IN _ZFP_ZFThreadPrivate *ownerZFThreadPrivate);
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadCallback)
+static void _ZFP_ZFThreadCallback(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
     _ZFP_I_ZFThreadRunnableData *runnableData = listenerData.param0<_ZFP_I_ZFThreadRunnableData *>();

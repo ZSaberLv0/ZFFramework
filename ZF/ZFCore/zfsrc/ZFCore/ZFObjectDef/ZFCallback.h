@@ -406,7 +406,7 @@ private:
         ZFCallbackTypeRawFunction, \
         zfnull, \
         zfnull, \
-        (ZFFuncAddrType)(callbackRawFunction), \
+        (ZFFuncAddrType)(void (*)(const ZFListenerData &, ZFObject *))(callbackRawFunction), \
         zfnull, \
         zfnull)
 

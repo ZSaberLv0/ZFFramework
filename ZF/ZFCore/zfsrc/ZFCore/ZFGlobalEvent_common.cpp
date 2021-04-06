@@ -39,7 +39,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(zfAllocWithCache_autoClean)
     ZFGlobalObserver().observerRemove(ZFGlobalEvent::EventAppOnMemoryLow(), this->cleanListener);
 }
 ZFListener cleanListener;
-static ZFLISTENER_PROTOTYPE_EXPAND(clean)
+static void clean(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     zfAllocCacheRemoveAll();
 }

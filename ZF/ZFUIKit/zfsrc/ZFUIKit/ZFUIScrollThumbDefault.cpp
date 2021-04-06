@@ -76,7 +76,7 @@ public:
     {
     }
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(aniOnStop)
+    static void aniOnStop(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIScrollThumbDefault *owner = userData->objectHolded();
         if(owner != zfnull)
@@ -85,7 +85,7 @@ public:
             owner->d->thumbView->viewVisible(zffalse);
         }
     }
-    static ZFLISTENER_PROTOTYPE_EXPAND(thumbHideAniAutoStop)
+    static void thumbHideAniAutoStop(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIScrollThumbDefault *owner = userData->objectHolded();
         if(owner != zfnull)

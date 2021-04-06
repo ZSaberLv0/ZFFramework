@@ -7,10 +7,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 // task processing
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestCallback_action);
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask_action);
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask_action);
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge_action);
+static void _ZFP_ZFThreadTaskRequestCallback_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
+static void _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
+static void _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
+static void _ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
 
 static ZFListener *_ZFP_ZFThread_wrappedTaskCallback = zfnull;
 static ZFListener *_ZFP_ZFThread_mergeCallbackIgnoreOldTask = zfnull;
@@ -55,7 +55,7 @@ static void _ZFP_ZFThreadTaskRequest_taskStop(ZF_IN ZFThreadTaskRequestData *tas
     _ZFP_ZFThreadTaskRequestTaskIdHolder.idRelease(taskData->taskId());
 }
 
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestCallback_action)
+static void _ZFP_ZFThreadTaskRequestCallback_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
     if(lockAvailable)
@@ -109,17 +109,17 @@ static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestCallback_action)
         }
     }
 }
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask_action)
+static void _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     ZFThreadTaskRequestMergeCallbackData *mergeCallbackData = listenerData.param0<ZFThreadTaskRequestMergeCallbackData *>();
     mergeCallbackData->taskRequestDataMerged = zfRetain(mergeCallbackData->taskRequestDataNew);
 }
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask_action)
+static void _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     ZFThreadTaskRequestMergeCallbackData *mergeCallbackData = listenerData.param0<ZFThreadTaskRequestMergeCallbackData *>();
     mergeCallbackData->taskRequestDataMerged = zfRetain(mergeCallbackData->taskRequestDataOld);
 }
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge_action)
+static void _ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge_action(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     // leave empty merged data, nothing to do
 }

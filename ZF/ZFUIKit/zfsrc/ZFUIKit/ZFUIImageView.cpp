@@ -11,7 +11,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIImageViewListenerHolder, ZFLevelZFFram
 }
 public:
     ZFListener imageNinePatchChangedListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(imageNinePatchChanged)
+    static void imageNinePatchChanged(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         const ZFProperty *property = listenerData.param0<v_ZFProperty *>()->zfv;
         if(property == ZFPropertyAccess(ZFUIImage, imageNinePatch)

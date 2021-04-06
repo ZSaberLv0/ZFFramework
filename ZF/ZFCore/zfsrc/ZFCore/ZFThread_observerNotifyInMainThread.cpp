@@ -62,7 +62,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFObserverNotifyInMainThreadDataHolder)
 }
 private:
     ZFListener callback;
-    static ZFLISTENER_PROTOTYPE_EXPAND(callbackAction)
+    static void callbackAction(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         _ZFP_I_ZFObserverNotifyInMainThreadTaskData *taskData = userData->to<_ZFP_I_ZFObserverNotifyInMainThreadTaskData *>();
         taskData->obj->observerNotifyWithCustomSender(

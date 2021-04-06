@@ -31,7 +31,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFResCacheHolder, ZFLevelZFFrameworkStatic
 zfstlmap<zfstlstringZ, ZFObject *> keyMap;
 zfstlmap<ZFObject *, const zfchar *> valueMap;
 ZFListener resOnDeallocListener;
-static ZFLISTENER_PROTOTYPE_EXPAND(resOnDealloc)
+static void resOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     zfCoreMutexLocker();
     ZF_GLOBAL_INITIALIZER_CLASS(ZFResCacheHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFResCacheHolder);

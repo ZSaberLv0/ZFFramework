@@ -20,7 +20,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewBlinkWhenFocus_AutoPause_DataHolder)
 }
 public:
     ZFListener doActionListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(doAction)
+    static void doAction(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIViewBlinkWhenFocusAutoApplyPauseForTime();
     }

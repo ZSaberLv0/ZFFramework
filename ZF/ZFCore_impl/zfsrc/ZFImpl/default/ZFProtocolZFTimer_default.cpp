@@ -55,7 +55,9 @@ public:
     }
 
 public:
-    ZFLISTENER_INLINE(threadCallback)
+    ZFMETHOD_INLINE_2(void, threadCallback,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         zfidentity curId = listenerData.param0<v_zfidentity *>()->zfv;
 
@@ -87,7 +89,9 @@ public:
             ZFThread::sleep(this->timer->timerInterval());
         }
     }
-    ZFLISTENER_INLINE(mainThreadCallback)
+    ZFMETHOD_INLINE_2(void, mainThreadCallback,
+                      ZFMP_IN(const ZFListenerData &, listenerData),
+                      ZFMP_IN(ZFObject *, userData))
     {
         zfidentity curId = listenerData.param0<v_zfidentity *>()->zfv;
 

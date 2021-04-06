@@ -19,7 +19,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIButtonGroupListenerHolder, ZFLevelZFFr
 }
 public:
     ZFListener buttonEventListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(buttonEvent)
+    static void buttonEvent(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIButtonGroup *buttonGroup = userData->objectHolded();
         ZFUIButton *button = listenerData.sender<ZFUIButton *>();
@@ -81,7 +81,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIButtonGroupListenerHolder_Tab, ZFLevel
 }
 public:
     ZFListener buttonOnClickListener;
-    static ZFLISTENER_PROTOTYPE_EXPAND(buttonOnClick)
+    static void buttonOnClick(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         ZFUIButtonGroup *buttonGroup = userData->objectHolded();
         ZFUIButton *button = listenerData.sender<ZFUIButton *>();

@@ -26,7 +26,7 @@ static void _ZFP_ZFImpl_ZFLua_ZFMethod_setupGlobalMethod(ZF_IN const ZFCoreArray
         ZFImpl_ZFLua_execute(luaStateList[i], code);
     }
 }
-static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFMethod_methodOnChange)
+static void _ZFP_ZFImpl_ZFLua_ZFMethod_methodOnChange(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     const ZFClassDataChangeData *data = listenerData.param0<ZFPointerHolder *>()->holdedDataPointer<const ZFClassDataChangeData *>();
     if(data->changedMethod != zfnull && data->changeType == ZFClassDataChangeTypeAttach)

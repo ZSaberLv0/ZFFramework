@@ -15,7 +15,7 @@ public:
     ZFListener cacheTrimListener;
     zfstlmap<ZFCache *, zfbool> attachedObject;
 public:
-    static ZFLISTENER_PROTOTYPE_EXPAND(cacheTrim)
+    static void cacheTrim(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
     {
         const zfstlmap<ZFCache *, zfbool> &attachedObject = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFCacheDataHolder)->attachedObject;
         for(zfstlmap<ZFCache *, zfbool>::const_iterator it = attachedObject.begin(); it != attachedObject.end(); ++it)
