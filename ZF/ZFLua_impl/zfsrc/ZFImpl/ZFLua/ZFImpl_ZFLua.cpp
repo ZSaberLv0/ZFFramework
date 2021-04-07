@@ -1017,6 +1017,7 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
     }
     zfstring fmtNew;
     const zfchar *pFmt = fmt;
+    const zfchar *pFmtL = pFmt;
 
     zfstring params[ZFMETHOD_MAX_PARAM];
     for(int i = luaParamOffset + 1; i <= count; ++i)
@@ -1055,15 +1056,15 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
                 || *pToken == 'c' || *pToken == 'C'
                 || *pToken == 's' || *pToken == 'S'
             ) {
-                fmtNew.append(pFmt, pToken - pFmt);
+                fmtNew.append(pFmtL, pToken - pFmtL);
                 fmtNew += 's';
                 if(*pToken == 'z' && *(pToken + 1) == 'i')
                 {
-                    pFmt = pToken + 2;
+                    pFmtL = pFmt = pToken + 2;
                 }
                 else
                 {
-                    pFmt = pToken + 1;
+                    pFmtL = pFmt = pToken + 1;
                 }
             }
             break;
@@ -1095,7 +1096,7 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
         }
     }
 
-    fmtNew += pFmt;
+    fmtNew += pFmtL;
     /* ZFMETHOD_MAX_PARAM */
     zfstringAppend(s, fmtNew
             , params[0].cString()
