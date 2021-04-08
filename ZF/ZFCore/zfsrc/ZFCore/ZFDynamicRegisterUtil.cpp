@@ -33,7 +33,6 @@ public:
     ZFCoreArrayPOD<const ZFMethod *> allMethod;
     ZFCoreArrayPOD<const ZFProperty *> allProperty;
     ZFCoreArrayPOD<zfidentity> allEvent;
-    ZFCoreArray<ZFOutput> errorCallbackList;
 public:
     _ZFP_ZFDynamicPrivate(void)
     : refCount(1)
@@ -52,7 +51,6 @@ public:
     , allMethod()
     , allProperty()
     , allEvent()
-    , errorCallbackList()
     {
         this->attachGlobal();
     }
@@ -64,7 +62,7 @@ public:
     void error(ZF_IN const zfchar *errorHint, ...)
     {
         this->errorOccurred = zftrue;
-        if(!this->errorCallbackList.isEmpty())
+        if(!ZFDynamic::errorCallbacks().isEmpty())
         {
             zfstring s;
             va_list vaList;
@@ -73,9 +71,9 @@ public:
             va_end(vaList);
             s += "\n";
 
-            for(zfindex i = 0; i < this->errorCallbackList.count(); ++i)
+            for(zfindex i = 0; i < ZFDynamic::errorCallbacks().count(); ++i)
             {
-                this->errorCallbackList[i].execute(s.cString());
+                ZFDynamic::errorCallbacks()[i].execute(s.cString());
             }
         }
     }
@@ -410,7 +408,6 @@ void ZFDynamic::removeAll(void)
     d->enumValueNext = 0;
     d->enumValues.removeAll();
     d->enumNames.removeAll();
-    d->errorCallbackList.removeAll();
 }
 
 const ZFCoreArrayPOD<const ZFClass *> &ZFDynamic::allClass(void) const
@@ -984,31 +981,20 @@ ZFDynamic &ZFDynamic::property(ZF_IN const ZFPropertyDynamicRegisterParam &param
     return *this;
 }
 
-ZFDynamic &ZFDynamic::errorCallbackAdd(ZF_IN const ZFOutput &errorCallback /* = ZFOutputDefault() */)
+ZFCoreArray<ZFOutput> &ZFDynamic::errorCallbacks(void)
 {
-    if(errorCallback.callbackIsValid())
-    {
-        d->errorCallbackList.add(errorCallback);
-    }
-    return *this;
+    static ZFCoreArray<ZFOutput> d;
+    return d;
 }
-ZFDynamic &ZFDynamic::errorCallbackRemove(ZF_IN const ZFOutput &errorCallback)
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFDynamicErrorCallbacks, ZFLevelZFFrameworkNormal)
 {
-    d->errorCallbackList.removeElement(errorCallback);
-    return *this;
+    ZFDynamic::errorCallbacks().add(ZFOutputDefault());
 }
-zfindex ZFDynamic::errorCallbackCount(void) const
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFDynamicErrorCallbacks)
 {
-    return d->errorCallbackList.count();
+    ZFDynamic::errorCallbacks().removeAll();
 }
-const ZFOutput &ZFDynamic::errorCallbackAtIndex(ZF_IN zfindex index) const
-{
-    return d->errorCallbackList[index];
-}
-void ZFDynamic::errorCallbackNotify(ZF_IN const zfchar *errorHint) const
-{
-    d->error("%s", errorHint);
-}
+ZF_GLOBAL_INITIALIZER_END(ZFDynamicErrorCallbacks)
 
 // ============================================================
 ZFMETHOD_FUNC_DEFINE_0(void, ZFDynamicRemoveAll)
@@ -1086,11 +1072,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, method, ZFMP
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_5(v_ZFDynamic, ZFDynamic &, property, ZFMP_IN(const zfchar *, propertyTypeId), ZFMP_IN(const zfchar *, propertyName), ZFMP_IN_OPT(ZFObject *, propertyInitValue, zfnull), ZFMP_IN_OPT(ZFMethodPrivilegeType, setterPrivilegeType, ZFMethodPrivilegeTypePublic), ZFMP_IN_OPT(ZFMethodPrivilegeType, getterPrivilegeType, ZFMethodPrivilegeTypePublic))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_5(v_ZFDynamic, ZFDynamic &, property, ZFMP_IN(const ZFClass *, propertyClassOfRetainProperty), ZFMP_IN(const zfchar *, propertyName), ZFMP_IN_OPT(ZFObject *, propertyInitValue, zfnull), ZFMP_IN_OPT(ZFMethodPrivilegeType, setterPrivilegeType, ZFMethodPrivilegeTypePublic), ZFMP_IN_OPT(ZFMethodPrivilegeType, getterPrivilegeType, ZFMethodPrivilegeTypePublic))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, property, ZFMP_IN(const ZFPropertyDynamicRegisterParam &, param))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, errorCallbackAdd, ZFMP_IN_OPT(const ZFOutput &, errorCallback, ZFOutputDefault()))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, errorCallbackRemove, ZFMP_IN(const ZFOutput &, errorCallback))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFDynamic, zfindex, errorCallbackCount)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, const ZFOutput &, errorCallbackAtIndex, ZFMP_IN(zfindex, index))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, void, errorCallbackNotify, ZFMP_IN(const zfchar *, errorHint))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFDynamic, ZFCoreArray<ZFOutput> &, errorCallbacks)
 
 ZF_NAMESPACE_GLOBAL_END
 

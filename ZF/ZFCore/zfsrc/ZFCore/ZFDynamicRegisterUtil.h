@@ -68,7 +68,7 @@ zfclassFwd _ZFP_ZFDynamicPrivate;
  *   ;
  * @endcode
  *
- * when any steps failed, #errorCallbackNotify would be called,
+ * when any steps failed, #errorCallbacks would be notified,
  * and all further call would be ignored\n
  * \n
  * you may store the returned ZFDynamic object,
@@ -267,16 +267,13 @@ public:
     ZFDynamic &property(ZF_IN const ZFPropertyDynamicRegisterParam &param);
 
 public:
-    /** @brief error callback which would be called if error occurred */
-    ZFDynamic &errorCallbackAdd(ZF_IN const ZFOutput &errorCallback = ZFOutputDefault());
-    /** @brief see #errorCallbackAdd */
-    ZFDynamic &errorCallbackRemove(ZF_IN const ZFOutput &errorCallback);
-    /** @brief see #errorCallbackAdd */
-    zfindex errorCallbackCount(void) const;
-    /** @brief see #errorCallbackAdd */
-    const ZFOutput &errorCallbackAtIndex(ZF_IN zfindex index) const;
-    /** @brief see #errorCallbackAdd */
-    void errorCallbackNotify(ZF_IN const zfchar *errorHint) const;
+    /**
+     * @brief callbacks which would be called when error occurred
+     *
+     * by default, #ZFOutputDefault would be attached during #ZFFrameworkInit
+     * with #ZFLevelZFFrameworkNormal
+     */
+    static ZFCoreArray<ZFOutput> &errorCallbacks(void);
 
 private:
     _ZFP_ZFDynamicPrivate *d;

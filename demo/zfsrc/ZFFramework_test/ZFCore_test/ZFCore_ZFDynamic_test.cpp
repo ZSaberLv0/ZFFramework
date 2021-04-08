@@ -24,7 +24,7 @@ protected:
                 zfautoRelease(zfRetain(ret)); // take care of this
                 d->ret = ret;
             })
-        ZFDynamic d = ZFDynamic().errorCallbackAdd()
+        ZFDynamic d = ZFDynamic()
             .classBegin("ZFDynamicTest", "ZFObject")
                 .property(ZFTypeId_zfstring(), "testProp")
                 .method(methodCallback, zfnull, ZFTypeId_zfstring(), "testMethod", ZFTypeId_zfstring())

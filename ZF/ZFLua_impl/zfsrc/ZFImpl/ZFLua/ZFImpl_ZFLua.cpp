@@ -909,71 +909,56 @@ zfbool ZFImpl_ZFLua_toLuaValue(ZF_IN lua_State *L,
     return zffalse;
 }
 
-static void _ZFP_ZFImpl_ZFLua_zfstringAppend_bool(ZF_OUT zfstring &ret, ZF_IN const zfchar *pToken, ZF_IN lua_State *L, ZF_IN int i)
+// ============================================================
+// ZFImpl_ZFLua_zfstringAppend
+static zfbool _ZFP_ZFImpl_ZFLua_zfstringAppend_bool(ZF_IN lua_State *L, ZF_IN int i)
 {
-    zfbool value = zftrue;
+    zfbool ret = zftrue;
     zfautoObject t;
     if(ZFImpl_ZFLua_toObject(t, L, i))
     {
         if(t == zfnull)
         {
-            value = zffalse;
+            ret = zffalse;
         }
         else if(t->classData()->classIsTypeOf(v_zfbool::ClassData()))
         {
-            value = t->to<v_zfbool *>()->zfv;
+            ret = t->to<v_zfbool *>()->zfv;
+        }
+        else if(ZFImpl_ZFLua_toNumberT(t, L, i))
+        {
+            ret = t->to<v_zflongdouble *>()->zfv;
         }
     }
     else if(lua_isboolean(L, i))
     {
-        value = (zfbool)lua_toboolean(L, i);
+        ret = (zfbool)lua_toboolean(L, i);
     }
     else if(lua_isnoneornil(L, i))
     {
-        value = zffalse;
+        ret = zffalse;
     }
     else if(lua_isnumber(L, i))
     {
-        value = (lua_tonumber(L, i) != 0);
+        ret = (lua_tonumber(L, i) != 0);
     }
-    zfboolToString(ret, value);
+    return ret;
 }
-static void _ZFP_ZFImpl_ZFLua_zfstringAppend_number(ZF_OUT zfstring &ret, ZF_IN const zfchar *pToken, ZF_IN lua_State *L, ZF_IN int i)
+static zflongdouble _ZFP_ZFImpl_ZFLua_zfstringAppend_number(ZF_IN lua_State *L, ZF_IN int i)
 {
-    zflongdouble value = 0;
     zfautoObject t;
     if(ZFImpl_ZFLua_toNumberT(t, L, i, zftrue))
     {
-        value = t->to<v_zflongdouble *>()->zfv;
+        return t->to<v_zflongdouble *>()->zfv;
     }
-
-    if(*pToken == 'z' && *(pToken + 1) == 'i')
+    else
     {
-        zfindexToString(ret, (zfindex)value);
-    }
-    else if(*pToken == 'd' || *pToken == 'i')
-    {
-        zfintToString(ret, (zfint)value);
-    }
-    else if(*pToken == 'u')
-    {
-        zfuintToString(ret, (zfuint)value);
-    }
-    else if(*pToken == 'o')
-    {
-        zfsFromIntT(ret, (zfuint)value, 8);
-    }
-    else if(*pToken == 'x' || *pToken == 'X')
-    {
-        zfsFromIntT(ret, (zfuint)value, 16, *pToken == 'X');
-    }
-    else if(*pToken == 'f')
-    {
-        zffloatToString(ret, (zffloat)value);
+        return 0;
     }
 }
-static void _ZFP_ZFImpl_ZFLua_zfstringAppend_pointer(ZF_OUT zfstring &ret, ZF_IN const zfchar *pToken, ZF_IN lua_State *L, ZF_IN int i)
+static zfstring _ZFP_ZFImpl_ZFLua_zfstringAppend_pointer(ZF_IN lua_State *L, ZF_IN int i)
 {
+    zfstring ret;
     zfautoObject t;
     if(ZFImpl_ZFLua_toObject(t, L, i))
     {
@@ -983,9 +968,11 @@ static void _ZFP_ZFImpl_ZFLua_zfstringAppend_pointer(ZF_OUT zfstring &ret, ZF_IN
     {
         ZFImpl_ZFLua_luaObjectInfoT(ret, L, i);
     }
+    return ret;
 }
-static void _ZFP_ZFImpl_ZFLua_zfstringAppend_string(ZF_OUT zfstring &ret, ZF_IN const zfchar *pToken, ZF_IN lua_State *L, ZF_IN int i)
+static zfstring _ZFP_ZFImpl_ZFLua_zfstringAppend_string(ZF_IN lua_State *L, ZF_IN int i, ZF_IN zfbool toString)
 {
+    zfstring ret;
     zfautoObject t;
     if(ZFImpl_ZFLua_toObject(t, L, i))
     {
@@ -995,10 +982,11 @@ static void _ZFP_ZFImpl_ZFLua_zfstringAppend_string(ZF_OUT zfstring &ret, ZF_IN 
     {
         // nothing to do
     }
-    else
+    else if(toString)
     {
         ZFImpl_ZFLua_luaObjectInfoT(ret, L, i);
     }
+    return ret;
 }
 zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
                                    ZF_IN_OUT zfstring &s,
@@ -1015,14 +1003,13 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
     {
         return zffalse;
     }
-    zfstring fmtNew;
-    const zfchar *pFmt = fmt;
-    const zfchar *pFmtL = pFmt;
 
-    zfstring params[ZFMETHOD_MAX_PARAM];
+    zfstring fmtTmp;
+    const zfchar *pFmt = fmt;
+    const zfchar *pFmtL = fmt;
+    const zfchar *pToken = zfnull;
     for(int i = luaParamOffset + 1; i <= count; ++i)
     {
-        const zfchar *pToken = zfnull;
         do {
             while(*pFmt != '\0' && *pFmt != '%') {++pFmt;}
             if(*pFmt == '\0' || *(pFmt + 1) == '\0')
@@ -1034,89 +1021,91 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
                 pFmt += 2;
                 continue;
             }
-            pToken = pFmt + 1;
-            while(zffalse
-                || *pToken == '-'
-                || *pToken == '+'
-                || *pToken == ' '
-                || *pToken == '.'
-                || (*pToken >= '0' && *pToken <= '9')
-            ) {
-                ++pToken;
-            }
-            if(zffalse
-                || *pToken == 'b'
-                || (*pToken == 'z' && *(pToken + 1) == 'i')
-                || *pToken == 'd' || *pToken == 'i'
-                || *pToken == 'u'
-                || *pToken == 'o'
-                || *pToken == 'x' || *pToken == 'X'
-                || *pToken == 'f'
-                || *pToken == 'p'
-                || *pToken == 'c' || *pToken == 'C'
-                || *pToken == 's' || *pToken == 'S'
-            ) {
-                fmtNew.append(pFmtL, pToken - pFmtL);
-                fmtNew += 's';
-                if(*pToken == 'z' && *(pToken + 1) == 'i')
-                {
-                    pFmtL = pFmt = pToken + 2;
-                }
-                else
-                {
-                    pFmtL = pFmt = pToken + 1;
-                }
-            }
-            break;
-        } while(zftrue);
+        } while(zffalse);
+        s.append(pFmtL, pFmt - pFmtL);
 
-        if(*pToken == 'b')
-        {
-            _ZFP_ZFImpl_ZFLua_zfstringAppend_bool(params[i - 1 - luaParamOffset], pToken, L, i);
-        }
-        else if(zffalse
-            || (*pToken == 'z' && *(pToken + 1) == 'i')
-            || *pToken == 'd' || *pToken == 'i'
-            || *pToken == 'u'
-            || *pToken == 'o'
-            || *pToken == 'x' || *pToken == 'X'
-            || *pToken == 'f'
+        pToken = pFmt + 1;
+        while(zffalse
+            || *pToken == '-'
+            || *pToken == '+'
+            || *pToken == ' '
+            || *pToken == '.'
+            || (*pToken >= '0' && *pToken <= '9')
         ) {
-            _ZFP_ZFImpl_ZFLua_zfstringAppend_number(params[i - 1 - luaParamOffset], pToken, L, i);
+            ++pToken;
         }
-        else if(*pToken == 'p')
+
+        switch(*pToken)
         {
-            _ZFP_ZFImpl_ZFLua_zfstringAppend_pointer(params[i - 1 - luaParamOffset], pToken, L, i);
+            case 'b':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                zfstringAppend(s, fmtTmp, _ZFP_ZFImpl_ZFLua_zfstringAppend_bool(L, i));
+                break;
+            case 'z':
+                if(*(pToken + 1) != 'i')
+                {
+                    return zffalse;
+                }
+                pFmtL = pToken + 2;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                zfstringAppend(s, fmtTmp, (zfindex)_ZFP_ZFImpl_ZFLua_zfstringAppend_number(L, i));
+                break;
+            case 'd':
+            case 'i':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                zfstringAppend(s, fmtTmp, (zfint)_ZFP_ZFImpl_ZFLua_zfstringAppend_number(L, i));
+                break;
+            case 'u':
+            case 'o':
+            case 'x':
+            case 'X':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                zfstringAppend(s, fmtTmp, (zfuint)_ZFP_ZFImpl_ZFLua_zfstringAppend_number(L, i));
+                break;
+            case 'f':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                zfstringAppend(s, fmtTmp, (zffloat)_ZFP_ZFImpl_ZFLua_zfstringAppend_number(L, i));
+                break;
+            case 'p':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                fmtTmp[fmtTmp.length() - 1] = 's';
+                zfstringAppend(s, fmtTmp, _ZFP_ZFImpl_ZFLua_zfstringAppend_pointer(L, i).cString());
+                break;
+            case 'c':
+            case 'C':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                {
+                    zfstring tmp = _ZFP_ZFImpl_ZFLua_zfstringAppend_string(L, i, zffalse);
+                    zfstringAppend(s, fmtTmp, (zfchar)(tmp.isEmpty() ? '?' : tmp[0]));
+                }
+                break;
+            case 's':
+            case 'S':
+                pFmtL = pToken + 1;
+                fmtTmp.assign(pFmt, pFmtL - pFmt);
+                zfstringAppend(s, fmtTmp, _ZFP_ZFImpl_ZFLua_zfstringAppend_string(L, i, zftrue).cString());
+                break;
+            default:
+                return zffalse;
         }
-        else if(zffalse
-            || *pToken == 'c' || *pToken == 'C'
-            || *pToken == 's' || *pToken == 'S'
-        ) {
-            _ZFP_ZFImpl_ZFLua_zfstringAppend_string(params[i - 1 - luaParamOffset], pToken, L, i);
-        }
+        pFmt = pFmtL;
     }
-
-    fmtNew += pFmtL;
-    /* ZFMETHOD_MAX_PARAM */
-    zfstringAppend(s, fmtNew
-            , params[0].cString()
-            , params[1].cString()
-            , params[2].cString()
-            , params[3].cString()
-            , params[4].cString()
-            , params[5].cString()
-            , params[6].cString()
-            , params[7].cString()
-        );
+    s.append(pFmtL, pFmt - pFmtL);
 
     return zftrue;
 }
 
+// ============================================================
 int ZFImpl_ZFLua_luaError(ZF_IN lua_State *L)
 {
     return luaL_error(L, ZFImpl_ZFLua_dummyError);
 }
-
 
 ZF_NAMESPACE_GLOBAL_END
 
