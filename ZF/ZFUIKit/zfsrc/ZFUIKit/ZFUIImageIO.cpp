@@ -9,12 +9,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromBase64,
                        ZFMP_IN(const ZFInput &, inputCallback))
 {
-    ZFIOBufferedCallbackUsingTmpFile io;
+    zfblockedAlloc(ZFIOBufferByCacheFile, io);
     zfautoObjectT<ZFUIImage *> ret = ZFUIImage::ClassData()->newInstance();
     ZFUIImage *image = ret;
-    if(image != zfnull && ZFBase64Decode(io.outputCallback(), inputCallback))
+    if(image != zfnull && ZFBase64Decode(io->output(), inputCallback))
     {
-        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(io.inputCallback());
+        void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(io->input());
         if(nativeImage != zfnull)
         {
             image->nativeImage(nativeImage);
@@ -30,12 +30,12 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageSaveToBase64,
 {
     if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
     {
-        ZFIOBufferedCallbackUsingTmpFile io;
-        if(!ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageToOutput(image->nativeImage(), io.outputCallback()))
+        zfblockedAlloc(ZFIOBufferByCacheFile, io);
+        if(!ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageToOutput(image->nativeImage(), io->output()))
         {
             return zffalse;
         }
-        return ZFBase64Encode(outputCallback, io.inputCallback());
+        return ZFBase64Encode(outputCallback, io->input());
     }
     return zffalse;
 }

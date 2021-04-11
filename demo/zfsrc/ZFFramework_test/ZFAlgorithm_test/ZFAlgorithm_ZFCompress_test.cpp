@@ -15,9 +15,9 @@ protected:
         this->testCaseOutputSeparator();
         this->testCaseOutput("compress buffer");
         {
-            ZFIOBufferedCallbackUsingBuffer io;
-            ZFCompress(io, ZFInputForBufferUnsafe("uncompressed text"));
-            ZFDecompress(ZFOutputDefault(), io);
+            zfblockedAlloc(ZFIOBufferByMemory, io);
+            ZFCompress(io->output(), ZFInputForBufferUnsafe("uncompressed text"));
+            ZFDecompress(ZFOutputDefault(), io->input());
         }
 
         this->testCaseOutputSeparator();
@@ -31,10 +31,10 @@ protected:
             this->testCaseOutput("original dst tree:");
             ZFFilePathInfoTreePrint(pathInfoDst, ZFOutputDefault(), "    ");
 
-            ZFIOBufferedCallbackUsingTmpFile io;
-            ZFCompressDir(io, pathInfoSrc);
+            zfblockedAlloc(ZFIOBufferByCacheFile, io);
+            ZFCompressDir(io->output(), pathInfoSrc);
 
-            ZFDecompressDir(pathInfoDst, io);
+            ZFDecompressDir(pathInfoDst, io->input());
             this->testCaseOutput("decompressed dst tree:");
             ZFFilePathInfoTreePrint(pathInfoDst, ZFOutputDefault(), "    ");
         }
