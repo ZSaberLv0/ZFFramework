@@ -596,7 +596,7 @@ void ZFObject::objectPropertyValueOnUpdate(ZF_IN const ZFProperty *property, ZF_
     {
         v_ZFProperty *param0 = zflockfree_zfAllocWithCache(v_ZFProperty);
         param0->zfv = property;
-        v_VoidPointerConst *param1 = zflockfree_zfAllocWithCache(v_VoidPointerConst);
+        v_ZFPtrConst *param1 = zflockfree_zfAllocWithCache(v_ZFPtrConst);
         param1->zfv = oldValue;
         this->observerNotify(ZFObject::EventObjectPropertyValueOnUpdate(), param0, param1);
         zflockfree_zfRelease(param0);

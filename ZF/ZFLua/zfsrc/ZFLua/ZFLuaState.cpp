@@ -45,7 +45,7 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaStateAttach,
     {
         ZFGlobalObserver().observerNotify(
             ZFGlobalEvent::EventLuaStateOnAttach(),
-            zflineAlloc(v_VoidPointer, L));
+            zflineAlloc(v_ZFPtr, L));
     }
 }
 ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaStateDetach,
@@ -55,7 +55,7 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFLuaStateDetach,
     {
         ZFGlobalObserver().observerNotify(
             ZFGlobalEvent::EventLuaStateOnDetach(),
-            zflineAlloc(v_VoidPointer, L));
+            zflineAlloc(v_ZFPtr, L));
     }
     ZFPROTOCOL_ACCESS(ZFLua)->luaStateDetach(L);
 }

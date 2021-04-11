@@ -127,7 +127,7 @@ void ZFImpl_ZFLua_luaStateAttach(ZF_IN lua_State *L)
     public:
         static int f(ZF_IN lua_State *L)
         {
-            zfblockedAllocWithCache(v_VoidPointer, ret);
+            zfblockedAllocWithCache(v_ZFPtr, ret);
             ret->zfv = (void *)L;
             zfautoObject tmp = ret;
             ZFImpl_ZFLua_luaPush(L, tmp);
@@ -583,7 +583,7 @@ protected:
 
 static void _ZFP_ZFImpl_ZFLua_ZFCallbackAutoClean_callback(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
-    lua_State *L = (lua_State *)listenerData.param0<v_VoidPointer *>()->zfv;
+    lua_State *L = (lua_State *)listenerData.param0<v_ZFPtr *>()->zfv;
     ZFCoreArrayPOD<_ZFP_I_ZFImpl_ZFLua_ZFCallbackForLuaHolder *> &attachList = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFImpl_ZFLua_ZFCallbackAutoClean)->attachList;
     for(zfindex i = attachList.count() - 1; i != zfindexMax(); --i)
     {

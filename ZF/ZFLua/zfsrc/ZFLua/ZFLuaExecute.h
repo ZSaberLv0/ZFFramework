@@ -133,7 +133,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     note: the va_args support params up to #ZFMETHOD_MAX_PARAM
  * -  path info
  *   -  `zfl_L()`\n
- *     lua_State of current chunk, stored as #v_VoidPointer
+ *     lua_State of current chunk, stored as #v_ZFPtr
  *   -  `ZFLuaPathInfo()`\n
  *     return path info of current context, null if not available
  *   -  `ZFLuaImport(localFilePath [, param0, param1, ...])`

@@ -54,14 +54,14 @@ ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
  * @brief see #ZFObject::observerNotify
  *
  * notified when #ZFLuaStateAttach,
- * param0 is a #v_VoidPointer to lua state
+ * param0 is a #v_ZFPtr to lua state
  */
 ZFOBSERVER_EVENT_GLOBAL(LuaStateOnAttach)
 /**
  * @brief see #ZFObject::observerNotify
  *
  * notified when #ZFLuaStateDetach,
- * param0 is a #v_VoidPointer to lua state
+ * param0 is a #v_ZFPtr to lua state
  */
 ZFOBSERVER_EVENT_GLOBAL(LuaStateOnDetach)
 ZF_NAMESPACE_END(ZFGlobalEvent)

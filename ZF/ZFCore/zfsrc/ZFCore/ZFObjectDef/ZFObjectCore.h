@@ -274,7 +274,7 @@ public:
      * @brief see #ZFObject::observerNotify
      *
      * param0 is #v_ZFProperty that value changes\n
-     * param1 is #v_VoidPointerConst holds the old property value
+     * param1 is #v_ZFPtrConst holds the old property value
      * (holds null when first time accessed)\n
      * the param1 holds these types:
      * -  for retain property, it points to (const zfautoObject *)

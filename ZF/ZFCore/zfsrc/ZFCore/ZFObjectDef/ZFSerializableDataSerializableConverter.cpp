@@ -464,7 +464,7 @@ zfbool ZFSerializableDataToZfsd(ZF_OUT zfstring &result,
         result += _ZFP_ZFSD_ChildBegin;
         for(zfindex i = 0; i < serializableData.elementCount(); ++i)
         {
-            if(!ZFSerializableDataToZfsd(result, serializableData.elementAtIndex(i), outErrorHint))
+            if(!ZFSerializableDataToZfsd(result, serializableData.elementAtIndex(i), outErrorHint, prettyPrint))
             {
                 return zffalse;
             }
@@ -621,7 +621,7 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfstring, ZFSerializableDataToZfsd, ZFMP_
 
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectFromZfsd, ZFMP_OUT(zfautoObject &, ret), ZFMP_IN(const ZFInput &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfautoObject, ZFObjectFromZfsd, ZFMP_IN(const ZFInput &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectToZfsd, ZFMP_IN_OUT(const ZFOutput &, output), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectToZfsd, ZFMP_IN_OUT(const ZFOutput &, output), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(zfbool, prettyPrint, zftrue))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif
