@@ -1096,7 +1096,7 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
         }
         pFmt = pFmtL;
     }
-    s.append(pFmtL, pFmt - pFmtL);
+    s.append(pFmtL, (fmt + zfslen(fmt)) - pFmtL);
 
     return zftrue;
 }

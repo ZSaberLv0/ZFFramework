@@ -143,7 +143,21 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     or `ZFLuaImportOnce(inputCallback [, param0, param1, ...])`\n
  *     same as ZFLuaImport, but only run once for each input with same #ZFCallback::callbackId,
  *     you may also use ZFLuaImportOnceReset to reset the cache state\n
- *     this is useful to load #ZFDynamic contents from lua code
+ *     the recommended way to achieve "import" similar to other languages:
+ *     @code
+ *       // some lua module
+ *       if YourClass then return YourClass end
+ *       ZFDynamic()
+ *           :classBegin('YourClass')
+ *           :classEnd()
+ *
+ *       // other lua file that used the module:
+ *       ZFLuaImportOnce('SomePath/YourClass.lua')
+ *       // or import multiple quickly
+ *       // ZFLuaImportAll('SomePath')
+ *       // and use the module
+ *       local obj = YourClass()
+ *     @endcode
  *   -  `ZFLuaImportAll(localFilePath [, importCallback, importCallbackUserData, recursive])`
  *     or `ZFLuaImportAll(pathInfo [, importCallback, importCallbackUserData, recursive])`\n
  *     util method to import all lua files under specified path,
