@@ -16,17 +16,6 @@ static void _ZFP_ZFFramework_test_prepareTestCase(ZF_IN ZFUIView *containerView)
 
 ZFMAIN_ENTRY()
 {
-    zfblockedAlloc(ZFArray, a);
-    zfblockedAlloc(ZFUIView, v0);
-    a->add(v0);
-    v0->viewId("v0");
-    zfblockedAlloc(ZFUIView, v1);
-    a->add(v1);
-    v1->viewId("v1");
-    ZFObjectToZfsd(ZFOutputDefault(), a, zfnull, zffalse);
-    return; // zfzfzf
-
-
     if(_ZFP_ZFFramework_test_protocolCheck())
     {
         zfautoObject containerView = _ZFP_ZFFramework_test_containerViewPrepare();
