@@ -812,7 +812,7 @@ public:
                        ZFMP_IN(const ZFUISizeParam &, sizeParam),
                        ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner),
                        ZFMP_IN_OPT(ZFUIMargin const &, layoutMargin, ZFUIMarginZero()),
-                       ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()))
+                       ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeInvalid()))
     /**
      * @brief remove view or do nothing if view isn't added to this view
      */

@@ -1849,7 +1849,7 @@ ZFMETHOD_DEFINE_5(ZFUIView, void, childAdd,
                   ZFMP_IN(const ZFUISizeParam &, sizeParam),
                   ZFMP_IN_OPT(ZFUIAlignFlags const &, layoutAlign, ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner),
                   ZFMP_IN_OPT(ZFUIMargin const &, layoutMargin, ZFUIMarginZero()),
-                  ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()))
+                  ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeInvalid()))
 {
     this->childAdd(view);
     ZFUILayoutParam *lp = view->layoutParam();
