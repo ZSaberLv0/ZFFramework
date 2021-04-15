@@ -298,22 +298,42 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
 
     if(error != 0)
     {
+        // [string "?"]:123: xxx
+        const char *nativeError = lua_tostring(L, -1);
+        zfindex tokenL = zfindexMax();
+        zfindex tokenR = zfindexMax();
+        tokenL = zfstringFind((const zfchar *)nativeError, zfindexMax(), "]:");
+        if(tokenL != zfindexMax())
+        {
+            tokenL += 2;
+            tokenR = zfstringFind((const zfchar *)nativeError + tokenL, zfindexMax(), ":");
+        }
+
+        // detect error line
+        zfindex errorLine = zfindexMax();
+        if(tokenL != zfindexMax() && tokenR != zfindexMax())
+        {
+            zfindexFromString(errorLine, (const zfchar *)nativeError + tokenL, tokenR);
+            nativeError = nativeError + tokenL + tokenR + 1;
+            while(*nativeError == ' ') {++nativeError;}
+        }
+
         zfstring errHintTmp;
+        errHintTmp += nativeError;
         if(!zfsIsEmpty(chunkInfo))
         {
-            errHintTmp += "pathInfo: [";
+            errHintTmp += ", at: [";
             errHintTmp += chunkInfo;
             errHintTmp += "]";
         }
-        const char *nativeError = lua_tostring(L, -1);
-        zfbool isBuiltinError = (zfstringFind(nativeError, ZFImpl_ZFLua_dummyError) != zfindexMax());
-        if(!isBuiltinError)
+        if(errorLine != zfindexMax())
         {
-            errHintTmp += nativeError;
-            if(errHint != zfnull)
-            {
-                *errHint += errHintTmp;
-            }
+            errHintTmp += ", line: ";
+            zfindexToString(errHintTmp, errorLine);
+        }
+        if(errHint != zfnull)
+        {
+            *errHint += errHintTmp;
         }
         ZFLuaErrorOccurredTrim("%s", errHintTmp.cString());
 
@@ -903,9 +923,9 @@ zfbool ZFImpl_ZFLua_toLuaValue(ZF_IN lua_State *L,
         return zftrue;
     }
 
-    ZFLuaErrorOccurredTrim("[zfl_luaValue] unknown param type, got %s",
+    ZFImpl_ZFLua_luaError(L,
+        "[zfl_luaValue] unknown param type, got %s",
         obj->objectInfo().cString());
-    ZFImpl_ZFLua_luaError(L);
     return zffalse;
 }
 
@@ -1099,12 +1119,6 @@ zfbool ZFImpl_ZFLua_zfstringAppend(ZF_IN lua_State *L,
     s.append(pFmtL, (fmt + zfslen(fmt)) - pFmtL);
 
     return zftrue;
-}
-
-// ============================================================
-int ZFImpl_ZFLua_luaError(ZF_IN lua_State *L)
-{
-    return luaL_error(L, ZFImpl_ZFLua_dummyError);
 }
 
 ZF_NAMESPACE_GLOBAL_END

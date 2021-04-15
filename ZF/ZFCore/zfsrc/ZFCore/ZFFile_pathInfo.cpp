@@ -139,15 +139,15 @@ zfindex ZFFilePathInfoCallbackSizeDefault(ZF_IN void *token)
 }
 
 // ============================================================
-static zfstlmap<zfstlstringZ, ZFFilePathInfoData> &_ZFP_ZFFilePathInfoDataMap(void)
+static zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> &_ZFP_ZFFilePathInfoImplMap(void)
 {
-    static zfstlmap<zfstlstringZ, ZFFilePathInfoData> d;
+    static zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> d;
     return d;
 }
-static ZFFilePathInfoData *_ZFP_ZFFilePathInfoDataForPathType(ZF_IN const zfchar *pathType)
+static ZFFilePathInfoImpl *_ZFP_ZFFilePathInfoImplForPathType(ZF_IN const zfchar *pathType)
 {
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData> &m = _ZFP_ZFFilePathInfoDataMap();
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData>::iterator it = m.find(pathType);
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> &m = _ZFP_ZFFilePathInfoImplMap();
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl>::iterator it = m.find(pathType);
     if(it != m.end())
     {
         return &(it->second);
@@ -162,7 +162,7 @@ static ZFFilePathInfoData *_ZFP_ZFFilePathInfoDataForPathType(ZF_IN const zfchar
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFilePathInfoIsExist,
                        ZFMP_IN(const ZFPathInfo &, pathInfo))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackIsExistDefault(pathInfo.pathData);
@@ -175,7 +175,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFilePathInfoIsExist,
 ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFFilePathInfoIsDir,
                        ZFMP_IN(const ZFPathInfo &, pathInfo))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackIsDirDefault(pathInfo.pathData);
@@ -189,7 +189,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoToFileName,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_OUT(zfstring &, fileName))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackToFileNameDefault(pathInfo.pathData, fileName);
@@ -204,7 +204,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFFilePathInfoToChild,
                        ZFMP_IN_OUT(zfstring &, pathDataChild),
                        ZFMP_IN(const zfchar *, childName))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackToChildDefault(pathInfo.pathData, pathDataChild, childName);
@@ -218,7 +218,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoToParent,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN_OUT(zfstring &, pathDataParent))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackToParentDefault(pathInfo.pathData, pathDataParent);
@@ -233,7 +233,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFFilePathInfoPathCreate,
                        ZFMP_IN_OPT(zfbool, autoMakeParent, zftrue),
                        ZFMP_OUT_OPT(zfstring *, errPos, zfnull))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackPathCreateDefault(pathInfo.pathData, autoMakeParent, errPos);
@@ -249,7 +249,7 @@ ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFFilePathInfoRemove,
                        ZFMP_IN_OPT(zfbool, isForce, zffalse),
                        ZFMP_IN_OPT(zfstring *, errPos, zfnull))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackRemoveDefault(pathInfo.pathData, isRecursive, isForce, errPos);
@@ -263,7 +263,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoFindFirst,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackFindFirstDefault(fd, pathInfo.pathData);
@@ -277,7 +277,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoFindNext,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackFindNextDefault(fd);
@@ -291,7 +291,7 @@ ZFMETHOD_FUNC_DEFINE_2(void, ZFFilePathInfoFindClose,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         ZFFilePathInfoCallbackFindCloseDefault(fd);
@@ -306,7 +306,7 @@ ZFMETHOD_FUNC_DEFINE_3(void *, ZFFilePathInfoOpen,
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flag, ZFFileOpenOption::e_Read),
                        ZFMP_IN_OPT(zfbool, autoCreateParent, zftrue))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackOpenDefault(pathInfo.pathData, flag, autoCreateParent);
@@ -320,7 +320,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoClose,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(void *, token))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackCloseDefault(token);
@@ -334,7 +334,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFFilePathInfoTell,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(void *, token))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackTellDefault(token);
@@ -350,7 +350,7 @@ ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFFilePathInfoSeek,
                        ZFMP_IN(zfindex, byteSize),
                        ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackSeekDefault(token, byteSize, position);
@@ -366,7 +366,7 @@ ZFMETHOD_FUNC_DEFINE_4(zfindex, ZFFilePathInfoRead,
                        ZFMP_IN(void *, buf),
                        ZFMP_IN(zfindex, maxByteSize))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackReadDefault(token, buf, maxByteSize);
@@ -382,7 +382,7 @@ ZFMETHOD_FUNC_DEFINE_4(zfindex, ZFFilePathInfoWrite,
                        ZFMP_IN(const void *, src),
                        ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax()))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackWriteDefault(token, src, maxByteSize);
@@ -396,7 +396,7 @@ ZFMETHOD_FUNC_DEFINE_2(void, ZFFilePathInfoFlush,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(void *, token))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         ZFFilePathInfoCallbackFlushDefault(token);
@@ -410,7 +410,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoIsEof,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(void *, token))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackIsEofDefault(token);
@@ -424,7 +424,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFFilePathInfoIsError,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(void *, token))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackIsErrorDefault(token);
@@ -438,7 +438,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFFilePathInfoSize,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(void *, token))
 {
-    ZFFilePathInfoData *data = _ZFP_ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    ZFFilePathInfoImpl *data = _ZFP_ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data == zfnull)
     {
         return ZFFilePathInfoCallbackSizeDefault(token);
@@ -451,9 +451,9 @@ ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFFilePathInfoSize,
 
 // ============================================================
 void _ZFP_ZFFilePathInfoRegister(ZF_IN const zfchar *pathType,
-                                 ZF_IN const ZFFilePathInfoData &data)
+                                 ZF_IN const ZFFilePathInfoImpl &data)
 {
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData> &m = _ZFP_ZFFilePathInfoDataMap();
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> &m = _ZFP_ZFFilePathInfoImplMap();
     zfCoreAssertWithMessage(m.find(pathType) == m.end(),
         "pathType \"%s\" already registered",
         pathType);
@@ -483,13 +483,13 @@ void _ZFP_ZFFilePathInfoRegister(ZF_IN const zfchar *pathType,
 }
 void _ZFP_ZFFilePathInfoUnregister(ZF_IN const zfchar *pathType)
 {
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData> &m = _ZFP_ZFFilePathInfoDataMap();
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> &m = _ZFP_ZFFilePathInfoImplMap();
     m.erase(pathType);
 }
-const ZFFilePathInfoData *ZFFilePathInfoDataForPathType(ZF_IN const zfchar *pathType)
+const ZFFilePathInfoImpl *ZFFilePathInfoImplForPathType(ZF_IN const zfchar *pathType)
 {
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData> &m = _ZFP_ZFFilePathInfoDataMap();
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData>::iterator it = m.find(pathType);
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> &m = _ZFP_ZFFilePathInfoImplMap();
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl>::iterator it = m.find(pathType);
     if(it == m.end())
     {
         return zfnull;
@@ -499,10 +499,10 @@ const ZFFilePathInfoData *ZFFilePathInfoDataForPathType(ZF_IN const zfchar *path
         return &(it->second);
     }
 }
-void ZFFilePathInfoDataGetAllT(ZF_IN_OUT ZFCoreArrayPOD<const zfchar *> &ret)
+void ZFFilePathInfoImplGetAllT(ZF_IN_OUT ZFCoreArrayPOD<const zfchar *> &ret)
 {
-    zfstlmap<zfstlstringZ, ZFFilePathInfoData> &m = _ZFP_ZFFilePathInfoDataMap();
-    for(zfstlmap<zfstlstringZ, ZFFilePathInfoData>::iterator it = m.begin(); it != m.end(); ++it)
+    zfstlmap<zfstlstringZ, ZFFilePathInfoImpl> &m = _ZFP_ZFFilePathInfoImplMap();
+    for(zfstlmap<zfstlstringZ, ZFFilePathInfoImpl>::iterator it = m.begin(); it != m.end(); ++it)
     {
         ret.add(it->first.c_str());
     }
@@ -514,7 +514,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFPathInfoForLocalFileT,
                        ZFMP_IN(const ZFPathInfo &, pathInfo),
                        ZFMP_IN(const zfchar *, childPath))
 {
-    const ZFFilePathInfoData *impl = ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    const ZFFilePathInfoImpl *impl = ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(impl == zfnull)
     {
         return zffalse;
@@ -573,7 +573,7 @@ public:
                             ZF_IN const zfchar *pathData,
                             ZF_IN ZFFileOpenOptionFlags flags)
     {
-        this->impl = ZFFilePathInfoDataForPathType(pathType);
+        this->impl = ZFFilePathInfoImplForPathType(pathType);
         if(this->impl == zfnull)
         {
             return zffalse;
@@ -593,7 +593,7 @@ public:
     ZFMETHOD_DECLARE_0(zfindex, ioSize)
 
 private:
-    const ZFFilePathInfoData *impl;
+    const ZFFilePathInfoImpl *impl;
     void *token;
 protected:
     _ZFP_I_ZFInputForPathInfoOwner(void)
@@ -783,7 +783,7 @@ public:
                             ZF_IN const zfchar *pathData,
                             ZF_IN ZFFileOpenOptionFlags flags)
     {
-        this->impl = ZFFilePathInfoDataForPathType(pathType);
+        this->impl = ZFFilePathInfoImplForPathType(pathType);
         if(this->impl == zfnull)
         {
             return zffalse;
@@ -803,7 +803,7 @@ public:
     ZFMETHOD_DECLARE_0(zfindex, ioSize)
 
 private:
-    const ZFFilePathInfoData *impl;
+    const ZFFilePathInfoImpl *impl;
     void *token;
 protected:
     _ZFP_I_ZFOutputForPathInfoOwner(void)
@@ -965,7 +965,7 @@ static zfbool _ZFP_ZFFileCallbackForLocalFileGetAbsPath(ZF_OUT zfstring &pathDat
                                                         ZF_IN const ZFPathInfo &pathInfo,
                                                         ZF_IN const zfchar *localPath)
 {
-    const ZFFilePathInfoData *impl = ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    const ZFFilePathInfoImpl *impl = ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(impl == zfnull)
     {
         return zffalse;

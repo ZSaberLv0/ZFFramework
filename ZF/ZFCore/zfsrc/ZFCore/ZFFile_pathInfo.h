@@ -222,7 +222,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFFilePathInfoSize,
 
 // ============================================================
 /** @brief callback data for #ZFPATHTYPE_FILEIO_REGISTER */
-zfclassPOD ZFFilePathInfoData
+zfclassPOD ZFFilePathInfoImpl
 {
 public:
     ZFFilePathInfoCallbackIsExist callbackIsExist; /**< @brief see #ZFPATHTYPE_FILEIO_REGISTER */
@@ -248,7 +248,7 @@ public:
 };
 
 extern ZF_ENV_EXPORT void _ZFP_ZFFilePathInfoRegister(ZF_IN const zfchar *pathType,
-                                                      ZF_IN const ZFFilePathInfoData &data);
+                                                      ZF_IN const ZFFilePathInfoImpl &data);
 extern ZF_ENV_EXPORT void _ZFP_ZFFilePathInfoUnregister(ZF_IN const zfchar *pathType);
 
 /**
@@ -285,7 +285,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFFilePathInfoUnregister(ZF_IN const zfchar *path
     ) \
     ZF_STATIC_REGISTER_INIT(ZFFilePathInfoReg_##registerSig) \
     { \
-        ZFFilePathInfoData data; \
+        ZFFilePathInfoImpl data; \
         data.callbackIsExist = callbackIsExist_; \
         data.callbackIsDir = callbackIsDir_; \
         data.callbackToFileName = callbackToFileName_; \
@@ -317,16 +317,16 @@ extern ZF_ENV_EXPORT void _ZFP_ZFFilePathInfoUnregister(ZF_IN const zfchar *path
 /**
  * @brief get data registered by #ZFPATHTYPE_FILEIO_REGISTER
  */
-extern ZF_ENV_EXPORT const ZFFilePathInfoData *ZFFilePathInfoDataForPathType(ZF_IN const zfchar *pathType);
-/** @brief see #ZFFilePathInfoDataGetAll */
-extern ZF_ENV_EXPORT void ZFFilePathInfoDataGetAllT(ZF_IN_OUT ZFCoreArrayPOD<const zfchar *> &ret);
+extern ZF_ENV_EXPORT const ZFFilePathInfoImpl *ZFFilePathInfoImplForPathType(ZF_IN const zfchar *pathType);
+/** @brief see #ZFFilePathInfoImplGetAll */
+extern ZF_ENV_EXPORT void ZFFilePathInfoImplGetAllT(ZF_IN_OUT ZFCoreArrayPOD<const zfchar *> &ret);
 /**
  * @brief get all data registered by #ZFPATHTYPE_FILEIO_REGISTER
  */
-inline ZFCoreArrayPOD<const zfchar *> ZFFilePathInfoDataGetAll(void)
+inline ZFCoreArrayPOD<const zfchar *> ZFFilePathInfoImplGetAll(void)
 {
     ZFCoreArrayPOD<const zfchar *> ret;
-    ZFFilePathInfoDataGetAllT(ret);
+    ZFFilePathInfoImplGetAllT(ret);
     return ret;
 }
 

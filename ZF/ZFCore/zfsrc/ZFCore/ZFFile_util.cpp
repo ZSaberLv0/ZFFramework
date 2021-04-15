@@ -441,7 +441,7 @@ static void _ZFP_ZFFileTreePrint(ZF_IN const zfchar *pathData,
                                  ZF_IN const zfchar *headToken,
                                  ZF_IN const zfchar *indentToken,
                                  ZF_IN zfindex indentLevel,
-                                 ZF_IN ZFFilePathInfoData const &fileImpl)
+                                 ZF_IN ZFFilePathInfoImpl const &fileImpl)
 {
     ZFFileFindData fd;
     if(fileImpl.callbackFindFirst(fd, pathData))
@@ -485,7 +485,7 @@ ZFMETHOD_FUNC_DEFINE_4(void, ZFFilePathInfoTreePrint,
                        ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
                        ZFMP_IN_OPT(const zfchar *, indentToken, "  "))
 {
-    const ZFFilePathInfoData *data = ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    const ZFFilePathInfoImpl *data = ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(data != zfnull
         && data->callbackFindFirst
         && data->callbackFindNext
@@ -502,7 +502,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFFilePathInfoForEach,
                        ZFMP_IN(const ZFListener &, fileCallback),
                        ZFMP_IN_OPT(ZFObject *, userData, zfnull))
 {
-    const ZFFilePathInfoData *impl = ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    const ZFFilePathInfoImpl *impl = ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(impl == zfnull)
     {
         return zffalse;

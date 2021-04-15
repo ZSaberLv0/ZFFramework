@@ -7,19 +7,17 @@ static int _ZFP_ZFImpl_ZFLua_ZFCallbackForLua(ZF_IN lua_State *L)
     int count = (int)lua_gettop(L);
     if(count != 1)
     {
-        ZFLuaErrorOccurredTrim(
+        return ZFImpl_ZFLua_luaError(L,
             "[ZFCallbackForLua] expect one param, got %zi",
             (zfindex)count);
-        return ZFImpl_ZFLua_luaError(L);
     }
 
     zfautoObject ret;
     if(!ZFImpl_ZFLua_toCallback(ret, L, 1))
     {
-        ZFLuaErrorOccurredTrim(
+        return ZFImpl_ZFLua_luaError(L,
             "[ZFCallbackForLua] unable to access the callback, got %s",
             ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
-        return ZFImpl_ZFLua_luaError(L);
     }
     else
     {

@@ -383,6 +383,11 @@ public:
      *   and follow the rules described in #objectHash
      */
     virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj);
+    /** @brief util to #objectCompare */
+    virtual zfbool equaleTo(ZF_IN ZFObject *anotherObj)
+    {
+        return this->objectCompare(anotherObj) == ZFCompareTheSame;
+    }
 
 public:
     /* ZFMETHOD_MAX_PARAM */

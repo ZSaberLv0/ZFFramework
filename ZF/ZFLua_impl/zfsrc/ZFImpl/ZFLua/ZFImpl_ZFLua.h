@@ -345,11 +345,16 @@ inline zfautoObject &ZFImpl_ZFLua_luaGet(ZF_IN lua_State *L, ZF_IN int luaStackO
 {
     return ELuna::convert2CppType<zfautoObject &>::convertType(L, luaStackOffset);
 }
-/** @cond ZFPrivateDoc */
-#define ZFImpl_ZFLua_dummyError "ZFImpl_ZFLua_dummyError"
-/** @endcond */
 /** @brief util for impl */
-extern ZF_ENV_EXPORT int ZFImpl_ZFLua_luaError(ZF_IN lua_State *L);
+inline int ZFImpl_ZFLua_luaError(ZF_IN lua_State *L, ZF_IN const zfchar *fmt, ...)
+{
+    zfstring errHint;
+    va_list vaList;
+    va_start(vaList, fmt);
+    zfstringAppendV(errHint, fmt, vaList);
+    va_end(vaList);
+    return luaL_error(L, "%s", errHint.cString());
+}
 
 ZF_NAMESPACE_GLOBAL_END
 

@@ -96,7 +96,9 @@ public:
     ZFMethodGenericInvoker methodGenericInvoker(void) const;
 
     /**
-     * @brief see #ZFMethodDynamicRegister, methodImpl's param0 is #ZFMethodInvokeData
+     * @brief see #ZFMethodDynamicRegister,
+     *   methodImpl's param0 is #ZFMethodInvokeData,
+     *   sender is the invokerObject
      */
     ZFMethodDynamicRegisterParam &methodImpl(ZF_IN const ZFListener &methodImpl);
     /** @brief see #ZFMethodDynamicRegister */

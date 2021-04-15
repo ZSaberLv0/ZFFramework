@@ -36,16 +36,16 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
     int count = (int)lua_gettop(L);
     if(count < luaParamOffset - 1)
     {
-        ZFLuaErrorOccurredTrim("[zfAlloc] takes at least one param");
-        return ZFImpl_ZFLua_luaError(L);
+        return ZFImpl_ZFLua_luaError(L,
+            "[zfAlloc] takes at least one param");
     }
     int paramCount = (count - (luaParamOffset - 1));
 
     zfautoObject clsHolder;
     if(!ZFImpl_ZFLua_toGeneric(clsHolder, L, 1))
     {
-        ZFLuaErrorOccurredTrim("[zfAlloc] unable to access class");
-        return ZFImpl_ZFLua_luaError(L);
+        return ZFImpl_ZFLua_luaError(L,
+            "[zfAlloc] unable to access class");
     }
 
     zfautoObject paramList[ZFMETHOD_MAX_PARAM];

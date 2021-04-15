@@ -14,7 +14,7 @@ static void _ZFP_ZFStyleLoad_ZFStyleSet(ZF_IN const zfchar *styleKey, ZF_IN ZFSt
         ZFStyleSet(styleKey, styleValue);
     }
 }
-static void _ZFP_ZFStyleLoadImpl(ZF_IN const ZFFilePathInfoData &fileImpl,
+static void _ZFP_ZFStyleLoadImpl(ZF_IN const ZFFilePathInfoImpl &fileImpl,
                                  ZF_IN const zfchar *pathType,
                                  ZF_IN const zfchar *pathData,
                                  ZF_IN const ZFFilterForString *fileNameFilter,
@@ -72,7 +72,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFStyleLoad,
                        ZFMP_IN_OPT(const ZFFilterForString *, fileNameFilter, zfnull),
                        ZFMP_IN_OPT(const ZFFilterForString *, dirNameFilter, zfnull))
 {
-    const ZFFilePathInfoData *fileImpl = ZFFilePathInfoDataForPathType(pathInfo.pathType);
+    const ZFFilePathInfoImpl *fileImpl = ZFFilePathInfoImplForPathType(pathInfo.pathType);
     if(fileImpl == zfnull)
     {
         return zffalse;

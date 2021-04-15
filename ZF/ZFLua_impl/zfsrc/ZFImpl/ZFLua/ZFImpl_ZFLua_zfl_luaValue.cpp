@@ -8,10 +8,9 @@ static int _ZFP_ZFImpl_ZFLua_zfl_luaValue(ZF_IN lua_State *L)
     int count = (int)lua_gettop(L);
     if(count != 1)
     {
-        ZFLuaErrorOccurredTrim(
+        return ZFImpl_ZFLua_luaError(L,
             "[zfl_luaValue] takes only one param, got %zi",
             (zfindex)count);
-        return ZFImpl_ZFLua_luaError(L);
     }
 
     if(!lua_isuserdata(L, 1) && lua_islightuserdata(L, 1))

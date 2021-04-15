@@ -30,10 +30,9 @@ static int _ZFP_ZFImpl_ZFLua_zfLogT(ZF_IN lua_State *L)
     int count = (int)lua_gettop(L);
     if(count != 0)
     {
-        ZFLuaErrorOccurredTrim(
+        return ZFImpl_ZFLua_luaError(L,
             "[zfLogT] takes no param, got %zi param",
             (zfindex)count);
-        return ZFImpl_ZFLua_luaError(L);
     }
 
     zfblockedAlloc(v_ZFCallback, ret);
@@ -47,10 +46,9 @@ static int _ZFP_ZFImpl_ZFLua_zfLogTrimT(ZF_IN lua_State *L)
     int count = (int)lua_gettop(L);
     if(count != 0)
     {
-        ZFLuaErrorOccurredTrim(
+        return ZFImpl_ZFLua_luaError(L,
             "[zfLogTrimT] takes no param, got %zi param",
             (zfindex)count);
-        return ZFImpl_ZFLua_luaError(L);
     }
 
     zfblockedAlloc(v_ZFCallback, ret);

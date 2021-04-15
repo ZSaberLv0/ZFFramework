@@ -59,7 +59,7 @@ static zfbool _ZFP_I_ZFMethodDynamicRegisterGI(ZFMETHOD_GENERIC_INVOKER_PARAMS)
     d->param7 = paramList[7];
 
     _ZFP_I_ZFMethodDynamicRegisterGITask *task = ZFCastZFObjectUnchecked(_ZFP_I_ZFMethodDynamicRegisterGITask *, invokerMethod->methodDynamicRegisterUserData());
-    task->methodImpl.execute(ZFListenerData().param0(d), task->methodImplUserData);
+    task->methodImpl.execute(ZFListenerData().sender(invokerObject).param0(d), task->methodImplUserData);
     ret = d->ret;
     if(errorHint != zfnull)
     {
