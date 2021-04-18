@@ -51,7 +51,6 @@ class _ZFP_ZFAnimationNativeViewImpl_sys_Qt_Ani : public QAbstractAnimation
 
 public:
     ZFAnimationNativeView *ownerZFAnimation;
-    zftimet aniDurationFixed;
 
     // for ani impl
     zffloat nativeAniScale;
@@ -75,7 +74,6 @@ public:
     _ZFP_ZFAnimationNativeViewImpl_sys_Qt_Ani(ZF_IN ZFAnimationNativeView *ownerZFAnimation)
     : QAbstractAnimation()
     , ownerZFAnimation(ownerZFAnimation)
-    , aniDurationFixed(ownerZFAnimation->aniDurationFixed())
     , nativeAniScale(1)
     , aniCurStep(0)
     , aniCurveFunc(zfnull)
@@ -101,7 +99,7 @@ public:
 public:
     virtual int duration(void) const
     {
-        return this->aniDurationFixed;
+        return this->ownerZFAnimation->aniDurationFixed();
     }
 protected:
     virtual void updateCurrentTime(int currentTime)
