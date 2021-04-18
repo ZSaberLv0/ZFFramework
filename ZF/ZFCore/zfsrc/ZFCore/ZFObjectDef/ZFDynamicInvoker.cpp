@@ -303,6 +303,10 @@ zfbool ZFDI_invoke(ZF_OUT zfautoObject &ret
         for(zfindex iMethod = 0; iMethod < methodList.count(); ++iMethod)
         {
             const ZFMethod *method = methodList[iMethod];
+            if(!_errorHintTmp.isEmpty())
+            {
+                _errorHintTmp += "\n    ";
+            }
             if(paramCount < method->methodParamCountMin() || paramCount > method->methodParamCount())
             {
                 if(errorHintTmp != zfnull)
@@ -314,10 +318,6 @@ zfbool ZFDI_invoke(ZF_OUT zfautoObject &ret
                         paramCount);
                 }
                 continue;
-            }
-            if(!_errorHintTmp.isEmpty())
-            {
-                _errorHintTmp += "\n    ";
             }
 
             for(zfindex i = 0; i < ZFMETHOD_MAX_PARAM; ++i)
