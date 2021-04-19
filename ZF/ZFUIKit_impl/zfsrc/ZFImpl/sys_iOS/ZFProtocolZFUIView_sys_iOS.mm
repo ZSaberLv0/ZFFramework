@@ -69,7 +69,7 @@
     if(self._ZFP_ownerZFUIView != zfnull && !CGSizeEqualToSize(self._ZFP_layoutedSize, self.frame.size))
     {
         self._ZFP_layoutedSize = self.frame.size;
-        ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(self._ZFP_ownerZFUIView, ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectFromCGRect(self.frame));
+        ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(self._ZFP_ownerZFUIView, ZFImpl_sys_iOS_ZFUIRectFromCGRect(self.frame));
     }
     self._ZFP_nativeImplView.frame = self._ZFP_nativeImplViewFrame;
 }
@@ -94,7 +94,7 @@
         ev->eventResolved(zffalse);
         ev->mouseId = (zft_zfidentity)[touch hash];
         ev->mouseAction = ZFUIMouseAction::e_MouseDown;
-        ev->mousePoint = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIPointFromCGPoint([touch locationInView:self]);
+        ev->mousePoint = ZFImpl_sys_iOS_ZFUIPointFromCGPoint([touch locationInView:self]);
         ev->mouseButton = ZFUIMouseButton::e_MouseButtonLeft;
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyUIEvent(self._ZFP_ownerZFUIView, ev);
     }
@@ -123,7 +123,7 @@
         ev->eventResolved(zffalse);
         ev->mouseId = (zft_zfidentity)[touch hash];
         ev->mouseAction = ZFUIMouseAction::e_MouseMove;
-        ev->mousePoint = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIPointFromCGPoint([touch locationInView:self]);
+        ev->mousePoint = ZFImpl_sys_iOS_ZFUIPointFromCGPoint([touch locationInView:self]);
         ev->mouseButton = ZFUIMouseButton::e_MouseButtonLeft;
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyUIEvent(self._ZFP_ownerZFUIView, ev);
     }
@@ -146,7 +146,7 @@
         ev->eventResolved(zffalse);
         ev->mouseId = (zft_zfidentity)[touch hash];
         ev->mouseAction = ZFUIMouseAction::e_MouseUp;
-        ev->mousePoint = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIPointFromCGPoint([touch locationInView:self]);
+        ev->mousePoint = ZFImpl_sys_iOS_ZFUIPointFromCGPoint([touch locationInView:self]);
         ev->mouseButton = ZFUIMouseButton::e_MouseButtonLeft;
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyUIEvent(self._ZFP_ownerZFUIView, ev);
     }
@@ -169,7 +169,7 @@
         ev->eventResolved(zffalse);
         ev->mouseId = (zft_zfidentity)[touch hash];
         ev->mouseAction = ZFUIMouseAction::e_MouseCancel;
-        ev->mousePoint = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIPointFromCGPoint([touch locationInView:self]);
+        ev->mousePoint = ZFImpl_sys_iOS_ZFUIPointFromCGPoint([touch locationInView:self]);
         ev->mouseButton = ZFUIMouseButton::e_MouseButtonLeft;
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyUIEvent(self._ZFP_ownerZFUIView, ev);
     }
@@ -372,7 +372,7 @@ public:
                                      ZF_IN const ZFUIRect &rect)
     {
         _ZFP_ZFUIViewImpl_sys_iOS_View *nativeView = (__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView();
-        nativeView._ZFP_nativeImplViewFrame = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(rect);
+        nativeView._ZFP_nativeImplViewFrame = ZFImpl_sys_iOS_ZFUIRectToCGRect(rect);
     }
     virtual zffloat nativeViewScaleForImpl(ZF_IN void *nativeView)
     {
@@ -410,7 +410,7 @@ public:
     virtual void viewBackgroundColor(ZF_IN ZFUIView *view,
                                      ZF_IN const ZFUIColor &viewBackgroundColor)
     {
-        ((__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView()).backgroundColor = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIColorToUIColor(viewBackgroundColor);
+        ((__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView()).backgroundColor = ZFImpl_sys_iOS_ZFUIColorToUIColor(viewBackgroundColor);
     }
 
 public:
@@ -455,7 +455,7 @@ public:
                            ZF_IN const ZFUIRect &rect)
     {
         ((__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView()).frame =
-            ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(rect);
+            ZFImpl_sys_iOS_ZFUIRectToCGRect(rect);
     }
 
     virtual void layoutRequest(ZF_IN ZFUIView *view)
@@ -470,8 +470,8 @@ public:
                                    ZF_IN const ZFUISize &sizeHint)
     {
         ret = ZFUISizeMake(zfmMax(sizeHint.width, 0), zfmMax(sizeHint.height, 0));
-        ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeFromCGSizeT(ret,
-            [(__bridge UIView *)nativeView sizeThatFits:ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeToCGSize(ret)]);
+        ZFImpl_sys_iOS_ZFUISizeFromCGSizeT(ret,
+            [(__bridge UIView *)nativeView sizeThatFits:ZFImpl_sys_iOS_ZFUISizeToCGSize(ret)]);
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFUIViewImpl_sys_iOS)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFUIViewImpl_sys_iOS)

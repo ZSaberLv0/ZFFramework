@@ -19,7 +19,7 @@ static void _ZFP_ZFUISysWindowImpl_sys_Qt_updateWindowLayout(ZF_IN ZFUISysWindow
             ZFUIRectMake(0, 0, screenRect.width(), screenRect.height()),
             ZFUIMarginZero()
         );
-    nativeWindow->setGeometry(ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(frame));
+    nativeWindow->setGeometry(ZFImpl_sys_Qt_ZFUIRectToQRect(frame));
     if(nativeWindow->layout() != zfnull)
     {
         QRect t(0, 0, frame.width, frame.height);
@@ -49,7 +49,7 @@ protected:
             case QEvent::WindowDeactivate:
                 ZFPROTOCOL_ACCESS(ZFUISysWindow)->notifyOnPause(owner);
                 #if ZF_ENV_DEBUG && 0
-                    zfLogTrimT() << ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrint(ZFImpl_sys_Qt_rootWindow());
+                    zfLogTrimT() << ZFImpl_sys_Qt_viewTreePrint(ZFImpl_sys_Qt_rootWindow());
                 #endif
                 break;
             default:

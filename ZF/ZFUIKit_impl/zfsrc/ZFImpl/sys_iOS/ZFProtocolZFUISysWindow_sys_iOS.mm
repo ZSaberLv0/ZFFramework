@@ -92,9 +92,9 @@
         }
 
         UIView *nativeRootView = (__bridge UIView *)self.ownerZFUISysWindow->rootView()->nativeView();
-        nativeRootView.frame = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(self.impl->notifyMeasureWindow(
+        nativeRootView.frame = ZFImpl_sys_iOS_ZFUIRectToCGRect(self.impl->notifyMeasureWindow(
             self.ownerZFUISysWindow,
-            ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectFromCGRect(self.view.bounds),
+            ZFImpl_sys_iOS_ZFUIRectFromCGRect(self.view.bounds),
             sysWindowMargin));
     }
 }

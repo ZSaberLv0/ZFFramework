@@ -36,7 +36,7 @@ public:
             {
                 QWidget *v = this->layoutItemList.get(i).widget;
                 errHint += " ";
-                ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(errHint, v);
+                ZFImpl_sys_Qt_viewInfoT(errHint, v);
             }
             zfCoreCriticalMessageTrim("%s", errHint.cString());
         }

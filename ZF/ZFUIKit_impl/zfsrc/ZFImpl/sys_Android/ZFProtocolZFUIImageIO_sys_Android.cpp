@@ -82,7 +82,7 @@ public:
                 .add(JNIType::S_int).add(JNIType::S_int)
             ).c_str());
         jobject tmp = JNIUtilCallStaticObjectMethod(jniEnv, this->jclsOwner, jmId,
-            ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(color),
+            ZFImpl_sys_Android_ZFUIColorToColor(color),
             (jint)size.width, (jint)size.height);
         JNIBlockedDeleteLocalRefWithEnv(tmp, jniEnv);
         return JNIUtilNewGlobalRef(jniEnv, tmp);

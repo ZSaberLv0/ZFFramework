@@ -52,7 +52,7 @@ public:
     void _ZFP_textColor(ZF_IN ZFUIColor v)
     {
         QPalette palette = this->palette();
-        palette.setColor(QPalette::Text, ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorToQColor(v));
+        palette.setColor(QPalette::Text, ZFImpl_sys_Qt_ZFUIColorToQColor(v));
         this->setPalette(palette);
     }
     void _ZFP_textShadowUpdate(ZF_IN const ZFUIColor &textShadowColor, ZF_IN const ZFUISize &textShadowOffset)
@@ -70,7 +70,7 @@ public:
                 this->setGraphicsEffect(effect);
             }
             effect->setBlurRadius(0);
-            effect->setColor(ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorToQColor(textShadowColor));
+            effect->setColor(ZFImpl_sys_Qt_ZFUIColorToQColor(textShadowColor));
             effect->setOffset(textShadowOffset.width, textShadowOffset.height);
         }
     }
@@ -303,7 +303,7 @@ public:
                            ZF_IN ZFUIAlignFlags const &textAlign)
     {
         _ZFP_ZFUITextEditImpl_sys_Qt_TextEdit *nativeImplView = ZFCastStatic(_ZFP_ZFUITextEditImpl_sys_Qt_TextEdit *, textEdit->nativeImplView());
-        nativeImplView->setAlignment(ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIAlignFlagsToQAlignment(textAlign));
+        nativeImplView->setAlignment(ZFImpl_sys_Qt_ZFUIAlignFlagsToQAlignment(textAlign));
     }
     virtual void textColor(ZF_IN ZFUITextEdit *textEdit,
                            ZF_IN ZFUIColor const &textColor)

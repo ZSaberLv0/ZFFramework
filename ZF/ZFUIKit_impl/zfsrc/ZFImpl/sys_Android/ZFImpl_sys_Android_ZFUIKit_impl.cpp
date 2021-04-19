@@ -199,7 +199,7 @@ void ZFImpl_sys_Android_ZFUIRectFromZFAndroidRectT(ZF_OUT ZFUIRect &ret, ZF_IN j
     ret.height = JNIUtilGetIntField(jniEnv, jobjRect, jfIdHeight);
 }
 
-jint ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(ZF_IN const ZFUIColor &color)
+jint ZFImpl_sys_Android_ZFUIColorToColor(ZF_IN const ZFUIColor &color)
 {
     return (jint)(0
             | ((zfuint)(ZFUIColorGetA(color) * 0xFF) << 24)
@@ -208,7 +208,7 @@ jint ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(ZF_IN const ZFUIColor &col
             | ((zfuint)(ZFUIColorGetB(color) * 0xFF) << 0)
         );
 }
-void ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorFromColorT(ZF_OUT ZFUIColor &ret, ZF_IN jint jColor)
+void ZFImpl_sys_Android_ZFUIColorFromColorT(ZF_OUT ZFUIColor &ret, ZF_IN jint jColor)
 {
     ret = ZFUIColorMake(
             (zfuint)((jColor >> 16) & 0xFF) / 255.0f,

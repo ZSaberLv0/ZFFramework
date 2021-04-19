@@ -121,19 +121,19 @@ public:
                            ZF_IN ZFUIColor const &textColor)
     {
         _ZFP_ZFUITextViewImpl_sys_iOS_TextView *nativeImplView = (__bridge _ZFP_ZFUITextViewImpl_sys_iOS_TextView *)textView->nativeImplView();
-        nativeImplView.textColor = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIColorToUIColor(textColor);
+        nativeImplView.textColor = ZFImpl_sys_iOS_ZFUIColorToUIColor(textColor);
     }
     virtual void textShadowColor(ZF_IN ZFUITextView *textView,
                                  ZF_IN ZFUIColor const &textShadowColor)
     {
         _ZFP_ZFUITextViewImpl_sys_iOS_TextView *nativeImplView = (__bridge _ZFP_ZFUITextViewImpl_sys_iOS_TextView *)textView->nativeImplView();
-        nativeImplView.shadowColor = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIColorToUIColor(textShadowColor);
+        nativeImplView.shadowColor = ZFImpl_sys_iOS_ZFUIColorToUIColor(textShadowColor);
     }
     virtual void textShadowOffset(ZF_IN ZFUITextView *textView,
                                   ZF_IN ZFUISize const &textShadowOffset)
     {
         _ZFP_ZFUITextViewImpl_sys_iOS_TextView *nativeImplView = (__bridge _ZFP_ZFUITextViewImpl_sys_iOS_TextView *)textView->nativeImplView();
-        nativeImplView.shadowOffset = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeToCGSize(textShadowOffset);
+        nativeImplView.shadowOffset = ZFImpl_sys_iOS_ZFUISizeToCGSize(textShadowOffset);
     }
     virtual void textSize(ZF_IN ZFUITextView *textView,
                           ZF_IN zfint textSize)
@@ -188,7 +188,7 @@ public:
                                            ZF_IN zfint textSize)
     {
         _ZFP_ZFUITextViewImpl_sys_iOS_TextView *nativeImplView = (__bridge _ZFP_ZFUITextViewImpl_sys_iOS_TextView *)textView->nativeImplView();
-        CGSize sizeHintTmp = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeToCGSize(sizeHint);
+        CGSize sizeHintTmp = ZFImpl_sys_iOS_ZFUISizeToCGSize(sizeHint);
         if(sizeHintTmp.width <= 0)
         {
             sizeHintTmp.width = 30000;
@@ -208,7 +208,7 @@ public:
             sizeHintTmp = [nativeImplView sizeThatFits:sizeHintTmp];
             nativeImplView.textSize = textSizeSaved;
         }
-        return ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeFromCGSize(sizeHintTmp);
+        return ZFImpl_sys_iOS_ZFUISizeFromCGSize(sizeHintTmp);
     }
 
     virtual zfint textSizeCurrent(ZF_IN ZFUITextView *textView)

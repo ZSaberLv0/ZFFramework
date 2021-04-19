@@ -138,7 +138,7 @@ public:
                            ZF_IN const ZFUIRect &targetFramePixel)
     {
         QPainter *painter = (QPainter *)token.impl;
-        QColor nativeColor = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorToQColor(color);
+        QColor nativeColor = ZFImpl_sys_Qt_ZFUIColorToQColor(color);
         painter->setPen(nativeColor);
         painter->setBrush(nativeColor);
         QPainter::CompositionMode oldMode = painter->compositionMode();
@@ -155,9 +155,9 @@ public:
         QPainter::CompositionMode oldMode = painter->compositionMode();
         painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
         painter->drawImage(
-                ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(targetFramePixel),
+                ZFImpl_sys_Qt_ZFUIRectToQRect(targetFramePixel),
                 *(QImage *)image->nativeImage(),
-                ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(imageFramePixel)
+                ZFImpl_sys_Qt_ZFUIRectToQRect(imageFramePixel)
             );
         painter->setCompositionMode(oldMode);
     }

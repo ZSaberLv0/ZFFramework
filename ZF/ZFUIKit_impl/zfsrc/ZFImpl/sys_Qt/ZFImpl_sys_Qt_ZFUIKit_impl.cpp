@@ -8,7 +8,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-void _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QWidget *view)
+void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QWidget *view)
 {
     // class name
     s += view->metaObject()->className();
@@ -39,7 +39,7 @@ void _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QWid
     }
 }
 
-void ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
+void ZFImpl_sys_Qt_viewInfoT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
 {
     if(view == zfnull)
     {
@@ -47,11 +47,11 @@ void ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(ZF_OUT zfstring &ret, ZF_IN QWidget *v
     }
     else
     {
-        _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(ret, view);
+        _ZFP_ZFImpl_sys_Qt_viewInfoT(ret, view);
     }
 }
 
-static void _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, QWidget *view, zfindex depth, zfindex siblingIndex)
+static void _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, QWidget *view, zfindex depth, zfindex siblingIndex)
 {
     zfstringAppend(s, "|%2d ", siblingIndex);
     for(zfindex i = 0; i < depth; ++i)
@@ -59,7 +59,7 @@ static void _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrint_recursive(ZF_IN_OUT zf
         s += "| ";
     }
 
-    _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewInfoT(s, view);
+    _ZFP_ZFImpl_sys_Qt_viewInfoT(s, view);
 
     s += "\n";
 
@@ -67,44 +67,44 @@ static void _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrint_recursive(ZF_IN_OUT zf
     {
         for(int i = 0; i < view->layout()->count(); ++i)
         {
-            _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrint_recursive(s, view->layout()->itemAt(i)->widget(), depth + 1, i);
+            _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(s, view->layout()->itemAt(i)->widget(), depth + 1, i);
         }
     }
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
+void ZFImpl_sys_Qt_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
 {
     ret += "==================== QWidget tree begin ====================\n";
     if(view != zfnull)
     {
-        _ZFP_ZFImpl_sys_Qt_ZFUIKit_impl_viewTreePrint_recursive(ret, view, 0, 0);
+        _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(ret, view, 0, 0);
     }
     ret += "==================== QWidget tree  end  ====================\n";
 }
 
 // convert utility
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIPointToQPointT(ZF_OUT QPoint &ret, ZF_IN const ZFUIPoint &point)
+void ZFImpl_sys_Qt_ZFUIPointToQPointT(ZF_OUT QPoint &ret, ZF_IN const ZFUIPoint &point)
 {
     ret = QPoint(point.x, point.y);
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIPointFromQPointT(ZF_OUT ZFUIPoint &ret, ZF_IN const QPoint &qPoint)
+void ZFImpl_sys_Qt_ZFUIPointFromQPointT(ZF_OUT ZFUIPoint &ret, ZF_IN const QPoint &qPoint)
 {
     ret.x = qPoint.x();
     ret.y = qPoint.y();
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUISizeToQSizeT(ZF_OUT QSize &ret, ZF_IN const ZFUISize &size)
+void ZFImpl_sys_Qt_ZFUISizeToQSizeT(ZF_OUT QSize &ret, ZF_IN const ZFUISize &size)
 {
     ret = QSize(size.width, size.height);
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUISizeFromQSizeT(ZF_OUT ZFUISize &ret, ZF_IN const QSize &qSize)
+void ZFImpl_sys_Qt_ZFUISizeFromQSizeT(ZF_OUT ZFUISize &ret, ZF_IN const QSize &qSize)
 {
     ret.width = qSize.width();
     ret.height = qSize.height();
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRectT(ZF_OUT QRect &ret, ZF_IN const ZFUIRect &rect)
+void ZFImpl_sys_Qt_ZFUIRectToQRectT(ZF_OUT QRect &ret, ZF_IN const ZFUIRect &rect)
 {
     ret = QRect(rect.x, rect.y, rect.width, rect.height);
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectFromQRectT(ZF_OUT ZFUIRect &ret, ZF_IN const QRect &qRect)
+void ZFImpl_sys_Qt_ZFUIRectFromQRectT(ZF_OUT ZFUIRect &ret, ZF_IN const QRect &qRect)
 {
     ret.x = qRect.x();
     ret.y = qRect.y();
@@ -112,7 +112,7 @@ void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectFromQRectT(ZF_OUT ZFUIRect &ret, ZF_IN c
     ret.height = qRect.height();
 }
 
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorToQColor(ZF_OUT QColor &ret, ZF_IN const ZFUIColor &color)
+void ZFImpl_sys_Qt_ZFUIColorToQColor(ZF_OUT QColor &ret, ZF_IN const ZFUIColor &color)
 {
     ret.setRgbF(
             (qreal)ZFUIColorGetR(color),
@@ -121,7 +121,7 @@ void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorToQColor(ZF_OUT QColor &ret, ZF_IN cons
             (qreal)ZFUIColorGetA(color)
         );
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorFromQColorT(ZF_OUT ZFUIColor &ret, ZF_IN const QColor &qColor)
+void ZFImpl_sys_Qt_ZFUIColorFromQColorT(ZF_OUT ZFUIColor &ret, ZF_IN const QColor &qColor)
 {
     ret = ZFUIColorMake(
             (zffloat)qColor.redF(),
@@ -131,7 +131,7 @@ void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorFromQColorT(ZF_OUT ZFUIColor &ret, ZF_I
         );
 }
 
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIAlignFlagsToQAlignmentT(ZF_OUT Qt::Alignment &ret, ZF_IN const ZFUIAlignFlags &align)
+void ZFImpl_sys_Qt_ZFUIAlignFlagsToQAlignmentT(ZF_OUT Qt::Alignment &ret, ZF_IN const ZFUIAlignFlags &align)
 {
     ret = (Qt::Alignment)0;
 
@@ -161,7 +161,7 @@ void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIAlignFlagsToQAlignmentT(ZF_OUT Qt::Alignment
         ZFBitSet(ret, Qt::AlignVCenter);
     }
 }
-void ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIAlignFlagsFromQAlignmentT(ZF_OUT ZFUIAlignFlags &ret, ZF_IN const Qt::Alignment qAlign)
+void ZFImpl_sys_Qt_ZFUIAlignFlagsFromQAlignmentT(ZF_OUT ZFUIAlignFlags &ret, ZF_IN const Qt::Alignment qAlign)
 {
     ret = ZFUIAlign::e_Center;
 

@@ -296,7 +296,7 @@ public:
         _ZFP_ZFUIDrawImpl_sys_Android_Token *nativeToken = (_ZFP_ZFUIDrawImpl_sys_Android_Token *)token.impl;
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId
             , nativeToken->canvas
-            , ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(color)
+            , ZFImpl_sys_Android_ZFUIColorToColor(color)
             , targetFramePixel.x
             , targetFramePixel.y
             , targetFramePixel.width

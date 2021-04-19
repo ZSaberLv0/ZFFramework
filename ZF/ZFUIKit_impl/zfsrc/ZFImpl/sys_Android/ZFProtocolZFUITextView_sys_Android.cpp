@@ -109,7 +109,7 @@ public:
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, textView->nativeImplView()),
-            ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(textColor));
+            ZFImpl_sys_Android_ZFUIColorToColor(textColor));
     }
     virtual void textShadowColor(ZF_IN ZFUITextView *textView,
                                  ZF_IN ZFUIColor const &textShadowColor)
@@ -122,7 +122,7 @@ public:
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, textView->nativeImplView()),
-            ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(textShadowColor));
+            ZFImpl_sys_Android_ZFUIColorToColor(textShadowColor));
     }
     virtual void textShadowOffset(ZF_IN ZFUITextView *textView,
                                   ZF_IN ZFUISize const &textShadowOffset)

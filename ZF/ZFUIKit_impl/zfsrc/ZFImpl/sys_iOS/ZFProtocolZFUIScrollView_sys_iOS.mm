@@ -66,7 +66,7 @@ static zftimet _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp(void)
     self->__ZFP_scrollContentFrame = newScrollContentFrame;
 
     self._ZFP_mouseDragOverride = zftrue;
-    self.contentSize = ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeToCGSize(ZFUIRectGetSize(newScrollContentFrame));
+    self.contentSize = ZFImpl_sys_iOS_ZFUISizeToCGSize(ZFUIRectGetSize(newScrollContentFrame));
     [self setContentOffset:CGPointMake(-newScrollContentFrame.x, -newScrollContentFrame.y) animated:NO];
     self._ZFP_mouseDragPrevPos = self.contentOffset;
     self._ZFP_mouseDragOverride = zffalse;
@@ -94,7 +94,7 @@ static zftimet _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp(void)
     self._ZFP_mouseDragOverride = zffalse;
     self._ZFP_impl->notifyScrollViewDragBegin(
         self._ZFP_ownerZFUIScrollView,
-        ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIPointFromCGPoint(self._ZFP_mouseDrag),
+        ZFImpl_sys_iOS_ZFUIPointFromCGPoint(self._ZFP_mouseDrag),
         _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp());
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -109,7 +109,7 @@ static zftimet _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp(void)
 
             self._ZFP_impl->notifyScrollViewDrag(
                 self._ZFP_ownerZFUIScrollView,
-                ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIPointFromCGPoint(self._ZFP_mouseDrag),
+                ZFImpl_sys_iOS_ZFUIPointFromCGPoint(self._ZFP_mouseDrag),
                 _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp());
         }
     }

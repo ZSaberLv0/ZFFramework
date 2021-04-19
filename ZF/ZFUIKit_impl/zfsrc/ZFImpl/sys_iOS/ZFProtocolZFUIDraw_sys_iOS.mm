@@ -74,7 +74,7 @@ public:
     virtual zfbool beginForImage(ZF_IN_OUT ZFUIDrawToken &token,
                                  ZF_IN const ZFUISize &imageSizePixel)
     {
-        UIGraphicsBeginImageContext(ZFImpl_sys_iOS_ZFUIKit_impl_ZFUISizeToCGSize(imageSizePixel));
+        UIGraphicsBeginImageContext(ZFImpl_sys_iOS_ZFUISizeToCGSize(imageSizePixel));
         token.impl = (void *)UIGraphicsGetCurrentContext();
         return (token.impl != zfnull);
     }
@@ -109,16 +109,16 @@ public:
     {
         CGContextRef context = (CGContextRef)token.impl;
         CGContextClearRect(context,
-            ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(targetFramePixel));
+            ZFImpl_sys_iOS_ZFUIRectToCGRect(targetFramePixel));
     }
     virtual void drawColor(ZF_IN_OUT ZFUIDrawToken &token,
                            ZF_IN const ZFUIColor &color,
                            ZF_IN const ZFUIRect &targetFramePixel)
     {
         CGContextRef context = (CGContextRef)token.impl;
-        CGContextSetFillColorWithColor(context, ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIColorToUIColor(color).CGColor);
+        CGContextSetFillColorWithColor(context, ZFImpl_sys_iOS_ZFUIColorToUIColor(color).CGColor);
         CGContextFillRect(context,
-            ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(targetFramePixel));
+            ZFImpl_sys_iOS_ZFUIRectToCGRect(targetFramePixel));
     }
     virtual void drawImage(ZF_IN_OUT ZFUIDrawToken &token,
                            ZF_IN ZFUIImage *image,
@@ -127,9 +127,9 @@ public:
     {
         CGContextRef context = (CGContextRef)token.impl;
         UIImage *srcImage = (__bridge UIImage *)image->nativeImage();
-        CGImageRef subImage = CGImageCreateWithImageInRect(srcImage.CGImage, ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(imageFramePixel));
+        CGImageRef subImage = CGImageCreateWithImageInRect(srcImage.CGImage, ZFImpl_sys_iOS_ZFUIRectToCGRect(imageFramePixel));
         CGContextDrawImage(context,
-            ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectToCGRect(targetFramePixel),
+            ZFImpl_sys_iOS_ZFUIRectToCGRect(targetFramePixel),
             subImage);
         CGImageRelease(subImage);
     }

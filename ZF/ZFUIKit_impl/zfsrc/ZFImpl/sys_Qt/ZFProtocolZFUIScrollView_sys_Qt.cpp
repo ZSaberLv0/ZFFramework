@@ -533,7 +533,7 @@ public:
                                     ZF_IN const ZFUIRect &frame)
     {
         _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *nativeScrollView = ZFCastStatic(_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *, scrollView->nativeImplView());
-        QRect nativeFrame = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(frame);
+        QRect nativeFrame = ZFImpl_sys_Qt_ZFUIRectToQRect(frame);
         nativeScrollView->_ZFP_scrollViewContentView->setGeometry(nativeFrame);
     }
     virtual zftimet scrollAnimationStart(ZF_IN ZFUIScrollView *scrollView,

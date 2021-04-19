@@ -408,7 +408,7 @@ public:
         this->aniDrawingTargetPrepare();
 
         ZFUIView *aniTarget = this->ownerZFAnimation->aniTarget()->to<ZFUIView *>();
-        QRect rect = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(ZFUIRectApplyScale(aniTarget->viewFrame(), aniTarget->scaleFixed()));
+        QRect rect = ZFImpl_sys_Qt_ZFUIRectToQRect(ZFUIRectApplyScale(aniTarget->viewFrame(), aniTarget->scaleFixed()));
         this->aniTargetGeometrySaved = rect;
         this->aniTargetCached->setGeometry(QRect(rect.x(), rect.y(), rect.width() + 1, rect.height() + 1));
         this->aniTargetCached->installEventFilter(this);

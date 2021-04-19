@@ -26,7 +26,7 @@ public:
         {
             nativeRect = [nativeView convertRect:nativeView.bounds toView:nil];
         }
-        ZFImpl_sys_iOS_ZFUIKit_impl_ZFUIRectFromCGRectT(rect, nativeRect);
+        ZFImpl_sys_iOS_ZFUIRectFromCGRectT(rect, nativeRect);
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFUIViewPositionOnScreenImpl_sys_iOS)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFUIViewPositionOnScreenImpl_sys_iOS)

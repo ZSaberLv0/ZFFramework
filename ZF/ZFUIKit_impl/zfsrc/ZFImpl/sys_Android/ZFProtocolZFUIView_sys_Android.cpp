@@ -225,7 +225,7 @@ public:
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsZFUIView, jmId,
             ZFCastStatic(jobject, view->nativeView()),
-            ZFImpl_sys_Android_ZFUIKit_impl_ZFUIColorToColor(viewBackgroundColor));
+            ZFImpl_sys_Android_ZFUIColorToColor(viewBackgroundColor));
     }
 
 public:

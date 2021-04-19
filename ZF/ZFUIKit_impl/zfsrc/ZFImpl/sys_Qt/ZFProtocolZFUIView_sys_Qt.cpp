@@ -127,7 +127,7 @@ public:
 public:
     void _ZFP_frame(ZF_IN const ZFUIRect &v)
     {
-        QRect frame = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(v);
+        QRect frame = ZFImpl_sys_Qt_ZFUIRectToQRect(v);
         if(this->geometry() != frame)
         {
             this->setGeometry(frame);
@@ -203,7 +203,7 @@ public:
                             this->_ZFP_layoutedSize = this->geometry().size();
                             ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(
                                 _ZFP_ownerZFUIView,
-                                ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectFromQRect(this->geometry()));
+                                ZFImpl_sys_Qt_ZFUIRectFromQRect(this->geometry()));
                         }
                         return true;
                     }
@@ -230,7 +230,7 @@ public:
     }
     virtual void mouseMoveEvent(QMouseEvent *event)
     {
-        this->_ZFP_mouseMoveLastPoint = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIPointFromQPoint(event->pos());
+        this->_ZFP_mouseMoveLastPoint = ZFImpl_sys_Qt_ZFUIPointFromQPoint(event->pos());
         if(_ZFP_ownerZFUIView == zfnull
             || !this->_ZFP_viewUIEnableTree || !this->_ZFP_viewUIEnable)
         {
@@ -307,7 +307,7 @@ private:
         ev->eventResolved(zffalse);
         ev->mouseId = (zfidentity)event->button();
         ev->mouseAction = mouseAction;
-        ev->mousePoint = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIPointFromQPoint(event->pos());
+        ev->mousePoint = ZFImpl_sys_Qt_ZFUIPointFromQPoint(event->pos());
         ev->mouseButton = ZFUIMouseButton::e_MouseButtonLeft;
         switch(event->button())
         {
@@ -461,7 +461,7 @@ public:
                                      ZF_IN const ZFUIRect &rect)
     {
         _ZFP_ZFUIViewImpl_sys_Qt_View *nativeView = ZFCastStatic(_ZFP_ZFUIViewImpl_sys_Qt_View *, view->nativeView());
-        QRect frame = ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIRectToQRect(rect);
+        QRect frame = ZFImpl_sys_Qt_ZFUIRectToQRect(rect);
         if(nativeView->_ZFP_nativeImplView->geometry() != frame)
         {
             nativeView->_ZFP_nativeImplView->setGeometry(frame);
@@ -532,7 +532,7 @@ public:
     {
         _ZFP_ZFUIViewImpl_sys_Qt_View *nativeViewTmp = ZFCastStatic(_ZFP_ZFUIViewImpl_sys_Qt_View *, view->nativeView());
         QPalette palette = nativeViewTmp->palette();
-        palette.setColor(QPalette::Window, ZFImpl_sys_Qt_ZFUIKit_impl_ZFUIColorToQColor(viewBackgroundColor));
+        palette.setColor(QPalette::Window, ZFImpl_sys_Qt_ZFUIColorToQColor(viewBackgroundColor));
         nativeViewTmp->setPalette(palette);
     }
 
@@ -600,7 +600,7 @@ public:
         }
         QSize t = nativeViewTmp->sizeHint();
         nativeViewTmp->setMaximumSize(maxSizeSaved);
-        ZFImpl_sys_Qt_ZFUIKit_impl_ZFUISizeFromQSizeT(ret, t);
+        ZFImpl_sys_Qt_ZFUISizeFromQSizeT(ret, t);
     }
 private:
     _ZFP_ZFUIViewImpl_sys_Qt_ChildChangeObserverHolder childChangeObserverHolder;
