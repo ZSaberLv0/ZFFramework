@@ -12,7 +12,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief execute in main thread
  *
- * automatically retain runnable's owner and params, and release them after finish\n
+ * automatically retain runnable's owner and userData, and release them after finish\n
  * runnable won't be executed immediately even if current thread is main thread,
  * it's queued instead,
  * unless you call this function in main thread and set waitUntilDone to zftrue\n
@@ -21,47 +21,43 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * while owner won't
  * @see ZFThreadExecuteInNewThread, ZFThreadExecuteCancel
  */
-ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFThreadExecuteInMainThread,
+ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInMainThread,
                         ZFMP_IN(const ZFListener &, runnable),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull),
-                        ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
                         ZFMP_IN_OPT(ZFObject *, owner, zfnull),
                         ZFMP_IN_OPT(zfbool, waitUntilDone, zffalse))
 /**
  * @brief util method for #ZFThreadExecuteInMainThread
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_4(zfidentity, ZFThreadExecuteInMainThreadWaitUntilDone,
+ZFMETHOD_FUNC_INLINE_DECLARE_3(zfidentity, ZFThreadExecuteInMainThreadWaitUntilDone,
                                ZFMP_IN(const ZFListener &, runnable),
                                ZFMP_IN_OPT(ZFObject *, userData, zfnull),
-                               ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
                                ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 {
-    return ZFThreadExecuteInMainThread(runnable, userData, listenerData, owner, zftrue);
+    return ZFThreadExecuteInMainThread(runnable, userData, owner, zftrue);
 }
 
 /**
  * @brief execute in new thread
  *
- * automatically retain runnable's owner and params, and release them after finish
+ * automatically retain runnable's owner and userData, and release them after finish
  * @see ZFThreadExecuteInMainThread, ZFThreadExecuteCancel
  * @note always try this method first to achieve thread processing,
  *   instead of create new ZFThread instance,
  *   since we may have thread pool for performance
  */
-ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInNewThread,
+ZFMETHOD_FUNC_DECLARE_3(zfidentity, ZFThreadExecuteInNewThread,
                         ZFMP_IN(const ZFListener &, runnable),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull),
-                        ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
                         ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 
 /**
  * @brief exeute in main thread after delay, directly schedule an #ZFThreadExecuteInMainThread if (delay <= 0)
  */
-ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
+ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
                         ZFMP_IN(zftimet, delay),
                         ZFMP_IN(const ZFListener &, runnable),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull),
-                        ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
                         ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 
 /**
@@ -71,16 +67,16 @@ ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancel,
                         ZFMP_IN(zfidentity, taskId))
 
 /**
- * @brief cancel all execute task of runnable, ignoring the params, see #ZFThreadExecuteCancel
- */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancel,
-                        ZFMP_IN(const ZFListener &, runnable))
-
-/**
  * @brief cancel all execute task of owner, see #ZFThreadExecuteCancel
  */
 ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancelByOwner,
                         ZFMP_IN(ZFObject *, owner))
+
+/**
+ * @brief cancel all execute task of runnable, ignoring the userData, see #ZFThreadExecuteCancel
+ */
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancelAll,
+                        ZFMP_IN(const ZFListener &, runnable))
 
 /**
  * @brief wait thread task until done

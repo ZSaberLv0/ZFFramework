@@ -173,29 +173,24 @@ private:
         }
         else
         {
+            _ZFP_ZFAnimationGroupPrivate *selfTmp = this;
+            ZFLISTENER_LAMBDA_3(childOnDelayFinish
+                , _ZFP_ZFAnimationGroupPrivate *, selfTmp
+                , ZFAnimationGroupChildData *, childData
+                , zfidentity, aniId
+                , {
+                    if(aniId == selfTmp->pimplOwner->aniId())
+                    {
+                        childData->childAni()->aniStart();
+                    }
+                })
             zfidentity childDelayTaskId = ZFThreadExecuteInMainThreadAfterDelay(
                 childData->childDelayBeforeStart(),
-                ZFCallbackForMemberMethod(this, ZFMethodAccess(_ZFP_ZFAnimationGroupPrivate, onChildStartDelay)),
-                zfnull,
-                ZFListenerData()
-                    .param0(zflineAlloc(v_zfidentity, aniId))
-                    .param1(childData)
-                );
+                childOnDelayFinish);
             if(childDelayTaskId != zfidentityInvalid())
             {
                 this->childDelayTaskIds.add(childDelayTaskId);
             }
-        }
-    }
-    ZFMETHOD_INLINE_2(void, onChildStartDelay,
-                      ZFMP_IN(const ZFListenerData &, listenerData),
-                      ZFMP_IN(ZFObject *, userData))
-    {
-        zfidentity aniId = listenerData.param0<v_zfidentity *>()->zfv;
-        ZFAnimationGroupChildData *childData = listenerData.param1<ZFAnimationGroupChildData *>();
-        if(aniId == this->pimplOwner->aniId())
-        {
-            childData->childAni()->aniStart();
         }
     }
 private:

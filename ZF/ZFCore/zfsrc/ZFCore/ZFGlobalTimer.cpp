@@ -157,7 +157,7 @@ ZFMETHOD_FUNC_DEFINE_0(void, ZFGlobalTimerManualStep)
     if(d->globalTimer != zfnull)
     {
         d->globalTimer->timerStop();
-        d->globalTimer->observerNotify(ZFTimer::EventTimerOnActivate(), d->globalTimer->timerParam0(), d->globalTimer->timerParam1());
+        d->globalTimer->observerNotify(ZFTimer::EventTimerOnActivate());
     }
 }
 ZFMETHOD_FUNC_DEFINE_0(void, ZFGlobalTimerManualStepCancel)

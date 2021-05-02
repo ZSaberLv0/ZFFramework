@@ -95,8 +95,6 @@ ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFObserverNotifyInMainThreadWithCustomSender,
         return ZFThreadTaskRequest(*_ZFP_ZFObserverNotifyInMainThreadCallback,
             taskData,
             zfnull,
-            zfnull,
-            zfnull,
             ZFThreadTaskRequestMergeCallbackDoNotMerge());
     }
     else

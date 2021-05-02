@@ -38,8 +38,6 @@ public:
     /**
      * @brief must be called in timer thread when timer thread started
      *   (can be called only once for one timer, before first time fire the timer)
-     *
-     * return a thread token for #notifyTimerStop
      */
     zffinal void notifyTimerStart(ZF_IN ZFTimer *timer)
     {

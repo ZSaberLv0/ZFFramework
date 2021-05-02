@@ -34,12 +34,11 @@ protected:
 public:
     zffinal void timerStart(void)
     {
+        zfRetain(this);
         ++(this->threadCallbackTaskId);
         this->threadCallbackId = ZFThreadExecuteInNewThread(
             ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, threadCallback)),
-            this /* pass this as dummy param to keep retain count */,
-            ZFListenerData().param0(zflineAlloc(v_zfidentity, this->threadCallbackTaskId))
-            );
+            zflineAlloc(v_zfidentity, this->threadCallbackTaskId));
     }
     zffinal void timerStop(void)
     {
@@ -52,6 +51,7 @@ public:
             this->timerThreadStarted = zffalse;
             this->impl->notifyTimerStop(this->timer);
         }
+        zfRelease(this);
     }
 
 public:
@@ -59,7 +59,9 @@ public:
                       ZFMP_IN(const ZFListenerData &, listenerData),
                       ZFMP_IN(ZFObject *, userData))
     {
-        zfidentity curId = listenerData.param0<v_zfidentity *>()->zfv;
+        zfRetain(this);
+        zfblockedRelease(this);
+        zfidentity curId = userData->to<v_zfidentity *>()->zfv;
 
         // delay
         if(curId != this->threadCallbackTaskId) {return ;}
@@ -82,9 +84,7 @@ public:
                 ++(this->mainThreadCallbackTaskId);
                 this->mainThreadCallbackId = ZFThreadExecuteInNewThread(
                     ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, mainThreadCallback)),
-                    zfnull,
-                    ZFListenerData().param0(zflineAlloc(v_zfidentity, this->mainThreadCallbackTaskId))
-                    );
+                    zflineAlloc(v_zfidentity, this->mainThreadCallbackTaskId));
             }
             ZFThread::sleep(this->timer->timerInterval());
         }
@@ -93,7 +93,7 @@ public:
                       ZFMP_IN(const ZFListenerData &, listenerData),
                       ZFMP_IN(ZFObject *, userData))
     {
-        zfidentity curId = listenerData.param0<v_zfidentity *>()->zfv;
+        zfidentity curId = userData->to<v_zfidentity *>()->zfv;
 
         if(curId != this->mainThreadCallbackTaskId) {return ;}
         if(!this->timerThreadStartNotified)

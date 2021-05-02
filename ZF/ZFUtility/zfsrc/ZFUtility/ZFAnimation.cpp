@@ -41,28 +41,6 @@ public:
 };
 
 // ============================================================
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFAnimationTaskHolder, ZFLevelZFFrameworkEssential)
-{
-    this->delayOnFinishListener = ZFCallbackForFunc(zfself::delayOnFinish);
-    this->dummyOnFinishListener = ZFCallbackForFunc(zfself::dummyOnFinish);
-}
-public:
-    ZFListener delayOnFinishListener;
-    static void delayOnFinish(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
-    {
-        ZFAnimation *ani = userData->objectHolded();
-        v_zfidentity *taskId = listenerData.param0<v_zfidentity *>();
-        ani->_ZFP_ZFAnimation_aniImplDelayNotifyFinish(taskId->zfv);
-    }
-    ZFListener dummyOnFinishListener;
-    static void dummyOnFinish(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
-    {
-        ZFAnimation *ani = userData->objectHolded();
-        ani->_ZFP_ZFAnimation_aniDummyNotifyStop();
-    }
-ZF_GLOBAL_INITIALIZER_END(ZFAnimationTaskHolder)
-
-// ============================================================
 ZFOBJECT_REGISTER(ZFAnimation)
 
 ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnInvalid)
@@ -211,12 +189,17 @@ void ZFAnimation::_ZFP_ZFAnimation_aniDummyNotifyStop(void)
 void ZFAnimation::aniImplDelay(void)
 {
     ++(d->aniDelayTaskId);
+    zfidentity aniDelayTaskId = d->aniDelayTaskId;
+    ZFLISTENER_LAMBDA_1(delayOnFinish
+        , zfidentity, aniDelayTaskId
+        , {
+            ZFAnimation *ani = userData->objectHolded();
+            ani->_ZFP_ZFAnimation_aniImplDelayNotifyFinish(aniDelayTaskId);
+        })
     d->aniDelayThreadId = ZFThreadExecuteInMainThreadAfterDelay(
         this->aniDelay(),
-        ZF_GLOBAL_INITIALIZER_INSTANCE(ZFAnimationTaskHolder)->delayOnFinishListener,
-        this->objectHolder(),
-        ZFListenerData().param0(zflineAlloc(v_zfidentity, d->aniDelayTaskId))
-        );
+        delayOnFinish,
+        this->objectHolder());
 }
 void ZFAnimation::aniImplDelayCancel(void)
 {
@@ -235,9 +218,13 @@ void ZFAnimation::aniImplStart(void)
     // start a dummy animation if not implemented
     if(this->classData() == ZFAnimation::ClassData())
     {
+        ZFLISTENER_LOCAL(dummyOnFinish, {
+                ZFAnimation *ani = userData->objectHolded();
+                ani->_ZFP_ZFAnimation_aniDummyNotifyStop();
+            })
         d->aniDummyThreadId = ZFThreadExecuteInMainThreadAfterDelay(
             this->aniDurationFixed(),
-            ZF_GLOBAL_INITIALIZER_INSTANCE(ZFAnimationTaskHolder)->dummyOnFinishListener,
+            dummyOnFinish,
             this->objectHolder());
     }
 }

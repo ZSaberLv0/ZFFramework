@@ -30,17 +30,13 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      *
-     * called when timer started, ensured in the same thread of timer event\n
-     * param0 is the #ZFTimer::timerParam0
-     * and param1 is the #ZFTimer::timerParam1
+     * called when timer started, ensured in the same thread of timer event
      */
     ZFOBSERVER_EVENT(TimerOnStart)
     /**
      * @brief see #ZFObject::observerNotify
      *
-     * called when timer activated\n
-     * param0 is the #ZFTimer::timerParam0
-     * and param1 is the #ZFTimer::timerParam1
+     * called when timer activated
      * @note on what thread this event is fired,
      *   depends on #timerActivateInMainThread
      */
@@ -48,9 +44,7 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      *
-     * called when timer stopped, ensured in the same thread that stop the timer\n
-     * param0 is the #ZFTimer::timerParam0
-     * and param1 is the #ZFTimer::timerParam1
+     * called when timer stopped, ensured in the same thread that stop the timer
      */
     ZFOBSERVER_EVENT(TimerOnStop)
 
@@ -61,9 +55,7 @@ protected:
      * you may change them after timer created,
      * but you must not if timer is started
      */
-    ZFOBJECT_ON_INIT_DECLARE_5(ZFMP_IN(zftimet, timerInterval),
-                               ZFMP_IN_OPT(ZFObject *, timerParam0, zfnull),
-                               ZFMP_IN_OPT(ZFObject *, timerParam1, zfnull),
+    ZFOBJECT_ON_INIT_DECLARE_3(ZFMP_IN(zftimet, timerInterval),
                                ZFMP_IN_OPT(zftimet, timerDelay, zftimetZero()),
                                ZFMP_IN_OPT(zfbool, timerActivateInMainThread, zftrue))
     zfoverride
@@ -104,24 +96,6 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, timerActivateInMainThread, zftrue)
     ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zfbool, timerActivateInMainThread)
 
-    /**
-     * @brief timer param, automatically retained
-     *
-     * the param is alive as long as the timer object is alive,
-     * it won't be released after timer stop
-     */
-    ZFPROPERTY_RETAIN(ZFObject *, timerParam0)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(ZFObject *, timerParam0)
-
-    /**
-     * @brief timer param, automatically retained
-     *
-     * the param is alive as long as the timer object is alive,
-     * it won't be released after timer stop
-     */
-    ZFPROPERTY_RETAIN(ZFObject *, timerParam1)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(ZFObject *, timerParam1)
-
 public:
     /**
      * @brief start the timer
@@ -151,17 +125,17 @@ protected:
     /** @brief see #EventTimerOnStart */
     virtual inline void timerOnStart(void)
     {
-        this->observerNotify(ZFTimer::EventTimerOnStart(), this->timerParam0(), this->timerParam1());
+        this->observerNotify(ZFTimer::EventTimerOnStart());
     }
     /** @brief see #EventTimerOnActivate */
     virtual inline void timerOnActivate(void)
     {
-        this->observerNotify(ZFTimer::EventTimerOnActivate(), this->timerParam0(), this->timerParam1());
+        this->observerNotify(ZFTimer::EventTimerOnActivate());
     }
     /** @brief see #EventTimerOnStop */
     virtual inline void timerOnStop(void)
     {
-        this->observerNotify(ZFTimer::EventTimerOnStop(), this->timerParam0(), this->timerParam1());
+        this->observerNotify(ZFTimer::EventTimerOnStop());
     }
 
 private:

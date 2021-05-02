@@ -75,7 +75,7 @@ static void _ZFP_ZFThreadTaskRequestCallback_action(ZF_IN const ZFListenerData &
             zfsynchronizeUnlock(_ZFP_ZFThread_mutex);
         }
         taskData->taskCallback().execute(
-            ZFListenerData().param0(taskData->taskParam0()).param1(taskData->taskParam1()),
+            ZFListenerData(),
             taskData->taskUserData());
         if(lockAvailable)
         {
@@ -141,19 +141,15 @@ ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallba
 ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallbackDoNotMerge, ZFThreadTaskRequestMergeCallbackDoNotMerge())
 ZFEXPORT_VAR_READONLY_ALIAS_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallbackDefault, ZFThreadTaskRequestMergeCallbackIgnoreOldTask)
 
-ZFMETHOD_FUNC_DEFINE_6(zfidentity, ZFThreadTaskRequest,
+ZFMETHOD_FUNC_DEFINE_4(zfidentity, ZFThreadTaskRequest,
                        ZFMP_IN(const ZFListener &, taskCallback),
                        ZFMP_IN_OPT(ZFObject *, taskUserData, zfnull),
-                       ZFMP_IN_OPT(ZFObject *, taskParam0, zfnull),
-                       ZFMP_IN_OPT(ZFObject *, taskParam1, zfnull),
                        ZFMP_IN_OPT(ZFObject *, taskOwner, zfnull),
                        ZFMP_IN_OPT(const ZFListener &, taskMergeCallback, ZFThreadTaskRequestMergeCallbackDefault()))
 {
     zfblockedAlloc(ZFThreadTaskRequestData, taskRequestData);
     taskRequestData->taskCallback(taskCallback);
     taskRequestData->taskUserData(taskUserData);
-    taskRequestData->taskParam0(taskParam0);
-    taskRequestData->taskParam1(taskParam1);
     taskRequestData->taskOwner(taskOwner);
     return ZFThreadTaskRequest(taskRequestData, taskMergeCallback);
 }
@@ -248,11 +244,9 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadTaskCancel,
         zfsynchronizeUnlock(_ZFP_ZFThread_mutex);
     }
 }
-ZFMETHOD_FUNC_DEFINE_4(void, ZFThreadTaskCancelExactly,
+ZFMETHOD_FUNC_DEFINE_2(void, ZFThreadTaskCancelExactly,
                        ZFMP_IN(const ZFListener &, task),
-                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
-                       ZFMP_IN_OPT(ZFObject *, param0, zfnull),
-                       ZFMP_IN_OPT(ZFObject *, param1, zfnull))
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull))
 {
     if(!task.callbackIsValid())
     {
@@ -270,9 +264,7 @@ ZFMETHOD_FUNC_DEFINE_4(void, ZFThreadTaskCancelExactly,
         ZFThreadTaskRequestData *taskData = _ZFP_ZFThread_taskDatas->get<ZFThreadTaskRequestData *>(i);
         if(taskData->taskCallback().objectCompare(task) == ZFCompareTheSame
             && ZFObjectCompare(taskData->taskUserData(), userData) == ZFCompareTheSame
-            && ZFObjectCompare(taskData->taskParam0(), param0) == ZFCompareTheSame
-            && ZFObjectCompare(taskData->taskParam1(), param1) == ZFCompareTheSame)
-        {
+        ) {
             _ZFP_ZFThreadTaskRequest_taskStop(taskData);
             _ZFP_ZFThread_taskDatas->remove(i);
             break;

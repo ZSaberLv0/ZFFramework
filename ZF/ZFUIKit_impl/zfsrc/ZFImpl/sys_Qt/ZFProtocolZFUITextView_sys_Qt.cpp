@@ -201,7 +201,7 @@ public:
         nativeImplView->_ZFP_textSize(textSize);
         nativeImplView->setMaximumWidth((sizeHint.width <= 0) ? 30000 : sizeHint.width);
         nativeImplView->setMaximumHeight((sizeHint.height <= 0) ? 30000 : sizeHint.height);
-        nativeImplView->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+        nativeImplView->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         nativeImplView->adjustSize();
 
         QRect ret = nativeImplView->geometry();

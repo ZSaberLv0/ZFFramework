@@ -2209,8 +2209,6 @@ ZFMETHOD_DEFINE_0(ZFUIView, void, viewPropertyUpdateRequest)
     ZFThreadTaskRequest(
         zfHint("task")ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewListenerHolder)->viewPropertyOnUpdateListener,
         zfHint("userData")this->objectHolder(),
-        zfHint("param0")zfnull,
-        zfHint("param1")zfnull,
         zfHint("owner")this,
         zfHint("mergeCallback")ZFThreadTaskRequestMergeCallbackIgnoreOldTask());
 }

@@ -33,17 +33,13 @@ ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnActivate)
 ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnStop)
 
-ZFOBJECT_ON_INIT_DEFINE_5(ZFTimer, ZFMP_IN(zftimet, timerInterval),
-                          ZFMP_IN_OPT(ZFObject *, timerParam0, zfnull),
-                          ZFMP_IN_OPT(ZFObject *, timerParam1, zfnull),
+ZFOBJECT_ON_INIT_DEFINE_3(ZFTimer, ZFMP_IN(zftimet, timerInterval),
                           ZFMP_IN_OPT(zftimet, timerDelay, zftimetZero()),
                           ZFMP_IN_OPT(zfbool, timerActivateInMainThread, zftrue))
 {
     this->objectOnInit();
     zfself::timerInterval(timerInterval);
     zfself::timerDelay(timerDelay);
-    zfself::timerParam0(timerParam0);
-    zfself::timerParam1(timerParam1);
     zfself::timerActivateInMainThread(timerActivateInMainThread);
 }
 void ZFTimer::objectOnInit(void)
@@ -82,14 +78,6 @@ ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, zftimet, timerDelay)
     zfCoreAssert(this->timerDelay() >= 0);
 }
 ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, zfbool, timerActivateInMainThread)
-{
-    zfCoreAssert(!this->timerStarted());
-}
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, ZFObject *, timerParam0)
-{
-    zfCoreAssert(!this->timerStarted());
-}
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, ZFObject *, timerParam1)
 {
     zfCoreAssert(!this->timerStarted());
 }

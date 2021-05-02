@@ -148,9 +148,17 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
     }
     else
     {
-        ZFLISTENER_LOCAL(blinkDelayOnFinish, {
+        view->observerAdd(ZFObject::EventObjectBeforeDealloc(), ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->viewOnDeallocListener);
+
+        ZFGlobalObserver().observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOn());
+        zfidentity delayTaskId = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->delayTaskIdGenerator.idAcquire();
+        zfblockedAlloc(v_zfidentity, delayTaskIdTag, delayTaskId);
+        view->objectTag(_ZFP_ZFUIViewBlink_tag_delayTaskId, delayTaskIdTag);
+
+        ZFLISTENER_LAMBDA_1(blinkDelayOnFinish,
+            zfautoObject, delayTaskIdTag, {
             ZFUIView *view = userData->objectHolded();
-            v_zfidentity *delayTaskId = listenerData.param0<v_zfidentity *>();
+            v_zfidentity *delayTaskId = delayTaskIdTag;
             v_zfidentity *delayTaskIdCur = view->objectTag<v_zfidentity *>(_ZFP_ZFUIViewBlink_tag_delayTaskId);
             if(delayTaskId != delayTaskIdCur)
             {
@@ -160,12 +168,6 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
             ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->delayTaskIdGenerator.idRelease(delayTaskId->zfv);
             _ZFP_ZFUIViewBlink_noAni_doOff(view);
         })
-        view->observerAdd(ZFObject::EventObjectBeforeDealloc(), ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->viewOnDeallocListener);
-
-        ZFGlobalObserver().observerNotifyWithCustomSender(view, ZFGlobalEvent::EventViewBlinkOn());
-        zfidentity delayTaskId = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->delayTaskIdGenerator.idAcquire();
-        zfblockedAlloc(v_zfidentity, delayTaskIdTag, delayTaskId);
-        view->objectTag(_ZFP_ZFUIViewBlink_tag_delayTaskId, delayTaskIdTag);
         zfidentity delayId = ZFThreadExecuteInMainThreadAfterDelay(
             #if _ZFP_ZFUIViewBlink_DEBUG_duration
                 (zftimet)5000
@@ -174,9 +176,7 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
             #endif
             ,
             blinkDelayOnFinish,
-            view->objectHolder(),
-            ZFListenerData().param0(delayTaskIdTag)
-            );
+            view->objectHolder());
         view->objectTag(_ZFP_ZFUIViewBlink_tag_delayId, zflineAlloc(v_zfidentity, delayId));
     }
 }
