@@ -176,6 +176,17 @@ public:
         view->layoutOnLayoutPrepare(bounds);
         view->observerNotify(ZFUIView::EventViewLayoutOnLayoutPrepare());
 
+        if(view->d->nativeImplView != zfnull)
+        {
+            ZFUIRect nativeImplViewFrame = ZFUIRectZero();
+            view->nativeImplViewOnLayout(nativeImplViewFrame, bounds, view->nativeImplViewMargin());
+            if(view->d->nativeImplViewFrame != nativeImplViewFrame || ZFBitTest(view->d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_scaleChanged))
+            {
+                view->d->nativeImplViewFrame = nativeImplViewFrame;
+                ZFPROTOCOL_ACCESS(ZFUIView)->nativeImplViewFrame(view, ZFUIRectApplyScale(nativeImplViewFrame, view->scaleFixed()));
+            }
+        }
+
         // layout
         view->layoutOnLayout(bounds);
         view->observerNotify(ZFUIView::EventViewLayoutOnLayout());
@@ -1626,16 +1637,6 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, viewFrame,
 
         ZFUIRect bounds = ZFUIRectGetBounds(d->viewFrame);
 
-        if(d->nativeImplView != zfnull)
-        {
-            ZFUIRect nativeImplViewFrame = ZFUIRectZero();
-            this->nativeImplViewOnLayout(nativeImplViewFrame, bounds, this->nativeImplViewMargin());
-            if(d->nativeImplViewFrame != nativeImplViewFrame || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_scaleChanged))
-            {
-                d->nativeImplViewFrame = nativeImplViewFrame;
-                ZFPROTOCOL_ACCESS(ZFUIView)->nativeImplViewFrame(this, ZFUIRectApplyScale(nativeImplViewFrame, this->scaleFixed()));
-            }
-        }
         d->layoutAction(this, bounds);
     }
     else if(d->viewFrame != viewFrame || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_scaleChanged)) {
