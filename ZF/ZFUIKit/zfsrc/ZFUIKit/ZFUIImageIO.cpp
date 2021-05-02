@@ -17,8 +17,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromBase64,
         void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageFromInput(io->input());
         if(nativeImage != zfnull)
         {
-            image->nativeImage(nativeImage);
-            ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+            image->nativeImage(nativeImage, zffalse);
             return ret;
         }
     }
@@ -53,8 +52,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromFile,
     {
         return zfnull;
     }
-    image->nativeImage(nativeImage);
-    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+    image->nativeImage(nativeImage, zffalse);
 
     if(!inputCallback.callbackSerializeCustomDisabled())
     {
@@ -98,8 +96,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(input, ZFUIImageSerializeType_input)
             "load image failed");
         return zffalse;
     }
-    ret->nativeImage(nativeImage);
-    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+    ret->nativeImage(nativeImage, zffalse);
     return zftrue;
 }
 
@@ -119,8 +116,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageScale,
         image->nativeImage(),
         ZFUISizeApplyScale(newSize, scale),
         ZFUIMarginApplyScale(image->imageNinePatch(), scale));
-    zfautoObjectT<ZFUIImage *> ret = ZFUIImageLoadFromNativeImage(nativeImage);
-    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImageLoadFromNativeImage(nativeImage, zffalse);
     return ret;
 }
 
@@ -153,8 +149,7 @@ static zfbool _ZFP_ZFUIImageLoadInFrame(ZF_IN_OUT ZFUIImage *ret,
         image->imageScaleFixed(),
         image->nativeImage(),
         framePixel);
-    ret->nativeImage(nativeImage);
-    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+    ret->nativeImage(nativeImage, zffalse);
 
     // only store custom type for performance
     if(image->imageSerializableType() != zfnull)
@@ -216,8 +211,9 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadInFrame,
 
 // ============================================================
 // ZFUIImageLoadFromNativeImage
-ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
-                       ZFMP_IN(void *, nativeImage))
+ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
+                       ZFMP_IN(void *, nativeImage),
+                       ZFMP_IN_OPT(zfbool, retainNativeImage, zftrue))
 {
     if(nativeImage == zfnull)
     {
@@ -290,9 +286,8 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(color, ZFUIImageSerializeType_color)
         ZFUIGlobalStyle::DefaultStyle()->imageScale(),
         color,
         ZFUISizeApplyScale(size, ZFUIGlobalStyle::DefaultStyle()->imageScale()));
-    ret->nativeImage(nativeImage);
+    ret->nativeImage(nativeImage, zffalse);
     ret->imageSerializableData(&imageData);
-    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
 
     return zftrue;
 }
@@ -305,8 +300,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromColor,
         ZFUIGlobalStyle::DefaultStyle()->imageScale(),
         color,
         sizeTmp);
-    zfautoObjectT<ZFUIImage *> ret = ZFUIImageLoadFromNativeImage(nativeImage);
-    ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+    zfautoObjectT<ZFUIImage *> ret = ZFUIImageLoadFromNativeImage(nativeImage, zffalse);
     ZFUIImage *image = ret;
     if(image == zfnull)
     {

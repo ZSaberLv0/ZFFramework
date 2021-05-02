@@ -32,7 +32,7 @@ public:
             layout->addWidget(nativeChild);
         }
     }
-    virtual void nativeViewRemote(ZF_IN void *parent, ZF_IN void *child)
+    virtual void nativeViewRemove(ZF_IN void *parent, ZF_IN void *child)
     {
         QWidget *nativeParent = (QWidget *)parent;
         QWidget *nativeChild = (QWidget *)child;

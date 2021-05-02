@@ -10,7 +10,6 @@
 @interface _ZFP_ZFUIViewImpl_sys_iOS_View : UIView
 @property (nonatomic, assign) ZFUIView *_ZFP_ownerZFUIView;
 @property (nonatomic, strong) UIView *_ZFP_nativeImplView;
-@property (nonatomic, assign) CGRect _ZFP_nativeImplViewFrame;
 @property (nonatomic, assign) CGSize _ZFP_layoutedSize;
 @property (nonatomic, strong) NSMutableArray *_ZFP_mouseRecords; // UITouch
 @property (nonatomic, assign) BOOL _ZFP_uiEnable;
@@ -71,7 +70,6 @@
         self._ZFP_layoutedSize = self.frame.size;
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(self._ZFP_ownerZFUIView, ZFImpl_sys_iOS_ZFUIRectFromCGRect(self.frame));
     }
-    self._ZFP_nativeImplView.frame = self._ZFP_nativeImplViewFrame;
 }
 
 // ============================================================
@@ -372,7 +370,7 @@ public:
                                      ZF_IN const ZFUIRect &rect)
     {
         _ZFP_ZFUIViewImpl_sys_iOS_View *nativeView = (__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView();
-        nativeView._ZFP_nativeImplViewFrame = ZFImpl_sys_iOS_ZFUIRectToCGRect(rect);
+        nativeView._ZFP_nativeImplView.frame = ZFImpl_sys_iOS_ZFUIRectToCGRect(rect);
     }
     virtual zffloat nativeViewScaleForImpl(ZF_IN void *nativeView)
     {

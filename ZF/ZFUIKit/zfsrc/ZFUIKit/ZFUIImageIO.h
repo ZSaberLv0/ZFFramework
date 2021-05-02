@@ -94,11 +94,10 @@ ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadInFrame,
 // ZFUIImageLoadFromNativeImage
 /**
  * @brief create image from native image
- *
- * the native image would be retained by the #ZFUIImage
  */
-ZFMETHOD_FUNC_DECLARE_1(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
-                        ZFMP_IN(void *, nativeImage))
+ZFMETHOD_FUNC_DECLARE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromNativeImage,
+                        ZFMP_IN(void *, nativeImage),
+                        ZFMP_IN_OPT(zfbool, retainNativeImage, zftrue))
 
 // ============================================================
 // color

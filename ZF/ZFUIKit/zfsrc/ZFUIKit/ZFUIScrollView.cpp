@@ -855,8 +855,8 @@ void ZFUIScrollView::viewEventOnWheelEvent(ZF_IN ZFUIWheelEvent *wheelEvent)
         return ;
     }
 
-    zfint wheelXSaved = this->scrollByPointEndPoint().x - this->scrollContentFrame().x;
-    zfint wheelYSaved = this->scrollByPointEndPoint().y - this->scrollContentFrame().y;
+    zfint wheelXSaved = -(this->scrollByPointEndPoint().x - this->scrollContentFrame().x);
+    zfint wheelYSaved = -(this->scrollByPointEndPoint().y - this->scrollContentFrame().y);
     const zfint initValue = 60;
     const zfint maxValue = 3000;
     zfint wheelX = wheelEvent->wheelX * initValue;
@@ -920,8 +920,8 @@ void ZFUIScrollView::viewEventOnWheelEvent(ZF_IN ZFUIWheelEvent *wheelEvent)
                 }
             }
         }
-        if((this->scrollContentOffsetLeft() <= 0 && wheelX > 0)
-            || (this->scrollContentOffsetRight() <= 0 && wheelX < 0))
+        if((this->scrollContentOffsetRight() < 0 && wheelX > 0)
+            || (this->scrollContentOffsetLeft() < 0 && wheelX < 0))
         {
             wheelX = 0;
         }
@@ -944,8 +944,8 @@ void ZFUIScrollView::viewEventOnWheelEvent(ZF_IN ZFUIWheelEvent *wheelEvent)
                 }
             }
         }
-        if((this->scrollContentOffsetTop() <= 0 && wheelY > 0)
-            || (this->scrollContentOffsetBottom() <= 0 && wheelY < 0))
+        if((this->scrollContentOffsetBottom() < 0 && wheelY > 0)
+            || (this->scrollContentOffsetTop() < 0 && wheelY < 0))
         {
             wheelY = 0;
         }
@@ -953,7 +953,7 @@ void ZFUIScrollView::viewEventOnWheelEvent(ZF_IN ZFUIWheelEvent *wheelEvent)
 
     if(wheelX != 0 || wheelY != 0)
     {
-        this->scrollByPoint(this->scrollContentFrame().x + wheelX, this->scrollContentFrame().y + wheelY);
+        this->scrollByPoint(this->scrollContentFrame().x - wheelX, this->scrollContentFrame().y - wheelY);
         wheelEvent->eventResolved(zftrue);
     }
 }
@@ -1165,11 +1165,11 @@ ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetTop)
 }
 ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetRight)
 {
-    return this->scrollArea().width - ZFUIRectGetRight(this->scrollContentFrame());
+    return ZFUIRectGetRight(this->scrollContentFrame()) - this->scrollArea().width;
 }
 ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollContentOffsetBottom)
 {
-    return this->scrollArea().height - ZFUIRectGetBottom(this->scrollContentFrame());
+    return ZFUIRectGetBottom(this->scrollContentFrame()) - this->scrollArea().height;
 }
 
 ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollContentFrameAnimated,

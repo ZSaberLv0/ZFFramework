@@ -176,6 +176,7 @@ void ZFUIScrollThumbDefault::scrollThumbInit(void)
         d->thumbView->layoutParam()->sizeParam(ZFUISizeParamFillFill());
         d->thumbView->image(this->scrollThumbImageVertical());
     }
+    d->thumbView->layoutParam()->sizeHint(ZFUISizeZero());
 
     d->thumbView->viewVisible(zffalse);
 }

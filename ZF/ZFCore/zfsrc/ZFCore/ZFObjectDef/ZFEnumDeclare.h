@@ -186,7 +186,6 @@ public:
     zfclass ZF_ENV_EXPORT EnumName : zfextends ZFEnum \
     { \
         ZFOBJECT_DECLARE(EnumName, ZFEnum) \
-        ZFALLOC_CACHE_RELEASE({zfsuper::zfAllocCacheRelease(cache);}) \
     public: \
         /** @brief see @ref EnumName */ \
         typedef enum \

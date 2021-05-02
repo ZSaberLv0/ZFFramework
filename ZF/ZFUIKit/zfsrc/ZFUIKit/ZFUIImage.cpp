@@ -171,8 +171,7 @@ zfbool ZFUIImage::serializableOnSerializeFromData(ZF_IN const ZFSerializableData
                 "fail to load image from base64 data: \"%s\"", imageBin);
             return zffalse;
         }
-        this->nativeImage(nativeImage);
-        ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(nativeImage);
+        this->nativeImage(nativeImage, zffalse);
         return zftrue;
     }
 
@@ -405,13 +404,21 @@ ZFMETHOD_DEFINE_0(ZFUIImage, void *, nativeImage)
     return d->nativeImage;
 }
 
-void ZFUIImage::nativeImage(ZF_IN void *nativeImage)
+void ZFUIImage::nativeImage(ZF_IN void *nativeImage,
+                            ZF_IN_OPT zfbool retainNativeImage /* = zftrue */)
 {
     void *toRelease = d->nativeImage;
 
     if(nativeImage != zfnull)
     {
-        d->nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRetain(nativeImage);
+        if(retainNativeImage)
+        {
+            d->nativeImage = ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRetain(nativeImage);
+        }
+        else
+        {
+            d->nativeImage = nativeImage;
+        }
     }
     else
     {

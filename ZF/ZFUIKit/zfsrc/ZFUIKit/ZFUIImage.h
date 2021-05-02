@@ -209,7 +209,8 @@ public:
      *
      * the image would be retained, actual retain logic is depending on the implementation
      */
-    virtual void nativeImage(ZF_IN void *nativeImage);
+    virtual void nativeImage(ZF_IN void *nativeImage,
+                             ZF_IN_OPT zfbool retainNativeImage = zftrue);
 
     /**
      * @brief see #ZFUIIMAGE_SERIALIZE_TYPE_DEFINE

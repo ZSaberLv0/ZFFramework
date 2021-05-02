@@ -39,7 +39,7 @@ public:
         [nativeParent addSubview:container];
         [container addSubview:nativeChild];
     }
-    virtual void nativeViewRemote(ZF_IN void *parent, ZF_IN void *child)
+    virtual void nativeViewRemove(ZF_IN void *parent, ZF_IN void *child)
     {
         UIView *nativeChild = (__bridge UIView *)child;
         [nativeChild.superview removeFromSuperview];

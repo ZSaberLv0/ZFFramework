@@ -4,12 +4,12 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-#define _ZFP_ZFUIScrollerDefault_scrollAniBounceMax 200
+#define _ZFP_ZFUIScrollerDefault_scrollAniBounceMax 40
 #define _ZFP_ZFUIScrollerDefault_scrollAniBounceDragMax 800
 #define _ZFP_ZFUIScrollerDefault_scrollAniStartTolerance 500
 
-#define _ZFP_ZFUIScrollerDefault_aniByPointDurationMin ((zftimet)100)
-#define _ZFP_ZFUIScrollerDefault_aniByPointDurationMax ((zftimet)1000)
+#define _ZFP_ZFUIScrollerDefault_aniByPointDurationMin ((zftimet)250)
+#define _ZFP_ZFUIScrollerDefault_aniByPointDurationMax ((zftimet)1500)
 
 #define _ZFP_ZFUIScrollerDefault_aniBySpeedSpeedMaxNormal 3000 // pixels per second
 #define _ZFP_ZFUIScrollerDefault_aniBySpeedSpeedMaxBounce 500 // pixels per second
@@ -275,6 +275,16 @@ public:
     }
     void aniByPointStart(ZF_IN zfint stopPos, ZF_IN_OPT zftimet duration = zftimetZero())
     {
+        // fix stopPos in bounce range
+        if(this->calcBounceHeadFromContentOffset(stopPos) > _ZFP_ZFUIScrollerDefault_scrollAniBounceMax)
+        {
+            stopPos = this->calcContentOffsetFromBounceHead(_ZFP_ZFUIScrollerDefault_scrollAniBounceMax);
+        }
+        else if(this->calcBounceTailFromContentOffset(stopPos) > _ZFP_ZFUIScrollerDefault_scrollAniBounceMax)
+        {
+            stopPos = this->calcContentOffsetFromBounceTail(_ZFP_ZFUIScrollerDefault_scrollAniBounceMax);
+        }
+
         if(duration <= 0)
         {
             duration = this->aniByPointDurationForOffset(stopPos - this->contentOffset);

@@ -27,7 +27,7 @@ public:
     }
     virtual void nativeWindowRootViewOnRemove(ZF_IN ZFUISysWindow *sysWindow)
     {
-        ZFPROTOCOL_ACCESS(ZFUISysWindowEmbedNativeView)->nativeViewRemote(
+        ZFPROTOCOL_ACCESS(ZFUISysWindowEmbedNativeView)->nativeViewRemove(
             this->nativeParent, sysWindow->rootView()->nativeView());
     }
 

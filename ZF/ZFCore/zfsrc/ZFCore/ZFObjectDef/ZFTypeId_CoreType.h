@@ -115,7 +115,7 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
                                               ZF_OUT_OPT const zfchar **outErrorPos = zfnull);
 
 // ============================================================
-// property type
+// common types
 /**
  * @brief see #ZFTYPEID_DECLARE
  *
@@ -246,6 +246,10 @@ ZFOUTPUT_TYPE(zfstring, {output.execute(zfstringToString(v));})
         } \
     };
 ZFTYPEID_ALIAS_DECLARE_CUSTOM(zfstring, zfstring, cString, const zfchar *, _ZFP_ZFTYPEID_ALIAS_EXPAND_cString)
+#undef _ZFP_ZFTYPEID_ALIAS_EXPAND_cString
+
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFPtr, void *)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFPtrConst, const void *)
 
 /**
  * @brief see #ZFTYPEID_DECLARE
@@ -410,6 +414,11 @@ ZFOUTPUT_TYPE(ZFLevel, {output.execute(ZFLevelToString(v));})
 ZFTYPEID_DECLARE(ZFFrameworkState, ZFFrameworkState)
 ZFOUTPUT_TYPE(ZFFrameworkState, {output.execute(ZFFrameworkStateToString(v));})
 
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFuncAddrType, ZFFuncAddrType)
+ZFTYPEID_ACCESS_ONLY_DECLARE(zfiterator, zfiterator)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFBuffer, ZFBuffer)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFIdentityGenerator, ZFIdentityGenerator)
+
 /**
  * @brief see #ZFTYPEID_DECLARE
  *
@@ -431,6 +440,11 @@ ZFOUTPUT_TYPE(ZFFilterType, {output.execute(ZFFilterTypeToString(v));})
  */
 ZFTYPEID_DECLARE(ZFFilterCallbackResult, ZFFilterCallbackResult)
 ZFOUTPUT_TYPE(ZFFilterCallbackResult, {output.execute(ZFFilterCallbackResultToString(v));})
+
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForNumber, ZFFilterForNumber)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForIndex, ZFFilterForIndex)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForIdentity, ZFFilterForIdentity)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForString, ZFFilterForString)
 
 /**
  * @brief see #ZFTYPEID_DECLARE
@@ -527,6 +541,8 @@ ZFOUTPUT_TYPE(ZFTokenForKeyValueContainer, {output.execute(ZFTokenForKeyValueCon
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFTokenForKeyValueContainer_tokenEtc "tokenEtc"
 
+// ============================================================
+// ZFObject types
 /**
  * @brief see #ZFTYPEID_DECLARE
  *
@@ -561,6 +577,15 @@ ZFTYPEID_DECLARE(ZFMethodType, ZFMethodType)
 ZFOUTPUT_TYPE(ZFMethodType, {output.execute(ZFMethodTypeToString(v));})
 
 ZFTYPEID_ACCESS_ONLY_DECLARE(ZFMethodParamDefaultValueCallback, ZFMethodParamDefaultValueCallback)
+
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFListenerData, ZFListenerData)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFObserverAddParam, ZFObserverAddParam)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFObserverHolder, ZFObserverHolder)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFClass, ZFFilterForZFClass)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFMethod, ZFFilterForZFMethod)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFProperty, ZFFilterForZFProperty)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFObject, ZFFilterForZFObject)
+ZFTYPEID_ACCESS_ONLY_DECLARE(ZFMethodGenericInvoker, ZFMethodGenericInvoker)
 
 ZFTYPEID_ACCESS_ONLY_DECLARE(ZFMethodDynamicRegisterParam, ZFMethodDynamicRegisterParam)
 
@@ -601,29 +626,6 @@ ZFOUTPUT_TYPE(ZFCallbackType, {output.execute(ZFCallbackTypeToString(v));})
  */
 ZFTYPEID_DECLARE(ZFSerializableData, ZFSerializableData)
 ZFOUTPUT_TYPE_DECLARE(ZFSerializableData)
-
-// ============================================================
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFuncAddrType, ZFFuncAddrType)
-ZFTYPEID_ACCESS_ONLY_DECLARE(zfiterator, zfiterator)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFBuffer, ZFBuffer)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForNumber, ZFFilterForNumber)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForIndex, ZFFilterForIndex)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForIdentity, ZFFilterForIdentity)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForString, ZFFilterForString)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFIdentityGenerator, ZFIdentityGenerator)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFListenerData, ZFListenerData)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFObserverAddParam, ZFObserverAddParam)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFObserverHolder, ZFObserverHolder)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFClass, ZFFilterForZFClass)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFMethod, ZFFilterForZFMethod)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFProperty, ZFFilterForZFProperty)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFFilterForZFObject, ZFFilterForZFObject)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFMethodGenericInvoker, ZFMethodGenericInvoker)
-
-// ============================================================
-// void *
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFPtr, void *)
-ZFTYPEID_ACCESS_ONLY_DECLARE(ZFPtrConst, const void *)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFTypeId_CoreType_h_

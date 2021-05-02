@@ -231,7 +231,6 @@ typedef zfbool (*_ZFP_ZFTypeIdProgressUpdate)(ZF_IN_OUT ZFProgressable *ret,
     zfclass ZF_ENV_EXPORT v_##TypeName : zfextends ZFTypeIdWrapper \
     { \
         ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(v_##TypeName, ZFTypeIdWrapper) \
-        ZFALLOC_CACHE_RELEASE({zfsuper::zfAllocCacheRelease(cache);}) \
     public: \
         /** @brief the value, see #ZFTypeId::Value */ \
         _ZFP_PropTypeW_##TypeName zfv; \

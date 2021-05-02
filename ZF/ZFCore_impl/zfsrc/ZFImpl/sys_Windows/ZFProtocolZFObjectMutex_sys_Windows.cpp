@@ -24,7 +24,7 @@ public:
     static void *implInit(void)
     {
         _Mutex *mutex = zfnew(_Mutex);
-        mutex->INVALID_THREAD_ID = (DWORD)INVALID_HANDLE_VALUE;
+        mutex->INVALID_THREAD_ID = (DWORD)-1;
         InitializeCriticalSection(&(mutex->mutex));
         InitializeCriticalSection(&(mutex->mutexParamLocker));
         mutex->runningThreadId = mutex->INVALID_THREAD_ID;

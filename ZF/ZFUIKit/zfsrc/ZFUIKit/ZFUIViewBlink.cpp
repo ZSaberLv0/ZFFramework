@@ -3,6 +3,8 @@
 #include "ZFAnimationNativeView.h"
 
 #include "ZFUIKit/protocol/ZFProtocolZFAnimationNativeView.h"
+#include "ZFUIKit/protocol/ZFProtocolZFUIImage.h"
+#include "ZFUIKit/protocol/ZFProtocolZFUIImageIO.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -14,7 +16,6 @@ ZF_NAMESPACE_END(ZFGlobalEvent)
 // ============================================================
 #define _ZFP_ZFUIViewBlink_DEBUG_noAni 0
 #define _ZFP_ZFUIViewBlink_DEBUG_duration 0
-#define _ZFP_ZFUIViewBlink_DEBUG_color 0
 
 #define _ZFP_ZFUIViewBlink_tag_ani "_ZFP_ZFUIViewBlink_tag_ani"
 #define _ZFP_ZFUIViewBlink_tag_blinkView "_ZFP_ZFUIViewBlink_tag_blinkView"
@@ -217,11 +218,14 @@ ZFEXPORT_VAR_DEFINE(zfautoObject, ZFUIViewBlinkImageDefault, zfnull)
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewBlinkInitSetting, ZFLevelZFFrameworkNormal)
 {
     (void)ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder);
-    #if _ZFP_ZFUIViewBlink_DEBUG_color
-        ZFUIViewBlinkImageDefault(ZFUIImageLoadFromColor(ZFUIColorMake(1, 0, 0)));
-    #else
+    if(ZFPROTOCOL_IS_AVAILABLE(ZFUIImage))
+    {
         ZFUIViewBlinkImageDefault(zfRes("ZFUIKit/ZFUIViewBlinkImage.xml"));
-    #endif
+    }
+    else if(ZFPROTOCOL_IS_AVAILABLE(ZFUIImageIO))
+    {
+        ZFUIViewBlinkImageDefault(ZFUIImageLoadFromColor(ZFUIColorMake(1, 0, 0)));
+    }
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewBlinkInitSetting)
 {

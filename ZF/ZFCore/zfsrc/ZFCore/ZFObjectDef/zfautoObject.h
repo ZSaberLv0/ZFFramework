@@ -91,39 +91,6 @@ zfautoObjectT<T_ZFObjectBase>::zfautoObjectT(ZF_IN T_ZFObject const &obj)
 }
 
 template<typename T_ZFObjectBase>
-zfautoObjectT<T_ZFObjectBase> &zfautoObjectT<T_ZFObjectBase>::operator = (ZF_IN zfautoObject const &ref)
-{
-    zfautoObject::operator = (ref);
-    if(this->toObject() != zfnull && ZFCastZFObject(T_ZFObjectBase, this->toObject()) == zfnull)
-    {
-        _ZFP_zfautoObjectTError();
-    }
-    return *this;
-}
-template<typename T_ZFObjectBase>
-template<typename T_ZFObject>
-zfautoObjectT<T_ZFObjectBase> &zfautoObjectT<T_ZFObjectBase>::operator = (ZF_IN T_ZFObject *obj)
-{
-    zfautoObject::operator = (obj);
-    if(this->toObject() != zfnull && ZFCastZFObject(T_ZFObjectBase, this->toObject()) == zfnull)
-    {
-        _ZFP_zfautoObjectTError();
-    }
-    return *this;
-}
-template<typename T_ZFObjectBase>
-template<typename T_ZFObject>
-zfautoObjectT<T_ZFObjectBase> &zfautoObjectT<T_ZFObjectBase>::operator = (ZF_IN T_ZFObject const &obj)
-{
-    zfautoObject::operator = (obj);
-    if(this->toObject() != zfnull && ZFCastZFObject(T_ZFObjectBase, this->toObject()) == zfnull)
-    {
-        _ZFP_zfautoObjectTError();
-    }
-    return *this;
-}
-
-template<typename T_ZFObjectBase>
 T_ZFObjectBase zfautoObjectT<T_ZFObjectBase>::operator -> (void) const
 {
     return ZFCastZFObjectUnchecked(T_ZFObjectBase, this->toObject());

@@ -67,7 +67,6 @@ public:
 zfclass ZF_ENV_EXPORT v_ZFCoreArray : zfextends ZFTypeIdWrapper
 {
     ZFOBJECT_DECLARE(v_ZFCoreArray, ZFTypeIdWrapper)
-    ZFALLOC_CACHE_RELEASE({zfsuper::zfAllocCacheRelease(cache);})
 public:
     /** @brief the value, see #ZFTypeId::Value */
     ZFCoreArray<zfautoObject> zfv;

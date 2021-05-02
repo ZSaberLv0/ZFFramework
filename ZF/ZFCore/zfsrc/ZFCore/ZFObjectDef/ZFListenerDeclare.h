@@ -25,7 +25,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 #if ZF_ENV_LAMBDA
     #define ZFListenerForLambda(content) \
-        ZFCallbackForFunc(((void (*)(const ZFListener &, ZFObject *))[](const ZFListener &listenerData, ZFObject *userData) {content}))
+        ZFCallbackForFunc(((void (*)(const ZFListenerData &, ZFObject *))[](const ZFListenerData &listenerData, ZFObject *userData) {content}))
 #else
     #define ZFListenerForLambda(content) ZF_ENV_LAMBDA_NOT_AVAILABLE
 #endif

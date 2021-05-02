@@ -165,11 +165,11 @@ inline void _ZFP_zfRelease(ZF_IN T_ZFObject obj)
  * -  the cached object type must supply #ZFALLOC_CACHE_RELEASE
  *   to reset the cache state
  *   @code
- *     zfclass YourObject : zfextends ZFObject
+ *     zfclass YourObject : zfextends SomeParent
  *     {
  *         ZFALLOC_CACHE_RELEASE({
- *             // call super if necessary
- *             zfsuper::zfAllocCacheRelease(obj);
+ *             // if SomeParent also declared ZFALLOC_CACHE_RELEASE,
+ *             // SomeParent's cache clear logic would be automatically called first
  *             cache->xxx.clear();
  *         })
  *     };
@@ -210,6 +210,7 @@ inline void _ZFP_zfRelease(ZF_IN T_ZFObject obj)
         } \
         static void zfAllocCacheRelease(ZF_IN ZFObject *_obj) \
         { \
+            zfsuper::zfAllocCacheRelease(_obj); \
             zfself *cache = ZFCastZFObjectUnchecked(zfself *, _obj); \
             ZFUNUSED(cache); \
             action \
@@ -222,6 +223,7 @@ inline void _ZFP_zfRelease(ZF_IN T_ZFObject obj)
         /** @cond ZFPrivateDoc */ \
         static void zfAllocCacheRelease(ZF_IN ZFObject *_obj) \
         { \
+            zfsuper::zfAllocCacheRelease(_obj); \
             zfself *cache = ZFCastZFObjectUnchecked(zfself *, _obj); \
             ZFUNUSED(cache); \
             action \

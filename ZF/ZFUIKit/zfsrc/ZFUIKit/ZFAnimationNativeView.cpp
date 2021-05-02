@@ -10,14 +10,12 @@ zfclassNotPOD _ZFP_ZFAnimationNativeViewPrivate
 {
 public:
     void *nativeAni;
-    zfbool aniTargetAutoDisableCached;
-    zfbool aniTargetEnableSaved;
+    zfbool aniTargetAutoDisableFlag;
 
 public:
     _ZFP_ZFAnimationNativeViewPrivate(void)
     : nativeAni(zfnull)
-    , aniTargetAutoDisableCached(zffalse)
-    , aniTargetEnableSaved(zffalse)
+    , aniTargetAutoDisableFlag(zffalse)
     {
     }
 };
@@ -119,26 +117,22 @@ void ZFAnimationNativeView::aniOnStart(void)
 {
     zfsuper::aniOnStart();
     ZFUIView *aniTarget = ZFAny(this->aniTarget());
-    if(aniTarget == zfnull)
+    if(aniTarget == zfnull || !this->aniTargetAutoDisable())
     {
-        d->aniTargetAutoDisableCached = zffalse;
+        d->aniTargetAutoDisableFlag = zffalse;
     }
     else
     {
-        d->aniTargetAutoDisableCached = this->aniTargetAutoDisable();
-        if(d->aniTargetAutoDisableCached)
-        {
-            d->aniTargetEnableSaved = aniTarget->viewUIEnableTree();
-            aniTarget->viewUIEnableTree(zffalse);
-        }
+        d->aniTargetAutoDisableFlag = zftrue;
+        aniTarget->viewUIEnableTree(zffalse);
     }
 }
 void ZFAnimationNativeView::aniOnStop(void)
 {
     ZFUIView *aniTarget = ZFAny(this->aniTarget());
-    if(aniTarget != zfnull && d->aniTargetAutoDisableCached)
+    if(aniTarget != zfnull && d->aniTargetAutoDisableFlag)
     {
-        aniTarget->viewUIEnableTree(d->aniTargetAutoDisableCached);
+        aniTarget->viewUIEnableTree(zftrue);
     }
     zfsuper::aniOnStop();
 }

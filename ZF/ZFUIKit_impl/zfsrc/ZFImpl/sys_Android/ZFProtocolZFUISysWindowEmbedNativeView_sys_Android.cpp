@@ -48,7 +48,7 @@ public:
             ZFCastStatic(jobject, child)
             );
     }
-    virtual void nativeViewRemote(ZF_IN void *parent, ZF_IN void *child)
+    virtual void nativeViewRemove(ZF_IN void *parent, ZF_IN void *child)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, "native_nativeViewRemove",

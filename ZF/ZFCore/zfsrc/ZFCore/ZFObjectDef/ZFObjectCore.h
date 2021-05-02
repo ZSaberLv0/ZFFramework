@@ -232,6 +232,7 @@ public:
     enum {_ZFP_ZFObjectCanAllocPublic = 1};
     static void _ZFP_Obj_initImpl(ZFClass *cls) {}
     static ZFObject *_ZFP_zfAllocWithCache(void) {return zfnull;}
+    static inline void zfAllocCacheRelease(ZF_IN ZFObject *_obj) {}
     virtual inline void _ZFP_ObjI_onInitIvk(void) {}
     virtual inline void _ZFP_ObjI_onDeallocIvk(void) {}
 protected:

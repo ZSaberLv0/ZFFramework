@@ -71,7 +71,6 @@ protected:
 zfclass ZF_ENV_EXPORT ZFDI_Wrapper : zfextends ZFDI_WrapperBase
 {
     ZFOBJECT_DECLARE(ZFDI_Wrapper, ZFDI_WrapperBase)
-    ZFALLOC_CACHE_RELEASE({zfsuper::zfAllocCacheRelease(cache);})
 public:
     zfoverride
     virtual void zfv(ZF_IN const zfchar *zfv)
@@ -87,7 +86,6 @@ private:
 zfclass ZF_ENV_EXPORT ZFDI_WrapperRaw : zfextends ZFDI_WrapperBase
 {
     ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFDI_WrapperRaw, ZFDI_WrapperBase)
-    ZFALLOC_CACHE_RELEASE({zfsuper::zfAllocCacheRelease(cache);})
 public:
     zfoverride
     virtual void zfv(ZF_IN const zfchar *zfv)

@@ -21,11 +21,13 @@ public:
     /**
      * @brief wheel rotate count in x direction
      *
-     * positive value means wheel from left to right
+     * positive value means wheel from right to left
      */
     zfint wheelX;
     /**
-     * @brief see #wheelX
+     * @brief wheel rotate count in y direction
+     *
+     * positive value means wheel from bottom to top
      */
     zfint wheelY;
 

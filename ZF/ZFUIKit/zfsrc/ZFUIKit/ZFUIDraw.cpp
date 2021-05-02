@@ -96,7 +96,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObjectT<ZFUIImage *>, endForImage,
         "ZFUIDraw::endForImage called with a mismatch context");
     void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIDrawForImage)->endForImage(*token);
     zfautoObjectT<ZFUIImage *> ret = token->target;
-    ret->nativeImage(nativeImage);
+    ret->nativeImage(nativeImage, zffalse);
     zfpoolDelete(token);
     if(nativeImage == zfnull)
     {
