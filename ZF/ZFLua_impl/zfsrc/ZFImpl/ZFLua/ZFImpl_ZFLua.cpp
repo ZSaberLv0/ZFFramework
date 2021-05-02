@@ -495,6 +495,22 @@ zfbool ZFImpl_ZFLua_toGeneric(ZF_OUT zfautoObject &param,
     }
 
     zfblockedAllocWithCache(ZFDI_WrapperRaw, wrapper);
+    if(lua_isnumber(L, luaStackOffset))
+    {
+        lua_Number n = lua_tonumber(L, luaStackOffset);
+        if(zfmAbs(n - (long)n) < zffloatEpsilon)
+        {
+            zfblockedAllocWithCache(ZFDI_Wrapper, wrapperTmp);
+            wrapperTmp->zfv(zfsFromInt((long)n));
+            param = wrapperTmp;
+        }
+        else
+        {
+            wrapper->zfv(lua_tostring(L, luaStackOffset));
+            param = wrapper;
+        }
+        return zftrue;
+    }
     if(lua_isstring(L, luaStackOffset))
     {
         wrapper->zfv(lua_tostring(L, luaStackOffset));
