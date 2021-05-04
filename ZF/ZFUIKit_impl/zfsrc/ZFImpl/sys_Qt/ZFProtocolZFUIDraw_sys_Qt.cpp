@@ -4,31 +4,34 @@
 
 #if ZF_ENV_sys_Qt
 
-#include <QImage>
-#include <QWidget>
+#include <QGraphicsWidget>
 #include <QPainter>
 
-class _ZFP_ZFUIDrawableViewImpl_sys_Qt : public QWidget
+class _ZFP_ZFUIDrawableViewImpl_sys_Qt : public QGraphicsWidget
 {
     Q_OBJECT
 
 public:
     ZFUIDrawableView *_ZFP_owner;
+    QPainter *_ZFP_painter;
 
 public:
     _ZFP_ZFUIDrawableViewImpl_sys_Qt(ZF_IN ZFUIDrawableView *owner)
-    : QWidget()
+    : QGraphicsWidget()
     , _ZFP_owner(owner)
+    , _ZFP_painter(NULL)
     {
     }
 
-protected:
-    virtual void paintEvent(QPaintEvent *event)
+public:
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr)
     {
-        QWidget::paintEvent(event);
+        QGraphicsWidget::paint(painter, option, widget);
         if(this->_ZFP_owner != zfnull)
         {
+            _ZFP_painter = painter;
             ZFPROTOCOL_ACCESS(ZFUIDrawForView)->notifyOnDraw(this->_ZFP_owner);
+            _ZFP_painter = NULL;
         }
     }
  };
@@ -38,7 +41,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 // ZFUIDrawForView
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIDrawForViewImpl_sys_Qt, ZFUIDrawForView, ZFProtocolLevel::e_SystemNormal)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QGraphicsWidget")
 
 public:
     virtual void *nativeDrawableViewCreate(ZF_IN ZFUIDrawableView *drawableView)
@@ -61,13 +64,13 @@ public:
     virtual zfbool beginForView(ZF_IN_OUT ZFUIDrawToken &token)
     {
         ZFUIDrawableView *drawableView = token.target;
-        QPainter *painter = new QPainter((QWidget *)drawableView->nativeImplView());
-        token.impl = (void *)painter;
+        _ZFP_ZFUIDrawableViewImpl_sys_Qt *nativeDrawableView = (_ZFP_ZFUIDrawableViewImpl_sys_Qt *)drawableView->nativeImplView();
+        token.impl = (void *)nativeDrawableView->_ZFP_painter;
         return zftrue;
     }
     virtual void endForView(ZF_IN_OUT ZFUIDrawToken &token)
     {
-        delete (QPainter *)token.impl;
+        // nothing to do
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFUIDrawForViewImpl_sys_Qt)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFUIDrawForViewImpl_sys_Qt)
@@ -110,7 +113,7 @@ ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFUIDrawForImageImpl_sys_Qt)
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIDrawImpl_sys_Qt, ZFUIDraw, ZFProtocolLevel::e_SystemNormal)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QPainter")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIDrawForView, "Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIDrawForView, "Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIDrawForImage, "Qt:QImage")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 

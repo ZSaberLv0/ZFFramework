@@ -86,40 +86,6 @@
         CATransform3D transformFrom = CATransform3DIdentity;
         CATransform3D transformTo = CATransform3DIdentity;
 
-        if(self.ownerAni->aniRotateXFrom() != 0)
-        {
-            transformFrom = CATransform3DRotate(transformFrom, self.ownerAni->aniRotateXFrom() * M_PI / 360, 1, 0, 0);
-        }
-        if(self.ownerAni->aniRotateYFrom() != 0)
-        {
-            transformFrom = CATransform3DRotate(transformFrom, self.ownerAni->aniRotateYFrom() * M_PI / 360, 0, 1, 0);
-        }
-        if(self.ownerAni->aniRotateZFrom() != 0)
-        {
-            transformFrom = CATransform3DRotate(transformFrom, self.ownerAni->aniRotateZFrom() * M_PI / 360, 0, 0, 1);
-        }
-        if(self.ownerAni->aniRotateXTo() != 0)
-        {
-            transformTo = CATransform3DRotate(transformTo, self.ownerAni->aniRotateXTo() * M_PI / 360, 1, 0, 0);
-        }
-        if(self.ownerAni->aniRotateYTo() != 0)
-        {
-            transformTo = CATransform3DRotate(transformTo, self.ownerAni->aniRotateYTo() * M_PI / 360, 0, 1, 0);
-        }
-        if(self.ownerAni->aniRotateZTo() != 0)
-        {
-            transformTo = CATransform3DRotate(transformTo, self.ownerAni->aniRotateZTo() * M_PI / 360, 0, 0, 1);
-        }
-
-        if(self.ownerAni->aniScaleXFrom() != 1 || self.ownerAni->aniScaleYFrom() != 1)
-        {
-            transformFrom = CATransform3DScale(transformFrom, self.ownerAni->aniScaleXFrom(), self.ownerAni->aniScaleYFrom(), 1);
-        }
-        if(self.ownerAni->aniScaleXTo() != 1 || self.ownerAni->aniScaleYTo() != 1)
-        {
-            transformTo = CATransform3DScale(transformTo, self.ownerAni->aniScaleXTo(), self.ownerAni->aniScaleYTo(), 1);
-        }
-
         transformFrom = CATransform3DTranslate(
             transformFrom,
             refWidth * self.ownerAni->aniTranslateXFrom() + self.ownerAni->aniTranslatePixelXFrom() * self.nativeAniScale,
@@ -130,6 +96,40 @@
             refWidth * self.ownerAni->aniTranslateXTo() + self.ownerAni->aniTranslatePixelXTo() * self.nativeAniScale,
             refHeight * self.ownerAni->aniTranslateYTo() + self.ownerAni->aniTranslatePixelYTo() * self.nativeAniScale,
             refZ * self.ownerAni->aniTranslateZTo() + self.ownerAni->aniTranslatePixelZTo() * self.nativeAniScale);
+
+        if(self.ownerAni->aniRotateXFrom() != 0)
+        {
+            transformFrom = CATransform3DRotate(transformFrom, self.ownerAni->aniRotateXFrom() * M_PI / 180, 1, 0, 0);
+        }
+        if(self.ownerAni->aniRotateYFrom() != 0)
+        {
+            transformFrom = CATransform3DRotate(transformFrom, self.ownerAni->aniRotateYFrom() * M_PI / 180, 0, 1, 0);
+        }
+        if(self.ownerAni->aniRotateZFrom() != 0)
+        {
+            transformFrom = CATransform3DRotate(transformFrom, self.ownerAni->aniRotateZFrom() * M_PI / 180, 0, 0, 1);
+        }
+        if(self.ownerAni->aniRotateXTo() != 0)
+        {
+            transformTo = CATransform3DRotate(transformTo, self.ownerAni->aniRotateXTo() * M_PI / 180, 1, 0, 0);
+        }
+        if(self.ownerAni->aniRotateYTo() != 0)
+        {
+            transformTo = CATransform3DRotate(transformTo, self.ownerAni->aniRotateYTo() * M_PI / 180, 0, 1, 0);
+        }
+        if(self.ownerAni->aniRotateZTo() != 0)
+        {
+            transformTo = CATransform3DRotate(transformTo, self.ownerAni->aniRotateZTo() * M_PI / 180, 0, 0, 1);
+        }
+
+        if(self.ownerAni->aniScaleXFrom() != 1 || self.ownerAni->aniScaleYFrom() != 1)
+        {
+            transformFrom = CATransform3DScale(transformFrom, self.ownerAni->aniScaleXFrom(), self.ownerAni->aniScaleYFrom(), 1);
+        }
+        if(self.ownerAni->aniScaleXTo() != 1 || self.ownerAni->aniScaleYTo() != 1)
+        {
+            transformTo = CATransform3DScale(transformTo, self.ownerAni->aniScaleXTo(), self.ownerAni->aniScaleYTo(), 1);
+        }
 
         CABasicAnimation *nativeTransformAni = [CABasicAnimation animationWithKeyPath:@"transform"];
         [nativeAnimations addObject:nativeTransformAni];

@@ -3,6 +3,7 @@
 /master/ZF_docs/Doxygen/libclang.dll
 
 # common
+**/.classpath
 **/.project
 **/.settings
 **/.svn

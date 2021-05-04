@@ -3,11 +3,11 @@
 
 #if ZF_ENV_sys_Qt
 
+#include <QGraphicsWidget>
 #include <QImage>
-#include <QWidget>
 #include <QPainter>
 
-class _ZFP_ZFUIImageViewImpl_sys_Qt_ImageView : public QWidget
+class _ZFP_ZFUIImageViewImpl_sys_Qt_ImageView : public QGraphicsWidget
 {
     Q_OBJECT
 
@@ -18,7 +18,7 @@ public:
 
 public:
     _ZFP_ZFUIImageViewImpl_sys_Qt_ImageView(ZF_IN ZFUIImageView *owner)
-    : QWidget()
+    : QGraphicsWidget()
     , _ZFP_owner(owner)
     , _ZFP_imageScale(1)
     , _ZFP_imageNinePatchScaled(ZFUIMarginZero())
@@ -26,21 +26,20 @@ public:
     }
 
 protected:
-    virtual void paintEvent(QPaintEvent *event)
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr)
     {
-        QWidget::paintEvent(event);
+        QGraphicsWidget::paint(painter, option, widget);
         if(_ZFP_owner == zfnull || _ZFP_owner->image() == zfnull || _ZFP_owner->image()->nativeImage() == zfnull)
         {
             return ;
         }
 
         QImage *image = (QImage *)_ZFP_owner->image()->nativeImage();
-        QPainter painter(this);
-        painter.setRenderHint(QPainter::SmoothPixmapTransform);
-        QRect bounds(QPoint(), this->geometry().size());
+        painter->setRenderHint(QPainter::SmoothPixmapTransform);
+        QRectF bounds(QPointF(), this->geometry().size());
         if(_ZFP_imageNinePatchScaled == ZFUIMarginZero())
         {
-            painter.drawImage(bounds, *image);
+            painter->drawImage(bounds, *image);
             return ;
         }
 
@@ -50,12 +49,12 @@ protected:
                 drawDatas,
                 ZFUISizeApplyScaleReversely(ZFImpl_sys_Qt_ZFUISizeFromQSize(image->size()), _ZFP_imageScale),
                 _ZFP_imageNinePatchScaled,
-                ZFImpl_sys_Qt_ZFUISizeFromQSize(bounds.size()));
+                ZFImpl_sys_Qt_ZFUISizeFromQSizeF(bounds.size()));
 
         for(zfindex i = 0; i < drawDatasCount; ++i)
         {
             const ZFUIImageImplNinePatchDrawData &drawData = drawDatas[i];
-            painter.drawImage(
+            painter->drawImage(
                 ZFImpl_sys_Qt_ZFUIRectToQRect(drawData.dst),
                 *image,
                 ZFImpl_sys_Qt_ZFUIRectToQRect(ZFUIRectApplyScale(drawData.src, _ZFP_imageScale)));
@@ -66,7 +65,7 @@ protected:
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIImageViewImpl_sys_Qt, ZFUIImageView, ZFProtocolLevel::e_SystemHigh)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIImage, "Qt:QImage")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()

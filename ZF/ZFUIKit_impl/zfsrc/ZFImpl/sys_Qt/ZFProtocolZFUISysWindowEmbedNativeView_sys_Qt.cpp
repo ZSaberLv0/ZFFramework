@@ -4,39 +4,36 @@
 
 #if ZF_ENV_sys_Qt
 
-#include <QWidget>
-#include <QVBoxLayout>
+#include "ZFImpl/sys_Qt/ZFMainEntry_sys_Qt.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUISysWindowEmbedNativeViewImpl_sys_Qt, ZFUISysWindowEmbedNativeView, ZFProtocolLevel::e_SystemHigh)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIView, "Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIView, "Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 
 public:
     virtual void nativeViewAdd(ZF_IN void *parent, ZF_IN void *child)
     {
-        QWidget *nativeParent = (QWidget *)parent;
-        QWidget *nativeChild = (QWidget *)child;
+        QGraphicsWidget *nativeParent = (QGraphicsWidget *)parent;
+        QGraphicsWidget *nativeChild = (QGraphicsWidget *)child;
         if(nativeParent->layout() != NULL)
         {
-            nativeParent->layout()->addWidget(nativeChild);
+            ((ZFImpl_sys_Qt_BaseLayout *)nativeParent->layout())->childAdd(nativeChild);
         }
         else
         {
-            QVBoxLayout *layout = new QVBoxLayout();
-            layout->setSpacing(0);
-            layout->setContentsMargins(0, 0, 0, 0);
+            ZFImpl_sys_Qt_BaseLayout *layout = new ZFImpl_sys_Qt_BaseLayout();
             nativeParent->setLayout(layout);
-            layout->addWidget(nativeChild);
+            layout->childAdd(nativeChild);
         }
     }
     virtual void nativeViewRemove(ZF_IN void *parent, ZF_IN void *child)
     {
-        QWidget *nativeParent = (QWidget *)parent;
-        QWidget *nativeChild = (QWidget *)child;
-        nativeParent->layout()->removeWidget(nativeChild);
+        QGraphicsWidget *nativeParent = (QGraphicsWidget *)parent;
+        QGraphicsWidget *nativeChild = (QGraphicsWidget *)child;
+        ((ZFImpl_sys_Qt_BaseLayout *)nativeParent->layout())->childRemove(nativeChild);
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFUISysWindowEmbedNativeViewImpl_sys_Qt)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFUISysWindowEmbedNativeViewImpl_sys_Qt)

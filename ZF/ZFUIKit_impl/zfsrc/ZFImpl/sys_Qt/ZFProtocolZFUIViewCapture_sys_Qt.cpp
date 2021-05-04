@@ -5,28 +5,30 @@
 
 #if ZF_ENV_sys_Qt
 
-#include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsWidget>
 #include <QImage>
+#include <QPainter>
 #include <QPixmap>
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIViewCaptureImpl_sys_Qt, ZFUIViewCapture, ZFProtocolLevel::e_SystemHigh)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIView, "Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIView, "Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIImage, "Qt:QImage")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 public:
     virtual zfbool viewCapture(ZF_IN ZFUIView *view,
                                ZF_IN_OUT ZFUIImage *image)
     {
-        QWidget *nativeView = ZFCastStatic(QWidget *, view->nativeView());
+        QGraphicsWidget *nativeView = ZFCastStatic(QGraphicsWidget *, view->nativeView());
 
-        QPixmap t(nativeView->size());
-        t.fill(QColor(0, 0, 0, 0));
-        nativeView->render(&t);
-        QImage nativeImage = t.toImage();
+        QImage nativeImage(nativeView->geometry().width(), nativeView->geometry().height(), QImage::Format_ARGB32);
+        nativeImage.fill(QColorConstants::Transparent);
+        QPainter painter(&nativeImage);
+        nativeView->scene()->render(&painter);
         image->nativeImage(&nativeImage);
 
         return zftrue;

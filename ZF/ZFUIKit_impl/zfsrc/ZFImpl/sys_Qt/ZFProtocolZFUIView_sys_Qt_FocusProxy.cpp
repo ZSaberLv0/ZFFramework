@@ -5,7 +5,7 @@
 
 #if ZF_ENV_sys_Qt
 
-#include <QWidget>
+#include <QGraphicsWidget>
 #include <QEvent>
 #include <QCoreApplication>
 
@@ -15,14 +15,18 @@ class _ZFP_ZFUIViewImpl_sys_Qt_FocusProxyToken : public QObject
 
 public:
     ZFUIView *ownerZFUIView;
-    QWidget *nativeOwner;
-    QWidget *nativeImplView;
+    QGraphicsWidget *nativeOwner;
+    QGraphicsWidget *nativeImplView;
 
 public:
     void attach(ZF_IN ZFUIView *ownerZFUIView,
-                ZF_IN QWidget *nativeOwner,
-                ZF_IN QWidget *nativeImplView)
+                ZF_IN QGraphicsWidget *nativeOwner,
+                ZF_IN QGraphicsWidget *nativeImplView)
     {
+        this->ownerZFUIView = ownerZFUIView;
+        this->nativeOwner = nativeOwner;
+        this->nativeImplView = nativeImplView;
+
         this->nativeOwner->installEventFilter(this);
         if(this->nativeImplView != zfnull)
         {
@@ -39,16 +43,6 @@ public:
     }
 
 public:
-    _ZFP_ZFUIViewImpl_sys_Qt_FocusProxyToken(ZF_IN ZFUIView *ownerZFUIView,
-                                             ZF_IN QWidget *nativeOwner,
-                                             ZF_IN QWidget *nativeImplView)
-    : QObject()
-    , ownerZFUIView(ownerZFUIView)
-    , nativeOwner(nativeOwner)
-    , nativeImplView(nativeImplView)
-    {
-        this->attach(ownerZFUIView, nativeOwner, nativeImplView);
-    }
     ~_ZFP_ZFUIViewImpl_sys_Qt_FocusProxyToken(void)
     {
         this->detach();
@@ -82,13 +76,15 @@ protected:
 };
 
 void *_ZFP_ZFUIViewImpl_sys_Qt_FocusProxy_attach(ZF_IN ZFUIView *ownerZFUIView,
-                                                 ZF_IN QWidget *nativeOwner,
-                                                 ZF_IN QWidget *nativeImplViewOrNull,
+                                                 ZF_IN QGraphicsWidget *nativeOwner,
+                                                 ZF_IN QGraphicsWidget *nativeImplViewOrNull,
                                                  ZF_IN_OPT void *tokenOld /* = zfnull */)
 {
     if(tokenOld == zfnull)
     {
-        return new _ZFP_ZFUIViewImpl_sys_Qt_FocusProxyToken(ownerZFUIView, nativeOwner, nativeImplViewOrNull);
+        _ZFP_ZFUIViewImpl_sys_Qt_FocusProxyToken *token = new _ZFP_ZFUIViewImpl_sys_Qt_FocusProxyToken();
+        token->attach(ownerZFUIView, nativeOwner, nativeImplViewOrNull);
+        return token;
     }
     else
     {
@@ -113,7 +109,7 @@ void _ZFP_ZFUIViewImpl_sys_Qt_FocusProxy_viewFocusable(ZF_IN void *token, ZF_IN 
     if(v)
     {
         t->nativeOwner->setFocusPolicy(Qt::ClickFocus);
-        if(t->nativeImplView != zfnull &&  t->nativeImplView->focusPolicy() != Qt::NoFocus)
+        if(t->nativeImplView != zfnull)
         {
             t->nativeImplView->setFocusPolicy(Qt::ClickFocus);
             t->nativeOwner->setFocusProxy(t->nativeImplView);
@@ -123,6 +119,10 @@ void _ZFP_ZFUIViewImpl_sys_Qt_FocusProxy_viewFocusable(ZF_IN void *token, ZF_IN 
     {
         t->nativeOwner->setFocusPolicy(Qt::NoFocus);
         t->nativeOwner->setFocusProxy(NULL);
+        if(t->nativeImplView != zfnull)
+        {
+            t->nativeImplView->setFocusPolicy(Qt::NoFocus);
+        }
     }
 }
 void _ZFP_ZFUIViewImpl_sys_Qt_FocusProxy_viewFocusRequest(ZF_IN void *token, ZF_IN zfbool v)

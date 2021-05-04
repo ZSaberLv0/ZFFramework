@@ -2,13 +2,17 @@
 
 #if ZF_ENV_sys_Qt
 
+#include <QGraphicsLayout>
+#include <QGraphicsWidget>
+#include <QGraphicsProxyWidget>
 #include <QLayout>
+#include <QWidget>
 #include <QLabel>
 #include <QTextEdit>
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QWidget *view)
+void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QObject *view)
 {
     // class name
     s += view->metaObject()->className();
@@ -16,10 +20,55 @@ void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QWidget *view)
     // instance
     zfstringAppend(s, " %p", view);
 
-    // frame
+    // basic widget info
+    if(qobject_cast<QWidget *>(view) != NULL)
     {
-        const QRect &frame = view->geometry();
+        QWidget *tmp = qobject_cast<QWidget *>(view);
+
+        const QRect &frame = tmp->geometry();
         zfstringAppend(s, " (%d, %d, %d, %d)", (zfint)frame.x(), (zfint)frame.y(), (zfint)frame.width(), (zfint)frame.height());
+
+        if(tmp->focusPolicy() != Qt::NoFocus)
+        {
+            zfstringAppend(s, " (focusable:%d)", (int)tmp->focusPolicy());
+        }
+        if(!tmp->isVisible())
+        {
+            s += " (hidden)";
+        }
+        if(!tmp->isEnabled())
+        {
+            s += " (disabled)";
+        }
+    }
+    else if(qobject_cast<QGraphicsLayoutItem *>(view) != NULL)
+    {
+        QGraphicsLayoutItem *tmp = qobject_cast<QGraphicsLayoutItem *>(view);
+
+        QRectF frame = tmp->geometry();
+        zfstringAppend(s, " (%d, %d, %d, %d)", (zfint)frame.x(), (zfint)frame.y(), (zfint)frame.width(), (zfint)frame.height());
+
+        QGraphicsWidget *tmpWidget = qobject_cast<QGraphicsWidget *>(view);
+        if(tmpWidget != NULL && tmpWidget->focusPolicy() != Qt::NoFocus)
+        {
+            zfstringAppend(s, " (focusable:%d)", (int)tmpWidget->focusPolicy());
+        }
+
+        if(tmp->graphicsItem() != NULL)
+        {
+            if(!tmp->graphicsItem()->isVisible())
+            {
+                s += " (hidden)";
+            }
+            if(!tmp->graphicsItem()->isEnabled())
+            {
+                s += " (all disabled)";
+            }
+            else if(!tmp->graphicsItem()->acceptTouchEvents())
+            {
+                s += " (disabled)";
+            }
+        }
     }
 
     // text
@@ -39,7 +88,7 @@ void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QWidget *view)
     }
 }
 
-void ZFImpl_sys_Qt_viewInfoT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
+void ZFImpl_sys_Qt_viewInfoT(ZF_OUT zfstring &ret, ZF_IN QObject *view)
 {
     if(view == zfnull)
     {
@@ -51,7 +100,7 @@ void ZFImpl_sys_Qt_viewInfoT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
     }
 }
 
-static void _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, QWidget *view, zfindex depth, zfindex siblingIndex)
+static void _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, QObject *view, zfindex depth, zfindex siblingIndex)
 {
     zfstringAppend(s, "|%2d ", siblingIndex);
     for(zfindex i = 0; i < depth; ++i)
@@ -63,22 +112,45 @@ static void _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, QW
 
     s += "\n";
 
-    if(view->layout() != zfnull)
+    if(qobject_cast<QWidget *>(view) != NULL)
     {
-        for(int i = 0; i < view->layout()->count(); ++i)
+        QLayout *l = qobject_cast<QWidget *>(view)->layout();
+        if(l != zfnull)
         {
-            _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(s, view->layout()->itemAt(i)->widget(), depth + 1, i);
+            for(int i = 0; i < l->count(); ++i)
+            {
+                _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(s, l->itemAt(i)->widget(), depth + 1, i);
+            }
+        }
+    }
+    else if(qobject_cast<QGraphicsWidget *>(view) != NULL)
+    {
+        QGraphicsLayout *l = qobject_cast<QGraphicsWidget *>(view)->layout();
+        if(l != zfnull)
+        {
+            for(int i = 0; i < l->count(); ++i)
+            {
+                _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(s, l->itemAt(i)->graphicsItem()->toGraphicsObject(), depth + 1, i);
+            }
+        }
+        else if(qobject_cast<QGraphicsProxyWidget *>(view) != NULL)
+        {
+            QGraphicsProxyWidget *l = qobject_cast<QGraphicsProxyWidget *>(view);
+            if(l->widget() != NULL)
+            {
+                _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(s, l->widget(), depth + 1, 0);
+            }
         }
     }
 }
-void ZFImpl_sys_Qt_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN QWidget *view)
+void ZFImpl_sys_Qt_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN QObject *view)
 {
-    ret += "==================== QWidget tree begin ====================\n";
+    ret += "==================== Qt view tree begin ====================\n";
     if(view != zfnull)
     {
         _ZFP_ZFImpl_sys_Qt_viewTreePrint_recursive(ret, view, 0, 0);
     }
-    ret += "==================== QWidget tree  end  ====================\n";
+    ret += "==================== Qt view tree  end  ====================\n";
 }
 
 // convert utility
@@ -91,6 +163,17 @@ void ZFImpl_sys_Qt_ZFUIPointFromQPointT(ZF_OUT ZFUIPoint &ret, ZF_IN const QPoin
     ret.x = qPoint.x();
     ret.y = qPoint.y();
 }
+
+void ZFImpl_sys_Qt_ZFUIPointToQPointFT(ZF_OUT QPointF &ret, ZF_IN const ZFUIPoint &point)
+{
+    ret = QPointF(point.x, point.y);
+}
+void ZFImpl_sys_Qt_ZFUIPointFromQPointFT(ZF_OUT ZFUIPoint &ret, ZF_IN const QPointF &qPoint)
+{
+    ret.x = (zfint)qPoint.x();
+    ret.y = (zfint)qPoint.y();
+}
+
 void ZFImpl_sys_Qt_ZFUISizeToQSizeT(ZF_OUT QSize &ret, ZF_IN const ZFUISize &size)
 {
     ret = QSize(size.width, size.height);
@@ -100,6 +183,17 @@ void ZFImpl_sys_Qt_ZFUISizeFromQSizeT(ZF_OUT ZFUISize &ret, ZF_IN const QSize &q
     ret.width = qSize.width();
     ret.height = qSize.height();
 }
+
+void ZFImpl_sys_Qt_ZFUISizeToQSizeFT(ZF_OUT QSizeF &ret, ZF_IN const ZFUISize &size)
+{
+    ret = QSizeF(size.width, size.height);
+}
+void ZFImpl_sys_Qt_ZFUISizeFromQSizeFT(ZF_OUT ZFUISize &ret, ZF_IN const QSizeF &qSize)
+{
+    ret.width = (zfint)qSize.width();
+    ret.height = (zfint)qSize.height();
+}
+
 void ZFImpl_sys_Qt_ZFUIRectToQRectT(ZF_OUT QRect &ret, ZF_IN const ZFUIRect &rect)
 {
     ret = QRect(rect.x, rect.y, rect.width, rect.height);
@@ -110,6 +204,18 @@ void ZFImpl_sys_Qt_ZFUIRectFromQRectT(ZF_OUT ZFUIRect &ret, ZF_IN const QRect &q
     ret.y = qRect.y();
     ret.width = qRect.width();
     ret.height = qRect.height();
+}
+
+void ZFImpl_sys_Qt_ZFUIRectToQRectFT(ZF_OUT QRectF &ret, ZF_IN const ZFUIRect &rect)
+{
+    ret = QRectF(rect.x, rect.y, rect.width, rect.height);
+}
+void ZFImpl_sys_Qt_ZFUIRectFromQRectFT(ZF_OUT ZFUIRect &ret, ZF_IN const QRectF &qRect)
+{
+    ret.x = (zfint)qRect.x();
+    ret.y = (zfint)qRect.y();
+    ret.width = (zfint)qRect.width();
+    ret.height = (zfint)qRect.height();
 }
 
 void ZFImpl_sys_Qt_ZFUIColorToQColor(ZF_OUT QColor &ret, ZF_IN const ZFUIColor &color)

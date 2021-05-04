@@ -4,6 +4,7 @@
 * change property setter name
 * change ZFUIRect's property
 * change lua to 5.4
+* change Qt impl to graphics view
 * add support for setter and getter method to simulate property
 * add lambda implemented by pure C++03
 * add basic graphics

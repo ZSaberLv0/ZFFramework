@@ -1,16 +1,16 @@
 #include "ZFImpl_sys_Qt_ZFUIKit_impl.h"
 #include "ZFUIKit/protocol/ZFProtocolZFUIScrollView.h"
 
-#include "ZFImpl_sys_Qt_QLayout.h"
-
 #if ZF_ENV_sys_Qt
 
+#include "ZFProtocolZFUIView_sys_Qt.h"
 #include <QTime>
-#include <QWidget>
+#include <QGraphicsWidget>
+#include <QGraphicsProxyWidget>
+#include <QGraphicsSceneMouseEvent>
 #include <QLayout>
-#include <QMouseEvent>
 #include <QTimer>
-#include <QCoreApplication>
+#include <QApplication>
 #include <QSet>
 #include <QMap>
 
@@ -24,7 +24,7 @@ class _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagData
 {
 public:
     zfbool cancelFlag;
-    QSet<QWidget *> forwardedFlag;
+    QSet<QGraphicsWidget *> forwardedFlag;
 public:
     _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagData(void)
     : cancelFlag(zffalse)
@@ -37,7 +37,7 @@ public:
         this->cancelFlag = ref.cancelFlag;
         // do not copy forwardedFlag
     }
-    zfbool preventFutureForward(ZF_IN QWidget *v)
+    zfbool preventFutureForward(ZF_IN QGraphicsWidget *v)
     {
         if(this->forwardedFlag.isEmpty())
         {
@@ -82,20 +82,11 @@ static _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagData *_ZFP_ZFUIScrollViewImpl
     return &(m.find(event).value());
 }
 
-static QMouseEvent *_ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(ZF_IN QMouseEvent *event,
-                                                                   ZF_IN QEvent::Type type,
-                                                                   ZF_IN QPointF const &localPos)
+static QGraphicsSceneMouseEvent *_ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(ZF_IN QGraphicsSceneMouseEvent *event,
+                                                                                ZF_IN QEvent::Type type,
+                                                                                ZF_IN QPointF const &localPos)
 {
-    QMouseEvent *ret = new QMouseEvent(
-            type
-            , localPos
-            , event->windowPos()
-            , event->screenPos()
-            , event->button()
-            , event->buttons()
-            , event->modifiers()
-        );
-    ret->setTimestamp(event->timestamp());
+    QGraphicsSceneMouseEvent *ret = ZFUIViewImpl_sys_Qt_mouseEventClone(event, type, localPos);
     _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagData *tag = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagCheck(event);
     if(tag != zfnull)
     {
@@ -105,8 +96,8 @@ static QMouseEvent *_ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(ZF_IN QMouseE
 }
 static zfbool _ZFP_ZFUIScrollViewImpl_sys_Qt_ChildOffset(ZF_OUT zfint &xOffset,
                                                          ZF_OUT zfint &yOffset,
-                                                         ZF_IN QWidget *parent,
-                                                         ZF_IN QWidget *child)
+                                                         ZF_IN QGraphicsWidget *parent,
+                                                         ZF_IN QGraphicsWidget *child)
 {
     while(child != zfnull && child != parent)
     {
@@ -117,57 +108,67 @@ static zfbool _ZFP_ZFUIScrollViewImpl_sys_Qt_ChildOffset(ZF_OUT zfint &xOffset,
     return (child == parent);
 }
 
-zfbool ZFUIViewImpl_sys_Qt_isMouseCancel(ZF_IN QMouseEvent *event)
+static zfbool _ZFP_ZFUIViewImpl_sys_Qt_isMouseCancel(ZF_IN QGraphicsSceneMouseEvent *event)
 {
     _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagData *tag = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagCheck(event);
     return (tag != zfnull && tag->cancelFlag);
 }
+ZF_STATIC_INITIALIZER_INIT(ZFUIViewImpl_sys_Qt_isMouseCancel)
+{
+    ZFUIViewImpl_sys_Qt_isMouseCancel = _ZFP_ZFUIViewImpl_sys_Qt_isMouseCancel;
+}
+ZF_STATIC_INITIALIZER_END(ZFUIViewImpl_sys_Qt_isMouseCancel)
 
 // ============================================================
-// QCoreApplication::sendEvent would cause recursive event dispatch,
+// QApplication::sendEvent would cause recursive event dispatch,
 // we only need exactly the one we send
 static zfindex _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_flag = 0;
 static QMap<QEvent *, QObject *> _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_sendingEvent;
 
 // ============================================================
 // native scroll view
-class _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView : public QWidget, public ZFUIScrollViewImplHelperProtocol
+class _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollContainer : public ZFImpl_sys_Qt_BaseView
+{
+    Q_OBJECT
+};
+class _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView : public QGraphicsWidget, public ZFUIScrollViewImplHelperProtocol
 {
     Q_OBJECT
 
 public:
     ZFPROTOCOL_INTERFACE_CLASS(ZFUIScrollView) *_ZFP_impl;
     ZFUIScrollView *_ZFP_ownerZFUIScrollView;
-    ZFImpl_sys_Qt_QLayout *_ZFP_layoutProxy;
+    ZFImpl_sys_Qt_Layout *_ZFP_layoutProxy;
     ZFUIScrollViewImplHelper _ZFP_scrollViewImplHelper;
     QTimer _ZFP_scrollAnimationTimer;
     zfindex _ZFP_scrollViewBgViewCount;
-    QWidget *_ZFP_scrollViewContentView;
-    ZFImpl_sys_Qt_QLayout *_ZFP_scrollViewContentViewLayoutProxy;
+    _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollContainer *_ZFP_scrollViewContentView;
+    ZFImpl_sys_Qt_Layout *_ZFP_scrollViewContentViewLayoutProxy;
 
 public:
     _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView(void)
-    : QWidget()
+    : QGraphicsWidget()
     , _ZFP_impl(zfnull)
     , _ZFP_ownerZFUIScrollView(zfnull)
-    , _ZFP_layoutProxy(new ZFImpl_sys_Qt_QLayout())
+    , _ZFP_layoutProxy(new ZFImpl_sys_Qt_Layout())
     , _ZFP_scrollViewImplHelper()
     , _ZFP_scrollAnimationTimer()
     , _ZFP_scrollViewBgViewCount(0)
     , _ZFP_scrollViewContentView(zfnull)
-    , _ZFP_scrollViewContentViewLayoutProxy(new ZFImpl_sys_Qt_QLayout())
+    , _ZFP_scrollViewContentViewLayoutProxy(new ZFImpl_sys_Qt_Layout())
     {
         this->setLayout(_ZFP_layoutProxy);
+        this->setAcceptTouchEvents(true);
 
-        _ZFP_scrollViewContentView = new QWidget();
-        _ZFP_layoutProxy->childAdd(zfnull, _ZFP_scrollViewContentView, 0);
+        _ZFP_scrollViewContentView = new _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollContainer();
+        _ZFP_layoutProxy->childAdd(_ZFP_scrollViewContentView, 0);
         _ZFP_scrollViewContentView->setLayout(_ZFP_scrollViewContentViewLayoutProxy);
 
-        QCoreApplication::instance()->installEventFilter(this);
+        QApplication::instance()->installEventFilter(this);
     }
     ~_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView(void)
     {
-        QCoreApplication::instance()->removeEventFilter(this);
+        QApplication::instance()->removeEventFilter(this);
 
         zfCoreAssert(_ZFP_scrollViewBgViewCount == 0);
         _ZFP_layoutProxy->childRemove(0);
@@ -185,7 +186,7 @@ public slots:
 protected:
     bool eventFilter(QObject *obj, QEvent *event)
     {
-        QWidget *child = qobject_cast<QWidget *>(obj);
+        QGraphicsWidget *child = qobject_cast<QGraphicsWidget *>(obj);
         if(child == zfnull || child->window() != this->window())
         {
             return false;
@@ -193,19 +194,19 @@ protected:
         ZFUIMouseActionEnum mouseAction = ZFUIMouseAction::e_MouseCancel;
         switch(event->type())
         {
-            case QEvent::MouseButtonPress:
-            case QEvent::MouseButtonDblClick:
+            case QEvent::GraphicsSceneMousePress:
+            case QEvent::GraphicsSceneMouseDoubleClick:
                 ZFImpl_sys_Qt_QObjectTag(obj, "_ZFP_ZFImpl_ZFUIScrollView_sys_Qt_mouseDownTag", QVariant::fromValue(zftrue));
                 mouseAction = ZFUIMouseAction::e_MouseDown;
                 break;
-            case QEvent::MouseMove:
+            case QEvent::GraphicsSceneMouseMove:
                 if(!ZFImpl_sys_Qt_QObjectTag(obj, "_ZFP_ZFImpl_ZFUIScrollView_sys_Qt_mouseDownTag").isValid())
                 {
                     return false;
                 }
                 mouseAction = ZFUIMouseAction::e_MouseMove;
                 break;
-            case QEvent::MouseButtonRelease:
+            case QEvent::GraphicsSceneMouseRelease:
                 ZFImpl_sys_Qt_QObjectTag(obj, "_ZFP_ZFImpl_ZFUIScrollView_sys_Qt_mouseDownTag", QVariant());
                 mouseAction = ZFUIMouseAction::e_MouseUp;
                 break;
@@ -216,10 +217,10 @@ protected:
         if(_ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_flag
             && _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_sendingEvent.value(event) != obj)
         {
-            return true;
+            return false;
         }
 
-        QWidget *parentScrollView = this->parentWidget();
+        QGraphicsWidget *parentScrollView = this->parentWidget();
         while(parentScrollView != NULL)
         {
             if(qobject_cast<_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *>(parentScrollView) != NULL)
@@ -247,21 +248,21 @@ protected:
             return false;
         }
 
-        QMouseEvent *e = (QMouseEvent *)event;
+        QGraphicsSceneMouseEvent *e = (QGraphicsSceneMouseEvent *)event;
 
-        QWidget *touchedFgView = this->_ZFP_findFgView(e->localPos().x() + xOffset, e->localPos().y() + yOffset);
+        QGraphicsWidget *touchedFgView = this->_ZFP_findFgView(e->pos().x() + xOffset, e->pos().y() + yOffset);
         if(touchedFgView != zfnull)
         {
             // cloned even if no extra processing
             // to ensure tag map would be cleaned to the event
-            QMouseEvent *t = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(e->localPos().x() + xOffset, e->localPos().y() + yOffset));
+            QGraphicsSceneMouseEvent *t = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(e->pos().x() + xOffset, e->pos().y() + yOffset));
 
-            QEvent *eTmp = (QEvent *)this->translateFromParentToChild(touchedFgView, t, t->localPos().x() + xOffset, t->localPos().y() + yOffset);
+            QEvent *eTmp = (QEvent *)this->translateFromParentToChild(touchedFgView, t, t->pos().x() + xOffset, t->pos().y() + yOffset);
             _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagAccess(eTmp)->forwardedFlag.insert(touchedFgView);
 
             ++_ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_flag;
             _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_sendingEvent.insert(eTmp, touchedFgView);
-            QCoreApplication::instance()->sendEvent(touchedFgView, eTmp);
+            QApplication::sendEvent(touchedFgView->scene(), eTmp);
             _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_sendingEvent.remove(eTmp);
             --_ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_flag;
 
@@ -274,7 +275,7 @@ protected:
 
         // cloned even if no extra processing
         // to ensure tag map would be cleaned to the event
-        QMouseEvent *t = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(e->localPos().x() + xOffset, e->localPos().y() + yOffset));
+        QGraphicsSceneMouseEvent *t = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(e->pos().x() + xOffset, e->pos().y() + yOffset));
         _ZFP_scrollViewImplHelper.interceptMouse(t, mouseAction);
         this->mouseEventCleanup(t);
         return true;
@@ -286,38 +287,38 @@ public:
     }
     virtual void mouseEventPos(ZF_OUT ZFUIPoint &ret, ZF_IN void *nativeMouseEvent)
     {
-        QMouseEvent *e = ZFCastStatic(QMouseEvent *, nativeMouseEvent);
-        ret.x = (zfint)e->x();
-        ret.y = (zfint)e->y();
+        QGraphicsSceneMouseEvent *e = ZFCastStatic(QGraphicsSceneMouseEvent *, nativeMouseEvent);
+        ret.x = (zfint)e->pos().x();
+        ret.y = (zfint)e->pos().y();
     }
     virtual void *mouseEventClone(ZF_IN void *nativeMouseEvent,
                                   ZF_IN_OPT zfbool changeMouseAction = zffalse,
                                   ZF_IN_OPT ZFUIMouseActionEnum mouseAction = ZFUIMouseAction::e_MouseCancel)
     {
-        QMouseEvent *e = ZFCastStatic(QMouseEvent *, nativeMouseEvent);
+        QGraphicsSceneMouseEvent *e = ZFCastStatic(QGraphicsSceneMouseEvent *, nativeMouseEvent);
         QEvent::Type type = e->type();
         if(changeMouseAction)
         {
             switch(mouseAction)
             {
                 case ZFUIMouseAction::e_MouseDown:
-                    type = QEvent::MouseButtonPress;
+                    type = QEvent::GraphicsSceneMousePress;
                     break;
                 case ZFUIMouseAction::e_MouseMove:
-                    type = QEvent::MouseMove;
+                    type = QEvent::GraphicsSceneMouseMove;
                     break;
                 case ZFUIMouseAction::e_MouseUp:
-                    type = QEvent::MouseButtonRelease;
+                    type = QEvent::GraphicsSceneMouseRelease;
                     break;
                 case ZFUIMouseAction::e_MouseCancel:
-                    type = QEvent::MouseButtonRelease;
+                    type = QEvent::GraphicsSceneMouseRelease;
                     break;
                 default:
                     zfCoreCriticalShouldNotGoHere();
                     return zfnull;
             }
         }
-        QMouseEvent *ret = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, type, e->localPos());
+        QGraphicsSceneMouseEvent *ret = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, type, e->pos());
         if(changeMouseAction && mouseAction == ZFUIMouseAction::e_MouseCancel)
         {
             _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagAccess(ret)->cancelFlag = zftrue;
@@ -326,20 +327,49 @@ public:
     }
     virtual void mouseEventCleanup(ZF_IN void *nativeMouseEvent)
     {
-        QMouseEvent *e = ZFCastStatic(QMouseEvent *, nativeMouseEvent);
+        QGraphicsSceneMouseEvent *e = ZFCastStatic(QGraphicsSceneMouseEvent *, nativeMouseEvent);
         _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagMap().remove(e);
         delete e;
     }
     virtual void mouseEventForward(ZF_IN void *nativeChild,
                                    ZF_IN void *nativeMouseEvent)
     {
-        QWidget *v = ZFCastStatic(QWidget *, nativeChild);
-        QMouseEvent *e = ZFCastStatic(QMouseEvent *, nativeMouseEvent);
+        QGraphicsWidget *v = ZFCastStatic(QGraphicsWidget *, nativeChild);
+        QGraphicsSceneMouseEvent *e = ZFCastStatic(QGraphicsSceneMouseEvent *, nativeMouseEvent);
         _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventTagAccess(e)->forwardedFlag.insert(v);
+
+        // forwarded mouse event is not QEvent::spontaneous(),
+        // QApplication won't dispatch focusInEvent,
+        // try to manually focus
+        if(v->focusPolicy() != Qt::NoFocus)
+        {
+            v->scene()->setFocusItem(v, Qt::MouseFocusReason);
+            QGraphicsProxyWidget *proxy = NULL;
+            if(v->layout() != NULL)
+            {
+                for(int i = 0; i < v->layout()->count(); ++i)
+                {
+                    QGraphicsItem *item = v->layout()->itemAt(i)->graphicsItem();
+                    if(item == NULL || !item->isWidget())
+                    {
+                        continue;
+                    }
+                    proxy = qobject_cast<QGraphicsProxyWidget *>((QGraphicsWidget *)item);
+                    if(proxy != NULL)
+                    {
+                        break;
+                    }
+                }
+            }
+            if(proxy != NULL && proxy->widget() != NULL && proxy->focusPolicy() != Qt::NoFocus)
+            {
+                proxy->widget()->setFocus(Qt::MouseFocusReason);
+            }
+        }
 
         ++_ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_flag;
         _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_sendingEvent.insert(e, v);
-        QCoreApplication::instance()->sendEvent(v, e);
+        QApplication::sendEvent(v->scene(), e);
         _ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_sendingEvent.remove(e);
         --_ZFP_ZFUIScrollViewImpl_sys_Qt_sendEvent_flag;
     }
@@ -352,20 +382,20 @@ public:
         return (cls0 == cls1);
     }
 
-    QWidget *_ZFP_findFgView(ZF_IN zfint x, ZF_IN zfint y)
+    QGraphicsWidget *_ZFP_findFgView(ZF_IN zfint x, ZF_IN zfint y)
     {
         ZFCoreArrayPOD<ZFUIView *> fgViews = _ZFP_ownerZFUIScrollView->internalFgViewArray();
         for(zfindex i = fgViews.count() - 1; i != zfindexMax(); --i)
         {
-            QWidget *t = ZFCastStatic(QWidget *, fgViews[i]->nativeView());
-            if(t->isEnabled() && t->geometry().contains(x, y))
+            QGraphicsWidget *t = ZFCastStatic(QGraphicsWidget *, fgViews[i]->nativeView());
+            if(t->isVisible() && t->acceptTouchEvents() && t->geometry().contains(x, y))
             {
                 return t;
             }
         }
         return zfnull;
     }
-    QWidget *_ZFP_findChildRecursive(ZF_IN QWidget *parent, ZF_IN zfint x, ZF_IN zfint y, ZF_IN zfbool findScrollView)
+    QGraphicsWidget *_ZFP_findChildRecursive(ZF_IN QGraphicsWidget *parent, ZF_IN zfint x, ZF_IN zfint y, ZF_IN zfbool findScrollView)
     {
         if(findScrollView && qobject_cast<_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *>(parent) != zfnull)
         {
@@ -374,14 +404,14 @@ public:
         const QObjectList &children = parent->children();
         for(int i = children.size() - 1; i != -1; --i)
         {
-            QWidget *t = qobject_cast<QWidget *>(children.at(i));
+            QGraphicsWidget *t = qobject_cast<QGraphicsWidget *>(children.at(i));
             if(t != zfnull && t->isEnabled() && t->geometry().contains(x, y))
             {
                 if(qobject_cast<_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *>(t) != zfnull)
                 {
                     return t;
                 }
-                QWidget *inner = _ZFP_findChildRecursive(t, x - t->geometry().x(), y - t->geometry().y(), findScrollView);
+                QGraphicsWidget *inner = _ZFP_findChildRecursive(t, x - t->geometry().x(), y - t->geometry().y(), findScrollView);
                 if(inner != zfnull)
                 {
                     return inner;
@@ -394,14 +424,14 @@ public:
         }
         return zfnull;
     }
-    QWidget *_ZFP_findChild(ZF_IN_OUT zfindex &beforeIndex, ZF_IN zfint x, ZF_IN zfint y)
+    QGraphicsWidget *_ZFP_findChild(ZF_IN_OUT zfindex &beforeIndex, ZF_IN zfint x, ZF_IN zfint y)
     {
         --beforeIndex;
         x -= _ZFP_scrollViewContentView->geometry().x();
         y -= _ZFP_scrollViewContentView->geometry().y();
         for( ; beforeIndex != zfindexMax(); --beforeIndex)
         {
-            QWidget *t = _ZFP_scrollViewContentViewLayoutProxy->itemAt(beforeIndex)->widget();
+            QGraphicsWidget *t = _ZFP_scrollViewContentViewLayoutProxy->childAtIndex(beforeIndex);
             if(t->isEnabled() && t->geometry().contains(x, y))
             {
                 return t;
@@ -414,10 +444,10 @@ public:
         zfindex beforeIndex = _ZFP_scrollViewContentViewLayoutProxy->count();
         do
         {
-            QWidget *t = _ZFP_findChild(beforeIndex, x, y);
+            QGraphicsWidget *t = _ZFP_findChild(beforeIndex, x, y);
             if(t != zfnull)
             {
-                QWidget *innerChild = _ZFP_findChildRecursive(
+                QGraphicsWidget *innerChild = _ZFP_findChildRecursive(
                     t,
                     x - _ZFP_scrollViewContentView->geometry().x() - t->geometry().x(),
                     y - _ZFP_scrollViewContentView->geometry().y() - t->geometry().y(),
@@ -439,14 +469,14 @@ public:
         zfindex beforeIndex = _ZFP_scrollViewContentViewLayoutProxy->count();
         do
         {
-            QWidget *t = _ZFP_findChild(beforeIndex, x, y);
+            QGraphicsWidget *t = _ZFP_findChild(beforeIndex, x, y);
             if(t != zfnull)
             {
                 if(qobject_cast<_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *>(t) != zfnull)
                 {
                     return t;
                 }
-                QWidget *innerChild = _ZFP_findChildRecursive(
+                QGraphicsWidget *innerChild = _ZFP_findChildRecursive(
                     t,
                     x - _ZFP_scrollViewContentView->geometry().x() - t->geometry().x(),
                     y - _ZFP_scrollViewContentView->geometry().y() - t->geometry().y(),
@@ -469,11 +499,11 @@ public:
                                              ZF_IN_OUT void *nativeMouseEvent,
                                              ZF_IN zfint const &xInParent, ZF_IN zfint const &yInParent)
     {
-        QMouseEvent *e = ZFCastStatic(QMouseEvent *, nativeMouseEvent);
+        QGraphicsSceneMouseEvent *e = ZFCastStatic(QGraphicsSceneMouseEvent *, nativeMouseEvent);
         zfint xOffset = 0;
         zfint yOffset = 0;
-        _ZFP_ZFUIScrollViewImpl_sys_Qt_ChildOffset(xOffset, yOffset, this, ZFCastStatic(QWidget *, nativeChild));
-        QMouseEvent *ret = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(xInParent - xOffset, yInParent - yOffset));
+        _ZFP_ZFUIScrollViewImpl_sys_Qt_ChildOffset(xOffset, yOffset, this, ZFCastStatic(QGraphicsWidget *, nativeChild));
+        QGraphicsSceneMouseEvent *ret = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(xInParent - xOffset, yInParent - yOffset));
         this->mouseEventCleanup(e);
         return ret;
     }
@@ -481,11 +511,11 @@ public:
                                              ZF_IN_OUT void *nativeMouseEvent,
                                              ZF_IN zfint const &xInChild, ZF_IN zfint const &yInChild)
     {
-        QMouseEvent *e = ZFCastStatic(QMouseEvent *, nativeMouseEvent);
+        QGraphicsSceneMouseEvent *e = ZFCastStatic(QGraphicsSceneMouseEvent *, nativeMouseEvent);
         zfint xOffset = 0;
         zfint yOffset = 0;
-        _ZFP_ZFUIScrollViewImpl_sys_Qt_ChildOffset(xOffset, yOffset, this, ZFCastStatic(QWidget *, nativeChild));
-        QMouseEvent *ret = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(xInChild + xOffset, yInChild + yOffset));
+        _ZFP_ZFUIScrollViewImpl_sys_Qt_ChildOffset(xOffset, yOffset, this, ZFCastStatic(QGraphicsWidget *, nativeChild));
+        QGraphicsSceneMouseEvent *ret = _ZFP_ZFUIScrollViewImpl_sys_Qt_MouseEventClone(e, e->type(), QPointF(xInChild + xOffset, yInChild + yOffset));
         this->mouseEventCleanup(e);
         return ret;
     }
@@ -496,7 +526,7 @@ public:
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIScrollViewImpl_sys_Qt, ZFUIScrollView, ZFProtocolLevel::e_SystemHigh)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QGraphicsWidget")
 
 public:
     virtual void *nativeScrollViewCreate(ZF_IN ZFUIScrollView *scrollView)
@@ -534,7 +564,7 @@ public:
     {
         _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *nativeScrollView = ZFCastStatic(_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *, scrollView->nativeImplView());
         QRect nativeFrame = ZFImpl_sys_Qt_ZFUIRectToQRect(frame);
-        nativeScrollView->_ZFP_scrollViewContentView->setGeometry(nativeFrame);
+        nativeScrollView->_ZFP_scrollViewContentView->forceGeometry(nativeFrame);
     }
     virtual zftimet scrollAnimationStart(ZF_IN ZFUIScrollView *scrollView,
                                          ZF_IN zftimet recommendTimerInterval)
@@ -543,7 +573,7 @@ public:
         nativeScrollView->_ZFP_scrollAnimationTimer.connect(
             &(nativeScrollView->_ZFP_scrollAnimationTimer), SIGNAL(timeout()),
             nativeScrollView, SLOT(_ZFP_scrollAnimationTimerOnActivate()));
-        nativeScrollView->_ZFP_scrollAnimationTimer.moveToThread(QCoreApplication::instance()->thread());
+        nativeScrollView->_ZFP_scrollAnimationTimer.moveToThread(QApplication::instance()->thread());
         nativeScrollView->_ZFP_scrollAnimationTimer.start((zfuint)recommendTimerInterval);
         return _ZFP_ZFUIScrollViewImpl_sys_Qt_timestamp();
     }
@@ -560,14 +590,14 @@ public:
                                 ZF_IN zfindex atIndex)
     {
         _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *nativeScrollView = ZFCastStatic(_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *, parent->nativeImplView());
-        nativeScrollView->_ZFP_scrollViewContentViewLayoutProxy->childAdd(child, ZFCastStatic(QWidget *, child->nativeView()), atIndex);
+        nativeScrollView->_ZFP_scrollViewContentViewLayoutProxy->childAdd(ZFCastStatic(QGraphicsWidget *, child->nativeView()), atIndex);
     }
     virtual void scrollChildRemove(ZF_IN ZFUIScrollView *parent,
                                    ZF_IN ZFUIView *child,
                                    ZF_IN zfindex atIndex)
     {
         _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *nativeScrollView = ZFCastStatic(_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *, parent->nativeImplView());
-        nativeScrollView->_ZFP_scrollViewContentViewLayoutProxy->childRemove(atIndex);
+        nativeScrollView->_ZFP_scrollViewContentViewLayoutProxy->childRemoveAtIndex(atIndex);
     }
     virtual void scrollChildRemoveAllForDealloc(ZF_IN ZFUIScrollView *parent)
     {

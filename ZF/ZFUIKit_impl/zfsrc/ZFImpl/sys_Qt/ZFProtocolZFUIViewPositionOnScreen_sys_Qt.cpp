@@ -4,22 +4,22 @@
 
 #if ZF_ENV_sys_Qt
 
-#include <QWidget>
+#include <QGraphicsWidget>
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIViewPositionOnScreenImpl_sys_Qt, ZFUIViewPositionOnScreen, ZFProtocolLevel::e_SystemHigh)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT("Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIView, "Qt:QWidget")
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFUIView, "Qt:QGraphicsWidget")
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 public:
     virtual void viewPositionOnScreen(ZF_IN ZFUIView *view,
                                       ZF_OUT ZFUIRect &rect)
     {
-        QWidget *nativeView = ZFCastStatic(QWidget *, view->nativeView());
+        QGraphicsWidget *nativeView = ZFCastStatic(QGraphicsWidget *, view->nativeView());
 
-        QPoint nativePos = nativeView->mapToGlobal(QPoint(0, 0));
+        QPointF nativePos = nativeView->mapToScene(QPointF(0, 0));
         rect.x = nativePos.x();
         rect.y = nativePos.y();
         rect.width = view->viewFrame().width;
