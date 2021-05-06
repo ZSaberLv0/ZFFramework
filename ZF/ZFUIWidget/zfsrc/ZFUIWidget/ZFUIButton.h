@@ -158,6 +158,8 @@ protected:
     zfoverride
     virtual void objectOnInit(void);
     zfoverride
+    virtual void objectOnInitFinish(void);
+    zfoverride
     virtual void objectOnDealloc(void);
 
 public:
@@ -199,8 +201,6 @@ protected:
     virtual void viewEventOnMouseEvent(ZF_IN ZFUIMouseEvent *mouseEvent);
     zfoverride
     virtual void viewEventOnKeyEvent(ZF_IN ZFUIKeyEvent *keyEvent);
-    zfoverride
-    virtual void viewPropertyOnUpdate(void);
 
 protected:
     /** @brief see #EventButtonOnClick */
@@ -251,10 +251,6 @@ public:
      * @brief current button state
      */
     ZFMETHOD_DECLARE_0(ZFUIButtonStateEnum, buttonState)
-    /**
-     * @brief manually update current button state without notify event
-     */
-    ZFMETHOD_DECLARE_0(void, buttonStateUpdate)
 
 protected:
     /** @brief see #EventButtonStateOnUpdate */

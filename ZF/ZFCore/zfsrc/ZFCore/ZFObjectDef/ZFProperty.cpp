@@ -59,7 +59,6 @@ ZFProperty::ZFProperty(void)
 , _ZFP_ZFPropertyLifeCycle_OnVerify()
 , _ZFP_ZFPropertyLifeCycle_OnAttach()
 , _ZFP_ZFPropertyLifeCycle_OnDetach()
-, _ZFP_ZFPropertyLifeCycle_OnUpdate()
 {
 }
 ZFProperty::~ZFProperty(void)

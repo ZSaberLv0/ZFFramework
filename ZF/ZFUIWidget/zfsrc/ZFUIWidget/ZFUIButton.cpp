@@ -407,6 +407,11 @@ void ZFUIButton::objectOnInit(void)
     d = zfpoolNew(_ZFP_ZFUIButtonPrivate);
     d->pimplOwner = this;
 }
+void ZFUIButton::objectOnInitFinish(void)
+{
+    zfsuper::objectOnInitFinish();
+    this->buttonStateOnUpdate();
+}
 void ZFUIButton::objectOnDealloc(void)
 {
     zfpoolDelete(d);
@@ -510,19 +515,9 @@ void ZFUIButton::viewEventOnKeyEvent(ZF_IN ZFUIKeyEvent *keyEvent)
     }
 }
 
-void ZFUIButton::viewPropertyOnUpdate(void)
-{
-    zfsuper::viewPropertyOnUpdate();
-    this->buttonStateUpdate();
-}
-
 ZFMETHOD_DEFINE_0(ZFUIButton, ZFUIButtonStateEnum, buttonState)
 {
     return d->buttonState;
-}
-ZFMETHOD_DEFINE_0(ZFUIButton, void, buttonStateUpdate)
-{
-    this->buttonStateOnUpdate();
 }
 
 ZF_NAMESPACE_GLOBAL_END

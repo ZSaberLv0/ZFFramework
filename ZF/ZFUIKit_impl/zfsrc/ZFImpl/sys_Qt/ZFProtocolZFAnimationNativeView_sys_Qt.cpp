@@ -19,6 +19,7 @@ public:
     ZFAnimationNativeView *ownerZFAnimation;
 
     // for ani impl
+    ZFUIView *aniTarget;
     QGraphicsWidget *nativeAniTarget;
     zffloat nativeAniScale;
     zffloat aniProgress;
@@ -28,12 +29,12 @@ public:
     // for ani transform
     QGraphicsOpacityEffect *alphaEffect;
     qreal alphaOrig;
-    QTransform transformOrig;
 
 public:
     _ZFP_ZFAnimationNativeViewImpl_sys_Qt_Ani(ZF_IN ZFAnimationNativeView *ownerZFAnimation)
     : QAbstractAnimation()
     , ownerZFAnimation(ownerZFAnimation)
+    , aniTarget(NULL)
     , nativeAniTarget(NULL)
     , nativeAniScale(1)
     , aniProgress(0)
@@ -41,7 +42,6 @@ public:
     , aniRunning(zffalse)
     , alphaEffect(NULL)
     , alphaOrig(1)
-    , transformOrig()
     {
         this->connect(this, SIGNAL(finished()), this, SLOT(nativeAniOnStop()));
     }
@@ -111,17 +111,28 @@ public:
             }
         }
 
-        QTransform transform = this->transformOrig;
-        zfbool hasTransform = zffalse;
+        QTransform transform;
         qreal width = this->nativeAniTarget->geometry().width();
         qreal height = this->nativeAniTarget->geometry().height();
 
         transform.translate(width / 2, height / 2);
 
+        if(this->aniTarget->viewRotation() != 0)
+        {
+            transform.rotate(this->aniTarget->viewRotation());
+        }
+        if(ani->aniRotateZFrom() != 0 || ani->aniRotateZTo() != 0)
+        {
+            transform.rotate(zfmApplyProgress(ani->aniRotateZFrom(), ani->aniRotateZTo(), progress));
+        }
+
+        if(this->aniTarget->viewScaleX() != 1 || this->aniTarget->viewScaleY() != 1)
+        {
+            transform.scale(this->aniTarget->viewScaleX(), this->aniTarget->viewScaleY());
+        }
         if(ani->aniScaleXFrom() != 1 || ani->aniScaleXTo() != 1
             || ani->aniScaleYFrom() != 1 || ani->aniScaleYTo() != 1)
         {
-            hasTransform = zftrue;
             transform.scale(
                 zfmApplyProgress(ani->aniScaleXFrom(), ani->aniScaleXTo(), progress),
                 zfmApplyProgress(ani->aniScaleYFrom(), ani->aniScaleYTo(), progress)
@@ -131,7 +142,6 @@ public:
         if(ani->aniTranslateXFrom() != 0 || ani->aniTranslateXTo() != 0
             || ani->aniTranslateYFrom() != 0 || ani->aniTranslateYTo() != 0)
         {
-            hasTransform = zftrue;
             transform.translate(
                 zfmApplyProgress(ani->aniTranslateXFrom(), ani->aniTranslateXTo(), progress) * width * this->nativeAniScale,
                 zfmApplyProgress(ani->aniTranslateYFrom(), ani->aniTranslateYTo(), progress) * height * this->nativeAniScale
@@ -140,25 +150,15 @@ public:
         if(ani->aniTranslatePixelXFrom() != 0 || ani->aniTranslatePixelXTo() != 0
             || ani->aniTranslatePixelYFrom() != 0 || ani->aniTranslatePixelYTo() != 0)
         {
-            hasTransform = zftrue;
             transform.translate(
                 zfmApplyProgress(ani->aniTranslatePixelXFrom(), ani->aniTranslatePixelXTo(), progress) * this->nativeAniScale,
                 zfmApplyProgress(ani->aniTranslatePixelYFrom(), ani->aniTranslatePixelYTo(), progress) * this->nativeAniScale
                 );
         }
 
-        if(ani->aniRotateZFrom() != 0 || ani->aniRotateZTo() != 0)
-        {
-            hasTransform = zftrue;
-            transform.rotate(zfmApplyProgress(ani->aniRotateZFrom(), ani->aniRotateZTo(), progress));
-        }
-
         transform.translate(-width / 2, -height / 2);
 
-        if(hasTransform)
-        {
-            this->nativeAniTarget->setTransform(transform);
-        }
+        this->nativeAniTarget->setTransform(transform);
     }
 
 public:
@@ -199,7 +199,8 @@ public:
                 zfCoreCriticalShouldNotGoHere();
                 return ;
         }
-        this->nativeAniTarget = (QGraphicsWidget *)this->ownerZFAnimation->aniTarget()->to<ZFUIView *>()->nativeView();
+        this->aniTarget = this->ownerZFAnimation->aniTarget()->to<ZFUIView *>();
+        this->nativeAniTarget = (QGraphicsWidget *)this->aniTarget->nativeView();
         this->alphaOrig = 1;
         this->alphaEffect = qobject_cast<QGraphicsOpacityEffect *>(this->nativeAniTarget->graphicsEffect());
         if(this->alphaEffect != NULL)
@@ -211,7 +212,6 @@ public:
             this->alphaEffect = new QGraphicsOpacityEffect(this->nativeAniTarget);
             this->nativeAniTarget->setGraphicsEffect(this->alphaEffect);
         }
-        this->transformOrig = this->nativeAniTarget->transform();
 
         this->aniRunning = zftrue;
         this->start();
@@ -239,7 +239,21 @@ private:
             }
             effect->setOpacity(this->alphaOrig);
         }
-        this->nativeAniTarget->setTransform(this->transformOrig);
+
+        {
+            QTransform t;
+            t.translate(this->nativeAniTarget->geometry().width() / 2, this->nativeAniTarget->geometry().height() / 2);
+            if(this->aniTarget->viewRotation() != 0)
+            {
+                t.rotate(this->aniTarget->viewRotation());
+            }
+            if(this->aniTarget->viewScaleX() != 1 || this->aniTarget->viewScaleY() != 1)
+            {
+                t.scale(this->aniTarget->viewScaleX(), this->aniTarget->viewScaleY());
+            }
+            t.translate(-this->nativeAniTarget->geometry().width() / 2, -this->nativeAniTarget->geometry().height() / 2);
+            this->nativeAniTarget->setTransform(t);
+        }
 
         this->alphaEffect = NULL;
         this->nativeAniTarget = NULL;

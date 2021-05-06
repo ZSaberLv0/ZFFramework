@@ -179,16 +179,15 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyForName(ZF_IN const zfchar *cla
  * -  propertyOnVerify: called when setter called\n
  *   you may verify the property value, and modify propertyValue to correct one
  * -  propertyOnAttach: called when property first accessed or setter called\n
- *   you may do additional attach steps here
+ *   you may do additional attach steps here,
+ *   or apply your impl according to the property's new value
  * -  propertyOnDetach: called when property setter called or owner object deallocated\n
  *   you may do additional detach steps here
- * -  propertyOnUpdate: called after property first accessed or setter called\n
- *   you may apply your impl according to the property's new value
  *
  *
  * after override, for detach events (detach/dealloc),
  * subclass's one would be called before parent's one,
- * for others (init/verify/attach/update),
+ * for others (init/verify/attach),
  * parent's one would be called first\n
  * \n
  * \n
@@ -197,7 +196,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyForName(ZF_IN const zfchar *cla
  *   -# store raw init value
  *   -# propertyOnInit
  *   -# propertyOnAttach
- *   -# propertyOnUpdate
  * -  property's setter called:
  *   -# propertyOnDetach
  *   -# propertyOnDealloc
@@ -205,7 +203,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyForName(ZF_IN const zfchar *cla
  *   -# propertyOnVerify
  *   -# propertyOnAttach
  *   -# #ZFObject::EventObjectPropertyValueOnUpdate
- *   -# propertyOnUpdate
  * -  property's owner object deallocated:
  *   -# propertyOnDetach
  *   -# propertyOnDealloc

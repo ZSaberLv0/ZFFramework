@@ -42,10 +42,6 @@ ZFCoreArrayPOD<_ZFP_PropLifeCycleData> &_ZFP_ZFPropertyLifeCycleDataRef(ZF_IN co
     {
         return property->_ZFP_ZFProperty_removeConst()->_ZFP_ZFPropertyLifeCycle_OnDetach;
     }
-    else if(zfscmpTheSame(lifeCycleName, "OnUpdate"))
-    {
-        return property->_ZFP_ZFProperty_removeConst()->_ZFP_ZFPropertyLifeCycle_OnUpdate;
-    }
 
     zfCoreCriticalShouldNotGoHere();
     return property->_ZFP_ZFProperty_removeConst()->_ZFP_ZFPropertyLifeCycle_OnInit;
@@ -142,11 +138,6 @@ void _ZFP_ZFPropertyLifeCycleCall_init_retain(ZF_IN const ZFProperty *property,
             &valueHolder,
             &valueHolder);
         propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueAttach(property);
-        _ZFP_ZFPropertyLifeCycleCallAction(
-            property->_ZFP_ZFPropertyLifeCycle_OnUpdate,
-            propertyOwnerObject,
-            &valueHolder,
-            &valueHolder);
         propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, zfnull);
     }
 }
@@ -171,11 +162,6 @@ void _ZFP_ZFPropertyLifeCycleCall_init_assign(ZF_IN const ZFProperty *property,
             value,
             value);
         propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueAttach(property);
-        _ZFP_ZFPropertyLifeCycleCallAction(
-            property->_ZFP_ZFPropertyLifeCycle_OnUpdate,
-            propertyOwnerObject,
-            value,
-            value);
         propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, zfnull);
     }
 }
@@ -262,11 +248,6 @@ void _ZFP_ZFPropertyLifeCycleCall_setter_retain(ZF_IN const ZFProperty *property
         &valueOld);
     if(!accessed) {propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueAttach(property);}
 
-    _ZFP_ZFPropertyLifeCycleCallAction(
-        property->_ZFP_ZFPropertyLifeCycle_OnUpdate,
-        propertyOwnerObject,
-        &valueNew,
-        &valueOld);
     propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, &propertyValueOld);
 }
 void _ZFP_ZFPropertyLifeCycleCall_setter_assign(ZF_IN const ZFProperty *property,
@@ -309,11 +290,6 @@ void _ZFP_ZFPropertyLifeCycleCall_setter_assign(ZF_IN const ZFProperty *property
         valueRef,
         propertyValueOld);
     if(!accessed) {propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueAttach(property);}
-    _ZFP_ZFPropertyLifeCycleCallAction(
-        property->_ZFP_ZFPropertyLifeCycle_OnUpdate,
-        propertyOwnerObject,
-        valueRef,
-        propertyValueOld);
     propertyOwnerObject->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, propertyValueOld);
 }
 

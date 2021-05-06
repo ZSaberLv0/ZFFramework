@@ -187,12 +187,6 @@ public:
      * called when #nativeImplViewMarginUpdate and value differs from old
      */
     ZFOBSERVER_EVENT(NativeImplViewMarginOnUpdate)
-    /**
-     * @brief see #ZFObject::observerNotify
-     *
-     * see #viewPropertyUpdateRequest
-     */
-    ZFOBSERVER_EVENT(ViewPropertyOnUpdate)
 
     // ============================================================
     // serialize
@@ -365,14 +359,36 @@ public:
     ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIColor, viewBackgroundColor)
 
     // ============================================================
+    // transform
+    /**
+     * @brief scale for the view
+     *
+     * when impl not available, setting this value would have no effect
+     */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewScaleX, 1)
+    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewScaleX)
+    /** @brief see #viewScaleX */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewScaleY, 1)
+    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewScaleY)
+
+    /**
+     * @brief rotation for the view
+     *
+     * the rotation is in Z axis,
+     * range in [0, 360),
+     * any value out of range would be fixed to [0, 360)\n
+     * when impl not available, setting this value would have no effect
+     */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewRotation, 0)
+    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewRotation)
+
+    // ============================================================
     // init and dealloc
 protected:
     zfoverride
     virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
-    zfoverride
-    virtual void objectOnInitFinish(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 
@@ -1075,24 +1091,6 @@ protected:
      * util it's resolved
      */
     virtual void viewEventOnWheelEvent(ZF_IN ZFUIWheelEvent *wheelEvent);
-
-    // ============================================================
-    // view property async update
-public:
-    /**
-     * @brief schedule a update task that #viewPropertyOnUpdate would be called after a proper time,
-     *   used to update view's property
-     *
-     * #viewPropertyOnUpdate ensured called once after a view created
-     */
-    ZFMETHOD_DECLARE_0(void, viewPropertyUpdateRequest)
-    zffinal inline void _ZFP_ZFUIView_viewPropertyNotifyUpdate(void)
-    {
-        this->viewPropertyOnUpdate();
-    }
-protected:
-    /** @brief see #viewPropertyUpdateRequest */
-    virtual void viewPropertyOnUpdate(void);
 
     // ============================================================
     // override

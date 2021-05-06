@@ -15,6 +15,7 @@ ZFImpl_sys_Qt_BaseView::ZFImpl_sys_Qt_BaseView(void)
 : _forceGeometry(QRectF())
 , _forceGeometryFlag(0)
 {
+    this->setFlag(QGraphicsItem::ItemClipsChildrenToShape);
 }
 void ZFImpl_sys_Qt_BaseView::ForceGeometry(QGraphicsWidget *item, const QRectF &rect)
 {

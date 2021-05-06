@@ -28,6 +28,10 @@ ZFENUM_END(ZFAnimationNativeViewCurve)
 zfclassFwd _ZFP_ZFAnimationNativeViewPrivate;
 /**
  * @brief animation using native implementation
+ *
+ * native animation usually has better performance,
+ * but may work incorrectly with local transform
+ * (such as #ZFUIView::viewRotation)
  */
 zfclass ZF_ENV_EXPORT ZFAnimationNativeView : zfextends ZFAnimation
 {

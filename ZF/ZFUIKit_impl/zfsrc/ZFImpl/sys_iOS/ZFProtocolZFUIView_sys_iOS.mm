@@ -326,6 +326,7 @@ public:
         nativeViewTmp.userInteractionEnabled = YES;
         nativeViewTmp.backgroundColor = nil;
         nativeViewTmp._ZFP_ZFUIViewFocus_viewFocusable = NO;
+        nativeViewTmp.layer.transform = CATransform3DIdentity;
 
         [nativeViewTmp._ZFP_mouseRecords removeAllObjects];
         nativeViewTmp._ZFP_ownerZFUIView = zfnull;
