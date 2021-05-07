@@ -153,6 +153,13 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
                                                  ZF_IN_OPT const ZFCoreArray<zfautoObject> *luaParams = zfnull,
                                                  ZF_OUT_OPT zfstring *errHint = zfnull,
                                                  ZF_IN_OPT const zfchar *chunkInfo = zfnull);
+/**
+ * @brief error handler for #ZFImpl_ZFLua_execute, lua_pcall, etc
+ */
+extern ZF_ENV_EXPORT void ZFImpl_ZFLua_execute_errorHandle(ZF_IN lua_State *L,
+                                                           ZF_IN int error,
+                                                           ZF_OUT_OPT zfstring *errHint = zfnull,
+                                                           ZF_IN_OPT const zfchar *chunkInfo = zfnull);
 
 // ============================================================
 // utils

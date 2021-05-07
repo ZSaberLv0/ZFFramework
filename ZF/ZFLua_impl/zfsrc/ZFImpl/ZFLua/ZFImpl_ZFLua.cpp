@@ -5,8 +5,6 @@
 #include "ZFCore/ZFSTLWrapper/zfstl_vector.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"
 
-#define _ZFP_ZFCallbackForLua_DEBUG ZF_ENV_DEBUG
-
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
@@ -138,17 +136,17 @@ void ZFImpl_ZFLua_luaStateAttach(ZF_IN lua_State *L)
 
     // zfl_call metatable
     ZFImpl_ZFLua_execute(L,
-            "_ZFP_zfl_index = function(tbl, k)\n"
-            "    local t = {ZFNS=tbl.ZFNS .. '.' .. k}\n" // ZFNamespaceSeparator
-            "    local d = {}\n"
-            "    d.__index = _ZFP_zfl_index\n"
-            "    d.__call = _ZFP_zfl_call\n"
-            "    debug.setmetatable(t, d)\n"
-            "    return t\n"
-            "end\n"
-            "_ZFP_zfl_call = function(tbl, ...)\n"
-            "    return zfl_callStatic(tbl.ZFNS, ...)\n"
-            "end\n"
+            "_ZFP_zfl_index = function(tbl, k)"
+            "    local t = {ZFNS=tbl.ZFNS .. '.' .. k};" // ZFNamespaceSeparator
+            "    local d = {};"
+            "    d.__index = _ZFP_zfl_index;"
+            "    d.__call = _ZFP_zfl_call;"
+            "    debug.setmetatable(t, d);"
+            "    return t;"
+            "end;"
+            "_ZFP_zfl_call = function(tbl, ...);"
+            "    return zfl_callStatic(tbl.ZFNS, ...);"
+            "end;"
         );
 
     // each impl setup callback
@@ -218,11 +216,11 @@ static void _ZFP_ZFImpl_ZFLua_implSetupScope(ZF_IN_OUT zfstring &code,
                                              ZF_IN const zfchar *scopeName)
 {
     zfstringAppend(code,
-            "%s = {ZFNS='%s'}\n"
-            "local tbl = {}\n"
-            "tbl.__index = _ZFP_zfl_index\n"
-            "tbl.__call = _ZFP_zfl_call\n"
-            "debug.setmetatable(%s, tbl)\n"
+            "%s = {ZFNS='%s'};"
+            "local tbl = {};"
+            "tbl.__index = _ZFP_zfl_index;"
+            "tbl.__call = _ZFP_zfl_call;"
+            "debug.setmetatable(%s, tbl);"
         , scopeName, scopeName, scopeName);
 }
 void ZFImpl_ZFLua_implSetupScope(ZF_IN_OUT lua_State *L, ZF_IN const zfchar **scopeNameList)
@@ -295,61 +293,7 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
             LUA_MULTRET,
             0);
     }
-
-    if(error != 0)
-    {
-        // [string "?"]:123: xxx
-        const char *nativeError = lua_tostring(L, -1);
-        zfindex tokenL = zfindexMax();
-        zfindex tokenR = zfindexMax();
-        tokenL = zfstringFind((const zfchar *)nativeError, zfindexMax(), "]:");
-        if(tokenL != zfindexMax())
-        {
-            tokenL += 2;
-            tokenR = zfstringFind((const zfchar *)nativeError + tokenL, zfindexMax(), ":");
-        }
-
-        // detect error line
-        zfindex errorLine = zfindexMax();
-        if(tokenL != zfindexMax() && tokenR != zfindexMax())
-        {
-            zfindexFromString(errorLine, (const zfchar *)nativeError + tokenL, tokenR);
-            nativeError = nativeError + tokenL + tokenR + 1;
-            while(*nativeError == ' ') {++nativeError;}
-        }
-
-        zfstring errHintTmp;
-        errHintTmp += nativeError;
-        if(!zfsIsEmpty(chunkInfo))
-        {
-            errHintTmp += ", at: [";
-            errHintTmp += chunkInfo;
-            errHintTmp += "]";
-        }
-        if(errorLine != zfindexMax())
-        {
-            errHintTmp += ", line: ";
-            zfindexToString(errHintTmp, errorLine);
-        }
-        if(errHint != zfnull)
-        {
-            *errHint += errHintTmp;
-        }
-        ZFLuaErrorOccurredTrim("%s", errHintTmp.cString());
-
-#if !ZF_ENV_ZFLUA_USE_EXCEPTION
-        zfCoreCriticalMessageTrim(
-                "| [ZFLua]\n"
-                "|     native lua error occurred with no exception support\n"
-                "|     (which would cause unrecoverable C++ memory leak or logic error)\n"
-                "|     to enable exception support\n"
-                "|     add ZF_ENV_ZFLUA_USE_EXCEPTION to your compiler"
-            );
-#endif
-
-        lua_pop(L, 1);
-        return zffalse;
-    }
+    ZFImpl_ZFLua_execute_errorHandle(L, error, errHint, chunkInfo);
 
     int luaResultNum = lua_gettop(L) - luaStackNum;
     if(luaResult != zfnull)
@@ -389,6 +333,66 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
     #endif
 
     return zftrue;
+}
+void ZFImpl_ZFLua_execute_errorHandle(ZF_IN lua_State *L,
+                                      ZF_IN int error,
+                                      ZF_OUT_OPT zfstring *errHint /* = zfnull */,
+                                      ZF_IN_OPT const zfchar *chunkInfo /* = zfnull */)
+{
+    if(error == 0)
+    {
+        return;
+    }
+    // [string "?"]:123: xxx
+    const char *nativeError = lua_tostring(L, -1);
+    zfindex tokenL = zfindexMax();
+    zfindex tokenR = zfindexMax();
+    tokenL = zfstringFind((const zfchar *)nativeError, zfindexMax(), "]:");
+    if(tokenL != zfindexMax())
+    {
+        tokenL += 2;
+        tokenR = zfstringFind((const zfchar *)nativeError + tokenL, zfindexMax(), ":");
+    }
+
+    // detect error line
+    zfindex errorLine = zfindexMax();
+    if(tokenL != zfindexMax() && tokenR != zfindexMax())
+    {
+        zfindexFromString(errorLine, (const zfchar *)nativeError + tokenL, tokenR);
+        nativeError = nativeError + tokenL + tokenR + 1;
+        while(*nativeError == ' ') {++nativeError;}
+    }
+
+    zfstring errHintTmp;
+    errHintTmp += nativeError;
+    if(!zfsIsEmpty(chunkInfo))
+    {
+        errHintTmp += ", at: [";
+        errHintTmp += chunkInfo;
+        errHintTmp += "]";
+    }
+    if(errorLine != zfindexMax())
+    {
+        errHintTmp += ", line: ";
+        zfindexToString(errHintTmp, errorLine);
+    }
+    if(errHint != zfnull)
+    {
+        *errHint += errHintTmp;
+    }
+    ZFLuaErrorOccurredTrim("%s", errHintTmp.cString());
+
+#if !ZF_ENV_ZFLUA_USE_EXCEPTION
+    zfCoreCriticalMessageTrim(
+            "| [ZFLua]\n"
+            "|     native lua error occurred with no exception support\n"
+            "|     (which would cause unrecoverable C++ memory leak or logic error)\n"
+            "|     to enable exception support\n"
+            "|     add ZF_ENV_ZFLUA_USE_EXCEPTION to your compiler"
+        );
+#endif
+
+    lua_pop(L, 1);
 }
 
 // ============================================================
@@ -572,9 +576,7 @@ zfclass _ZFP_I_ZFImpl_ZFLua_ZFCallbackForLuaHolder : zfextends ZFObject
 public:
     lua_State *L;
     int luaFunc;
-#if _ZFP_ZFCallbackForLua_DEBUG
     zfstring luaFuncInfo;
-#endif
 
     ZFMETHOD_INLINE_2(void, callback,
                       ZFMP_IN(const ZFListenerData &, listenerData),
@@ -593,7 +595,8 @@ public:
 
             ZFImpl_ZFLua_luaPush(L, userData);
 
-            lua_pcall(L, 2, 0, 0);
+            int error = lua_pcall(L, 2, 0, 0);
+            ZFImpl_ZFLua_execute_errorHandle(L, error, zfnull, this->luaFuncInfo);
         }
     }
 protected:
@@ -661,11 +664,20 @@ zfbool ZFImpl_ZFLua_toCallback(ZF_OUT zfautoObject &param,
         ret->zfv.callbackOwnerObjectRetain();
         param = ret;
 
-        #if _ZFP_ZFCallbackForLua_DEBUG
+        if(ZFLogLevelIsActive(ZFLogLevel::e_Debug))
         {
             const zfchar *buf =
                     "local arg={...}\n"
                     "local info=debug.getinfo(arg[1])\n"
+                    "local i = 1\n"
+                    "while true do\n"
+                    "    local n,v = debug.getlocal(4, i)\n"
+                    "    if not n then break end\n"
+                    "    if n == 'ZFLuaPathInfo' then\n"
+                    "        return v() .. ':' .. info['linedefined']\n"
+                    "    end\n"
+                    "    i = i + 1\n"
+                    "end\n"
                     "return info['source'] .. ':' .. info['linedefined']\n"
                 ;
             int error = luaL_loadbuffer(L, buf, zfslen(buf), "[ZFLuaDebug]");
@@ -673,22 +685,19 @@ zfbool ZFImpl_ZFLua_toCallback(ZF_OUT zfautoObject &param,
             {
                 lua_pushvalue(L, luaStackOffset);
                 error = lua_pcall(L, 1, 1, 0);
-
-                if(error == 0 && ZFImpl_ZFLua_toString(holder->luaFuncInfo, L, -1, zftrue))
+                if(error == 0)
                 {
+                    ZFImpl_ZFLua_toString(holder->luaFuncInfo, L, -1, zftrue);
                     lua_pop(L, 1);
                 }
             }
-
             if(error != 0)
             {
-                zfstring errHintTmp;
                 const char *nativeError = lua_tostring(L, -1);
                 zfCoreCriticalMessageTrim("[ZFLuaDebug] %s", nativeError);
                 lua_pop(L, 1);
             }
         }
-        #endif
         return zftrue;
     }
     else

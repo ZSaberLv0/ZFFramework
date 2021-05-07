@@ -354,7 +354,7 @@ void ZFImpl_ZFLua_implSetupObject_metatable(ZF_IN_OUT lua_State *L, ZF_IN_OPT in
     lua_pushvalue(L, (objIndex > 0) ? objIndex : (objIndex - 1));
 
     int error = lua_pcall(L, 1, 0, 0);
-    if(error)
+    if(error != 0)
     {
         zfstring errorHint = lua_tostring(L, -1);
         lua_pop(L, 1);
