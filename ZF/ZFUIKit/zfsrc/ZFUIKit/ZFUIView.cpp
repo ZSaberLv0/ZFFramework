@@ -1110,8 +1110,6 @@ void ZFUIView::objectOnInit(void)
             ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewCacheOnRestore(this, d->nativeView);
         }
     }
-    d->scaleForImpl = ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewScaleForImpl(d->nativeView);
-    d->scaleFixed = d->scaleForImpl;
 }
 void ZFUIView::objectOnDealloc(void)
 {

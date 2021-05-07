@@ -42,7 +42,11 @@ public:
                            ZF_IN_OPT zftimet aniDuration = 0,
                            ZF_IN_OPT ZFTimeLineCurve *aniCurve = zfnull) const;
 
-    /** @brief see #ZFAniBuilder */
+    /**
+     * @brief see #ZFAniBuilder
+     *
+     * customAniCallback's param0 is a #v_zffloat holds the ani progress
+     */
     const ZFAniBuilder &customAni(ZF_IN const ZFListener &customAniCallback,
                                   ZF_IN_OPT ZFObject *userData = zfnull,
                                   ZF_IN_OPT zftimet aniDuration = 0,

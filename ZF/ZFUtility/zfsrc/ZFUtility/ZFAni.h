@@ -86,7 +86,9 @@ protected:
         if(this->customAniCallback().callbackIsValid())
         {
             this->_ZFP_progressHolder->zfv = progress;
-            this->customAniCallback().execute(ZFListenerData(zfidentityInvalid(), this, this->_ZFP_progressHolder));
+            this->customAniCallback().execute(
+                ZFListenerData(zfidentityInvalid(), this, this->_ZFP_progressHolder),
+                this->customAniUserData());
         }
     }
     zfoverride

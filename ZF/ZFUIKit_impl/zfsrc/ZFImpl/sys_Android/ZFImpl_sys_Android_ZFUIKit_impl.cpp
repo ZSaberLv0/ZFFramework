@@ -233,6 +233,33 @@ void ZFImpl_sys_Android_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN jobject nativ
     JNIUtilReleaseStringUTFChars(jniEnv, tmp, utf);
 }
 
+#if ZF_ENV_DEBUG && 0
+    ZF_GLOBAL_INITIALIZER_INIT(ZFImpl_sys_Android_autoPrintViewTree)
+    {
+        if(!ZFProtocolIsAvailable("ZFUIView"))
+        {
+            return ;
+        }
+        ZFLISTENER_LOCAL(windowOnPause, {
+            ZFUISysWindow *sysWindow = listenerData.sender<ZFUISysWindow *>();
+            zfstring s;
+            ZFImpl_sys_Android_viewTreePrintT(s, (jobject)sysWindow->rootView()->nativeView());
+            zfLogTrimT() << s;
+        })
+        this->windowOnPauseListener = windowOnPause;
+        ZFGlobalObserver().observerAdd(
+            ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
+    }
+    ZF_GLOBAL_INITIALIZER_DESTROY(ZFImpl_sys_Android_autoPrintViewTree)
+    {
+        ZFGlobalObserver().observerRemove(
+            ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
+    }
+    private:
+        ZFListener windowOnPauseListener;
+    ZF_GLOBAL_INITIALIZER_END(ZFImpl_sys_Android_autoPrintViewTree)
+#endif
+
 ZF_NAMESPACE_GLOBAL_END
 
 #endif

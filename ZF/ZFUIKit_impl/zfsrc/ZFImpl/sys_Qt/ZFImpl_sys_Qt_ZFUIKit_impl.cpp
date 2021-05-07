@@ -290,6 +290,33 @@ void ZFImpl_sys_Qt_ZFUIAlignFlagsFromQAlignmentT(ZF_OUT ZFUIAlignFlags &ret, ZF_
     }
 }
 
+#if ZF_ENV_DEBUG && 0
+    ZF_GLOBAL_INITIALIZER_INIT(ZFImpl_sys_Qt_autoPrintViewTree)
+    {
+        if(!ZFProtocolIsAvailable("ZFUIView"))
+        {
+            return ;
+        }
+        ZFLISTENER_LOCAL(windowOnPause, {
+            ZFUISysWindow *sysWindow = listenerData.sender<ZFUISysWindow *>();
+            zfstring s;
+            ZFImpl_sys_Qt_viewTreePrintT(s, (QGraphicsWidget *)sysWindow->rootView()->nativeView());
+            zfLogTrimT() << s;
+        })
+        this->windowOnPauseListener = windowOnPause;
+        ZFGlobalObserver().observerAdd(
+            ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
+    }
+    ZF_GLOBAL_INITIALIZER_DESTROY(ZFImpl_sys_Qt_autoPrintViewTree)
+    {
+        ZFGlobalObserver().observerRemove(
+            ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
+    }
+    private:
+        ZFListener windowOnPauseListener;
+    ZF_GLOBAL_INITIALIZER_END(ZFImpl_sys_Qt_autoPrintViewTree)
+#endif
+
 ZF_NAMESPACE_GLOBAL_END
 #endif // #if ZF_ENV_sys_Qt
 

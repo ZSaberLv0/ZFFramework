@@ -10,7 +10,6 @@
 @interface _ZFP_ZFUIViewImpl_sys_iOS_View : UIView
 @property (nonatomic, assign) ZFUIView *_ZFP_ownerZFUIView;
 @property (nonatomic, strong) UIView *_ZFP_nativeImplView;
-@property (nonatomic, assign) CGSize _ZFP_layoutedSize;
 @property (nonatomic, strong) NSMutableArray *_ZFP_mouseRecords; // UITouch
 @property (nonatomic, assign) BOOL _ZFP_uiEnable;
 @property (nonatomic, assign) BOOL _ZFP_ZFUIViewFocus_viewFocusable;
@@ -31,7 +30,6 @@
 
     // status init
     self._ZFP_uiEnable = YES;
-    self._ZFP_layoutedSize = CGSizeMake(-1, -1);
 
     self._ZFP_ZFUIViewFocus_viewFocusable = NO;
 
@@ -65,9 +63,8 @@
 }
 - (void)layoutSubviews
 {
-    if(self._ZFP_ownerZFUIView != zfnull && !CGSizeEqualToSize(self._ZFP_layoutedSize, self.frame.size))
+    if(self._ZFP_ownerZFUIView != zfnull && self._ZFP_ownerZFUIView->viewParent() == zfnull)
     {
-        self._ZFP_layoutedSize = self.frame.size;
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(self._ZFP_ownerZFUIView, ZFImpl_sys_iOS_ZFUIRectFromCGRect(self.frame));
     }
 }
@@ -460,7 +457,6 @@ public:
     virtual void layoutRequest(ZF_IN ZFUIView *view)
     {
         _ZFP_ZFUIViewImpl_sys_iOS_View *nativeView = (__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView();
-        nativeView._ZFP_layoutedSize = CGSizeMake(-1, -1);
         [nativeView setNeedsLayout];
     }
 
