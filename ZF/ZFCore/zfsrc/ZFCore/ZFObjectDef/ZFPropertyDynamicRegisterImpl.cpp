@@ -109,10 +109,17 @@ public:
             if(ret == zfnull)
             {
                 const ZFClass *propClass = this->d->typeIdClass();
-                if(propClass != zfnull && !propClass->classIsTypeOf(ZFTypeIdWrapper::ClassData()))
+                if(propClass != zfnull)
                 {
-                    zfblockedAlloc(_ZFP_I_PropDynRetainHolder, holder);
-                    ret = holder;
+                    if(propClass->classIsTypeOf(ZFTypeIdWrapper::ClassData()))
+                    {
+                        ret = propClass->newInstance();
+                    }
+                    else
+                    {
+                        zfblockedAlloc(_ZFP_I_PropDynRetainHolder, holder);
+                        ret = holder;
+                    }
                     return zftrue;
                 }
             }
