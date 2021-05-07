@@ -44,15 +44,17 @@ ZFOBSERVER_EVENT_GLOBAL(LogLevelOnChange)
 ZF_NAMESPACE_END(ZFGlobalEvent)
 
 /** @brief see #ZFLogLevel, #ZFLogLevel::e_Warning by default */
-extern ZF_ENV_EXPORT void ZFLogLevelDefault(ZF_IN ZFLogLevelEnum level);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFLogLevelDefault,
+                        ZFMP_IN(ZFLogLevelEnum, level))
 /** @brief see #ZFLogLevel */
-extern ZF_ENV_EXPORT ZFLogLevelEnum ZFLogLevelDefault(void);
+ZFMETHOD_FUNC_DECLARE_0(ZFLogLevelEnum, ZFLogLevelDefault)
 
 /**
  * @brief true if specified level is active
  *   (i.e. #ZFLogLevelDefault not greater than the specified level)
  */
-inline zfbool ZFLogLevelIsActive(ZF_IN ZFLogLevelEnum level)
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zfbool, ZFLogLevelIsActive,
+                               ZFMP_IN(ZFLogLevelEnum, level))
 {
     return (ZFLogLevelDefault() <= level);
 }
