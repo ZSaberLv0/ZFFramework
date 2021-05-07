@@ -14,10 +14,6 @@ ZFMETHOD_DEFINE_1(ZFUIRootView, void, scaleForApp,
     if(scale > 0)
     {
         this->_ZFP_ZFUIView_scaleSetRecursively(scale * this->scaleForImpl(), this->scaleForImpl());
-        if(this->rootViewOwnerSysWindow() != zfnull)
-        {
-            this->rootViewOwnerSysWindow()->_ZFP_ZFUISysWindow_sysWindowLayoutUpdate();
-        }
     }
 }
 
