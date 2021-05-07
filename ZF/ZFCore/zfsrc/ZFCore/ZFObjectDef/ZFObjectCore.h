@@ -385,7 +385,7 @@ public:
      */
     virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj);
     /** @brief util to #objectCompare */
-    virtual zfbool equaleTo(ZF_IN ZFObject *anotherObj)
+    virtual zfbool equalTo(ZF_IN ZFObject *anotherObj)
     {
         return this->objectCompare(anotherObj) == ZFCompareTheSame;
     }
