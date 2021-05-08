@@ -273,10 +273,10 @@ public:
         _ZFP_ZFUIDrawImpl_sys_Android_Token *nativeToken = (_ZFP_ZFUIDrawImpl_sys_Android_Token *)token.impl;
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId
             , nativeToken->canvas
-            , targetFramePixel.x
-            , targetFramePixel.y
-            , targetFramePixel.width
-            , targetFramePixel.height
+            , (jint)targetFramePixel.x
+            , (jint)targetFramePixel.y
+            , (jint)targetFramePixel.width
+            , (jint)targetFramePixel.height
             );
     }
     virtual void drawColor(ZF_IN_OUT ZFUIDrawToken &token,
@@ -297,10 +297,10 @@ public:
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId
             , nativeToken->canvas
             , ZFImpl_sys_Android_ZFUIColorToColor(color)
-            , targetFramePixel.x
-            , targetFramePixel.y
-            , targetFramePixel.width
-            , targetFramePixel.height
+            , (jint)targetFramePixel.x
+            , (jint)targetFramePixel.y
+            , (jint)targetFramePixel.width
+            , (jint)targetFramePixel.height
             );
     }
     virtual void drawImage(ZF_IN_OUT ZFUIDrawToken &token,
@@ -326,14 +326,14 @@ public:
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId
             , nativeToken->canvas
             , (jobject)image->nativeImage()
-            , imageFramePixel.x
-            , imageFramePixel.y
-            , imageFramePixel.width
-            , imageFramePixel.height
-            , targetFramePixel.x
-            , targetFramePixel.y
-            , targetFramePixel.width
-            , targetFramePixel.height
+            , (jint)imageFramePixel.x
+            , (jint)imageFramePixel.y
+            , (jint)imageFramePixel.width
+            , (jint)imageFramePixel.height
+            , (jint)targetFramePixel.x
+            , (jint)targetFramePixel.y
+            , (jint)targetFramePixel.width
+            , (jint)targetFramePixel.height
             );
     }
 

@@ -26,51 +26,51 @@ protected:
 
 public:
     zfoverride
-    virtual void scrollOwnerSizeChanged(ZF_IN zfint ownerSize);
+    virtual void scrollOwnerSizeChanged(ZF_IN zffloat ownerSize);
     zfoverride
     virtual void scrollBounceChanged(ZF_IN zfbool scrollBounce,
                                      ZF_IN zfbool scrollBounceAlways);
     zfoverride
     virtual void scrollAlignToPageChanged(ZF_IN zfbool scrollAlignToPage);
     zfoverride
-    virtual void scrollContentChanged(ZF_IN zfint contentOffset, ZF_IN zfint contentSize);
+    virtual void scrollContentChanged(ZF_IN zffloat contentOffset, ZF_IN zffloat contentSize);
 
 public:
     zfoverride
     virtual void scrollToFitRange(void);
     zfoverride
-    virtual void scrollWithoutAnimation(ZF_IN zfint contentOffset);
+    virtual void scrollWithoutAnimation(ZF_IN zffloat contentOffset);
     zfoverride
-    virtual void scrollByPoint(ZF_IN zfint point);
+    virtual void scrollByPoint(ZF_IN zffloat point);
     zfoverride
-    virtual zfint scrollByPointEndPoint(void);
+    virtual zffloat scrollByPointEndPoint(void);
     zfoverride
-    virtual void scrollBySpeed(ZF_IN zfint speed);
+    virtual void scrollBySpeed(ZF_IN zffloat speed);
     zfoverride
-    virtual zfint scrollBySpeedCurrentSpeed(void);
+    virtual zffloat scrollBySpeedCurrentSpeed(void);
     zfoverride
-    virtual zfint scrollBySpeedEndPointPredicted(void);
+    virtual zffloat scrollBySpeedEndPointPredicted(void);
 
     zfoverride
-    virtual zfint scrollEndPointPredicted(void);
+    virtual zffloat scrollEndPointPredicted(void);
 
     zfoverride
     virtual zfbool scrollRequireFocus(void);
 
 public:
     zfoverride
-    virtual zfint scrollOwnerSize(void);
+    virtual zffloat scrollOwnerSize(void);
     zfoverride
-    virtual zfint scrollContentOffset(void);
+    virtual zffloat scrollContentOffset(void);
     zfoverride
-    virtual zfint scrollContentSize(void);
+    virtual zffloat scrollContentSize(void);
 
 public:
     zfoverride
-    virtual void scrollOnDragBegin(ZF_IN zfint mousePos,
+    virtual void scrollOnDragBegin(ZF_IN zffloat mousePos,
                                    ZF_IN zftimet mouseTime);
     zfoverride
-    virtual void scrollOnDrag(ZF_IN zfint mousePos,
+    virtual void scrollOnDrag(ZF_IN zffloat mousePos,
                               ZF_IN zftimet mouseTime);
     zfoverride
     virtual void scrollOnDragEnd(ZF_IN zftimet mouseTime,

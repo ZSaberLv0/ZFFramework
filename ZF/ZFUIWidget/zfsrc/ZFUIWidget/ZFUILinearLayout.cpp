@@ -30,7 +30,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, ZFUIMargin, layoutChildMa
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, zfint, layoutChildSpace)
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, zffloat, layoutChildSpace)
 {
     if(this->layoutChildSpace() != propertyValueOld)
     {
@@ -42,12 +42,12 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, zfint, layoutChildSpace)
 // override ZFUIView
 static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *parent,
                                                         ZF_IN const ZFUISize &sizeHint,
-                                                        ZF_OUT_OPT zfint *fixedSize = zfnull,
-                                                        ZF_OUT_OPT zfint *totalWeight = zfnull);
+                                                        ZF_OUT_OPT zffloat *fixedSize = zfnull,
+                                                        ZF_OUT_OPT zffloat *totalWeight = zfnull);
 static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *parent,
                                                       ZF_IN const ZFUISize &sizeHint,
-                                                      ZF_OUT_OPT zfint *fixedSize = zfnull,
-                                                      ZF_OUT_OPT zfint *totalWeight = zfnull);
+                                                      ZF_OUT_OPT zffloat *fixedSize = zfnull,
+                                                      ZF_OUT_OPT zffloat *totalWeight = zfnull);
 void ZFUILinearLayout::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                        ZF_IN const ZFUISize &sizeHint,
                                        ZF_IN const ZFUISizeParam &sizeParam)
@@ -94,11 +94,11 @@ void ZFUILinearLayout::layoutOnLayout(ZF_IN const ZFUIRect &bounds)
 // measure
 static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *parent,
                                                         ZF_IN const ZFUISize &sizeHint,
-                                                        ZF_OUT_OPT zfint *fixedSize /* = zfnull */,
-                                                        ZF_OUT_OPT zfint *totalWeight /* = zfnull */)
+                                                        ZF_OUT_OPT zffloat *fixedSize /* = zfnull */,
+                                                        ZF_OUT_OPT zffloat *totalWeight /* = zfnull */)
 {
-    zfint parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
-    zfint parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
+    zffloat parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
+    zffloat parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
     ZFUISize ret = ZFUISizeMake(parentMarginX, 0);
     if(fixedSize != zfnull)
     {
@@ -112,14 +112,14 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *
         {
             continue ;
         }
-        zfint prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
+        zffloat prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
         if(totalWeight != zfnull)
         {
             *totalWeight += layoutParam->layoutWeight();
         }
 
-        zfint marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
-        zfint marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
+        zffloat marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
+        zffloat marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
         child->layoutMeasure(
             ZFUISizeMake(
                 ZFUILayoutParam::sizeHintMerge(
@@ -144,11 +144,11 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *
 }
 static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *parent,
                                                       ZF_IN const ZFUISize &sizeHint,
-                                                      ZF_OUT_OPT zfint *fixedSize /* = zfnull */,
-                                                      ZF_OUT_OPT zfint *totalWeight /* = zfnull */)
+                                                      ZF_OUT_OPT zffloat *fixedSize /* = zfnull */,
+                                                      ZF_OUT_OPT zffloat *totalWeight /* = zfnull */)
 {
-    zfint parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
-    zfint parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
+    zffloat parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
+    zffloat parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
     ZFUISize ret = ZFUISizeMake(0, parentMarginY);
     if(fixedSize != zfnull)
     {
@@ -162,14 +162,14 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *pa
         {
             continue ;
         }
-        zfint prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
+        zffloat prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
         if(totalWeight != zfnull)
         {
             *totalWeight += layoutParam->layoutWeight();
         }
 
-        zfint marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
-        zfint marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
+        zffloat marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
+        zffloat marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
         child->layoutMeasure(
             ZFUISizeMake(
                 ZFUILayoutParam::sizeHintMerge(
@@ -198,13 +198,13 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *pa
 static void _ZFP_ZFUILinearLayout_layoutHorizontal(ZF_IN ZFUILinearLayout *parent,
                                                    ZF_IN const ZFUISize &size)
 {
-    zfint fixedSize = 0;
-    zfint totalWeight = 0;
+    zffloat fixedSize = 0;
+    zffloat totalWeight = 0;
     _ZFP_ZFUILinearLayout_measureHorizontal(
         parent, size, &fixedSize, &totalWeight);
-    zfint flexibleSize = zfmMax(0, size.width - fixedSize);
+    zffloat flexibleSize = zfmMax((zffloat)0, size.width - fixedSize);
     zfbool positiveDirection = (parent->layoutOrientation() == ZFUIOrientation::e_Left);
-    zfint usedSize = (positiveDirection ? parent->layoutChildMargin().left : parent->layoutChildMargin().right);
+    zffloat usedSize = (positiveDirection ? parent->layoutChildMargin().left : parent->layoutChildMargin().right);
     for(zfindex i = 0; i < parent->childCount(); ++i)
     {
         ZFUIView *child = parent->childAtIndex(i);
@@ -213,8 +213,8 @@ static void _ZFP_ZFUILinearLayout_layoutHorizontal(ZF_IN ZFUILinearLayout *paren
         {
             continue ;
         }
-        zfint prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
-        zfint childSize = 0;
+        zffloat prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
+        zffloat childSize = 0;
         if(layoutParam->layoutWeight() > 0)
         {
             childSize = layoutParam->layoutWeight() * flexibleSize / totalWeight;
@@ -249,13 +249,13 @@ static void _ZFP_ZFUILinearLayout_layoutHorizontal(ZF_IN ZFUILinearLayout *paren
 static void _ZFP_ZFUILinearLayout_layoutVertical(ZF_IN ZFUILinearLayout *parent,
                                                  ZF_IN const ZFUISize &size)
 {
-    zfint fixedSize = 0;
-    zfint totalWeight = 0;
+    zffloat fixedSize = 0;
+    zffloat totalWeight = 0;
     _ZFP_ZFUILinearLayout_measureVertical(
         parent, size, &fixedSize, &totalWeight);
-    zfint flexibleSize = zfmMax(0, size.height - fixedSize);
+    zffloat flexibleSize = zfmMax((zffloat)0, size.height - fixedSize);
     zfbool positiveDirection = (parent->layoutOrientation() == ZFUIOrientation::e_Top);
-    zfint usedSize = (positiveDirection ? parent->layoutChildMargin().top : parent->layoutChildMargin().bottom);
+    zffloat usedSize = (positiveDirection ? parent->layoutChildMargin().top : parent->layoutChildMargin().bottom);
     for(zfindex i = 0; i < parent->childCount(); ++i)
     {
         ZFUIView *child = parent->childAtIndex(i);
@@ -264,8 +264,8 @@ static void _ZFP_ZFUILinearLayout_layoutVertical(ZF_IN ZFUILinearLayout *parent,
         {
             continue ;
         }
-        zfint prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
-        zfint childSize = 0;
+        zffloat prevSpace = (i > 0 ? parent->layoutChildSpace() : 0);
+        zffloat childSize = 0;
         if(layoutParam->layoutWeight() > 0)
         {
             childSize = layoutParam->layoutWeight() * flexibleSize / totalWeight;

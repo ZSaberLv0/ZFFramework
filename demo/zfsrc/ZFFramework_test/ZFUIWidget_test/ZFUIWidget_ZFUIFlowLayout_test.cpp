@@ -94,16 +94,16 @@ private:
                 , ZFUIMarginMake(24)
                 ));
 
-        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, zfint, ZFPropertyAccess(ZFUIFlowLayout, layoutChildSpaceX),
-            ZFCoreArrayPODCreate(zfint
+        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, zffloat, ZFPropertyAccess(ZFUIFlowLayout, layoutChildSpaceX),
+            ZFCoreArrayPODCreate(zffloat
                 , 0
                 , 8
                 , 12
                 , 24
                 ));
 
-        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, zfint, ZFPropertyAccess(ZFUIFlowLayout, layoutChildSpaceY),
-            ZFCoreArrayPODCreate(zfint
+        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, zffloat, ZFPropertyAccess(ZFUIFlowLayout, layoutChildSpaceY),
+            ZFCoreArrayPODCreate(zffloat
                 , 0
                 , 8
                 , 12

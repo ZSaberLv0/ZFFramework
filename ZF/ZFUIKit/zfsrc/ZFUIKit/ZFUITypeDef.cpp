@@ -4,47 +4,33 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 ZFMETHOD_FUNC_DEFINE_3(void, ZFUISizeApplyScale,
-                       ZFMP_OUT(zfint &, ret),
-                       ZFMP_IN(zfint const &, v),
+                       ZFMP_OUT(zffloat &, ret),
+                       ZFMP_IN(zffloat const &, v),
                        ZFMP_IN(zffloat, scale))
 {
-    if(v == 1)
-    {
-        ret = 1;
-    }
-    else
-    {
-        ret = (zfint)zfmRound(v * scale);
-    }
+    ret = (zffloat)zfmRound(v * scale);
 }
-ZFMETHOD_FUNC_INLINE_DEFINE_2(zfint, ZFUISizeApplyScale,
-                              ZFMP_IN(zfint const &, v),
+ZFMETHOD_FUNC_INLINE_DEFINE_2(zffloat, ZFUISizeApplyScale,
+                              ZFMP_IN(zffloat const &, v),
                               ZFMP_IN(zffloat, scale))
 
 ZFMETHOD_FUNC_DEFINE_3(void, ZFUISizeApplyScaleReversely,
-                       ZFMP_OUT(zfint &, ret),
-                       ZFMP_IN(zfint const &, v),
+                       ZFMP_OUT(zffloat &, ret),
+                       ZFMP_IN(zffloat const &, v),
                        ZFMP_IN(zffloat, scale))
 {
-    if(v == 1)
-    {
-        ret = 1;
-    }
-    else
-    {
-        ret = (zfint)zfmRound(v / scale);
-    }
+    ret = (zffloat)zfmRound(v / scale);
 }
-ZFMETHOD_FUNC_INLINE_DEFINE_2(zfint, ZFUISizeApplyScaleReversely,
-                              ZFMP_IN(zfint const &, v),
+ZFMETHOD_FUNC_INLINE_DEFINE_2(zffloat, ZFUISizeApplyScaleReversely,
+                              ZFMP_IN(zffloat const &, v),
                               ZFMP_IN(zffloat, scale))
 
 // ============================================================
 // ZFUIPoint
 ZFEXPORT_VAR_READONLY_DEFINE(ZFUIPoint, ZFUIPointZero, ZFUIPointMake(0, 0))
 ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIPoint, ZFUIPointMake,
-                              ZFMP_IN(zfint const &, x),
-                              ZFMP_IN(zfint const &, y))
+                              ZFMP_IN(zffloat const &, x),
+                              ZFMP_IN(zffloat const &, y))
 ZFMETHOD_FUNC_INLINE_DEFINE_3(void, ZFUIPointApplyScale,
                               ZFMP_OUT(ZFUIPoint &, ret),
                               ZFMP_IN(const ZFUIPoint &, point),
@@ -60,8 +46,8 @@ ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIPoint, ZFUIPointApplyScaleReversely,
                               ZFMP_IN(const ZFUIPoint &, point),
                               ZFMP_IN(zffloat, scale))
 ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUIPoint, ZFUIPoint, {
-        ZFCoreArrayPOD<zfint> buf;
-        if(!zfCoreDataPairSplitInt(buf, 2, src, srcLen))
+        ZFCoreArrayPOD<zffloat> buf;
+        if(!zfCoreDataPairSplitFloat(buf, 2, src, srcLen))
         {
             return zffalse;
         }
@@ -69,30 +55,30 @@ ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUIPoint, ZFUIPoint, {
         v.y = buf[1];
         return zftrue;
     }, {
-        zfstringAppend(s, "(%d, %d)", v.x, v.y);
+        zfstringAppend(s, "(%f, %f)", v.x, v.y);
         return zftrue;
     })
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIPoint, zfint, x)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIPoint, zfint, y)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIPoint, zffloat, x)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIPoint, zffloat, y)
 
 ZFTYPEID_PROGRESS_DEFINE(ZFUIPoint, ZFUIPoint, {
-        ret.x = from.x + (zfint)((to.x - from.x) * progress);
-        ret.y = from.y + (zfint)((to.y - from.y) * progress);
+        ret.x = from.x + (zffloat)((to.x - from.x) * progress);
+        ret.y = from.y + (zffloat)((to.y - from.y) * progress);
     })
 
 // ============================================================
 // ZFUIMargin
 ZFEXPORT_VAR_READONLY_DEFINE(ZFUIMargin, ZFUIMarginZero, ZFUIMarginMake(0, 0, 0, 0))
 ZFMETHOD_FUNC_INLINE_DEFINE_4(ZFUIMargin, ZFUIMarginMake,
-                              ZFMP_IN(zfint const &, left),
-                              ZFMP_IN(zfint const &, top),
-                              ZFMP_IN(zfint const &, right),
-                              ZFMP_IN(zfint const &, bottom))
+                              ZFMP_IN(zffloat const &, left),
+                              ZFMP_IN(zffloat const &, top),
+                              ZFMP_IN(zffloat const &, right),
+                              ZFMP_IN(zffloat const &, bottom))
 ZFMETHOD_FUNC_INLINE_DEFINE_1(ZFUIMargin, ZFUIMarginMake,
-                              ZFMP_IN(zfint const &, margin))
+                              ZFMP_IN(zffloat const &, margin))
 ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIMargin, ZFUIMarginMake,
-                              ZFMP_IN(zfint const &, x),
-                              ZFMP_IN(zfint const &, y))
+                              ZFMP_IN(zffloat const &, x),
+                              ZFMP_IN(zffloat const &, y))
 ZFMETHOD_FUNC_INLINE_DEFINE_3(void, ZFUIMarginApplyScale,
                               ZFMP_OUT(ZFUIMargin &, ret),
                               ZFMP_IN(const ZFUIMargin &, margin),
@@ -107,9 +93,9 @@ ZFMETHOD_FUNC_INLINE_DEFINE_3(void, ZFUIMarginApplyScaleReversely,
 ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIMargin, ZFUIMarginApplyScaleReversely,
                               ZFMP_IN(const ZFUIMargin &, margin),
                               ZFMP_IN(zffloat, scale))
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfint, ZFUIMarginGetWidth,
+ZFMETHOD_FUNC_INLINE_DEFINE_1(zffloat, ZFUIMarginGetWidth,
                               ZFMP_IN(const ZFUIMargin &, margin))
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfint, ZFUIMarginGetHeight,
+ZFMETHOD_FUNC_INLINE_DEFINE_1(zffloat, ZFUIMarginGetHeight,
                               ZFMP_IN(const ZFUIMargin &, margin))
 ZFMETHOD_FUNC_INLINE_DEFINE_3(void, ZFUIMarginInc,
                               ZFMP_IN_OUT(ZFUIMargin &, ret),
@@ -126,8 +112,8 @@ ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIMargin, ZFUIMarginDec,
                               ZFMP_IN(const ZFUIMargin &, v0),
                               ZFMP_IN(const ZFUIMargin &, v1))
 ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUIMargin, ZFUIMargin, {
-        ZFCoreArrayPOD<zfint> buf;
-        if(!zfCoreDataPairSplitInt(buf, 4, src, srcLen))
+        ZFCoreArrayPOD<zffloat> buf;
+        if(!zfCoreDataPairSplitFloat(buf, 4, src, srcLen))
         {
             return zffalse;
         }
@@ -137,19 +123,19 @@ ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUIMargin, ZFUIMargin, {
         v.bottom = buf[3];
         return zftrue;
     }, {
-        zfstringAppend(s, "(%d, %d, %d, %d)", v.left, v.top, v.right, v.bottom);
+        zfstringAppend(s, "(%f, %f, %f, %f)", v.left, v.top, v.right, v.bottom);
         return zftrue;
     })
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zfint, left)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zfint, top)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zfint, right)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zfint, bottom)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zffloat, left)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zffloat, top)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zffloat, right)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIMargin, zffloat, bottom)
 
 ZFTYPEID_PROGRESS_DEFINE(ZFUIMargin, ZFUIMargin, {
-        ret.left = from.left + (zfint)((to.left - from.left) * progress);
-        ret.top = from.top + (zfint)((to.top - from.top) * progress);
-        ret.right = from.right + (zfint)((to.right - from.right) * progress);
-        ret.bottom = from.bottom + (zfint)((to.bottom - from.bottom) * progress);
+        ret.left = from.left + (zffloat)((to.left - from.left) * progress);
+        ret.top = from.top + (zffloat)((to.top - from.top) * progress);
+        ret.right = from.right + (zffloat)((to.right - from.right) * progress);
+        ret.bottom = from.bottom + (zffloat)((to.bottom - from.bottom) * progress);
     })
 
 // ============================================================
@@ -157,10 +143,10 @@ ZFTYPEID_PROGRESS_DEFINE(ZFUIMargin, ZFUIMargin, {
 ZFEXPORT_VAR_READONLY_DEFINE(ZFUISize, ZFUISizeZero, ZFUISizeMake(0, 0))
 ZFEXPORT_VAR_READONLY_DEFINE(ZFUISize, ZFUISizeInvalid, ZFUISizeMake(-1, -1))
 ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUISize, ZFUISizeMake,
-                              ZFMP_IN(zfint const &, width),
-                              ZFMP_IN(zfint const &, height))
+                              ZFMP_IN(zffloat const &, width),
+                              ZFMP_IN(zffloat const &, height))
 ZFMETHOD_FUNC_INLINE_DEFINE_1(ZFUISize, ZFUISizeMake,
-                              ZFMP_IN(zfint const &, v))
+                              ZFMP_IN(zffloat const &, v))
 ZFMETHOD_FUNC_INLINE_DEFINE_4(void, ZFUISizeApplyRange,
                               ZFMP_OUT(ZFUISize &, ret),
                               ZFMP_IN(const ZFUISize &, orgSize),
@@ -232,8 +218,8 @@ ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUISize, ZFUISizeApplyMarginReversely,
                               ZFMP_IN(const ZFUIMargin &, margin))
 
 ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUISize, ZFUISize, {
-        ZFCoreArrayPOD<zfint> buf;
-        if(!zfCoreDataPairSplitInt(buf, 2, src, srcLen))
+        ZFCoreArrayPOD<zffloat> buf;
+        if(!zfCoreDataPairSplitFloat(buf, 2, src, srcLen))
         {
             return zffalse;
         }
@@ -241,25 +227,25 @@ ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUISize, ZFUISize, {
         v.height = buf[1];
         return zftrue;
     }, {
-        zfstringAppend(s, "(%d, %d)", v.width, v.height);
+        zfstringAppend(s, "(%f, %f)", v.width, v.height);
         return zftrue;
     })
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUISize, zfint, width)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUISize, zfint, height)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUISize, zffloat, width)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUISize, zffloat, height)
 
 ZFTYPEID_PROGRESS_DEFINE(ZFUISize, ZFUISize, {
-        ret.width = from.width + (zfint)((to.width - from.width) * progress);
-        ret.height = from.height + (zfint)((to.height - from.height) * progress);
+        ret.width = from.width + (zffloat)((to.width - from.width) * progress);
+        ret.height = from.height + (zffloat)((to.height - from.height) * progress);
     })
 
 // ============================================================
 // ZFUIRect
 ZFEXPORT_VAR_READONLY_DEFINE(ZFUIRect, ZFUIRectZero, ZFUIRectMake(0, 0, 0, 0))
 ZFMETHOD_FUNC_INLINE_DEFINE_4(ZFUIRect, ZFUIRectMake,
-                              ZFMP_IN(zfint const &, x),
-                              ZFMP_IN(zfint const &, y),
-                              ZFMP_IN(zfint const &, w),
-                              ZFMP_IN(zfint const &, h))
+                              ZFMP_IN(zffloat const &, x),
+                              ZFMP_IN(zffloat const &, y),
+                              ZFMP_IN(zffloat const &, w),
+                              ZFMP_IN(zffloat const &, h))
 ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIRect, ZFUIRectMake,
                               ZFMP_IN(const ZFUIPoint &, point),
                               ZFMP_IN(const ZFUISize &, size))
@@ -306,13 +292,13 @@ ZFMETHOD_FUNC_INLINE_DEFINE_1(ZFUIRect, ZFUIRectGetBounds,
                               ZFMP_IN(const ZFUIRect &, rect))
 ZFMETHOD_FUNC_INLINE_DEFINE_1(ZFUIPoint, ZFUIRectGetCenter,
                               ZFMP_IN(const ZFUIRect &, rect))
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfint, ZFUIRectGetLeft,
+ZFMETHOD_FUNC_INLINE_DEFINE_1(zffloat, ZFUIRectGetLeft,
                               ZFMP_IN(const ZFUIRect &, rect))
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfint, ZFUIRectGetTop,
+ZFMETHOD_FUNC_INLINE_DEFINE_1(zffloat, ZFUIRectGetTop,
                               ZFMP_IN(const ZFUIRect &, rect))
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfint, ZFUIRectGetRight,
+ZFMETHOD_FUNC_INLINE_DEFINE_1(zffloat, ZFUIRectGetRight,
                               ZFMP_IN(const ZFUIRect &, rect))
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfint, ZFUIRectGetBottom,
+ZFMETHOD_FUNC_INLINE_DEFINE_1(zffloat, ZFUIRectGetBottom,
                               ZFMP_IN(const ZFUIRect &, rect))
 ZFMETHOD_FUNC_INLINE_DEFINE_3(void, ZFUIRectApplyMargin,
                               ZFMP_OUT(ZFUIRect &, ret),
@@ -329,8 +315,8 @@ ZFMETHOD_FUNC_INLINE_DEFINE_2(ZFUIRect, ZFUIRectApplyMarginReversely,
                               ZFMP_IN(const ZFUIRect &, rect),
                               ZFMP_IN(const ZFUIMargin &, margin))
 ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUIRect, ZFUIRect, {
-        ZFCoreArrayPOD<zfint> buf;
-        if(!zfCoreDataPairSplitInt(buf, 4, src, srcLen))
+        ZFCoreArrayPOD<zffloat> buf;
+        if(!zfCoreDataPairSplitFloat(buf, 4, src, srcLen))
         {
             return zffalse;
         }
@@ -340,19 +326,19 @@ ZFTYPEID_DEFINE_BY_STRING_CONVERTER(ZFUIRect, ZFUIRect, {
         v.height = buf[3];
         return zftrue;
     }, {
-        zfstringAppend(s, "(%d, %d, %d, %d)", v.x, v.y, v.width, v.height);
+        zfstringAppend(s, "(%f, %f, %f, %f)", v.x, v.y, v.width, v.height);
         return zftrue;
     })
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zfint, x)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zfint, y)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zfint, width)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zfint, height)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zffloat, x)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zffloat, y)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zffloat, width)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIRect, zffloat, height)
 
 ZFTYPEID_PROGRESS_DEFINE(ZFUIRect, ZFUIRect, {
-        ret.x = from.x + (zfint)((to.x - from.x) * progress);
-        ret.y = from.y + (zfint)((to.y - from.y) * progress);
-        ret.width = from.width + (zfint)((to.width - from.width) * progress);
-        ret.height = from.height + (zfint)((to.height - from.height) * progress);
+        ret.x = from.x + (zffloat)((to.x - from.x) * progress);
+        ret.y = from.y + (zffloat)((to.y - from.y) * progress);
+        ret.width = from.width + (zffloat)((to.width - from.width) * progress);
+        ret.height = from.height + (zffloat)((to.height - from.height) * progress);
     })
 
 // ============================================================
@@ -378,15 +364,15 @@ ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFUIAlignIsValid,
 {
     return (
             ZFBitGet(align, ~(_ZFP_ZFUIAlignMask())) == 0
-            && ((zfint)ZFBitTest(align, ZFUIAlign::e_Left)
-                + (zfint)ZFBitTest(align, ZFUIAlign::e_LeftInner)
-                + (zfint)ZFBitTest(align, ZFUIAlign::e_Right)
-                + (zfint)ZFBitTest(align, ZFUIAlign::e_RightInner)
+            && ((zffloat)ZFBitTest(align, ZFUIAlign::e_Left)
+                + (zffloat)ZFBitTest(align, ZFUIAlign::e_LeftInner)
+                + (zffloat)ZFBitTest(align, ZFUIAlign::e_Right)
+                + (zffloat)ZFBitTest(align, ZFUIAlign::e_RightInner)
                 ) <= 1
-            && ((zfint)ZFBitTest(align, ZFUIAlign::e_Top)
-                + (zfint)ZFBitTest(align, ZFUIAlign::e_TopInner)
-                + (zfint)ZFBitTest(align, ZFUIAlign::e_Bottom)
-                + (zfint)ZFBitTest(align, ZFUIAlign::e_BottomInner)
+            && ((zffloat)ZFBitTest(align, ZFUIAlign::e_Top)
+                + (zffloat)ZFBitTest(align, ZFUIAlign::e_TopInner)
+                + (zffloat)ZFBitTest(align, ZFUIAlign::e_Bottom)
+                + (zffloat)ZFBitTest(align, ZFUIAlign::e_BottomInner)
                 ) <= 1
         );
 }

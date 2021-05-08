@@ -63,8 +63,9 @@
 }
 - (void)layoutSubviews
 {
-    if(self._ZFP_ownerZFUIView != zfnull && self._ZFP_ownerZFUIView->viewParent() == zfnull)
-    {
+    if(self._ZFP_ownerZFUIView != zfnull
+        && (self._ZFP_ownerZFUIView->viewParent() == zfnull || !self._ZFP_ownerZFUIView->viewParent()->layoutRequested())
+    ) {
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(self._ZFP_ownerZFUIView, ZFImpl_sys_iOS_ZFUIRectFromCGRect(self.frame));
     }
 }
@@ -464,7 +465,7 @@ public:
                                    ZF_IN void *nativeView,
                                    ZF_IN const ZFUISize &sizeHint)
     {
-        ret = ZFUISizeMake(zfmMax(sizeHint.width, 0), zfmMax(sizeHint.height, 0));
+        ret = ZFUISizeMake(zfmMax(sizeHint.width, (zffloat)0), zfmMax(sizeHint.height, (zffloat)0));
         ZFImpl_sys_iOS_ZFUISizeFromCGSizeT(ret,
             [(__bridge UIView *)nativeView sizeThatFits:ZFImpl_sys_iOS_ZFUISizeToCGSize(ret)]);
     }

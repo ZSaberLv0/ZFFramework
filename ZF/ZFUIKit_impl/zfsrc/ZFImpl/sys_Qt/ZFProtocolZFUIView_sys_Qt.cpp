@@ -62,8 +62,8 @@ protected:
     virtual void onLayout(const QRectF &rect)
     {
         if(_ZFP_ownerZFUIView != zfnull && _ZFP_layoutedSize != rect.size()
-            && (_ZFP_ownerZFUIView->viewParent() == zfnull || !_ZFP_ownerZFUIView->viewParent()->layoutRequested()))
-        {
+            && (_ZFP_ownerZFUIView->viewParent() == zfnull || !_ZFP_ownerZFUIView->viewParent()->layoutRequested())
+        ) {
             _ZFP_layoutedSize = rect.size();
             ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(
                 _ZFP_ownerZFUIView,
@@ -327,7 +327,7 @@ protected:
 private:
     void wheelEventResolve(QGraphicsSceneWheelEvent *event)
     {
-        zfint eventSteps = event->delta() / 8 / 15;
+        zffloat eventSteps = event->delta() / 8 / 15;
 
         zfblockedAllocWithCache(ZFUIWheelEvent, wheelEvent);
         wheelEvent->eventResolved(zffalse);

@@ -23,13 +23,13 @@ public:
      *
      * positive value means wheel from right to left
      */
-    zfint wheelX;
+    zffloat wheelX;
     /**
      * @brief wheel rotate count in y direction
      *
      * positive value means wheel from bottom to top
      */
-    zfint wheelY;
+    zffloat wheelY;
 
 protected:
     zfoverride

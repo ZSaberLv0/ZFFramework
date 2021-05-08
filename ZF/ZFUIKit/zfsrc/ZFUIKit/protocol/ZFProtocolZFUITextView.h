@@ -48,13 +48,13 @@ public:
                                   ZF_IN ZFUISize const &textShadowOffset) zfpurevirtual;
     /** @brief see #ZFUITextView */
     virtual void textSize(ZF_IN ZFUITextView *textView,
-                          ZF_IN zfint textSize) zfpurevirtual;
+                          ZF_IN zffloat textSize) zfpurevirtual;
     /** @brief see #ZFUITextView */
     virtual void textSizeAutoChangeMinSize(ZF_IN ZFUITextView *textView,
-                                           ZF_IN zfint textSizeAutoChangeMinSize) zfpurevirtual;
+                                           ZF_IN zffloat textSizeAutoChangeMinSize) zfpurevirtual;
     /** @brief see #ZFUITextView */
     virtual void textSizeAutoChangeMaxSize(ZF_IN ZFUITextView *textView,
-                                           ZF_IN zfint textSizeAutoChangeMaxSize) zfpurevirtual;
+                                           ZF_IN zffloat textSizeAutoChangeMaxSize) zfpurevirtual;
     /** @brief see #ZFUITextView */
     virtual void textSingleLine(ZF_IN ZFUITextView *textView,
                                 ZF_IN zfbool textSingleLine) zfpurevirtual;
@@ -73,12 +73,12 @@ public:
      */
     virtual ZFUISize measureNativeTextView(ZF_IN ZFUITextView *textView,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize) zfpurevirtual;
+                                           ZF_IN zffloat textSize) zfpurevirtual;
 
     /**
      * @brief see #ZFUITextView::textSizeCurrent
      */
-    virtual zfint textSizeCurrent(ZF_IN ZFUITextView *textView) zfpurevirtual;
+    virtual zffloat textSizeCurrent(ZF_IN ZFUITextView *textView) zfpurevirtual;
 
     /**
      * @brief layout text view after ZFUIView's layout step,
@@ -97,10 +97,10 @@ public:
      * loop to measure and calculate proper text size,
      * may have performance issues
      */
-    zfint calcTextSizeAutoChange(ZF_IN ZFUITextView *textView,
-                                 ZF_IN const ZFUISize &sizeHint)
+    zffloat calcTextSizeAutoChange(ZF_IN ZFUITextView *textView,
+                                   ZF_IN const ZFUISize &sizeHint)
     {
-        zfint curTextSize = textView->textSize();
+        zffloat curTextSize = textView->textSize();
         ZFUISize curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleFixed()));
 
         if(textView->textSizeAutoChangeMaxSize() > 0)

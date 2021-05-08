@@ -464,7 +464,7 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     }
 
     ZFUISize contentSize = ZFUISizeZero();
-    zfint contentSpace = 0;
+    zffloat contentSpace = 0;
     switch(this->buttonContentIconPosition())
     {
         case ZFUIOrientation::e_Left:
@@ -537,7 +537,7 @@ void ZFUIButtonBasic::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
     }
 
     ZFUIRect contentFrame = ZFUIRectZero();
-    zfint contentSpace = 0;
+    zffloat contentSpace = 0;
     switch(this->buttonContentIconPosition())
     {
         case ZFUIOrientation::e_Left:

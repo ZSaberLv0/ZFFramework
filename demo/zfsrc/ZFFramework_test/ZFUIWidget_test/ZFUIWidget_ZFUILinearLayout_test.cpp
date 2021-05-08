@@ -76,8 +76,8 @@ private:
                 , ZFUIMarginMake(24)
                 ));
 
-        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, zfint, ZFPropertyAccess(ZFUILinearLayout, layoutChildSpace),
-            ZFCoreArrayPODCreate(zfint
+        ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, zffloat, ZFPropertyAccess(ZFUILinearLayout, layoutChildSpace),
+            ZFCoreArrayPODCreate(zffloat
                 , 0
                 , 8
                 , 12

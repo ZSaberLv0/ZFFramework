@@ -12,8 +12,8 @@ public:
     {
         return 2000;
     }
-    virtual zfint cellSizeAtIndex(ZF_IN zfindex index,
-                                  ZF_IN ZFUIListCell *cell)
+    virtual zffloat cellSizeAtIndex(ZF_IN zfindex index,
+                                    ZF_IN ZFUIListCell *cell)
     {
         #if 1
             return this->cellSizeHint() + zfmRand(100);
@@ -142,7 +142,7 @@ private:
                 , ZFUIOrientation::e_Right
                 , ZFUIOrientation::e_Bottom
                 ));
-        ZFUIKit_test_prepareSettingForNormalProperty(settings, listView->listAdapter()->toObject(), zfint, ZFPropertyAccess(ZFUIListAdapter, cellSizeHint), ZFCoreArrayPODCreate(zfint, 56, 100, 44));
+        ZFUIKit_test_prepareSettingForNormalProperty(settings, listView->listAdapter()->toObject(), zffloat, ZFPropertyAccess(ZFUIListAdapter, cellSizeHint), ZFCoreArrayPODCreate(zffloat, 56, 100, 44));
 
 #define _ZFP_ZFUIWidget_ZFUIListView_test_autoScrollSpeed 100
         { // auto scroll x
@@ -153,7 +153,7 @@ private:
             ZFLISTENER_LOCAL(buttonTextGetter, {
                 ZFUIListView *listView = userData->objectTag("listView")->objectHolded();
                 v_zfstring *text = listenerData.param0<v_zfstring *>();
-                text->zfv = zfstringWithFormat("autoScrollSpeedX: %d", listView->autoScrollSpeedX());
+                text->zfv = zfstringWithFormat("autoScrollSpeedX: %f", listView->autoScrollSpeedX());
             })
             setting->buttonTextGetter(buttonTextGetter);
             ZFLISTENER_LOCAL(buttonClickListener, {
@@ -177,7 +177,7 @@ private:
             ZFLISTENER_LOCAL(buttonTextGetter, {
                 ZFUIListView *listView = userData->objectTag("listView")->objectHolded();
                 v_zfstring *text = listenerData.param0<v_zfstring *>();
-                text->zfv = zfstringWithFormat("autoScrollSpeedY: %d", listView->autoScrollSpeedY());
+                text->zfv = zfstringWithFormat("autoScrollSpeedY: %f", listView->autoScrollSpeedY());
             })
             setting->buttonTextGetter(buttonTextGetter);
             ZFLISTENER_LOCAL(buttonClickListener, {
@@ -201,11 +201,11 @@ private:
                 ZFUIListView *listView = userData->objectTag("listView")->objectHolded();
                 zfbool toHead = (zfmRand(2) == 0);
                 zfindex toIndex = zfmRand(listView->listAdapter()->cellCount());
-                zfint toOffset = (ZFUIOrientationIsHorizontal(listView->listOrientation())
-                    ? zfmRand(listView->viewFrame().width)
-                    : zfmRand(listView->viewFrame().height));
+                zffloat toOffset = (ZFUIOrientationIsHorizontal(listView->listOrientation())
+                    ? zfmRand((zfint)listView->viewFrame().width)
+                    : zfmRand((zfint)listView->viewFrame().height));
                 zfbool animated = (zfmRand(5) != 0);
-                ZFUIHintShow(zfstringWithFormat("%s\nindex: %zi\noffset: %d\nanimated: %b",
+                ZFUIHintShow(zfstringWithFormat("%s\nindex: %zi\noffset: %f\nanimated: %b",
                     toHead ? "scrollListCellToHead" : "scrollListCellToTail",
                     toIndex, toOffset, animated));
                 if(toHead)

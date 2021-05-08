@@ -18,7 +18,7 @@ ZFMETHOD_DEFINE_0(ZFUIListAdapter, const ZFUISize &, listContainerSize)
     return this->_ZFP_ZFUIListAdapter_listContainerSize;
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListAdapter, zfint, cellSizeHint)
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListAdapter, zffloat, cellSizeHint)
 {
     this->listAdapterNotifyReload();
 }
@@ -33,7 +33,7 @@ ZFMETHOD_DEFINE_1(ZFUIListAdapter, void, listAdapterNotifyReload,
     this->listAdapterOnReload(atIndexOrMax);
 }
 
-ZFMETHOD_DEFINE_2(ZFUIListAdapter, zfint, cellSizeAtIndex,
+ZFMETHOD_DEFINE_2(ZFUIListAdapter, zffloat, cellSizeAtIndex,
                   ZFMP_IN(zfindex, index),
                   ZFMP_IN(ZFUIListCell *, cell))
 {

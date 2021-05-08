@@ -28,7 +28,7 @@ public:
     }
 
 public:
-    void _ZFP_textSize(ZF_IN zfint v)
+    void _ZFP_textSize(ZF_IN zffloat v)
     {
         QFont font = this->font();
         font.setPixelSize((int)v);
@@ -149,17 +149,17 @@ public:
         nativeImplView->_ZFP_textShadowUpdate(textView->textShadowColor(), textShadowOffset);
     }
     virtual void textSize(ZF_IN ZFUITextView *textView,
-                          ZF_IN zfint textSize)
+                          ZF_IN zffloat textSize)
     {
         // changed during layoutNativeTextView
     }
     virtual void textSizeAutoChangeMinSize(ZF_IN ZFUITextView *textView,
-                                           ZF_IN zfint textSizeAutoChangeMinSize)
+                                           ZF_IN zffloat textSizeAutoChangeMinSize)
     {
         // changed during layoutNativeTextView
     }
     virtual void textSizeAutoChangeMaxSize(ZF_IN ZFUITextView *textView,
-                                           ZF_IN zfint textSizeAutoChangeMaxSize)
+                                           ZF_IN zffloat textSizeAutoChangeMaxSize)
     {
         // changed during layoutNativeTextView
     }
@@ -196,7 +196,7 @@ public:
 public:
     virtual ZFUISize measureNativeTextView(ZF_IN ZFUITextView *textView,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize)
+                                           ZF_IN zffloat textSize)
     {
         _ZFP_ZFUITextViewImpl_sys_Qt_TextView *nativeImplView = getNativeImplView(textView);
         QRect geometrySaved = nativeImplView->geometry();
@@ -224,17 +224,17 @@ public:
         return ZFUISizeMake(ret.width(), ret.height());
     }
 
-    virtual zfint textSizeCurrent(ZF_IN ZFUITextView *textView)
+    virtual zffloat textSizeCurrent(ZF_IN ZFUITextView *textView)
     {
         _ZFP_ZFUITextViewImpl_sys_Qt_TextView *nativeImplView = getNativeImplView(textView);
-        return (zfint)nativeImplView->font().pixelSize();
+        return (zffloat)nativeImplView->font().pixelSize();
     }
 
     virtual void layoutNativeTextView(ZF_IN ZFUITextView *textView,
                                       ZF_IN const ZFUISize &viewSize)
     {
         _ZFP_ZFUITextViewImpl_sys_Qt_TextView *nativeImplView = getNativeImplView(textView);
-        zfint fixedTextSize = this->calcTextSizeAutoChange(textView, viewSize);
+        zffloat fixedTextSize = this->calcTextSizeAutoChange(textView, viewSize);
         nativeImplView->_ZFP_textSize(fixedTextSize);
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFUITextViewImpl_sys_Qt)

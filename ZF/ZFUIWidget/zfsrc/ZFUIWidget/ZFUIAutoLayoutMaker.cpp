@@ -187,7 +187,7 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::zfal_maker(ZF_IN ZFUIView *child, ZF_I
     return *this;
 }
 
-ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::width(ZF_IN zfint size)
+ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::width(ZF_IN zffloat size)
 {
     d->requireChild();
     ZFUILayoutParam *layoutParam = d->child->layoutParam();
@@ -203,7 +203,7 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::width(ZF_IN zfint size)
     }
     return *this;
 }
-ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::height(ZF_IN zfint size)
+ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::height(ZF_IN zffloat size)
 {
     d->requireChild();
     ZFUILayoutParam *layoutParam = d->child->layoutParam();
@@ -219,11 +219,11 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::height(ZF_IN zfint size)
     }
     return *this;
 }
-ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::size(ZF_IN zfint size)
+ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::size(ZF_IN zffloat size)
 {
     return this->size(size, size);
 }
-ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::size(ZF_IN zfint width, ZF_IN zfint height)
+ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::size(ZF_IN zffloat width, ZF_IN zffloat height)
 {
     d->requireChild();
     ZFUILayoutParam *layoutParam = d->child->layoutParam();
@@ -367,7 +367,7 @@ ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::scale(ZF_IN zffloat scale)
     }
     return *this;
 }
-ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::offset(ZF_IN zfint offset)
+ZFUIAutoLayoutMaker &ZFUIAutoLayoutMaker::offset(ZF_IN zffloat offset)
 {
     d->requireTarget();
     for(zfindex i = d->ruleAttached.count() - 1; i != zfindexMax(); --i)
@@ -424,10 +424,10 @@ ZFOBJECT_ON_INIT_USER_REGISTER_2({
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, zfal_maker, ZFMP_IN(ZFUIView *, child))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, zfal_maker, ZFMP_IN(ZFUIView *, child), ZFMP_IN(ZFUIAutoLayout *, parent))
 
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, width, ZFMP_IN(zfint, size))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, height, ZFMP_IN(zfint, size))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, size, ZFMP_IN(zfint, size))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, size, ZFMP_IN(zfint, width), ZFMP_IN(zfint, height))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, width, ZFMP_IN(zffloat, size))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, height, ZFMP_IN(zffloat, size))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, size, ZFMP_IN(zffloat, size))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, size, ZFMP_IN(zffloat, width), ZFMP_IN(zffloat, height))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, size, ZFMP_IN(const ZFUISize &, size))
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, width)
@@ -455,7 +455,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutM
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, toParent)
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, scale, ZFMP_IN(zffloat, scale))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, offset, ZFMP_IN(zfint, offset))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, offset, ZFMP_IN(zffloat, offset))
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, biasX, ZFMP_IN(zffloat, biasX))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIAutoLayoutMaker, ZFUIAutoLayoutMaker &, biasY, ZFMP_IN(zffloat, biasY))

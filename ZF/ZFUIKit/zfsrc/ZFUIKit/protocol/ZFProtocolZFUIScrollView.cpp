@@ -329,8 +329,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::trackMouseDown(ZF_IN void *nativeMous
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
 
     this->dragState = _ZFP_ZFUIScrollViewImplHelperDragStateTracking;
     this->trackingChild = this->pimplOwner->implProtocol->findTouchedChildScrollView(x, y);
@@ -366,8 +366,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::trackMouseMove(ZF_IN void *nativeMous
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
     if(this->trackingChild != zfnull)
     {
         void *tmp = this->pimplOwner->implProtocol->mouseEventClone(nativeMouseEvent);
@@ -391,8 +391,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::trackMouseMove(ZF_IN void *nativeMous
     }
 
     ZFUIPoint mouseDownPos = this->mouseEventPos(this->mouseDownSaved);
-    zfint xOffset = x - mouseDownPos.x;
-    zfint yOffset = y - mouseDownPos.y;
+    zffloat xOffset = x - mouseDownPos.x;
+    zffloat yOffset = y - mouseDownPos.y;
     if(zfmAbs(xOffset) <= this->pimplOwner->nativeScrollTolerance && zfmAbs(yOffset) <= this->pimplOwner->nativeScrollTolerance)
     {
         return ;
@@ -514,8 +514,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::trackMouseUp(ZF_IN void *nativeMouseE
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
     if(this->trackingChild != zfnull)
     {
         ZFUIScrollViewImplHelper *tmp = this->trackingChild;
@@ -538,8 +538,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::trackMouseCancel(ZF_IN void *nativeMo
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
     if(this->trackingChild != zfnull)
     {
         ZFUIScrollViewImplHelper *tmp = this->trackingChild;
@@ -565,8 +565,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::resolveMouseDown(ZF_IN void *nativeMo
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
     this->mouseDownCleanup();
 
     if(!this->scrollableOrBounceable())
@@ -618,8 +618,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::resolveMouseMove(ZF_IN void *nativeMo
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
     if(this->dragState == _ZFP_ZFUIScrollViewImplHelperDragStateDragging)
     {
         ZFPROTOCOL_ACCESS(ZFUIScrollView)->notifyScrollViewDrag(this->pimplOwner->scrollView, ZFUIPointMake(x, y), this->pimplOwner->implProtocol->nativeTime());
@@ -719,8 +719,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::resolveMouseUp(ZF_IN void *nativeMous
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
 
     if(this->dragState == _ZFP_ZFUIScrollViewImplHelperDragStateDragging)
     {
@@ -768,8 +768,8 @@ void _ZFP_ZFUIScrollViewImplHelperPrivate::resolveMouseCancel(ZF_IN void *native
         << this->mouseEventPos(nativeMouseEvent);
     #endif
     ZFUIPoint mousePos = this->mouseEventPos(nativeMouseEvent);
-    zfint &x = mousePos.x;
-    zfint &y = mousePos.y;
+    zffloat &x = mousePos.x;
+    zffloat &y = mousePos.y;
 
     if(this->dragState == _ZFP_ZFUIScrollViewImplHelperDragStateDragging)
     {

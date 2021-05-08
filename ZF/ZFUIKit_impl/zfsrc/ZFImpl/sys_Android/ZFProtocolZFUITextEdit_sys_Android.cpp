@@ -227,7 +227,7 @@ public:
             ZFCastStatic(jint, textShadowOffset.height));
     }
     virtual void textSize(ZF_IN ZFUITextEdit *textEdit,
-                          ZF_IN zfint textSize)
+                          ZF_IN zffloat textSize)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, "native_textSize",
@@ -245,7 +245,7 @@ public:
 public:
     virtual ZFUISize measureNativeTextEdit(ZF_IN ZFUITextEdit *textEdit,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize)
+                                           ZF_IN zffloat textSize)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, "native_measureNativeTextEdit",
@@ -261,7 +261,7 @@ public:
             ZFCastStatic(jint, sizeHint.height),
             ZFCastStatic(jint, textSize));
         jint *jarrSize = JNIUtilGetIntArrayElements(jniEnv, jobjSize, NULL);
-        ZFUISize ret = ZFUISizeMake((zfint)jarrSize[0], (zfint)jarrSize[1]);
+        ZFUISize ret = ZFUISizeMake((zffloat)jarrSize[0], (zffloat)jarrSize[1]);
         JNIUtilReleaseIntArrayElements(jniEnv, jobjSize, jarrSize, JNI_ABORT);
         JNIUtilDeleteLocalRef(jniEnv, jobjSize);
         return ret;

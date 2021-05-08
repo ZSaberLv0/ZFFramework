@@ -33,14 +33,14 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIMargin, layoutChildMarg
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, zfint, layoutChildSpaceX)
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, zffloat, layoutChildSpaceX)
 {
     if(this->layoutChildSpaceX() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, zfint, layoutChildSpaceY)
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, zffloat, layoutChildSpaceY)
 {
     if(this->layoutChildSpaceY() != propertyValueOld)
     {
@@ -142,8 +142,8 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureHorizontalLine(ZF_IN ZFUIFlowLayout *
                                                           ZF_IN const ZFUISize &sizeHint,
                                                           ZF_IN zfindex childIndexStart,
                                                           ZF_OUT zfindex &childIndexStop,
-                                                          ZF_OUT zfint &fixedSize,
-                                                          ZF_OUT zfint &totalWeight)
+                                                          ZF_OUT zffloat &fixedSize,
+                                                          ZF_OUT zffloat &totalWeight)
 {
     ZFUISize lineSize = ZFUISizeZero();
     childIndexStop = parent->childCount();
@@ -155,11 +155,11 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureHorizontalLine(ZF_IN ZFUIFlowLayout *
         {
             continue ;
         }
-        zfint prevSpace = (i > childIndexStart ? parent->layoutChildSpaceX() : 0);
+        zffloat prevSpace = (i > childIndexStart ? parent->layoutChildSpaceX() : 0);
         totalWeight += layoutParam->layoutWeight();
 
-        zfint marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
-        zfint marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
+        zffloat marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
+        zffloat marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
         child->layoutMeasure(
             ZFUISizeMake(
                 ZFUILayoutParam::sizeHintMerge(
@@ -194,8 +194,8 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureVerticalLine(ZF_IN ZFUIFlowLayout *pa
                                                         ZF_IN const ZFUISize &sizeHint,
                                                         ZF_IN zfindex childIndexStart,
                                                         ZF_OUT zfindex &childIndexStop,
-                                                        ZF_OUT zfint &fixedSize,
-                                                        ZF_OUT zfint &totalWeight)
+                                                        ZF_OUT zffloat &fixedSize,
+                                                        ZF_OUT zffloat &totalWeight)
 {
     ZFUISize lineSize = ZFUISizeZero();
     childIndexStop = parent->childCount();
@@ -207,11 +207,11 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureVerticalLine(ZF_IN ZFUIFlowLayout *pa
         {
             continue ;
         }
-        zfint prevSpace = (i > childIndexStart ? parent->layoutChildSpaceY() : 0);
+        zffloat prevSpace = (i > childIndexStart ? parent->layoutChildSpaceY() : 0);
         totalWeight += layoutParam->layoutWeight();
 
-        zfint marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
-        zfint marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
+        zffloat marginX = ZFUIMarginGetWidth(layoutParam->layoutMargin());
+        zffloat marginY = ZFUIMarginGetHeight(layoutParam->layoutMargin());
         child->layoutMeasure(
             ZFUISizeMake(
                 ZFUILayoutParam::sizeHintMerge(
@@ -248,8 +248,8 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureVerticalLine(ZF_IN ZFUIFlowLayout *pa
 static ZFUISize _ZFP_ZFUIFlowLayout_measureHorizontal(ZF_IN ZFUIFlowLayout *parent,
                                                       ZF_IN const ZFUISize &sizeHint)
 {
-    zfint parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
-    zfint parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
+    zffloat parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
+    zffloat parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
     ZFUISize ret = ZFUISizeMake(0, parentMarginY);
     zfindex childIndex = 0;
     ZFUISize sizeHintTmp = ZFUISizeMake(
@@ -257,9 +257,9 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureHorizontal(ZF_IN ZFUIFlowLayout *pare
         sizeHint.height);
     for(zfindex lineIndex = 0; childIndex < parent->childCount(); ++lineIndex)
     {
-        zfint fixedSize = 0;
-        zfint totalWeight = 0;
-        zfint prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceY() : 0);
+        zffloat fixedSize = 0;
+        zffloat totalWeight = 0;
+        zffloat prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceY() : 0);
         ZFUISize lineSizeHint = ZFUISizeMake(
             sizeHintTmp.width,
             ZFUILayoutParam::sizeHintOffset(sizeHintTmp.height, 0 - prevLineSpace - ret.height));
@@ -273,8 +273,8 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureHorizontal(ZF_IN ZFUIFlowLayout *pare
 static ZFUISize _ZFP_ZFUIFlowLayout_measureVertical(ZF_IN ZFUIFlowLayout *parent,
                                                     ZF_IN const ZFUISize &sizeHint)
 {
-    zfint parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
-    zfint parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
+    zffloat parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
+    zffloat parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
     ZFUISize ret = ZFUISizeMake(parentMarginX, 0);
     zfindex childIndex = 0;
     ZFUISize sizeHintTmp = ZFUISizeMake(
@@ -282,9 +282,9 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureVertical(ZF_IN ZFUIFlowLayout *parent
         ZFUILayoutParam::sizeHintOffset(sizeHint.height, 0 - parentMarginY));
     for(zfindex lineIndex = 0; childIndex < parent->childCount(); ++lineIndex)
     {
-        zfint fixedSize = 0;
-        zfint totalWeight = 0;
-        zfint prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceX() : 0);
+        zffloat fixedSize = 0;
+        zffloat totalWeight = 0;
+        zffloat prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceX() : 0);
         ZFUISize lineSizeHint = ZFUISizeMake(
             ZFUILayoutParam::sizeHintOffset(sizeHintTmp.width, 0 - prevLineSpace - ret.width),
             sizeHintTmp.width);
@@ -301,17 +301,17 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureVertical(ZF_IN ZFUIFlowLayout *parent
 static void _ZFP_ZFUIFlowLayout_layoutHorizontal(ZF_IN ZFUIFlowLayout *parent,
                                                  ZF_IN const ZFUISize &size)
 {
-    zfint parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
+    zffloat parentMarginX = ZFUIMarginGetWidth(parent->layoutChildMargin());
     zfbool positiveDirectionX = (parent->layoutOrientationMain() == ZFUIOrientation::e_Left);
     zfbool positiveDirectionY = (_ZFP_ZFUIFlowLayout_layoutOrientationSecondary(parent) == ZFUIOrientation::e_Top);
-    zfint lineSizeUsed = (positiveDirectionY ? parent->layoutChildMargin().top : parent->layoutChildMargin().bottom);
-    zfint lineTailMargin = (positiveDirectionY ? parent->layoutChildMargin().bottom : parent->layoutChildMargin().top);
+    zffloat lineSizeUsed = (positiveDirectionY ? parent->layoutChildMargin().top : parent->layoutChildMargin().bottom);
+    zffloat lineTailMargin = (positiveDirectionY ? parent->layoutChildMargin().bottom : parent->layoutChildMargin().top);
     zfindex childIndex = 0;
     for(zfindex lineIndex = 0; childIndex < parent->childCount(); ++lineIndex)
     {
-        zfint fixedSize = 0;
-        zfint totalWeight = 0;
-        zfint prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceY() : 0);
+        zffloat fixedSize = 0;
+        zffloat totalWeight = 0;
+        zffloat prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceY() : 0);
         zfindex childIndexStart = childIndex;
         ZFUISize lineSizeHint = ZFUISizeMake(
             size.width - parentMarginX,
@@ -319,8 +319,8 @@ static void _ZFP_ZFUIFlowLayout_layoutHorizontal(ZF_IN ZFUIFlowLayout *parent,
         ZFUISize lineSize = _ZFP_ZFUIFlowLayout_measureHorizontalLine(
             parent, lineSizeHint, childIndexStart, childIndex, fixedSize, totalWeight);
 
-        zfint flexibleSize = size.width - parentMarginX - fixedSize;
-        zfint usedSize = (positiveDirectionX ? parent->layoutChildMargin().left : parent->layoutChildMargin().right);
+        zffloat flexibleSize = size.width - parentMarginX - fixedSize;
+        zffloat usedSize = (positiveDirectionX ? parent->layoutChildMargin().left : parent->layoutChildMargin().right);
         for(zfindex i = childIndexStart; i < childIndex; ++i)
         {
             ZFUIView *child = parent->childAtIndex(i);
@@ -329,8 +329,8 @@ static void _ZFP_ZFUIFlowLayout_layoutHorizontal(ZF_IN ZFUIFlowLayout *parent,
             {
                 continue ;
             }
-            zfint prevSpace = (i > childIndexStart ? parent->layoutChildSpaceX() : 0);
-            zfint childSize = 0;
+            zffloat prevSpace = (i > childIndexStart ? parent->layoutChildSpaceX() : 0);
+            zffloat childSize = 0;
             if(layoutParam->layoutWeight() > 0)
             {
                 childSize = layoutParam->layoutWeight() * flexibleSize / totalWeight;
@@ -366,17 +366,17 @@ static void _ZFP_ZFUIFlowLayout_layoutHorizontal(ZF_IN ZFUIFlowLayout *parent,
 static void _ZFP_ZFUIFlowLayout_layoutVertical(ZF_IN ZFUIFlowLayout *parent,
                                                ZF_IN const ZFUISize &size)
 {
-    zfint parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
+    zffloat parentMarginY = ZFUIMarginGetHeight(parent->layoutChildMargin());
     zfbool positiveDirectionX = (_ZFP_ZFUIFlowLayout_layoutOrientationSecondary(parent) == ZFUIOrientation::e_Left);
     zfbool positiveDirectionY = (parent->layoutOrientationMain() == ZFUIOrientation::e_Top);
-    zfint lineSizeUsed = (positiveDirectionX ? parent->layoutChildMargin().left : parent->layoutChildMargin().right);
-    zfint lineTailMargin = (positiveDirectionX ? parent->layoutChildMargin().right : parent->layoutChildMargin().left);
+    zffloat lineSizeUsed = (positiveDirectionX ? parent->layoutChildMargin().left : parent->layoutChildMargin().right);
+    zffloat lineTailMargin = (positiveDirectionX ? parent->layoutChildMargin().right : parent->layoutChildMargin().left);
     zfindex childIndex = 0;
     for(zfindex lineIndex = 0; childIndex < parent->childCount(); ++lineIndex)
     {
-        zfint fixedSize = 0;
-        zfint totalWeight = 0;
-        zfint prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceX() : 0);
+        zffloat fixedSize = 0;
+        zffloat totalWeight = 0;
+        zffloat prevLineSpace = (lineIndex > 0 ? parent->layoutChildSpaceX() : 0);
         zfindex childIndexStart = childIndex;
         ZFUISize lineSizeHint = ZFUISizeMake(
             size.width - lineSizeUsed - lineTailMargin,
@@ -384,8 +384,8 @@ static void _ZFP_ZFUIFlowLayout_layoutVertical(ZF_IN ZFUIFlowLayout *parent,
         ZFUISize lineSize = _ZFP_ZFUIFlowLayout_measureVerticalLine(
             parent, lineSizeHint, childIndexStart, childIndex, fixedSize, totalWeight);
 
-        zfint flexibleSize = size.height - parentMarginY - fixedSize;
-        zfint usedSize = (positiveDirectionY ? parent->layoutChildMargin().top : parent->layoutChildMargin().bottom);
+        zffloat flexibleSize = size.height - parentMarginY - fixedSize;
+        zffloat usedSize = (positiveDirectionY ? parent->layoutChildMargin().top : parent->layoutChildMargin().bottom);
         for(zfindex i = childIndexStart; i < childIndex; ++i)
         {
             ZFUIView *child = parent->childAtIndex(i);
@@ -394,8 +394,8 @@ static void _ZFP_ZFUIFlowLayout_layoutVertical(ZF_IN ZFUIFlowLayout *parent,
             {
                 continue ;
             }
-            zfint prevSpace = (i > childIndexStart ? parent->layoutChildSpaceY() : 0);
-            zfint childSize = 0;
+            zffloat prevSpace = (i > childIndexStart ? parent->layoutChildSpaceY() : 0);
+            zffloat childSize = 0;
             if(layoutParam->layoutWeight() > 0)
             {
                 childSize = layoutParam->layoutWeight() * flexibleSize / totalWeight;

@@ -163,7 +163,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUISize, textShadowOffset)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleFixed()));
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfint, textSize)
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zffloat, textSize)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->scaleFixed()));
     if(this->textSize() != propertyValueOld)

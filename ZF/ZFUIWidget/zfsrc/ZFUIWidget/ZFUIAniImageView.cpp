@@ -46,9 +46,9 @@ ZFMETHOD_DEFINE_4(ZFUIAniImageData, zfbool, aniLoad,
     d->frameImages.removeAll();
     d->frameTimers.removeAll();
 
-    for(zfint y = 0, yEnd = imageSizeFixed.height - frameSizePixel.height; y <= yEnd && d->frameImages.count() < frameCount; y += frameSizePixel.height)
+    for(zffloat y = 0, yEnd = imageSizeFixed.height - frameSizePixel.height; y <= yEnd && d->frameImages.count() < frameCount; y += frameSizePixel.height)
     {
-        for(zfint x = 0, xEnd = imageSizeFixed.width - frameSizePixel.width; x <= xEnd && d->frameImages.count() < frameCount; x += frameSizePixel.width)
+        for(zffloat x = 0, xEnd = imageSizeFixed.width - frameSizePixel.width; x <= xEnd && d->frameImages.count() < frameCount; x += frameSizePixel.width)
         {
             zfautoObjectT<ZFUIImage *> frameImage = ZFUIImageLoadInFrame(frameSrc, ZFUIRectMake(
                     x,
@@ -680,12 +680,12 @@ static zfbool _ZFP_ZFUIAniImageCreate(ZF_IN const ZFClass *desiredClass,
     zfuint xCount = 1;
     zfuint yCount = (zfuint)frameCount;
     zfuint minSize = xCount * yCount;
-    zfuint minDiff = zfmAbs((zfint)(frameSizePixel.width * xCount) - (zfint)(frameSizePixel.height * yCount));
+    zfuint minDiff = zfmAbs((zffloat)(frameSizePixel.width * xCount) - (zffloat)(frameSizePixel.height * yCount));
     for(zfuint x = 2; x <= frameCount; ++x)
     {
         zfuint y = ((frameCount % x) == 0) ? (zfuint)(frameCount / x) : (zfuint)(frameCount / x + 1);
         zfuint size = x * y;
-        zfuint diff = zfmAbs((zfint)(frameSizePixel.width * x) - (zfint)(frameSizePixel.height * y));
+        zfuint diff = zfmAbs((zffloat)(frameSizePixel.width * x) - (zffloat)(frameSizePixel.height * y));
         if(size <= minSize && diff <= minDiff)
         {
             xCount = x;

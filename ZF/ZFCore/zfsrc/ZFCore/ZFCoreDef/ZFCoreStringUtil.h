@@ -191,56 +191,44 @@ inline zfint zfsToInt(ZF_IN const zfchar *src,
  */
 template<typename T_Float>
 ZF_ENV_EXPORT zfbool zfsFromFloatT(ZF_OUT zfstring &s,
-                                   ZF_IN T_Float n,
-                                   ZF_IN_OPT zfindex decimalLenOrMax = zfindexMax())
+                                   ZF_IN T_Float n)
 {
-    if(n == 0)
+    zfchar buf[64] = {0};
+    sprintf(buf, "%lf", (double)n);
+    const zfchar *p = buf;
+    while(*p && *p != '.') {++p;}
+    if(*p == '\0')
     {
-        s += '0';
+        s += buf;
         return zftrue;
     }
-    if(n < 0)
+    const zfchar *pEnd = p + zfslen(p) - 1;
+    if(*pEnd == '0')
     {
-        s += '-';
-        n = 0 - n;
-    }
-
-    zfsFromIntT(s, (unsigned long)n);
-    s += '.';
-    n -= (unsigned long)n;
-
-    unsigned long t;
-    if(decimalLenOrMax == zfindexMax())
-    {
-        if(sizeof(T_Float) <= 4) {t = (unsigned long)(n * 10000);}
-        else if(sizeof(T_Float) <= 8) {t = (unsigned long)(n * 1000000);}
-        else {t = (unsigned long)(n * 100000000);}
-        if(t > 0)
+        do {--pEnd;} while(*pEnd == '0');
+        if(pEnd == p)
         {
-            while((t % 10) == 0) {t /= 10;}
+            s.append(buf, p - buf);
+        }
+        else
+        {
+            s.append(buf, pEnd + 1 - buf);
         }
     }
     else
     {
-        unsigned long e = 1;
-        for(zfindex i = 0; i < decimalLenOrMax; ++i)
-        {
-            e *= 10;
-        }
-        t = (unsigned long)(n * e);
+        s += buf;
     }
-    zfsFromIntT(s, t);
     return zftrue;
 }
 /**
  * @brief see #zfsFromFloatT
  */
 template<typename T_Float>
-ZF_ENV_EXPORT zfstring zfsFromFloat(ZF_IN T_Float n,
-                                    ZF_IN_OPT zfindex decimalLenOrMax = zfindexMax())
+ZF_ENV_EXPORT zfstring zfsFromFloat(ZF_IN T_Float n)
 {
     zfstring s;
-    zfsFromFloatT(s, n, decimalLenOrMax);
+    zfsFromFloatT(s, n);
     return s;
 }
 

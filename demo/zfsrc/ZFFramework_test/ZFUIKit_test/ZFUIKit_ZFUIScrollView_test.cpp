@@ -87,11 +87,11 @@ private:
             ZFUIMarginGetWidth(contentMargin) + itemSize.width + (itemSize.width + itemSpace.width) * itemCount.width,
             ZFUIMarginGetHeight(contentMargin) + itemSize.height + (itemSize.height + itemSpace.height) * itemCount.height));
 
-        for(zfint y = contentMargin.top;
+        for(zffloat y = contentMargin.top;
             y <= scrollView->scrollContentFrame().height - itemSize.height - contentMargin.bottom;
             y += itemSize.height + itemSpace.height)
         {
-            for(zfint x = contentMargin.left;
+            for(zffloat x = contentMargin.left;
                 x <= scrollView->scrollContentFrame().height - itemSize.width - contentMargin.right;
                 x += itemSize.width + itemSpace.width)
             {
@@ -130,7 +130,7 @@ private:
             ZFLISTENER_LOCAL(buttonTextGetter, {
                 ZFUIScrollView *scrollView = userData->objectTag("scrollView")->objectHolded();
                 v_zfstring *text = listenerData.param0<v_zfstring *>();
-                text->zfv = zfstringWithFormat("autoScrollSpeedX: %d", scrollView->autoScrollSpeedX());
+                text->zfv = zfstringWithFormat("autoScrollSpeedX: %f", scrollView->autoScrollSpeedX());
             })
             setting->buttonTextGetter(buttonTextGetter);
             ZFLISTENER_LOCAL(buttonClickListener, {
@@ -154,7 +154,7 @@ private:
             ZFLISTENER_LOCAL(buttonTextGetter, {
                 ZFUIScrollView *scrollView = userData->objectTag("scrollView")->objectHolded();
                 v_zfstring *text = listenerData.param0<v_zfstring *>();
-                text->zfv = zfstringWithFormat("autoScrollSpeedY: %d", scrollView->autoScrollSpeedY());
+                text->zfv = zfstringWithFormat("autoScrollSpeedY: %f", scrollView->autoScrollSpeedY());
             })
             setting->buttonTextGetter(buttonTextGetter);
             ZFLISTENER_LOCAL(buttonClickListener, {

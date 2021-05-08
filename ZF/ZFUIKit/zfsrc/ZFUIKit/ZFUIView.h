@@ -306,29 +306,29 @@ public:
     ZFMETHOD_DECLARE_0(void, viewFrameReset)
 
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_0(zfint const &, viewX)
+    ZFMETHOD_DECLARE_0(zffloat const &, viewX)
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_1(void, viewX, ZFMP_IN(zfint const &, propertyValue))
+    ZFMETHOD_DECLARE_1(void, viewX, ZFMP_IN(zffloat const &, propertyValue))
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_0(zfint const &, viewY)
+    ZFMETHOD_DECLARE_0(zffloat const &, viewY)
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_1(void, viewY, ZFMP_IN(zfint const &, propertyValue))
+    ZFMETHOD_DECLARE_1(void, viewY, ZFMP_IN(zffloat const &, propertyValue))
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_0(zfint const &, viewWidth)
+    ZFMETHOD_DECLARE_0(zffloat const &, viewWidth)
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_1(void, viewWidth, ZFMP_IN(zfint const &, propertyValue))
+    ZFMETHOD_DECLARE_1(void, viewWidth, ZFMP_IN(zffloat const &, propertyValue))
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_0(zfint const &, viewHeight)
+    ZFMETHOD_DECLARE_0(zffloat const &, viewHeight)
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_1(void, viewHeight, ZFMP_IN(zfint const &, propertyValue))
+    ZFMETHOD_DECLARE_1(void, viewHeight, ZFMP_IN(zffloat const &, propertyValue))
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_0(zfint const &, viewCenterX)
+    ZFMETHOD_DECLARE_0(zffloat const &, viewCenterX)
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_1(void, viewCenterX, ZFMP_IN(zfint const &, propertyValue))
+    ZFMETHOD_DECLARE_1(void, viewCenterX, ZFMP_IN(zffloat const &, propertyValue))
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_0(zfint const &, viewCenterY)
+    ZFMETHOD_DECLARE_0(zffloat const &, viewCenterY)
     /** @brief see #viewFrame */
-    ZFMETHOD_DECLARE_1(void, viewCenterY, ZFMP_IN(zfint const &, propertyValue))
+    ZFMETHOD_DECLARE_1(void, viewCenterY, ZFMP_IN(zffloat const &, propertyValue))
 
     /**
      * @brief prefered size, #ZFUISizeInvalid by default

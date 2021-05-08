@@ -39,7 +39,7 @@ zfclass ZF_ENV_EXPORT ZFUIFlowLayoutParam : zfextends ZFUILayoutParam
      * -  child1 = parentSize * 4 / 9
      * -  child2 = parentSize * 3 / 9
      */
-    ZFPROPERTY_ASSIGN(zfint, layoutWeight)
+    ZFPROPERTY_ASSIGN(zffloat, layoutWeight)
 
     /**
      * @brief whether reserve space if child is not visible, false by default
@@ -110,14 +110,14 @@ public:
      * @brief extra space between each child independent from children's layout param,
      *   in x direction, 0 by default
      */
-    ZFPROPERTY_ASSIGN(zfint, layoutChildSpaceX)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, layoutChildSpaceX)
+    ZFPROPERTY_ASSIGN(zffloat, layoutChildSpaceX)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, layoutChildSpaceX)
     /**
      * @brief extra space between each child independent from children's layout param,
      *   in y direction, 0 by default
      */
-    ZFPROPERTY_ASSIGN(zfint, layoutChildSpaceY)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, layoutChildSpaceY)
+    ZFPROPERTY_ASSIGN(zffloat, layoutChildSpaceY)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, layoutChildSpaceY)
 
     // ============================================================
     // override ZFUIView

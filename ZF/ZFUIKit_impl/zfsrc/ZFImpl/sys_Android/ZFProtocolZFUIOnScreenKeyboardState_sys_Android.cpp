@@ -46,7 +46,7 @@ public:
             ).c_str());
         jintArray jobjRect = (jintArray)JNIUtilCallStaticObjectMethod(jniEnv, this->jclsOwner, jmId);
         jint *jarrRect = JNIUtilGetIntArrayElements(jniEnv, jobjRect, NULL);
-        ZFUIRect ret = ZFUIRectMake((zfint)jarrRect[0], (zfint)jarrRect[1], (zfint)jarrRect[2], (zfint)jarrRect[3]);
+        ZFUIRect ret = ZFUIRectMake((zffloat)jarrRect[0], (zffloat)jarrRect[1], (zffloat)jarrRect[2], (zffloat)jarrRect[3]);
         JNIUtilReleaseIntArrayElements(jniEnv, jobjRect, jarrRect, JNI_ABORT);
         JNIUtilDeleteLocalRef(jniEnv, jobjRect);
         return ret;

@@ -123,10 +123,10 @@ public:
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsZFUIView, jmId,
             ZFCastStatic(jobject, view->nativeView()),
-            rect.x,
-            rect.y,
-            rect.width,
-            rect.height);
+            (jint)rect.x,
+            (jint)rect.y,
+            (jint)rect.width,
+            (jint)rect.height);
     }
     virtual zffloat nativeViewScaleForImpl(ZF_IN void *nativeView)
     {
@@ -287,10 +287,10 @@ public:
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsZFUIView, jmId,
             ZFCastStatic(jobject, view->nativeView()),
-            rect.x,
-            rect.y,
-            rect.width,
-            rect.height);
+            (jint)rect.x,
+            (jint)rect.y,
+            (jint)rect.width,
+            (jint)rect.height);
     }
 
     virtual void layoutRequest(ZF_IN ZFUIView *view)
@@ -320,8 +320,8 @@ public:
             (jint)sizeHint.width,
             (jint)sizeHint.height);
         jint *jarrSize = JNIUtilGetIntArrayElements(jniEnv, jobjSize, NULL);
-        ret.width = (zfint)jarrSize[0];
-        ret.height = (zfint)jarrSize[1];
+        ret.width = (zffloat)jarrSize[0];
+        ret.height = (zffloat)jarrSize[1];
         JNIUtilReleaseIntArrayElements(jniEnv, jobjSize, jarrSize, JNI_ABORT);
         JNIUtilDeleteLocalRef(jniEnv, jobjSize);
     }
@@ -342,7 +342,7 @@ JNI_METHOD_DECLARE_BEGIN(ZFImpl_sys_Android_JNI_ID_ZFUIView,
 {
     ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(
         ZFCastZFObject(ZFUIView *, JNIConvertZFObjectFromJNIType(jniEnv, zfjniPointerOwnerZFUIView)),
-        ZFUIRectMake((zfint)rect_x, (zfint)rect_y, (zfint)rect_width, (zfint)rect_height));
+        ZFUIRectMake((zffloat)rect_x, (zffloat)rect_y, (zffloat)rect_width, (zffloat)rect_height));
 }
 JNI_METHOD_DECLARE_END()
 JNI_METHOD_DECLARE_BEGIN(ZFImpl_sys_Android_JNI_ID_ZFUIView,

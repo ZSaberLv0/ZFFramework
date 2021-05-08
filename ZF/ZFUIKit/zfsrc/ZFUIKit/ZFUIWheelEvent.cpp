@@ -7,9 +7,9 @@ ZFOBJECT_REGISTER(ZFUIWheelEvent)
 void ZFUIWheelEvent::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {
     ret += "wheel (";
-    zfsFromIntT(ret, this->wheelX);
+    zfsFromFloatT(ret, this->wheelX);
     ret += ", ";
-    zfsFromIntT(ret, this->wheelY);
+    zfsFromFloatT(ret, this->wheelY);
     ret += ")";
 
     if(this->eventResolved())
@@ -19,8 +19,8 @@ void ZFUIWheelEvent::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 }
 
 // ============================================================
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWheelEvent, zfint, wheelX)
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWheelEvent, zfint, wheelY)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWheelEvent, zffloat, wheelX)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWheelEvent, zffloat, wheelY)
 
 ZF_NAMESPACE_GLOBAL_END
 

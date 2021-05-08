@@ -46,7 +46,7 @@ public:
     /** @brief see #ZFUIAutoLayout */
     ZFCORE_PARAM_WITH_INIT(zffloat, scale, 0)
     /** @brief see #ZFUIAutoLayout */
-    ZFCORE_PARAM(zfint, offset)
+    ZFCORE_PARAM(zffloat, offset)
 
 public:
     /** @brief remove all contents */
@@ -199,7 +199,7 @@ zfclassFwd _ZFP_ZFUIAutoLayoutPrivate;
  *     it's implicitly set to align to parent with flexible rule\n
  *     note, if both left/right and width have flexible rule,
  *     the left/right rule would have higher priority
- * -  `offset` : #zfint shows offset to `target`
+ * -  `offset` : #zffloat shows offset to `target`
  * -  `biasX` : if both left and right has flexible rule,
  *   align to which side, `0` means totally align to left,
  *   while `1` means align to right

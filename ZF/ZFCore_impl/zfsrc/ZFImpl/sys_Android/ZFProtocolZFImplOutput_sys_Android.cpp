@@ -57,38 +57,25 @@ private:
     zfstring savedString;
     void checkOutput(ZF_IN_OUT zfstring &s)
     {
-        if(s.length() > 0)
+        if(s.isEmpty())
         {
-            if(s[s.length() - 1] == '\n')
+            return;
+        }
+
+        zfindex pL = 0;
+        do {
+            zfindex p = zfstringFind(s.cString() + pL, '\n');
+            if(p == zfindexMax())
             {
-                if(s.length() == 1)
-                {
-                    _ZFP_ZFImpl_sys_Android_ZFImplOutput_output(" ");
-                }
-                else
-                {
-                    s.remove(s.length() - 1);
-                    _ZFP_ZFImpl_sys_Android_ZFImplOutput_output("%s", s.cString());
-                }
-                s.removeAll();
+                break;
             }
-            else
-            {
-                zfindex index = zfstringFindReversely(s, '\n');
-                if(index != zfindexMax())
-                {
-                    if(index == 0)
-                    {
-                        _ZFP_ZFImpl_sys_Android_ZFImplOutput_output(" ");
-                    }
-                    else
-                    {
-                        s[index] = '\0';
-                        _ZFP_ZFImpl_sys_Android_ZFImplOutput_output("%s", s.cString());
-                    }
-                    s.remove(0, index + 1);
-                }
-            }
+            s[pL + p] = '\0';
+            _ZFP_ZFImpl_sys_Android_ZFImplOutput_output("%s", s.cString() + pL);
+            pL = pL + p + 1;
+        } while(zftrue);
+        if(pL != 0)
+        {
+            s.remove(0, pL);
         }
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFImplOutputImpl_sys_Android)

@@ -99,7 +99,7 @@ zfbool ZFUIAutoLayoutParam::serializableOnSerializeFromData(ZF_IN const ZFSerial
 
         // offset
         ZFSerializableUtilSerializeAttributeFromData(element, outErrorHint, outErrorPos,
-            check, ZFSerializableKeyword_ZFUIAutoLayoutParam_offset, zfint, rule.offset());
+            check, ZFSerializableKeyword_ZFUIAutoLayoutParam_offset, zffloat, rule.offset());
 
         // finish
         element.resolveMark();
@@ -148,7 +148,7 @@ zfbool ZFUIAutoLayoutParam::serializableOnSerializeToData(ZF_IN_OUT ZFSerializab
 
         // offset
         ZFSerializableUtilSerializeAttributeToData(element, outErrorHint, ref,
-            ZFSerializableKeyword_ZFUIAutoLayoutParam_offset, zfint, rule.offset(), 0, 0);
+            ZFSerializableKeyword_ZFUIAutoLayoutParam_offset, zffloat, rule.offset(), 0, 0);
 
         element.itemClass(ZFSerializableKeyword_ZFUIAutoLayoutParam_rule);
         serializableData.elementAdd(element);

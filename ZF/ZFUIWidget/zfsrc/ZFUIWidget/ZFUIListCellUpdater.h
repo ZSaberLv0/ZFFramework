@@ -21,7 +21,7 @@ public:
     zfindex cellCount; /**< @brief cell's total count */
     ZFUIOrientationEnum listOrientation; /**< @brief owner list container's orientation */
     ZFUISize listContainerSize; /**< @brief owner list container's size */
-    zfint cellSizeHint; /**< @brief list cell's size hint */
+    zffloat cellSizeHint; /**< @brief list cell's size hint */
 };
 ZFTYPEID_ACCESS_ONLY_DECLARE(ZFUIListCellUpdaterParam, ZFUIListCellUpdaterParam)
 ZFCORE_POD_COMPARER_DECLARE(ZFUIListCellUpdaterParam)

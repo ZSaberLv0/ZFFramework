@@ -9,7 +9,7 @@ void ZFUIListCellView::objectOnInitFinish(void)
 {
     zfsuper::objectOnInitFinish();
 
-    zfint itemMargin = ZFUIGlobalStyle::DefaultStyle()->itemMargin();
+    zffloat itemMargin = ZFUIGlobalStyle::DefaultStyle()->itemMargin();
 
     this->internalBgViewAdd(this->cellIconContainer());
     this->cellIconContainer()->layoutParam()->layoutAlign(ZFUIAlign::e_Center);

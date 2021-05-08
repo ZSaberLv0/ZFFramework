@@ -82,26 +82,26 @@ public:
     /**
      * @brief text size, #ZFUIGlobalStyle::textSizeNormal by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSize,
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSize,
                                 ZFUIGlobalStyle::DefaultStyle()->textSizeNormal())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, textSize)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, textSize)
 
     /**
      * @brief if not 0, auto decrease text size
      *   when the view isn't big enough to hold current text,
      *   #ZFUIGlobalStyle::textSizeTiny by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeAutoChangeMinSize,
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeAutoChangeMinSize,
                                 ZFUIGlobalStyle::DefaultStyle()->textSizeTiny())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, textSizeAutoChangeMinSize)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, textSizeAutoChangeMinSize)
     /**
      * @brief if not 0 and larger than #textSizeAutoChangeMinSize,
      *   auto increase text size when the view is bigger than current text need,
      *   0 by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeAutoChangeMaxSize,
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeAutoChangeMaxSize,
                                 0)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, textSizeAutoChangeMaxSize)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, textSizeAutoChangeMaxSize)
 
     /**
      * @brief single line or not, true by default
@@ -146,7 +146,7 @@ public:
      *
      * if the view hasn't been layouted, the size may be invalid
      */
-    ZFMETHOD_DECLARE_0(zfint, textSizeCurrent)
+    ZFMETHOD_DECLARE_0(zffloat, textSizeCurrent)
 
     // ============================================================
     // override

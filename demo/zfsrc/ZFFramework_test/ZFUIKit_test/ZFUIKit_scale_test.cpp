@@ -35,13 +35,20 @@ private:
             ZFLISTENER_LOCAL(buttonTextGetter, {
                 v_zfstring *text = listenerData.param0<v_zfstring *>();
                 text->zfv = zfstringWithFormat(
-                    "scale: %d",
-                    (zfint)ZFUISysWindow::mainWindow()->rootView()->scaleForApp());
+                    "scale: %f",
+                    ZFUISysWindow::mainWindow()->rootView()->scaleForApp());
             })
             setting->buttonTextGetter(buttonTextGetter);
             ZFLISTENER_LOCAL(buttonClickListener, {
                 ZFUIRootView *rootView = ZFUISysWindow::mainWindow()->rootView();
-                rootView->scaleForApp(((zfint)(rootView->scaleForApp()) % 2) + 1);
+                if(rootView->scaleForApp() == 1)
+                {
+                    rootView->scaleForApp(2);
+                }
+                else
+                {
+                    rootView->scaleForApp(1);
+                }
             })
             setting->buttonClickListener(buttonClickListener);
         }

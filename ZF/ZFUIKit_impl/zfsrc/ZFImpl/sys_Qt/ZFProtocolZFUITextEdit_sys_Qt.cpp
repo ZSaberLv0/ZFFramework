@@ -44,7 +44,7 @@ public:
     }
 
 public:
-    void _ZFP_textSize(ZF_IN zfint v)
+    void _ZFP_textSize(ZF_IN zffloat v)
     {
         QFont font = this->font();
         font.setPixelSize((int)v);
@@ -334,7 +334,7 @@ public:
         nativeImplView->_ZFP_textShadowUpdate(textEdit->textShadowColor(), textShadowOffset);
     }
     virtual void textSize(ZF_IN ZFUITextEdit *textEdit,
-                          ZF_IN zfint textSize)
+                          ZF_IN zffloat textSize)
     {
         _ZFP_ZFUITextEditImpl_sys_Qt_TextEdit *nativeImplView = getNativeImplView(textEdit);
         nativeImplView->_ZFP_textSize(textSize);
@@ -345,7 +345,7 @@ public:
 public:
     virtual ZFUISize measureNativeTextEdit(ZF_IN ZFUITextEdit *textEdit,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize)
+                                           ZF_IN zffloat textSize)
     {
         _ZFP_ZFUITextEditImpl_sys_Qt_TextEdit *nativeImplView = getNativeImplView(textEdit);
         QFont font = nativeImplView->font();

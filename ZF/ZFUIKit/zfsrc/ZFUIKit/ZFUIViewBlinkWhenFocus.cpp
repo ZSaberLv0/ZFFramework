@@ -45,7 +45,7 @@ static void _ZFP_ZFUIViewBlinkWhenFocus_focusChange(ZF_IN const ZFListenerData &
 static void _ZFP_ZFUIViewBlinkWhenFocus_mouseDown(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
 static void _ZFP_ZFUIViewBlinkWhenFocus_viewOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData);
 static zfbool _ZFP_ZFUIViewBlinkWhenFocus_started = zffalse;
-static zfint _ZFP_ZFUIViewBlinkWhenFocus_paused = 0;
+static zffloat _ZFP_ZFUIViewBlinkWhenFocus_paused = 0;
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewBlinkWhenFocusDataHolder, ZFLevelZFFrameworkNormal)
 {
     this->focusChangeListener = ZFCallbackForFunc(_ZFP_ZFUIViewBlinkWhenFocus_focusChange);

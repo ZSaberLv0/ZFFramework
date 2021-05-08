@@ -48,7 +48,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIListCellUpdaterParam, zfindex, cell
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIListCellUpdaterParam, zfindex, cellCount)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIListCellUpdaterParam, ZFUIOrientationEnum, listOrientation)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIListCellUpdaterParam, ZFUISize, listContainerSize)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIListCellUpdaterParam, zfint, cellSizeHint)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFUIListCellUpdaterParam, zffloat, cellSizeHint)
 
 ZF_NAMESPACE_GLOBAL_END
 

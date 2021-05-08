@@ -1595,8 +1595,8 @@ ZFMETHOD_DEFINE_2(ZFUIView, const ZFUISize &, layoutMeasure,
         if(sizeParam.width == ZFUISizeType::e_Fill && sizeParam.height == ZFUISizeType::e_Fill)
         {
             d->measureResult->sizeHint = sizeHint;
-            d->measureResult->measuredSize.width = zfmMax(0, d->measureResult->measuredSize.width);
-            d->measureResult->measuredSize.height = zfmMax(0, d->measureResult->measuredSize.height);
+            d->measureResult->measuredSize.width = zfmMax((zffloat)0, d->measureResult->measuredSize.width);
+            d->measureResult->measuredSize.height = zfmMax((zffloat)0, d->measureResult->measuredSize.height);
         }
         else
         {
@@ -1713,61 +1713,61 @@ ZFMETHOD_DEFINE_0(ZFUIView, void, viewFrameReset)
     }
 }
 
-ZFMETHOD_DEFINE_0(ZFUIView, zfint const &, viewX)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat const &, viewX)
 {
     return this->viewFrame().x;
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, viewX, ZFMP_IN(zfint const &, propertyValue))
+ZFMETHOD_DEFINE_1(ZFUIView, void, viewX, ZFMP_IN(zffloat const &, propertyValue))
 {
     ZFUIRect viewFrame = this->viewFrame();
     viewFrame.x = propertyValue;
     this->viewFrame(viewFrame);
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zfint const &, viewY)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat const &, viewY)
 {
     return this->viewFrame().y;
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, viewY, ZFMP_IN(zfint const &, propertyValue))
+ZFMETHOD_DEFINE_1(ZFUIView, void, viewY, ZFMP_IN(zffloat const &, propertyValue))
 {
     ZFUIRect viewFrame = this->viewFrame();
     viewFrame.y = propertyValue;
     this->viewFrame(viewFrame);
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zfint const &, viewWidth)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat const &, viewWidth)
 {
     return this->viewFrame().width;
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, viewWidth, ZFMP_IN(zfint const &, propertyValue))
+ZFMETHOD_DEFINE_1(ZFUIView, void, viewWidth, ZFMP_IN(zffloat const &, propertyValue))
 {
     ZFUIRect viewFrame = this->viewFrame();
     viewFrame.width = propertyValue;
     this->viewFrame(viewFrame);
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zfint const &, viewHeight)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat const &, viewHeight)
 {
     return this->viewFrame().height;
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, viewHeight, ZFMP_IN(zfint const &, propertyValue))
+ZFMETHOD_DEFINE_1(ZFUIView, void, viewHeight, ZFMP_IN(zffloat const &, propertyValue))
 {
     ZFUIRect viewFrame = this->viewFrame();
     viewFrame.height = propertyValue;
     this->viewFrame(viewFrame);
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zfint const &, viewCenterX)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat const &, viewCenterX)
 {
     return d->viewCenter.x;
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, viewCenterX, ZFMP_IN(zfint const &, propertyValue))
+ZFMETHOD_DEFINE_1(ZFUIView, void, viewCenterX, ZFMP_IN(zffloat const &, propertyValue))
 {
     ZFUIRect viewFrame = this->viewFrame();
     viewFrame.x = propertyValue - viewFrame.width / 2;
     this->viewFrame(viewFrame);
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zfint const &, viewCenterY)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat const &, viewCenterY)
 {
     return d->viewCenter.y;
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, viewCenterY, ZFMP_IN(zfint const &, propertyValue))
+ZFMETHOD_DEFINE_1(ZFUIView, void, viewCenterY, ZFMP_IN(zffloat const &, propertyValue))
 {
     ZFUIRect viewFrame = this->viewFrame();
     viewFrame.y = propertyValue - viewFrame.height / 2;

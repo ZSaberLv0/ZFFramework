@@ -295,7 +295,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObjectT<ZFUIImage *>, ZFUIImageLoadFromColor,
                        ZFMP_IN(const ZFUIColor &, color),
                        ZFMP_IN_OPT(const ZFUISize &, sizePixel, ZFUISizeZero()))
 {
-    ZFUISize sizeTmp = ZFUISizeMake(zfmMax(1, sizePixel.width), zfmMax(1, sizePixel.height));
+    ZFUISize sizeTmp = ZFUISizeMake(zfmMax((zffloat)1, sizePixel.width), zfmMax((zffloat)1, sizePixel.height));
     void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImageIO)->imageLoadFromColor(
         ZFUIGlobalStyle::DefaultStyle()->imageScale(),
         color,

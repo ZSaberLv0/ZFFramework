@@ -49,6 +49,7 @@ public class ZFAndroidUI {
             @Override
             public void outputLine(String s) {
                 sb.append(s);
+                sb.append("\n");
             }
         }, (View)view);
         return sb.toString();

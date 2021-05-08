@@ -10,7 +10,7 @@
 @property (nonatomic, assign) zfbool textOverrideFlag;
 
 @property (nonatomic, strong) NSString *fontName;
-@property (nonatomic, assign) zfint textSize;
+@property (nonatomic, assign) zffloat textSize;
 
 - (void)_textFieldTextChanged:(UITextField *)textField;
 @end
@@ -40,7 +40,7 @@
     self.fontName = nil;
 }
 
-- (void)setTextSize:(zfint)newTextSize ZFImpl_sys_iOS_overrideProperty
+- (void)setTextSize:(zffloat)newTextSize ZFImpl_sys_iOS_overrideProperty
 {
     if(self->_textSize != newTextSize)
     {
@@ -288,7 +288,7 @@ public:
         nativeImplView.layer.shadowOffset = ZFImpl_sys_iOS_ZFUISizeToCGSize(textShadowOffset);
     }
     virtual void textSize(ZF_IN ZFUITextEdit *textEdit,
-                          ZF_IN zfint textSize)
+                          ZF_IN zffloat textSize)
     {
         _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit *nativeImplView = (__bridge _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit *)textEdit->nativeImplView();
         nativeImplView.textSize = textSize;
@@ -299,10 +299,10 @@ public:
 public:
     virtual ZFUISize measureNativeTextEdit(ZF_IN ZFUITextEdit *textEdit,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize)
+                                           ZF_IN zffloat textSize)
     {
         _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit *nativeImplView = (__bridge _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit *)textEdit->nativeImplView();
-        zfint textSizeSaved = nativeImplView.textSize;
+        zffloat textSizeSaved = nativeImplView.textSize;
         nativeImplView.textSize = textSize;
         CGSize sizeTmp = ZFImpl_sys_iOS_ZFUISizeToCGSize(sizeHint);
         if(sizeTmp.width <= 0)

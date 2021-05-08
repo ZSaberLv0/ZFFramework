@@ -242,14 +242,14 @@ public:
      */
     ZFMETHOD_DECLARE_3(void, scrollListCellToHead,
                        ZFMP_IN(zfindex, cellIndex),
-                       ZFMP_IN_OPT(zfint, offset, 0),
+                       ZFMP_IN_OPT(zffloat, offset, 0),
                        ZFMP_IN_OPT(zfbool, animated, zftrue))
     /**
      * @brief scroll cell to bottom, see #scrollListCellToHead
      */
     ZFMETHOD_DECLARE_3(void, scrollListCellToTail,
                        ZFMP_IN(zfindex, cellIndex),
-                       ZFMP_IN_OPT(zfint, offset, 0),
+                       ZFMP_IN_OPT(zffloat, offset, 0),
                        ZFMP_IN_OPT(zfbool, animated, zftrue))
 
     // ============================================================

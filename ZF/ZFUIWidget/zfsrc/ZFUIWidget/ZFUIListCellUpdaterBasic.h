@@ -22,7 +22,7 @@ public:
     /**
      * @brief separator size, 1 by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, separatorSize,
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, separatorSize,
                                 1)
 
     /**

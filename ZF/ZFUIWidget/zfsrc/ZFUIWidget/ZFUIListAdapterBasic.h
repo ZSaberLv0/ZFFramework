@@ -20,7 +20,7 @@ public:
     /** @brief see #ZFUIListAdapterBasic::EventListCellAtIndex */
     ZFPROPERTY_ASSIGN(zfindex, cellIndex)
     /** @brief see #ZFUIListAdapterBasic::EventListCellAtIndex */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, cellSize, -1)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, cellSize, -1)
 };
 
 // ============================================================
@@ -110,8 +110,8 @@ public:
         return param->cell();
     }
     zfoverride
-    virtual zfint cellSizeAtIndex(ZF_IN zfindex index,
-                                  ZF_IN ZFUIListCell *cell)
+    virtual zffloat cellSizeAtIndex(ZF_IN zfindex index,
+                                    ZF_IN ZFUIListCell *cell)
     {
         if(this->observerHasAdd(zfself::EventListCellSizeAtIndex()))
         {

@@ -36,81 +36,81 @@ public:
     /**
      * @brief space between inner items
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSpace, 8)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSpace, 8)
     /**
      * @brief space to outer containers
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemMargin, 8)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemMargin, 8)
 
     // ============================================================
     // item size hints
     /**
      * @brief text item size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeText, 21)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeText, 21)
     /**
      * @brief small control item size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeControl, 32)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeControl, 32)
     /**
      * @brief button size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeButton, 44)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeButton, 44)
     /**
      * @brief button size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeButtonWidth, 68)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeButtonWidth, 68)
     /**
      * @brief icon size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeIcon, 40)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeIcon, 40)
     /**
      * @brief icon size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeIconSmall, 32)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeIconSmall, 32)
     /**
      * @brief list cell size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeListCell, 48)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeListCell, 48)
     /**
      * @brief dialog item size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeDialog, 80)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeDialog, 80)
     /**
      * @brief dialog item size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, itemSizeDialogWidth, 200)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, itemSizeDialogWidth, 200)
 
     // ============================================================
     // text size hints
     /**
      * @brief extra tiny text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeExtraTiny, 8)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeExtraTiny, 8)
     /**
      * @brief tiny text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeTiny, 10)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeTiny, 10)
     /**
      * @brief small text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeSmall, 12)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeSmall, 12)
     /**
      * @brief normal text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeNormal, 14)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeNormal, 14)
     /**
      * @brief big text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeBig, 16)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeBig, 16)
     /**
      * @brief large text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeLarge, 18)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeLarge, 18)
     /**
      * @brief extra large text size hint
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSizeExtraLarge, 20)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSizeExtraLarge, 20)
 
     // ============================================================
     // text settings

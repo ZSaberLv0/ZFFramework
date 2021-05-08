@@ -67,7 +67,7 @@ public:
                                   ZF_IN ZFUISize const &textShadowOffset) zfpurevirtual;
     /** @brief see #ZFUITextEdit */
     virtual void textSize(ZF_IN ZFUITextEdit *textEdit,
-                          ZF_IN zfint textSize) zfpurevirtual;
+                          ZF_IN zffloat textSize) zfpurevirtual;
 
     // ============================================================
     // layout
@@ -80,7 +80,7 @@ public:
      */
     virtual ZFUISize measureNativeTextEdit(ZF_IN ZFUITextEdit *textEdit,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize) zfpurevirtual;
+                                           ZF_IN zffloat textSize) zfpurevirtual;
 
     // ============================================================
     // edit

@@ -255,9 +255,9 @@ public:
     /**
      * @brief text size, #ZFUIGlobalStyle::textSizeNormal by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, textSize,
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, textSize,
                                 ZFUIGlobalStyle::DefaultStyle()->textSizeNormal())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, textSize)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, textSize)
 
 public:
     /**

@@ -70,7 +70,7 @@ protected:
 private:
     void updateListSize(void)
     {
-        zfint cellSizeHint = this->listAdapterValue->cellSizeHint();
+        zffloat cellSizeHint = this->listAdapterValue->cellSizeHint();
         ZFUISize sizeHint = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeDialogWidth(), cellSizeHint);
         ZFUISize size = sizeHint;
         size.height = 0;

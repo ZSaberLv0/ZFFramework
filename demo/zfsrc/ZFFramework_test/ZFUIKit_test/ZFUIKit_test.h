@@ -56,8 +56,8 @@ protected:
     {
         zfsuper::layoutOnLayoutPrepare(bounds);
 
-        zfint contentHeight = 0;
-        zfint space = 4;
+        zffloat contentHeight = 0;
+        zffloat space = 4;
         ZFUISize childMeasureSizeHint = ZFUISizeMake(this->scrollArea().width, -1);
         ZFUISizeParam childMeasureSizeParam = ZFUISizeParamFillWrap();
 

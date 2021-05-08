@@ -32,26 +32,26 @@ public:
      *
      * 0 result size means no need to show the scroll thumb
      */
-    static void scrollThumbPosFromViewPos(ZF_OUT zfint &scrollThumbResultPos,
-                                          ZF_OUT zfint &scrollThumbResultSize,
-                                          ZF_IN zfint scrollThumbRange,
-                                          ZF_IN zfint scrollViewSize,
-                                          ZF_IN zfint scrollContentOffset,
-                                          ZF_IN zfint scrollContentSize,
-                                          ZF_IN zfint scrollThumbMinSize,
-                                          ZF_IN_OPT zfint headMargin = 0,
-                                          ZF_IN_OPT zfint tailMargin = 0);
+    static void scrollThumbPosFromViewPos(ZF_OUT zffloat &scrollThumbResultPos,
+                                          ZF_OUT zffloat &scrollThumbResultSize,
+                                          ZF_IN zffloat scrollThumbRange,
+                                          ZF_IN zffloat scrollViewSize,
+                                          ZF_IN zffloat scrollContentOffset,
+                                          ZF_IN zffloat scrollContentSize,
+                                          ZF_IN zffloat scrollThumbMinSize,
+                                          ZF_IN_OPT zffloat headMargin = 0,
+                                          ZF_IN_OPT zffloat tailMargin = 0);
     /**
      * @brief util method to calculate view's position according to scroll thumb's position
      */
-    static void scrollThumbPosToViewPos(ZF_OUT zfint &scrollContentOffset,
-                                        ZF_IN zfint scrollViewSize,
-                                        ZF_IN zfint scrollContentSize,
-                                        ZF_IN zfint scrollThumbPos,
-                                        ZF_IN zfint scrollThumbSize,
-                                        ZF_IN zfint scrollThumbRange,
-                                        ZF_IN_OPT zfint headMargin = 0,
-                                        ZF_IN_OPT zfint tailMargin = 0);
+    static void scrollThumbPosToViewPos(ZF_OUT zffloat &scrollContentOffset,
+                                        ZF_IN zffloat scrollViewSize,
+                                        ZF_IN zffloat scrollContentSize,
+                                        ZF_IN zffloat scrollThumbPos,
+                                        ZF_IN zffloat scrollThumbSize,
+                                        ZF_IN zffloat scrollThumbRange,
+                                        ZF_IN_OPT zffloat headMargin = 0,
+                                        ZF_IN_OPT zffloat tailMargin = 0);
 
 public:
     /**

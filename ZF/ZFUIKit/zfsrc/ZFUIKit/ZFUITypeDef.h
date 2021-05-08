@@ -13,45 +13,37 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // basic size
 /**
  * @brief return a scaled int
- *
- * note, to suit most case, apply scale on 1 pixel would always result to 1 pixel
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFUISizeApplyScale,
-                        ZFMP_OUT(zfint &, ret),
-                        ZFMP_IN(zfint const &, v),
+                        ZFMP_OUT(zffloat &, ret),
+                        ZFMP_IN(zffloat const &, v),
                         ZFMP_IN(zffloat, scale))
 /**
  * @brief return a scaled int
- *
- * note, to suit most case, apply scale on 1 pixel would always result to 1 pixel
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_2(zfint, ZFUISizeApplyScale,
-                               ZFMP_IN(zfint const &, v),
+ZFMETHOD_FUNC_INLINE_DECLARE_2(zffloat, ZFUISizeApplyScale,
+                               ZFMP_IN(zffloat const &, v),
                                ZFMP_IN(zffloat, scale))
 {
-    zfint ret = 0;
+    zffloat ret = 0;
     ZFUISizeApplyScale(ret, v, scale);
     return ret;
 }
 /**
  * @brief return a scaled int reversely
- *
- * note, to suit most case, apply scale on 1 pixel would always result to 1 pixel
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFUISizeApplyScaleReversely,
-                        ZFMP_OUT(zfint &, ret),
-                        ZFMP_IN(zfint const &, v),
+                        ZFMP_OUT(zffloat &, ret),
+                        ZFMP_IN(zffloat const &, v),
                         ZFMP_IN(zffloat, scale))
 /**
  * @brief return a scaled int reversely
- *
- * note, to suit most case, apply scale on 1 pixel would always result to 1 pixel
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_2(zfint, ZFUISizeApplyScaleReversely,
-                               ZFMP_IN(zfint const &, v),
+ZFMETHOD_FUNC_INLINE_DECLARE_2(zffloat, ZFUISizeApplyScaleReversely,
+                               ZFMP_IN(zffloat const &, v),
                                ZFMP_IN(zffloat, scale))
 {
-    zfint ret = 0;
+    zffloat ret = 0;
     ZFUISizeApplyScaleReversely(ret, v, scale);
     return ret;
 }
@@ -64,8 +56,8 @@ ZFMETHOD_FUNC_INLINE_DECLARE_2(zfint, ZFUISizeApplyScaleReversely,
 zfclassPOD ZF_ENV_EXPORT ZFUIPoint
 {
 public:
-    zfint x;   /**< @brief x */
-    zfint y;   /**< @brief y */
+    zffloat x;   /**< @brief x */
+    zffloat y;   /**< @brief y */
 };
 
 /**
@@ -93,8 +85,8 @@ ZFEXPORT_VAR_READONLY_DECLARE(ZFUIPoint, ZFUIPointZero)
  * @brief make a ZFUIPoint
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUIPoint, ZFUIPointMake,
-                               ZFMP_IN(zfint const &, x),
-                               ZFMP_IN(zfint const &, y))
+                               ZFMP_IN(zffloat const &, x),
+                               ZFMP_IN(zffloat const &, y))
 {
     ZFUIPoint ret = {x, y};
     return ret;
@@ -151,10 +143,10 @@ ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUIPoint, ZFUIPointApplyScaleReversely,
 zfclassPOD ZF_ENV_EXPORT ZFUIMargin
 {
 public:
-    zfint left;    /**< @brief left margin */
-    zfint top;     /**< @brief top margin */
-    zfint right;   /**< @brief right margin */
-    zfint bottom;  /**< @brief bottom margin */
+    zffloat left;    /**< @brief left margin */
+    zffloat top;     /**< @brief top margin */
+    zffloat right;   /**< @brief right margin */
+    zffloat bottom;  /**< @brief bottom margin */
 };
 
 /**
@@ -182,10 +174,10 @@ ZFEXPORT_VAR_READONLY_DECLARE(ZFUIMargin, ZFUIMarginZero)
  * @brief make a margin
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_4(ZFUIMargin, ZFUIMarginMake,
-                               ZFMP_IN(zfint const &, left),
-                               ZFMP_IN(zfint const &, top),
-                               ZFMP_IN(zfint const &, right),
-                               ZFMP_IN(zfint const &, bottom))
+                               ZFMP_IN(zffloat const &, left),
+                               ZFMP_IN(zffloat const &, top),
+                               ZFMP_IN(zffloat const &, right),
+                               ZFMP_IN(zffloat const &, bottom))
 {
     ZFUIMargin ret = {left, top, right, bottom};
     return ret;
@@ -194,7 +186,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_4(ZFUIMargin, ZFUIMarginMake,
  * @brief make a margin with all sides set to margin
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_1(ZFUIMargin, ZFUIMarginMake,
-                               ZFMP_IN(zfint const &, margin))
+                               ZFMP_IN(zffloat const &, margin))
 {
     ZFUIMargin ret = {margin, margin, margin, margin};
     return ret;
@@ -203,8 +195,8 @@ ZFMETHOD_FUNC_INLINE_DECLARE_1(ZFUIMargin, ZFUIMarginMake,
  * @brief make a margin with left/right to x and top/bottom to y
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUIMargin, ZFUIMarginMake,
-                               ZFMP_IN(zfint const &, x),
-                               ZFMP_IN(zfint const &, y))
+                               ZFMP_IN(zffloat const &, x),
+                               ZFMP_IN(zffloat const &, y))
 {
     ZFUIMargin ret = {x, y, x, y};
     return ret;
@@ -269,7 +261,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUIMargin, ZFUIMarginApplyScaleReversely,
 /**
  * @brief left + right margin
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIMarginGetWidth,
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zffloat, ZFUIMarginGetWidth,
                                ZFMP_IN(const ZFUIMargin &, margin))
 {
     return margin.left + margin.right;
@@ -277,7 +269,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIMarginGetWidth,
 /**
  * @brief top + bottom margin
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIMarginGetHeight,
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zffloat, ZFUIMarginGetHeight,
                                ZFMP_IN(const ZFUIMargin &, margin))
 {
     return margin.top + margin.bottom;
@@ -399,8 +391,8 @@ inline ZFUIMargin &operator -= (ZF_IN_OUT ZFUIMargin &v0,
 zfclassPOD ZF_ENV_EXPORT ZFUISize
 {
 public:
-    zfint width;   /**< @brief width */
-    zfint height;  /**< @brief height */
+    zffloat width;   /**< @brief width */
+    zffloat height;  /**< @brief height */
 };
 
 /**
@@ -435,8 +427,8 @@ ZFEXPORT_VAR_READONLY_DECLARE(ZFUISize, ZFUISizeInvalid)
  * @brief make a ZFUISize
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUISize, ZFUISizeMake,
-                               ZFMP_IN(zfint const &, width),
-                               ZFMP_IN(zfint const &, height))
+                               ZFMP_IN(zffloat const &, width),
+                               ZFMP_IN(zffloat const &, height))
 {
     ZFUISize ret = {width, height};
     return ret;
@@ -445,7 +437,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUISize, ZFUISizeMake,
  * @brief make a ZFUISize
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_1(ZFUISize, ZFUISizeMake,
-                               ZFMP_IN(zfint const &, v))
+                               ZFMP_IN(zffloat const &, v))
 {
     ZFUISize ret = {v, v};
     return ret;
@@ -612,10 +604,10 @@ ZFMETHOD_FUNC_INLINE_DECLARE_2(ZFUISize, ZFUISizeApplyMarginReversely,
 zfclassPOD ZF_ENV_EXPORT ZFUIRect
 {
 public:
-    zfint x; /**< @brief x */
-    zfint y; /**< @brief y */
-    zfint width; /**< @brief width */
-    zfint height; /**< @brief height */
+    zffloat x; /**< @brief x */
+    zffloat y; /**< @brief y */
+    zffloat width; /**< @brief width */
+    zffloat height; /**< @brief height */
 };
 
 /**
@@ -643,10 +635,10 @@ ZFEXPORT_VAR_READONLY_DECLARE(ZFUIRect, ZFUIRectZero)
  * @brief make a ZFUIRect
  */
 ZFMETHOD_FUNC_INLINE_DECLARE_4(ZFUIRect, ZFUIRectMake,
-                               ZFMP_IN(zfint const &, x),
-                               ZFMP_IN(zfint const &, y),
-                               ZFMP_IN(zfint const &, w),
-                               ZFMP_IN(zfint const &, h))
+                               ZFMP_IN(zffloat const &, x),
+                               ZFMP_IN(zffloat const &, y),
+                               ZFMP_IN(zffloat const &, w),
+                               ZFMP_IN(zffloat const &, h))
 {
     ZFUIRect ret = {x, y, w, h};
     return ret;
@@ -877,7 +869,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_1(ZFUIPoint, ZFUIRectGetCenter,
 /**
  * @brief get left edge of the rect
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetLeft,
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zffloat, ZFUIRectGetLeft,
                                ZFMP_IN(const ZFUIRect &, rect))
 {
     return rect.x;
@@ -885,7 +877,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetLeft,
 /**
  * @brief get top edge of the rect
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetTop,
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zffloat, ZFUIRectGetTop,
                                ZFMP_IN(const ZFUIRect &, rect))
 {
     return rect.y;
@@ -893,7 +885,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetTop,
 /**
  * @brief get right edge of the rect
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetRight,
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zffloat, ZFUIRectGetRight,
                                ZFMP_IN(const ZFUIRect &, rect))
 {
     return (rect.x + rect.width);
@@ -901,7 +893,7 @@ ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetRight,
 /**
  * @brief get bottom edge of the rect
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_1(zfint, ZFUIRectGetBottom,
+ZFMETHOD_FUNC_INLINE_DECLARE_1(zffloat, ZFUIRectGetBottom,
                                ZFMP_IN(const ZFUIRect &, rect))
 {
     return (rect.y + rect.height);

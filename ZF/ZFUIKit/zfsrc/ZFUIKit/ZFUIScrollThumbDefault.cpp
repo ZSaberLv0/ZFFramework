@@ -62,8 +62,8 @@ public:
     ZFUIImageView *thumbView;
     ZFAnimation *thumbHideAni;
     ZFListener thumbHideAniAutoStopListener;
-    zfint lastPos;
-    zfint lastSize;
+    zffloat lastPos;
+    zffloat lastSize;
     zftimet lastVisibleTime;
 public:
     _ZFP_ZFUIScrollThumbDefaultPrivate(void)
@@ -202,9 +202,9 @@ void ZFUIScrollThumbDefault::scrollThumbUpdate(void)
     else
     {
         ZFUISize imageSize = d->thumbView->image()->imageSize();
-        zfint pos = 0;
-        zfint size = 0;
-        zfint sizeRange = 0;
+        zffloat pos = 0;
+        zffloat size = 0;
+        zffloat sizeRange = 0;
         zfbool viewVisibleNew = zffalse;
         if(this->scrollThumbHorizontal())
         {

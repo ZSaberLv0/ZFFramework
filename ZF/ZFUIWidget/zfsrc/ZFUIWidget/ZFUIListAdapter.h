@@ -75,8 +75,8 @@ public:
      * setting #cellSizeFill would override this property,
      * and use #listContainerSize to layout each cell
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, cellSizeHint, ZFUIGlobalStyle::DefaultStyle()->itemSizeListCell())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfint, cellSizeHint)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, cellSizeHint, ZFUIGlobalStyle::DefaultStyle()->itemSizeListCell())
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, cellSizeHint)
 
     /**
      * @brief if #cellSizeHint not set, whether fill cell size to #listContainerSize,
@@ -115,7 +115,7 @@ public:
      * otherwise, the cell's size is fixed\n
      * return #cellSizeHint according to #cellSizeFill by default
      */
-    ZFMETHOD_DECLARE_2(zfint, cellSizeAtIndex,
+    ZFMETHOD_DECLARE_2(zffloat, cellSizeAtIndex,
                        ZFMP_IN(zfindex, index),
                        ZFMP_IN(ZFUIListCell *, cell))
 

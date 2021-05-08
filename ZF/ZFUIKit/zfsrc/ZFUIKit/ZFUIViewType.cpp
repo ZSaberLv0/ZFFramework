@@ -90,9 +90,9 @@ ZFMETHOD_DEFINE_3(ZFUILayoutParam, ZFUIRect, layoutParamApply,
 }
 
 ZFMETHOD_DEFINE_4(ZFUILayoutParam, void, sizeHintApply,
-                  ZFMP_OUT(zfint &, ret),
-                  ZFMP_IN(zfint, size),
-                  ZFMP_IN(zfint, sizeHint),
+                  ZFMP_OUT(zffloat &, ret),
+                  ZFMP_IN(zffloat, size),
+                  ZFMP_IN(zffloat, sizeHint),
                   ZFMP_IN(ZFUISizeTypeEnum, sizeParam))
 {
     ret = size;
@@ -115,12 +115,12 @@ ZFMETHOD_DEFINE_4(ZFUILayoutParam, void, sizeHintApply,
             break;
     }
 }
-ZFMETHOD_DEFINE_3(ZFUILayoutParam, zfint, sizeHintApply,
-                  ZFMP_IN(zfint, size),
-                  ZFMP_IN(zfint, sizeHint),
+ZFMETHOD_DEFINE_3(ZFUILayoutParam, zffloat, sizeHintApply,
+                  ZFMP_IN(zffloat, size),
+                  ZFMP_IN(zffloat, sizeHint),
                   ZFMP_IN(ZFUISizeTypeEnum, sizeParam))
 {
-    zfint ret = size;
+    zffloat ret = size;
     ZFUILayoutParam::sizeHintApply(ret, size, sizeHint, sizeParam);
     return ret;
 }
@@ -145,9 +145,9 @@ ZFMETHOD_DEFINE_3(ZFUILayoutParam, ZFUISize, sizeHintApply,
 }
 
 ZFMETHOD_DEFINE_3(ZFUILayoutParam, void, sizeHintMerge,
-                  ZFMP_OUT(zfint &, ret),
-                  ZFMP_IN(zfint, sizeHint0),
-                  ZFMP_IN(zfint, sizeHint1))
+                  ZFMP_OUT(zffloat &, ret),
+                  ZFMP_IN(zffloat, sizeHint0),
+                  ZFMP_IN(zffloat, sizeHint1))
 {
     if(sizeHint0 < 0 && sizeHint1 < 0)
     {
@@ -162,11 +162,11 @@ ZFMETHOD_DEFINE_3(ZFUILayoutParam, void, sizeHintMerge,
         ret = zfmMax(sizeHint0, sizeHint1);
     }
 }
-ZFMETHOD_DEFINE_2(ZFUILayoutParam, zfint, sizeHintMerge,
-                  ZFMP_IN(zfint, sizeHint0),
-                  ZFMP_IN(zfint, sizeHint1))
+ZFMETHOD_DEFINE_2(ZFUILayoutParam, zffloat, sizeHintMerge,
+                  ZFMP_IN(zffloat, sizeHint0),
+                  ZFMP_IN(zffloat, sizeHint1))
 {
-    zfint ret = 0;
+    zffloat ret = 0;
     ZFUILayoutParam::sizeHintMerge(ret, sizeHint0, sizeHint1);
     return ret;
 }
@@ -189,9 +189,9 @@ ZFMETHOD_DEFINE_2(ZFUILayoutParam, ZFUISize, sizeHintMerge,
 }
 
 ZFMETHOD_DEFINE_3(ZFUILayoutParam, void, sizeHintOffset,
-                  ZFMP_OUT(zfint &, ret),
-                  ZFMP_IN(zfint, sizeHint),
-                  ZFMP_IN(zfint, offset))
+                  ZFMP_OUT(zffloat &, ret),
+                  ZFMP_IN(zffloat, sizeHint),
+                  ZFMP_IN(zffloat, offset))
 {
     if(offset >= 0)
     {
@@ -199,14 +199,14 @@ ZFMETHOD_DEFINE_3(ZFUILayoutParam, void, sizeHintOffset,
     }
     else
     {
-        ret = ((sizeHint >= 0) ? zfmMax(0, sizeHint + offset) : -1);
+        ret = ((sizeHint >= 0) ? zfmMax((zffloat)0, sizeHint + offset) : -1);
     }
 }
-ZFMETHOD_DEFINE_2(ZFUILayoutParam, zfint, sizeHintOffset,
-                  ZFMP_IN(zfint, sizeHint),
-                  ZFMP_IN(zfint, offset))
+ZFMETHOD_DEFINE_2(ZFUILayoutParam, zffloat, sizeHintOffset,
+                  ZFMP_IN(zffloat, sizeHint),
+                  ZFMP_IN(zffloat, offset))
 {
-    zfint ret = 0;
+    zffloat ret = 0;
     ZFUILayoutParam::sizeHintOffset(ret, sizeHint, offset);
     return ret;
 }
@@ -231,14 +231,14 @@ ZFMETHOD_DEFINE_2(ZFUILayoutParam, ZFUISize, sizeHintOffset,
 ZFMETHOD_DEFINE_3(ZFUILayoutParam, void, sizeHintOffset,
                   ZFMP_OUT(ZFUISize &, ret),
                   ZFMP_IN(const ZFUISize &, sizeHint),
-                  ZFMP_IN(zfint, offset))
+                  ZFMP_IN(zffloat, offset))
 {
     ret.width = ZFUILayoutParam::sizeHintOffset(sizeHint.width, offset);
     ret.height = ZFUILayoutParam::sizeHintOffset(sizeHint.height, offset);
 }
 ZFMETHOD_DEFINE_2(ZFUILayoutParam, ZFUISize, sizeHintOffset,
                   ZFMP_IN(const ZFUISize &, sizeHint),
-                  ZFMP_IN(zfint, offset))
+                  ZFMP_IN(zffloat, offset))
 {
     ZFUISize ret = ZFUISizeZero();
     ZFUILayoutParam::sizeHintOffset(ret, sizeHint, offset);

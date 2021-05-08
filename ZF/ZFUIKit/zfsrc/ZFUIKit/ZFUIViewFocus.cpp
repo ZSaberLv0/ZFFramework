@@ -97,8 +97,8 @@ ZFOUTPUT_TYPE(_ZFP_ZFUIViewFocusData, {
 static void _ZFP_ZFUIViewFocusNextFind(ZF_IN_OUT ZFCoreArrayPOD<_ZFP_ZFUIViewFocusData> &focusDatas,
                                        ZF_IN ZFUIView *view,
                                        ZF_IN zfbool includingInternalViews,
-                                       ZF_IN zfint offsetX,
-                                       ZF_IN zfint offsetY)
+                                       ZF_IN zffloat offsetX,
+                                       ZF_IN zffloat offsetY)
 {
     if(!ZFUIViewFocusNextFilter().filterCheckActive(view))
     {

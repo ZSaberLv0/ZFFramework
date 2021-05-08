@@ -227,7 +227,10 @@ void ZFImpl_sys_iOS_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN UIView *view)
     ret += "==================== UIView tree  end  ====================\n";
 }
 
-#if ZF_ENV_DEBUG && 0
+ZF_NAMESPACE_GLOBAL_END
+
+#if 0
+    #include "ZFUIKit/ZFUISysWindow.h"
     ZF_GLOBAL_INITIALIZER_INIT(ZFImpl_sys_iOS_autoPrintViewTree)
     {
         if(!ZFProtocolIsAvailable("ZFUIView"))
@@ -253,8 +256,6 @@ void ZFImpl_sys_iOS_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN UIView *view)
         ZFListener windowOnPauseListener;
     ZF_GLOBAL_INITIALIZER_END(ZFImpl_sys_iOS_autoPrintViewTree)
 #endif
-
-ZF_NAMESPACE_GLOBAL_END
 
 #endif // #if ZF_ENV_sys_iOS
 

@@ -3,6 +3,7 @@
 * reduce property impl's complexity
 * change property setter name
 * change ZFUIRect's property
+* change UI size unit
 * change lua to 5.4
 * change Qt impl to graphics view
 * add support for setter and getter method to simulate property

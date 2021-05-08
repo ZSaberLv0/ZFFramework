@@ -57,7 +57,7 @@ public:
     /**
      * @brief button icon and label's space, #ZFUIGlobalStyle::itemSpace by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, buttonContentSpace, ZFUIGlobalStyle::DefaultStyle()->itemSpace())
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, buttonContentSpace, ZFUIGlobalStyle::DefaultStyle()->itemSpace())
 
     /**
      * @brief button background's layout margin, #ZFUIMarginZero by default

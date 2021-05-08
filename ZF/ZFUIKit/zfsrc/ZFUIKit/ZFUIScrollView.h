@@ -338,13 +338,13 @@ public:
      *
      * positive if normal scroll, negative if bouncing
      */
-    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetLeft)
+    ZFMETHOD_DECLARE_0(zffloat, scrollContentOffsetLeft)
     /** @brief see #scrollContentOffsetLeft */
-    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetTop)
+    ZFMETHOD_DECLARE_0(zffloat, scrollContentOffsetTop)
     /** @brief see #scrollContentOffsetLeft */
-    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetRight)
+    ZFMETHOD_DECLARE_0(zffloat, scrollContentOffsetRight)
     /** @brief see #scrollContentOffsetLeft */
-    ZFMETHOD_DECLARE_0(zfint, scrollContentOffsetBottom)
+    ZFMETHOD_DECLARE_0(zffloat, scrollContentOffsetBottom)
 
 public:
     /**
@@ -364,8 +364,8 @@ public:
      * @brief animated scroll to desired position
      */
     ZFMETHOD_DECLARE_2(void, scrollByPoint,
-                       ZFMP_IN(zfint, xPos),
-                       ZFMP_IN(zfint, yPos))
+                       ZFMP_IN(zffloat, xPos),
+                       ZFMP_IN(zffloat, yPos))
     /**
      * @brief return end point of #scrollByPoint, or current content offset if not scrolling
      */
@@ -374,16 +374,16 @@ public:
      * @brief scroll by desired initial speed, in pixels per second
      */
     ZFMETHOD_DECLARE_2(void, scrollBySpeed,
-                       ZFMP_IN(zfint, xSpeedInPixelsPerSecond),
-                       ZFMP_IN(zfint, ySpeedInPixelsPerSecond))
+                       ZFMP_IN(zffloat, xSpeedInPixelsPerSecond),
+                       ZFMP_IN(zffloat, ySpeedInPixelsPerSecond))
     /**
      * @brief return current speed of #scrollBySpeed
      */
-    ZFMETHOD_DECLARE_0(zfint, scrollBySpeedCurrentSpeedX)
+    ZFMETHOD_DECLARE_0(zffloat, scrollBySpeedCurrentSpeedX)
     /**
      * @brief return current speed of #scrollBySpeed
      */
-    ZFMETHOD_DECLARE_0(zfint, scrollBySpeedCurrentSpeedY)
+    ZFMETHOD_DECLARE_0(zffloat, scrollBySpeedCurrentSpeedY)
     /**
      * @brief return predicted end point of #scrollBySpeed, or current content offset if not scrolling,
      *   valid only if isn't bouncing and won't bouncing when stop
@@ -406,12 +406,12 @@ public:
      * -  scroll reached content's edge
      */
     ZFMETHOD_DECLARE_1(void, autoScrollStartX,
-                       ZFMP_IN(zfint, speedInPixelsPerSecond))
+                       ZFMP_IN(zffloat, speedInPixelsPerSecond))
     /**
      * @brief see #autoScrollStartX
      */
     ZFMETHOD_DECLARE_1(void, autoScrollStartY,
-                       ZFMP_IN(zfint, speedInPixelsPerSecond))
+                       ZFMP_IN(zffloat, speedInPixelsPerSecond))
     /**
      * @brief see #autoScrollStartX
      */
@@ -423,11 +423,11 @@ public:
     /**
      * @brief current auto scroll speed, 0 means not auto scrolling, see #autoScrollStartX
      */
-    ZFMETHOD_DECLARE_0(zfint, autoScrollSpeedX)
+    ZFMETHOD_DECLARE_0(zffloat, autoScrollSpeedX)
     /**
      * @brief current auto scroll speed, 0 means not auto scrolling, see #autoScrollStartX
      */
-    ZFMETHOD_DECLARE_0(zfint, autoScrollSpeedY)
+    ZFMETHOD_DECLARE_0(zffloat, autoScrollSpeedY)
 
 public:
     /**

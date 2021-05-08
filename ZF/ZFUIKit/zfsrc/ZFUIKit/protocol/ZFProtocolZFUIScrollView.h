@@ -198,11 +198,11 @@ public:
                                    ZF_IN void *nativeMouseEvent) zfpurevirtual;
 
     /** @brief see #ZFUIScrollViewImplHelper */
-    virtual ZFUIScrollViewImplHelper *findTouchedChildScrollView(ZF_IN zfint x, ZF_IN zfint y) zfpurevirtual;
+    virtual ZFUIScrollViewImplHelper *findTouchedChildScrollView(ZF_IN zffloat x, ZF_IN zffloat y) zfpurevirtual;
     /** @brief see #ZFUIScrollViewImplHelper */
     virtual void findTouchedChildScrollViewCleanup(ZF_IN void *nativeChild) zfpurevirtual;
     /** @brief see #ZFUIScrollViewImplHelper */
-    virtual void *findTouchedChild(ZF_IN zfint x, ZF_IN zfint y) zfpurevirtual;
+    virtual void *findTouchedChild(ZF_IN zffloat x, ZF_IN zffloat y) zfpurevirtual;
     /** @brief see #ZFUIScrollViewImplHelper */
     virtual void findTouchedChildCleanup(ZF_IN void *nativeChild) zfpurevirtual;
 
@@ -225,11 +225,11 @@ public:
      */
     virtual void *translateFromParentToChild(ZF_IN void *nativeChild,
                                              ZF_IN_OUT void *nativeMouseEvent,
-                                             ZF_IN zfint const &xInParent, ZF_IN zfint const &yInParent) zfpurevirtual;
+                                             ZF_IN zffloat const &xInParent, ZF_IN zffloat const &yInParent) zfpurevirtual;
     /** @brief see #translateFromParentToChild */
     virtual void *translateFromChildToParent(ZF_IN void *nativeChild,
                                              ZF_IN_OUT void *nativeMouseEvent,
-                                             ZF_IN zfint const &xInChild, ZF_IN zfint const &yInChild) zfpurevirtual;
+                                             ZF_IN zffloat const &xInChild, ZF_IN zffloat const &yInChild) zfpurevirtual;
 };
 zfclassFwd _ZFP_ZFUIScrollViewImplHelperPrivate;
 /**
@@ -254,7 +254,7 @@ public:
     /** @brief see #ZFUIScrollViewImplHelper */
     ZFUIScrollViewImplHelperProtocol *implProtocol;
     /** @brief see #ZFUIScrollViewImplHelper */
-    zfint nativeScrollTolerance;
+    zffloat nativeScrollTolerance;
 
 public:
     /** @brief see #ZFUIScrollViewImplHelper */

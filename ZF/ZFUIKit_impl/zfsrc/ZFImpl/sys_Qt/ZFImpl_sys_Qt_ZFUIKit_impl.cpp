@@ -170,8 +170,8 @@ void ZFImpl_sys_Qt_ZFUIPointToQPointFT(ZF_OUT QPointF &ret, ZF_IN const ZFUIPoin
 }
 void ZFImpl_sys_Qt_ZFUIPointFromQPointFT(ZF_OUT ZFUIPoint &ret, ZF_IN const QPointF &qPoint)
 {
-    ret.x = (zfint)qPoint.x();
-    ret.y = (zfint)qPoint.y();
+    ret.x = (zffloat)qPoint.x();
+    ret.y = (zffloat)qPoint.y();
 }
 
 void ZFImpl_sys_Qt_ZFUISizeToQSizeT(ZF_OUT QSize &ret, ZF_IN const ZFUISize &size)
@@ -190,8 +190,8 @@ void ZFImpl_sys_Qt_ZFUISizeToQSizeFT(ZF_OUT QSizeF &ret, ZF_IN const ZFUISize &s
 }
 void ZFImpl_sys_Qt_ZFUISizeFromQSizeFT(ZF_OUT ZFUISize &ret, ZF_IN const QSizeF &qSize)
 {
-    ret.width = (zfint)qSize.width();
-    ret.height = (zfint)qSize.height();
+    ret.width = (zffloat)qSize.width();
+    ret.height = (zffloat)qSize.height();
 }
 
 void ZFImpl_sys_Qt_ZFUIRectToQRectT(ZF_OUT QRect &ret, ZF_IN const ZFUIRect &rect)
@@ -212,10 +212,10 @@ void ZFImpl_sys_Qt_ZFUIRectToQRectFT(ZF_OUT QRectF &ret, ZF_IN const ZFUIRect &r
 }
 void ZFImpl_sys_Qt_ZFUIRectFromQRectFT(ZF_OUT ZFUIRect &ret, ZF_IN const QRectF &qRect)
 {
-    ret.x = (zfint)qRect.x();
-    ret.y = (zfint)qRect.y();
-    ret.width = (zfint)qRect.width();
-    ret.height = (zfint)qRect.height();
+    ret.x = (zffloat)qRect.x();
+    ret.y = (zffloat)qRect.y();
+    ret.width = (zffloat)qRect.width();
+    ret.height = (zffloat)qRect.height();
 }
 
 void ZFImpl_sys_Qt_ZFUIColorToQColor(ZF_OUT QColor &ret, ZF_IN const ZFUIColor &color)
@@ -290,7 +290,10 @@ void ZFImpl_sys_Qt_ZFUIAlignFlagsFromQAlignmentT(ZF_OUT ZFUIAlignFlags &ret, ZF_
     }
 }
 
-#if ZF_ENV_DEBUG && 0
+ZF_NAMESPACE_GLOBAL_END
+
+#if 0
+    #include "ZFUIKit/ZFUISysWindow.h"
     ZF_GLOBAL_INITIALIZER_INIT(ZFImpl_sys_Qt_autoPrintViewTree)
     {
         if(!ZFProtocolIsAvailable("ZFUIView"))
@@ -317,6 +320,5 @@ void ZFImpl_sys_Qt_ZFUIAlignFlagsFromQAlignmentT(ZF_OUT ZFUIAlignFlags &ret, ZF_
     ZF_GLOBAL_INITIALIZER_END(ZFImpl_sys_Qt_autoPrintViewTree)
 #endif
 
-ZF_NAMESPACE_GLOBAL_END
 #endif // #if ZF_ENV_sys_Qt
 

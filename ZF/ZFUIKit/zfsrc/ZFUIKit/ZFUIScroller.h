@@ -45,7 +45,7 @@ public:
      * @brief called when owner scroll view's size changed,
      *   you should fix content frame to match bounds if necessary
      */
-    virtual void scrollOwnerSizeChanged(ZF_IN zfint ownerSize) zfpurevirtual;
+    virtual void scrollOwnerSizeChanged(ZF_IN zffloat ownerSize) zfpurevirtual;
     /**
      * @brief whether use bounce
      */
@@ -61,7 +61,7 @@ public:
      * @brief used to update scroll content,
      *   you should keep or update previous scroll animation if necessary
      */
-    virtual void scrollContentChanged(ZF_IN zfint contentOffset, ZF_IN zfint contentSize) zfpurevirtual;
+    virtual void scrollContentChanged(ZF_IN zffloat contentOffset, ZF_IN zffloat contentSize) zfpurevirtual;
 
 public:
     /**
@@ -79,35 +79,35 @@ public:
      * @brief scroll without scroll animation,
      *   you should stop old scroll animation if necessary
      */
-    virtual void scrollWithoutAnimation(ZF_IN zfint contentOffset) zfpurevirtual;
+    virtual void scrollWithoutAnimation(ZF_IN zffloat contentOffset) zfpurevirtual;
     /**
      * @brief see #ZFUIScrollView::scrollByPoint
      */
-    virtual void scrollByPoint(ZF_IN zfint point) zfpurevirtual;
+    virtual void scrollByPoint(ZF_IN zffloat point) zfpurevirtual;
     /**
      * @brief return end position of #scrollByPoint,
      *   must return current content offset if not scrolling
      */
-    virtual zfint scrollByPointEndPoint(void) zfpurevirtual;
+    virtual zffloat scrollByPointEndPoint(void) zfpurevirtual;
     /**
      * @brief see #ZFUIScrollView::scrollBySpeed
      */
-    virtual void scrollBySpeed(ZF_IN zfint speed) zfpurevirtual;
+    virtual void scrollBySpeed(ZF_IN zffloat speed) zfpurevirtual;
     /**
      * @brief return current speed of #scrollBySpeed
      */
-    virtual zfint scrollBySpeedCurrentSpeed(void) zfpurevirtual;
+    virtual zffloat scrollBySpeedCurrentSpeed(void) zfpurevirtual;
     /**
      * @brief return end position of #scrollBySpeed,
      *   must return current content offset if not scrolling
      */
-    virtual zfint scrollBySpeedEndPointPredicted(void) zfpurevirtual;
+    virtual zffloat scrollBySpeedEndPointPredicted(void) zfpurevirtual;
 
     /**
      * @brief return end position,
      *   must return current content offset if not scrolling
      */
-    virtual zfint scrollEndPointPredicted(void) zfpurevirtual;
+    virtual zffloat scrollEndPointPredicted(void) zfpurevirtual;
 
     /**
      * @brief whether this direction's scroller want higher priority,
@@ -119,15 +119,15 @@ public:
     /**
      * @brief used to get current owner size
      */
-    virtual zfint scrollOwnerSize(void) zfpurevirtual;
+    virtual zffloat scrollOwnerSize(void) zfpurevirtual;
     /**
      * @brief used to get current content offset
      */
-    virtual zfint scrollContentOffset(void) zfpurevirtual;
+    virtual zffloat scrollContentOffset(void) zfpurevirtual;
     /**
      * @brief used to get current content size
      */
-    virtual zfint scrollContentSize(void) zfpurevirtual;
+    virtual zffloat scrollContentSize(void) zfpurevirtual;
 
 public:
     /**
@@ -135,14 +135,14 @@ public:
      *
      * note drag events is not ensured paired
      */
-    virtual void scrollOnDragBegin(ZF_IN zfint mousePos,
+    virtual void scrollOnDragBegin(ZF_IN zffloat mousePos,
                                    ZF_IN zftimet mouseTime) zfpurevirtual;
     /**
      * @brief drag
      *
      * note drag events is not ensured paired
      */
-    virtual void scrollOnDrag(ZF_IN zfint mousePos,
+    virtual void scrollOnDrag(ZF_IN zffloat mousePos,
                               ZF_IN zftimet mouseTime) zfpurevirtual;
     /**
      * @brief drag end

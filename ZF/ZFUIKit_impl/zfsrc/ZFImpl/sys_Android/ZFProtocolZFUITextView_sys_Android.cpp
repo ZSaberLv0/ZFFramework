@@ -140,17 +140,17 @@ public:
             ZFCastStatic(jint, textShadowOffset.height));
     }
     virtual void textSize(ZF_IN ZFUITextView *textView,
-                          ZF_IN zfint textSize)
+                          ZF_IN zffloat textSize)
     {
         // changed during layoutNativeTextView
     }
     virtual void textSizeAutoChangeMinSize(ZF_IN ZFUITextView *textView,
-                                           ZF_IN zfint textSizeAutoChangeMinSize)
+                                           ZF_IN zffloat textSizeAutoChangeMinSize)
     {
         // changed during layoutNativeTextView
     }
     virtual void textSizeAutoChangeMaxSize(ZF_IN ZFUITextView *textView,
-                                           ZF_IN zfint textSizeAutoChangeMaxSize)
+                                           ZF_IN zffloat textSizeAutoChangeMaxSize)
     {
         // changed during layoutNativeTextView
     }
@@ -186,7 +186,7 @@ public:
 public:
     virtual ZFUISize measureNativeTextView(ZF_IN ZFUITextView *textView,
                                            ZF_IN const ZFUISize &sizeHint,
-                                           ZF_IN zfint textSize)
+                                           ZF_IN zffloat textSize)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, "native_measureNativeTextView",
@@ -202,13 +202,13 @@ public:
             ZFCastStatic(jint, sizeHint.height),
             ZFCastStatic(jint, textSize));
         jint *jarrSize = JNIUtilGetIntArrayElements(jniEnv, jobjSize, NULL);
-        ZFUISize ret = ZFUISizeMake((zfint)jarrSize[0], (zfint)jarrSize[1]);
+        ZFUISize ret = ZFUISizeMake((zffloat)jarrSize[0], (zffloat)jarrSize[1]);
         JNIUtilReleaseIntArrayElements(jniEnv, jobjSize, jarrSize, JNI_ABORT);
         JNIUtilDeleteLocalRef(jniEnv, jobjSize);
         return ret;
     }
 
-    virtual zfint textSizeCurrent(ZF_IN ZFUITextView *textView)
+    virtual zffloat textSizeCurrent(ZF_IN ZFUITextView *textView)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, "native_textSizeCurrent",
@@ -217,7 +217,7 @@ public:
             ).c_str());
         jint ret = JNIUtilCallStaticIntMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, textView->nativeImplView()));
-        return ZFCastStatic(zfint, ret);
+        return ZFCastStatic(zffloat, ret);
     }
 
     virtual void layoutNativeTextView(ZF_IN ZFUITextView *textView,
@@ -229,7 +229,7 @@ public:
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
                 .add(JNIType::S_int)
             ).c_str());
-        zfint fixedTextSize = this->calcTextSizeAutoChange(textView, viewSize);
+        zffloat fixedTextSize = this->calcTextSizeAutoChange(textView, viewSize);
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, textView->nativeImplView()),
             (jint)fixedTextSize);

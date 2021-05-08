@@ -186,14 +186,14 @@ public:
      * @brief util method to apply sizeHint according sizeParam
      */
     ZFMETHOD_DECLARE_STATIC_4(void, sizeHintApply,
-                              ZFMP_OUT(zfint &, ret),
-                              ZFMP_IN(zfint, size),
-                              ZFMP_IN(zfint, sizeHint),
+                              ZFMP_OUT(zffloat &, ret),
+                              ZFMP_IN(zffloat, size),
+                              ZFMP_IN(zffloat, sizeHint),
                               ZFMP_IN(ZFUISizeTypeEnum, sizeParam))
     /** @brief see #sizeHintApply */
-    ZFMETHOD_DECLARE_STATIC_3(zfint, sizeHintApply,
-                              ZFMP_IN(zfint, size),
-                              ZFMP_IN(zfint, sizeHint),
+    ZFMETHOD_DECLARE_STATIC_3(zffloat, sizeHintApply,
+                              ZFMP_IN(zffloat, size),
+                              ZFMP_IN(zffloat, sizeHint),
                               ZFMP_IN(ZFUISizeTypeEnum, sizeParam))
 
     /**
@@ -214,13 +214,13 @@ public:
      * @brief merge two size hint
      */
     ZFMETHOD_DECLARE_STATIC_3(void, sizeHintMerge,
-                              ZFMP_OUT(zfint &, ret),
-                              ZFMP_IN(zfint, sizeHint0),
-                              ZFMP_IN(zfint, sizeHint1))
+                              ZFMP_OUT(zffloat &, ret),
+                              ZFMP_IN(zffloat, sizeHint0),
+                              ZFMP_IN(zffloat, sizeHint1))
     /** @brief see #sizeHintMerge */
-    ZFMETHOD_DECLARE_STATIC_2(zfint, sizeHintMerge,
-                              ZFMP_IN(zfint, sizeHint0),
-                              ZFMP_IN(zfint, sizeHint1))
+    ZFMETHOD_DECLARE_STATIC_2(zffloat, sizeHintMerge,
+                              ZFMP_IN(zffloat, sizeHint0),
+                              ZFMP_IN(zffloat, sizeHint1))
 
     /**
      * @brief merge two size hint
@@ -238,13 +238,13 @@ public:
      * @brief safely increase or decrease size hint, do nothing if old one is no limit
      */
     ZFMETHOD_DECLARE_STATIC_3(void, sizeHintOffset,
-                              ZFMP_OUT(zfint &, ret),
-                              ZFMP_IN(zfint, sizeHint),
-                              ZFMP_IN(zfint, offset))
+                              ZFMP_OUT(zffloat &, ret),
+                              ZFMP_IN(zffloat, sizeHint),
+                              ZFMP_IN(zffloat, offset))
     /** @brief see #sizeHintOffset */
-    ZFMETHOD_DECLARE_STATIC_2(zfint, sizeHintOffset,
-                              ZFMP_IN(zfint, sizeHint),
-                              ZFMP_IN(zfint, offset))
+    ZFMETHOD_DECLARE_STATIC_2(zffloat, sizeHintOffset,
+                              ZFMP_IN(zffloat, sizeHint),
+                              ZFMP_IN(zffloat, offset))
 
     /**
      * @brief safely increase or decrease size hint, do nothing if old one is no limit
@@ -264,11 +264,11 @@ public:
     ZFMETHOD_DECLARE_STATIC_3(void, sizeHintOffset,
                               ZFMP_OUT(ZFUISize &, ret),
                               ZFMP_IN(const ZFUISize &, sizeHint),
-                              ZFMP_IN(zfint, offset))
+                              ZFMP_IN(zffloat, offset))
     /** @brief see #sizeHintOffset */
     ZFMETHOD_DECLARE_STATIC_2(ZFUISize, sizeHintOffset,
                               ZFMP_IN(const ZFUISize &, sizeHint),
-                              ZFMP_IN(zfint, offset))
+                              ZFMP_IN(zffloat, offset))
 
 public:
     zfoverride
