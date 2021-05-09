@@ -20,9 +20,11 @@ public:
      * @brief apply transform for view
      *
      * things you should impl:
+     * -  #ZFUIView::viewTranslateX
+     * -  #ZFUIView::viewTranslateY
      * -  #ZFUIView::viewScaleX
      * -  #ZFUIView::viewScaleY
-     * -  #ZFUIView::viewRotation
+     * -  #ZFUIView::viewRotate
      */
     virtual void viewTransform(ZF_IN ZFUIView *view) zfpurevirtual;
 ZFPROTOCOL_INTERFACE_END(ZFUIViewTransform)

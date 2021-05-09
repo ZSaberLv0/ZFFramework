@@ -133,6 +133,8 @@ public:
     ZFOBSERVER_EVENT(ViewOnRemoveFromParent)
     /**
      * @brief see #ZFObject::observerNotify
+     *
+     * called when this view or parent view's #UIScale or #UIScaleFixed changed
      */
     ZFOBSERVER_EVENT(UIScaleOnChange)
     /**
@@ -361,6 +363,17 @@ public:
     // ============================================================
     // transform
     /**
+     * @brief translate for the view
+     *
+     * when impl not available, setting this value would have no effect
+     */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewTranslateX, 0)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, viewTranslateX)
+    /** @brief see #viewTranslateX */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewTranslateY, 0)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, viewTranslateY)
+
+    /**
      * @brief scale for the view
      *
      * when impl not available, setting this value would have no effect
@@ -379,8 +392,8 @@ public:
      * any value out of range would be fixed to [0, 360)\n
      * when impl not available, setting this value would have no effect
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewRotation, 0)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewRotation)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewRotate, 0)
+    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewRotate)
 
     // ============================================================
     // init and dealloc
@@ -615,6 +628,12 @@ public:
      * size-related property should be flushed manually while scale changed,
      * subclass should override #UIScaleOnChange to update them,
      * which would be called if #UIScaleFixed really changed
+     * \n
+     * #UIScale usually used for scale for entire view tree,
+     * all layout and touch position would be scaled properly,
+     * however, changing #UIScale for a deep view tree may consume must time\n
+     * for temporarily scale, typically for animation,
+     * use #viewScaleX instead
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, UIScale, 1)
     ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, UIScale)

@@ -117,9 +117,9 @@ public:
 
         transform.translate(width / 2, height / 2);
 
-        if(this->aniTarget->viewRotation() != 0)
+        if(this->aniTarget->viewRotate() != 0)
         {
-            transform.rotate(this->aniTarget->viewRotation());
+            transform.rotate(this->aniTarget->viewRotate());
         }
         if(ani->aniRotateZFrom() != 0 || ani->aniRotateZTo() != 0)
         {
@@ -243,9 +243,9 @@ private:
         {
             QTransform t;
             t.translate(this->nativeAniTarget->geometry().width() / 2, this->nativeAniTarget->geometry().height() / 2);
-            if(this->aniTarget->viewRotation() != 0)
+            if(this->aniTarget->viewRotate() != 0)
             {
-                t.rotate(this->aniTarget->viewRotation());
+                t.rotate(this->aniTarget->viewRotate());
             }
             if(this->aniTarget->viewScaleX() != 1 || this->aniTarget->viewScaleY() != 1)
             {

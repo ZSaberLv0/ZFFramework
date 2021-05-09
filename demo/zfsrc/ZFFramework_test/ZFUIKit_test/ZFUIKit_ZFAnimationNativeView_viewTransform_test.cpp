@@ -24,7 +24,7 @@ protected:
         view->image(zfRes("test_normal.png"));
         view->viewScaleX(1.5f);
         view->viewScaleY(0.5f);
-        view->viewRotation(40);
+        view->viewRotate(40);
 
         this->ani()->aniTarget(view);
 

@@ -20,9 +20,16 @@ public:
         QGraphicsWidget *nativeView = (QGraphicsWidget *)view->nativeView();
         QTransform t;
         t.translate(nativeView->geometry().width() / 2, nativeView->geometry().height() / 2);
-        if(view->viewRotation() != 0)
+        if(view->viewTranslateX() != 0 || view->viewTranslateY() != 0)
         {
-            t.rotate(view->viewRotation());
+            t.translate(
+                    view->viewTranslateX() * view->UIScaleFixed(),
+                    view->viewTranslateY() * view->UIScaleFixed()
+                );
+        }
+        if(view->viewRotate() != 0)
+        {
+            t.rotate(view->viewRotate());
         }
         if(view->viewScaleX() != 1 || view->viewScaleY() != 1)
         {

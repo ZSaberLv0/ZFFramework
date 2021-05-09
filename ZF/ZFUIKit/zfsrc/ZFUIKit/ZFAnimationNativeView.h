@@ -31,7 +31,7 @@ zfclassFwd _ZFP_ZFAnimationNativeViewPrivate;
  *
  * native animation usually has better performance,
  * but may work incorrectly with local transform
- * (such as #ZFUIView::viewRotation)
+ * (such as #ZFUIView::viewRotate)
  */
 zfclass ZF_ENV_EXPORT ZFAnimationNativeView : zfextends ZFAnimation
 {

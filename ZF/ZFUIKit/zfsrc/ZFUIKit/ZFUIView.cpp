@@ -1063,6 +1063,20 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, ZFUIColor, viewBackgroundColor)
     ZFPROTOCOL_ACCESS(ZFUIView)->viewBackgroundColor(this, this->viewBackgroundColor());
 }
 
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewTranslateX)
+{
+    if(propertyValue != propertyValueOld)
+    {
+        d->viewTransformUpdate(this);
+    }
+}
+ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewTranslateY)
+{
+    if(propertyValue != propertyValueOld)
+    {
+        d->viewTransformUpdate(this);
+    }
+}
 ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleX)
 {
     if(propertyValue < 0)
@@ -1085,7 +1099,7 @@ ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleY)
         d->viewTransformUpdate(this);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewRotation)
+ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewRotate)
 {
     while(propertyValue < 0)
     {

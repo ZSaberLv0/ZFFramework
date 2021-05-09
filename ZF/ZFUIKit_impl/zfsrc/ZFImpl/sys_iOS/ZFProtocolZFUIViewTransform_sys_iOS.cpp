@@ -25,9 +25,17 @@ public:
             }
             UIView *nativeView = (__bridge UIView *)viewTmp->nativeView();
             CATransform3D t = CATransform3DIdentity;
-            if(viewTmp->viewRotation() != 0)
+            if(viewTmp->viewTranslateX() != 0 || viewTmp->viewTranslateY() != 0)
             {
-                t = CATransform3DRotate(t, ((int)viewTmp->viewRotation()) * M_PI / 180, 0, 0, 1);
+                t = CATransform3DTranslate(t
+                        , viewTmp->viewTranslateX() * viewTmp->UIScaleFixed()
+                        , viewTmp->viewTranslateY() * viewTmp->UIScaleFixed()
+                        , 0
+                    );
+            }
+            if(viewTmp->viewRotate() != 0)
+            {
+                t = CATransform3DRotate(t, ((int)viewTmp->viewRotate()) * M_PI / 180, 0, 0, 1);
             }
             if(viewTmp->viewScaleX() != 1 || viewTmp->viewScaleY() != 1)
             {
