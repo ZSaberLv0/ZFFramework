@@ -155,7 +155,7 @@ public:
 // ZFUIAutoLayout
 zfclassFwd _ZFP_ZFUIAutoLayoutPrivate;
 /**
- * @brief auto layout with contraint rule
+ * @brief auto layout with constraint rule
  *
  * recommended to use #ZFUIAutoLayoutMaker to create rules\n
  * \n

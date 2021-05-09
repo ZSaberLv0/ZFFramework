@@ -11,8 +11,8 @@ void ZFImpl_sys_iOS_ZFUIPointToCGPointT(ZF_OUT CGPoint &ret, ZF_IN const ZFUIPoi
 }
 void ZFImpl_sys_iOS_ZFUIPointFromCGPointT(ZF_OUT ZFUIPoint &ret, ZF_IN const CGPoint &cgPoint)
 {
-    ret.x = zfmRound(cgPoint.x);
-    ret.y = zfmRound(cgPoint.y);
+    ret.x = cgPoint.x;
+    ret.y = cgPoint.y;
 }
 void ZFImpl_sys_iOS_ZFUISizeToCGSizeT(ZF_OUT CGSize &ret, ZF_IN const ZFUISize &size)
 {
@@ -21,8 +21,8 @@ void ZFImpl_sys_iOS_ZFUISizeToCGSizeT(ZF_OUT CGSize &ret, ZF_IN const ZFUISize &
 }
 void ZFImpl_sys_iOS_ZFUISizeFromCGSizeT(ZF_OUT ZFUISize &ret, ZF_IN const CGSize &cgSize)
 {
-    ret.width = zfmRound(cgSize.width);
-    ret.height = zfmRound(cgSize.height);
+    ret.width = cgSize.width;
+    ret.height = cgSize.height;
 }
 void ZFImpl_sys_iOS_ZFUIRectToCGRectT(ZF_OUT CGRect &ret, ZF_IN const ZFUIRect &rect)
 {
@@ -33,10 +33,10 @@ void ZFImpl_sys_iOS_ZFUIRectToCGRectT(ZF_OUT CGRect &ret, ZF_IN const ZFUIRect &
 }
 void ZFImpl_sys_iOS_ZFUIRectFromCGRectT(ZF_OUT ZFUIRect &ret, ZF_IN const CGRect &cgRect)
 {
-    ret.x = zfmRound(cgRect.origin.x);
-    ret.y = zfmRound(cgRect.origin.y);
-    ret.width = zfmRound(cgRect.size.width);
-    ret.height = zfmRound(cgRect.size.height);
+    ret.x = cgRect.origin.x;
+    ret.y = cgRect.origin.y;
+    ret.width = cgRect.size.width;
+    ret.height = cgRect.size.height;
 }
 
 void ZFImpl_sys_iOS_ZFUIMarginToUIEdgeInsetsT(ZF_OUT UIEdgeInsets &ret, ZF_IN const ZFUIMargin &margin)
@@ -48,10 +48,10 @@ void ZFImpl_sys_iOS_ZFUIMarginToUIEdgeInsetsT(ZF_OUT UIEdgeInsets &ret, ZF_IN co
 }
 void ZFImpl_sys_iOS_ZFUIMarginFromUIEdgeInsetsT(ZF_OUT ZFUIMargin &ret, ZF_IN const UIEdgeInsets &edgeInsets)
 {
-    ret.left = zfmRound(edgeInsets.left);
-    ret.top = zfmRound(edgeInsets.top);
-    ret.right = zfmRound(edgeInsets.right);
-    ret.bottom = zfmRound(edgeInsets.bottom);
+    ret.left = edgeInsets.left;
+    ret.top = edgeInsets.top;
+    ret.right = edgeInsets.right;
+    ret.bottom = edgeInsets.bottom;
 }
 
 UIColor *ZFImpl_sys_iOS_ZFUIColorToUIColor(ZF_IN const ZFUIColor &color)

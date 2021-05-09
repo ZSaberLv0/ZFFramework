@@ -242,7 +242,7 @@ public:
         zffloat progress = (zffloat)(curTime - this->aniByPointStartTime) / (this->aniByPointStopTime - this->aniByPointStartTime);
         zffloat offsetProgress = ZFBezierEaseOut().y_by_x(progress);
 
-        this->contentOffset = this->aniByPointStartPos + (zffloat)zfmRound((this->aniByPointStopPos - this->aniByPointStartPos) * offsetProgress);
+        this->contentOffset = this->aniByPointStartPos + (this->aniByPointStopPos - this->aniByPointStartPos) * offsetProgress;
         if(zfmAbs(this->contentOffset - this->aniByPointStopPos) <= 1)
         {
             this->contentOffset = aniByPointStopPos;

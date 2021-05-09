@@ -134,7 +134,7 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      */
-    ZFOBSERVER_EVENT(ViewScaleOnChange)
+    ZFOBSERVER_EVENT(UIScaleOnChange)
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -574,28 +574,29 @@ public:
     // scale settings
 public:
     /**
-     * @brief scale for view
+     * @brief UI scale for view tree
      *
      * ZFUIView use a special scale logic to adapt various screen sizes,
      * which contain these scale values:
      * -  app scale:\n
-     *   accessed by #scaleForApp, 1 by default\n
-     *   automatically changed while adding a ZFUIView to another,
-     *   and can only be changed by app by using #ZFUIRootView::scaleForApp of #ZFUISysWindow
+     *   app's custom scale, accessed by #UIScale, 1 by default\n
+     *   you may change this view to apply scale for entire view tree,
+     *   every child view may have different scale setting,
+     *   the final scale can be accessed by #UIScaleInherited
      * -  impl scale:\n
-     *   accessed by #scaleForImpl, it's value depends on impl\n
+     *   accessed by #UIScaleForImpl, it's value depends on impl\n
      *   automatically changed while adding a ZFUIView to native view,
      *   can not be changed by app
      * -  fixed scale:\n
-     *   accessed by #scaleFixed, always equal to (#scaleForApp * #scaleForImpl)\n
+     *   accessed by #UIScaleFixed, always equal to
+     *   (#UIScaleInherited * #UIScale * #UIScaleForImpl)\n
      *   all size unit would be applied with this value
      *   before passing to implementations,
      *   can not be changed by app
      * -  impl physical scale:\n
-     *   accessedb y #scaleForImplPhysicalPixel, it's value depends on impl\n
-     *   corresponding to #scaleForImpl,
-     *   used only if you want to verify physical pixel
-     *   (since impl may have it's own scale logic)
+     *   accessed by #UIScaleForPixel, it's value depends on impl\n
+     *   to access final pixel size:
+     *   view's size * #UIScaleInherited * #UIScale * #UIScaleForPixel
      *
      * in general:
      * -  for app:\n
@@ -603,8 +604,7 @@ public:
      *   all elements can be assigned as fixed size,
      *   such as 48 for a button's height and 21 for a small textView's height,
      *   it will be scaled automatically while rendering to different size's or DPI's devices\n
-     *   if you really want to change scale setting,
-     *   you should use #ZFUIRootView::scaleForApp of #ZFUISysWindow
+     *   you may use #UIScale to control custom scale logic
      * -  for implementation:\n
      *   you have no need to worry about element's logical size,
      *   everything would be scaled to desired size unit
@@ -613,32 +613,27 @@ public:
      * \n
      * since scale may affect impl's pixel size,
      * size-related property should be flushed manually while scale changed,
-     * subclass should override #scaleOnChange to update them,
-     * which would be called if #scaleFixed really changed
+     * subclass should override #UIScaleOnChange to update them,
+     * which would be called if #UIScaleFixed really changed
      */
-    ZFMETHOD_DECLARE_0(zffloat, scaleForApp)
-    /**
-     * @brief see #scaleForApp
-     */
-    ZFMETHOD_DECLARE_0(zffloat, scaleForImpl)
-    /**
-     * @brief see #scaleForApp
-     */
-    ZFMETHOD_DECLARE_0(zffloat, scaleForImplPhysicalPixel)
-    /**
-     * @brief see #scaleForApp
-     */
-    ZFMETHOD_DECLARE_0(zffloat, scaleFixed)
+    ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, UIScale, 1)
+    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, UIScale)
+    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, UIScale)
+    /** @brief see #UIScale */
+    ZFMETHOD_DECLARE_0(zffloat, UIScaleInherited)
+    /** @brief see #UIScale */
+    ZFMETHOD_DECLARE_0(zffloat, UIScaleForImpl)
+    /** @brief see #UIScale */
+    ZFMETHOD_DECLARE_0(zffloat, UIScaleForPixel)
+    /** @brief see #UIScale */
+    ZFMETHOD_DECLARE_0(zffloat, UIScaleFixed)
 protected:
     /**
-     * @brief see #scaleForApp, ensured called only when scale value actually changed
+     * @brief see #UIScale, ensured called only when scale value actually changed
      *
-     * after this method, #EventViewScaleOnChange would be fired
+     * after this method, #EventUIScaleOnChange would be fired
      */
-    virtual void scaleOnChange(void);
-public:
-    void _ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleFixed,
-                                           ZF_IN zffloat scaleForImpl);
+    virtual void UIScaleOnChange(void);
 
     // ============================================================
     // layout logic
@@ -916,7 +911,7 @@ protected:
     virtual void viewOnRemoveFromParent(ZF_IN ZFUIView *parent);
 
     // ============================================================
-    // internal impl views
+    // internal views
 public:
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_3(void, internalImplViewAdd,
@@ -928,12 +923,7 @@ public:
                        ZFMP_IN(ZFUIView *, view))
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFUIView *>, internalImplViewArray)
-protected:
-    /** @brief see #internalBgViewAdd */
-    virtual void internalImplViewOnLayout(ZF_IN const ZFUIRect &bounds);
 
-    // ============================================================
-    // internal background views
 public:
     /**
      * @brief internal view which is independent from normal view
@@ -967,12 +957,7 @@ public:
      * @brief usually for debug use only, try to avoid use this in your app for other purpose
      */
     ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFUIView *>, internalBgViewArray)
-protected:
-    /** @brief see #internalBgViewAdd */
-    virtual void internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds);
 
-    // ============================================================
-    // internal foreground views
 public:
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_3(void, internalFgViewAdd,
@@ -984,8 +969,6 @@ public:
                        ZFMP_IN(ZFUIView *, view))
     /** @brief see #internalBgViewAdd */
     ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFUIView *>, internalFgViewArray)
-    /** @brief see #internalBgViewAdd */
-    virtual void internalFgViewOnLayout(ZF_IN const ZFUIRect &bounds);
 
     // ============================================================
     // other internal view logic
@@ -1023,6 +1006,8 @@ protected:
     {
         return zftrue;
     }
+    /** @brief see #internalBgViewAdd */
+    virtual void internalViewOnLayout(ZF_IN const ZFUIRect &bounds);
 
     // ============================================================
     // UI events

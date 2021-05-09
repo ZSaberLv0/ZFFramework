@@ -509,9 +509,9 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     ret.width = zfmMax(backgroundSize.width, contentSize.width);
     ret.height = zfmMax(backgroundSize.height, contentSize.height);
 }
-void ZFUIButtonBasic::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
+void ZFUIButtonBasic::internalViewOnLayout(ZF_IN const ZFUIRect &bounds)
 {
-    zfsuper::internalBgViewOnLayout(bounds);
+    zfsuper::internalViewOnLayout(bounds);
 
     ZFUIView *backgroundView = ZFCastZFObjectUnchecked(ZFUIView *, d->buttonBackground);
     if(backgroundView != zfnull)

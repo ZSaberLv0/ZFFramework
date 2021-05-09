@@ -28,7 +28,7 @@ protected:
         void *context = ZFUIDraw::beginForView(this);
         ZFUIKit_ZFUIDraw_test_DrawableView::testDraw(
             context,
-            ZFUISizeApplyScale(ZFUIRectGetSize(this->viewFrame()), this->scaleFixed()));
+            ZFUISizeApplyScale(ZFUIRectGetSize(this->viewFrame()), this->UIScaleFixed()));
         ZFUIDraw::endForView(context);
     }
 };
@@ -56,10 +56,10 @@ protected:
         zfblockedAlloc(ZFUIImageView, view1);
         container->childAdd(view1, ZFUISizeParamFillFill(), ZFUIAlign::e_RightInner);
         view1->layoutParam()->sizeHint(ZFUISizeMake(100, 100));
-        void *context = ZFUIDraw::beginForImage(ZFUISizeApplyScale(ZFUISizeMake(100), view1->scaleFixed()));
+        void *context = ZFUIDraw::beginForImage(ZFUISizeApplyScale(ZFUISizeMake(100), view1->UIScaleFixed()));
         ZFUIKit_ZFUIDraw_test_DrawableView::testDraw(
             context,
-            ZFUISizeApplyScale(ZFUISizeMake(100), view1->scaleFixed()));
+            ZFUISizeApplyScale(ZFUISizeMake(100), view1->UIScaleFixed()));
         zfautoObjectT<ZFUIImage *> image = ZFUIDraw::endForImage(context);
         view1->image(image);
 

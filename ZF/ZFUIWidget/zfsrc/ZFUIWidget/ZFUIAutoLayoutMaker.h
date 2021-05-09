@@ -23,13 +23,13 @@ zfclassFwd _ZFP_ZFUIAutoLayoutMakerPrivate;
  * all available functions of maker:
  * -  zfal_maker(view) :
  *   change the maker's target
- * -  width(int) / height(int) :
+ * -  width(zffloat) / height(zffloat) :
  *   explicitly specify the size rule,
  *   same as setting #ZFUIView::layoutParam with sizeHint and fill sizeParam,
  *   would be overrided by other rules if conflict,
  *   set to negative value would reset the rule
- * -  size(int) / size(int, int) / size(ZFUISize) :
- *   util to width(int) / height(int)
+ * -  size(zffloat) / size(zffloat, zffloat) / size(ZFUISize) :
+ *   util to width(zffloat) / height(zffloat)
  * -  left(), top/right/bottom/width/height, etc :
  *   specify the #ZFUIAutoLayoutRule::pos
  * -  toLeft(target), top/right/bottom/width/height, etc :

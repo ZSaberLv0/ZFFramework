@@ -59,7 +59,7 @@ protected:
     zfoverride
     virtual zfbool internalViewShouldLayout(ZF_IN ZFUIView *internalView);
     zfoverride
-    virtual void internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds);
+    virtual void internalViewOnLayout(ZF_IN const ZFUIRect &bounds);
     zfoverride
     virtual void textOnChange(ZF_IN const zfchar *oldText);
 };

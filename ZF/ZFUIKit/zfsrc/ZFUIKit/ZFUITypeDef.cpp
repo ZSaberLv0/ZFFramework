@@ -8,7 +8,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFUISizeApplyScale,
                        ZFMP_IN(zffloat const &, v),
                        ZFMP_IN(zffloat, scale))
 {
-    ret = (zffloat)zfmRound(v * scale);
+    ret = v * scale;
 }
 ZFMETHOD_FUNC_INLINE_DEFINE_2(zffloat, ZFUISizeApplyScale,
                               ZFMP_IN(zffloat const &, v),
@@ -19,7 +19,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFUISizeApplyScaleReversely,
                        ZFMP_IN(zffloat const &, v),
                        ZFMP_IN(zffloat, scale))
 {
-    ret = (zffloat)zfmRound(v / scale);
+    ret = v / scale;
 }
 ZFMETHOD_FUNC_INLINE_DEFINE_2(zffloat, ZFUISizeApplyScaleReversely,
                               ZFMP_IN(zffloat const &, v),

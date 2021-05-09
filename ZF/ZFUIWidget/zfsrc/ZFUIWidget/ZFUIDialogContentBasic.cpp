@@ -399,9 +399,9 @@ void ZFUIDialogContentBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
 {
     ret = d->mainContainer->layoutMeasure(sizeHint, sizeParam);
 }
-void ZFUIDialogContentBasic::internalFgViewOnLayout(ZF_IN const ZFUIRect &bounds)
+void ZFUIDialogContentBasic::internalViewOnLayout(ZF_IN const ZFUIRect &bounds)
 {
-    zfsuper::internalFgViewOnLayout(bounds);
+    zfsuper::internalViewOnLayout(bounds);
     d->mainContainer->viewFrame(bounds);
 }
 zfbool ZFUIDialogContentBasic::internalViewShouldLayout(ZF_IN ZFUIView *internalView)

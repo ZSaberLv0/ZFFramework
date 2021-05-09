@@ -24,18 +24,6 @@ zffinal zfclass ZF_ENV_EXPORT ZFUIRootView : zfextends ZFUIView
 
 public:
     /**
-     * @brief set scale for root view, as well as all of its children
-     */
-    ZFMETHOD_DECLARE_1(void, scaleForApp,
-                       ZFMP_IN(zffloat, scale))
-    zfoverride
-    virtual zffloat scaleForApp(void)
-    {
-        return zfsuper::scaleForApp();
-    }
-
-public:
-    /**
      * @brief owner #ZFUISysWindow
      */
     zffinal ZFUISysWindow *rootViewOwnerSysWindow(void)

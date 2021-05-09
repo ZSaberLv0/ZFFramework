@@ -52,7 +52,7 @@ ZFMETHOD_DEFINE_0(ZFUIOnScreenKeyboardState, const ZFUIRect &, keyboardFramePrev
 ZFMETHOD_DEFINE_1(ZFUIOnScreenKeyboardState, void, keyboardFixClientFrameT,
                   ZFMP_OUT(ZFUIRect &, clientFrame))
 {
-    zffloat scale = this->keyboardOwnerSysWindow()->rootView()->scaleFixed();
+    zffloat scale = this->keyboardOwnerSysWindow()->rootView()->UIScaleFixed();
     ZFPROTOCOL_ACCESS(ZFUIOnScreenKeyboardState)->keyboardFixClientFrame(
         this,
         ZFUIRectApplyScale(this->keyboardFrame(), scale),

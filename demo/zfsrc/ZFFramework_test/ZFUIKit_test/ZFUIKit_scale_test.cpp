@@ -29,25 +29,25 @@ private:
     {
         zfblockedAlloc(ZFArray, settings);
 
-        { // scaleForApp
+        { // UIScale
             zfblockedAlloc(ZFUIKit_test_SettingData, setting);
             settings->add(setting);
             ZFLISTENER_LOCAL(buttonTextGetter, {
                 v_zfstring *text = listenerData.param0<v_zfstring *>();
                 text->zfv = zfstringWithFormat(
                     "scale: %f",
-                    ZFUISysWindow::mainWindow()->rootView()->scaleForApp());
+                    ZFUISysWindow::mainWindow()->rootView()->UIScale());
             })
             setting->buttonTextGetter(buttonTextGetter);
             ZFLISTENER_LOCAL(buttonClickListener, {
                 ZFUIRootView *rootView = ZFUISysWindow::mainWindow()->rootView();
-                if(rootView->scaleForApp() == 1)
+                if(rootView->UIScale() == 1)
                 {
-                    rootView->scaleForApp(2);
+                    rootView->UIScale(2);
                 }
                 else
                 {
-                    rootView->scaleForApp(1);
+                    rootView->UIScale(1);
                 }
             })
             setting->buttonClickListener(buttonClickListener);

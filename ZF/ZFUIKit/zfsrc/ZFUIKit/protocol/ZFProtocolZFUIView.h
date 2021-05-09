@@ -80,11 +80,11 @@ public:
     /**
      * @brief get proper scale for the view
      */
-    virtual zffloat nativeViewScaleForImpl(ZF_IN void *nativeView) zfpurevirtual;
+    virtual zffloat UIScaleForImpl(ZF_IN void *nativeView) zfpurevirtual;
     /**
      * @brief get proper scale for physical pixel
      */
-    virtual zffloat nativeViewScaleForPhysicalPixel(ZF_IN void *nativeView) zfpurevirtual;
+    virtual zffloat UIScaleForPixel(ZF_IN void *nativeView) zfpurevirtual;
 
     // ============================================================
     // properties
@@ -182,7 +182,7 @@ public:
     zffinal void notifyLayoutView(ZF_IN ZFUIView *view,
                                   ZF_IN const ZFUIRect &rect)
     {
-        view->_ZFP_ZFUIView_notifyLayoutView(ZFUIRectApplyScaleReversely(rect, view->scaleFixed()));
+        view->_ZFP_ZFUIView_notifyLayoutView(ZFUIRectApplyScaleReversely(rect, view->UIScaleFixed()));
     }
     /**
      * @brief implementation must notify when UI event occurred
@@ -194,7 +194,7 @@ public:
     zffinal void notifyUIEvent(ZF_IN ZFUIView *view,
                                ZF_IN ZFUIEvent *uiEvent)
     {
-        uiEvent->_ZFP_ZFUIEvent_eventOnApplyScaleReversely(view->scaleFixed());
+        uiEvent->_ZFP_ZFUIEvent_eventOnApplyScaleReversely(view->UIScaleFixed());
         view->viewEventSend(uiEvent);
     }
 ZFPROTOCOL_INTERFACE_END(ZFUIView)

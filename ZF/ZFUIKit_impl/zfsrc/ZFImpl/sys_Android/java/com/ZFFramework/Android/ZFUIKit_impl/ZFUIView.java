@@ -90,11 +90,11 @@ public class ZFUIView extends ViewGroup {
         nativeViewTmp.nativeImplViewFrame_height = nativeImplViewFrame_height;
     }
 
-    public static float native_nativeViewScaleForImpl(Object nativeView) {
-        return ZFUIView.native_nativeViewScaleForPhysicalPixel(nativeView);
+    public static float native_UIScaleForImpl(Object nativeView) {
+        return ZFUIView.native_UIScaleForPixel(nativeView);
     }
 
-    public static float native_nativeViewScaleForPhysicalPixel(Object nativeView) {
+    public static float native_UIScaleForPixel(Object nativeView) {
         return ZFAndroidUI.screenDensity(((View) nativeView).getContext());
     }
 

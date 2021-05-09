@@ -324,7 +324,7 @@ public:
         ZFUIRect frame = this->pimplOwner->scrollContentFrame();
         frame.x += this->pimplOwner->scrollAreaMargin().left;
         frame.y += this->pimplOwner->scrollAreaMargin().top;
-        ZFUIRectApplyScale(frame, frame, this->pimplOwner->scaleFixed());
+        ZFUIRectApplyScale(frame, frame, this->pimplOwner->UIScaleFixed());
         if(frame != this->scrollContentFrameCache)
         {
             this->scrollContentFrameCache = frame;

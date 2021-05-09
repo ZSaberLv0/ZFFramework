@@ -7,10 +7,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 static void _ZFP_ZFUITextView_updateSizeRelatedProperty(ZF_IN ZFUITextView *owner)
 {
     ZFPROTOCOL_INTERFACE_CLASS(ZFUITextView) *impl = ZFPROTOCOL_ACCESS(ZFUITextView);
-    impl->textShadowOffset(owner, ZFUISizeApplyScale(owner->textShadowOffset(), owner->scaleFixed()));
-    impl->textSize(owner, ZFUISizeApplyScale(owner->textSize(), owner->scaleFixed()));
-    impl->textSizeAutoChangeMinSize(owner, ZFUISizeApplyScale(owner->textSizeAutoChangeMinSize(), owner->scaleFixed()));
-    impl->textSizeAutoChangeMaxSize(owner, ZFUISizeApplyScale(owner->textSizeAutoChangeMaxSize(), owner->scaleFixed()));
+    impl->textShadowOffset(owner, ZFUISizeApplyScale(owner->textShadowOffset(), owner->UIScaleFixed()));
+    impl->textSize(owner, ZFUISizeApplyScale(owner->textSize(), owner->UIScaleFixed()));
+    impl->textSizeAutoChangeMinSize(owner, ZFUISizeApplyScale(owner->textSizeAutoChangeMinSize(), owner->UIScaleFixed()));
+    impl->textSizeAutoChangeMaxSize(owner, ZFUISizeApplyScale(owner->textSizeAutoChangeMaxSize(), owner->UIScaleFixed()));
 }
 
 // ============================================================
@@ -58,11 +58,11 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUIColor, textShadowColor)
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUISize, textShadowOffset)
 {
-    ZFPROTOCOL_ACCESS(ZFUITextView)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleFixed()));
+    ZFPROTOCOL_ACCESS(ZFUITextView)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->UIScaleFixed()));
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSize)
 {
-    ZFPROTOCOL_ACCESS(ZFUITextView)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->scaleFixed()));
+    ZFPROTOCOL_ACCESS(ZFUITextView)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->UIScaleFixed()));
     if(this->textSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -70,7 +70,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSize)
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMinSize)
 {
-    ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeAutoChangeMinSize(this, ZFUISizeApplyScale(this->textSizeAutoChangeMinSize(), this->scaleFixed()));
+    ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeAutoChangeMinSize(this, ZFUISizeApplyScale(this->textSizeAutoChangeMinSize(), this->UIScaleFixed()));
     if(this->textSizeAutoChangeMinSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -78,7 +78,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMi
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMaxSize)
 {
-    ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeAutoChangeMaxSize(this, ZFUISizeApplyScale(this->textSizeAutoChangeMaxSize(), this->scaleFixed()));
+    ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeAutoChangeMaxSize(this, ZFUISizeApplyScale(this->textSizeAutoChangeMaxSize(), this->UIScaleFixed()));
     if(this->textSizeAutoChangeMaxSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -150,20 +150,20 @@ ZFMETHOD_DEFINE_2(ZFUITextView, void, measureTextView,
                     0 - ZFUIMarginGetWidth(nativeImplViewMargin),
                     0 - ZFUIMarginGetHeight(nativeImplViewMargin)
                 )),
-            this->scaleFixed()),
-        ZFUISizeApplyScale(this->textSize(), this->scaleFixed())),
-        this->scaleFixed());
+            this->UIScaleFixed()),
+        ZFUISizeApplyScale(this->textSize(), this->UIScaleFixed())),
+        this->UIScaleFixed());
     ZFUISizeApplyMarginReversely(ret, ret, nativeImplViewMargin);
 }
 
 ZFMETHOD_DEFINE_0(ZFUITextView, zffloat, textSizeCurrent)
 {
-    return ZFUISizeApplyScaleReversely(ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeCurrent(this), this->scaleFixed());
+    return ZFUISizeApplyScaleReversely(ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeCurrent(this), this->UIScaleFixed());
 }
 
-void ZFUITextView::scaleOnChange(void)
+void ZFUITextView::UIScaleOnChange(void)
 {
-    zfsuper::scaleOnChange();
+    zfsuper::UIScaleOnChange();
     _ZFP_ZFUITextView_updateSizeRelatedProperty(this);
 }
 void ZFUITextView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
@@ -172,11 +172,11 @@ void ZFUITextView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
 {
     this->measureTextView(ret, sizeHint);
 }
-void ZFUITextView::internalImplViewOnLayout(ZF_IN const ZFUIRect &bounds)
+void ZFUITextView::internalViewOnLayout(ZF_IN const ZFUIRect &bounds)
 {
-    zfsuper::internalImplViewOnLayout(bounds);
+    zfsuper::internalViewOnLayout(bounds);
     ZFPROTOCOL_ACCESS(ZFUITextView)->layoutNativeTextView(this,
-        ZFUISizeApplyScale(ZFUISizeApplyMargin(ZFUIRectGetSize(bounds), this->nativeImplViewMargin()), this->scaleFixed()));
+        ZFUISizeApplyScale(ZFUISizeApplyMargin(ZFUIRectGetSize(bounds), this->nativeImplViewMargin()), this->UIScaleFixed()));
 }
 
 ZF_NAMESPACE_GLOBAL_END

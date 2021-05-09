@@ -136,10 +136,10 @@ static zftimet _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp(void)
     self._ZFP_impl->scrollContentFrameUpdateByImpl(
         self._ZFP_ownerZFUIScrollView,
         ZFUIRectMake(
-            zfmRound(-self.contentOffset.x),
-            zfmRound(-self.contentOffset.y),
-            zfmRound(self.contentSize.width),
-            zfmRound(self.contentSize.height)));
+            -self.contentOffset.x,
+            -self.contentOffset.y,
+            self.contentSize.width,
+            self.contentSize.height));
 }
 - (void)_ZFP_scrollImplScrollAnimationTimerEvent:(id)dummy
 {

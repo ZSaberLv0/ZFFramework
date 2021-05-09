@@ -64,6 +64,7 @@
 - (void)layoutSubviews
 {
     if(self._ZFP_ownerZFUIView != zfnull
+        && self._ZFP_ownerZFUIView->layoutRequested()
         && (self._ZFP_ownerZFUIView->viewParent() == zfnull || !self._ZFP_ownerZFUIView->viewParent()->layoutRequested())
     ) {
         ZFPROTOCOL_ACCESS(ZFUIView)->notifyLayoutView(self._ZFP_ownerZFUIView, ZFImpl_sys_iOS_ZFUIRectFromCGRect(self.frame));
@@ -371,11 +372,11 @@ public:
         _ZFP_ZFUIViewImpl_sys_iOS_View *nativeView = (__bridge _ZFP_ZFUIViewImpl_sys_iOS_View *)view->nativeView();
         nativeView._ZFP_nativeImplView.frame = ZFImpl_sys_iOS_ZFUIRectToCGRect(rect);
     }
-    virtual zffloat nativeViewScaleForImpl(ZF_IN void *nativeView)
+    virtual zffloat UIScaleForImpl(ZF_IN void *nativeView)
     {
         return 1;
     }
-    virtual zffloat nativeViewScaleForPhysicalPixel(ZF_IN void *nativeView)
+    virtual zffloat UIScaleForPixel(ZF_IN void *nativeView)
     {
         UIScreen *ownerScreen = ((__bridge UIView *)nativeView).window.screen;
         return (zffloat)((ownerScreen == nil) ? [UIScreen mainScreen].scale : ownerScreen.scale);

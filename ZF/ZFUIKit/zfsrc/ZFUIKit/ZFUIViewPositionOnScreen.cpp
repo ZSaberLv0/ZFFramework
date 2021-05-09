@@ -8,7 +8,7 @@ ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewPositionOnScreen,
                        ZFMP_IN(ZFUIView *, view))
 {
     ZFPROTOCOL_ACCESS(ZFUIViewPositionOnScreen)->viewPositionOnScreen(view, rect);
-    rect = ZFUIRectApplyScaleReversely(rect, view->scaleFixed());
+    rect = ZFUIRectApplyScaleReversely(rect, view->UIScaleFixed());
 }
 ZFMETHOD_FUNC_INLINE_DEFINE_1(ZFUIRect, ZFUIViewPositionOnScreen,
                               ZFMP_IN(ZFUIView *, view))

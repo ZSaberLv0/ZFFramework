@@ -26,8 +26,8 @@ public:
 public:
     void updateSizeRelatedProperty(void)
     {
-        ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowOffset(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textShadowOffset(), this->pimplOwner->scaleFixed()));
-        ZFPROTOCOL_ACCESS(ZFUITextEdit)->textSize(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSize(), this->pimplOwner->scaleFixed()));
+        ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowOffset(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textShadowOffset(), this->pimplOwner->UIScaleFixed()));
+        ZFPROTOCOL_ACCESS(ZFUITextEdit)->textSize(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSize(), this->pimplOwner->UIScaleFixed()));
     }
 
 public:
@@ -161,11 +161,11 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIColor, textShadowColor)
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUISize, textShadowOffset)
 {
-    ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleFixed()));
+    ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->UIScaleFixed()));
 }
 ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zffloat, textSize)
 {
-    ZFPROTOCOL_ACCESS(ZFUITextEdit)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->scaleFixed()));
+    ZFPROTOCOL_ACCESS(ZFUITextEdit)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->UIScaleFixed()));
     if(this->textSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -287,9 +287,9 @@ ZFMETHOD_DEFINE_2(ZFUITextEdit, void, measureTextEdit,
                     0 - ZFUIMarginGetWidth(nativeImplViewMargin),
                     0 - ZFUIMarginGetHeight(nativeImplViewMargin)
                 )),
-            this->scaleFixed()),
-        ZFUISizeApplyScale(this->textSize(), this->scaleFixed())),
-        this->scaleFixed());
+            this->UIScaleFixed()),
+        ZFUISizeApplyScale(this->textSize(), this->UIScaleFixed())),
+        this->UIScaleFixed());
     if(ZFPropertyIsValueAccessed(ZFPropertyAccess(ZFUITextEdit, textPlaceHolder), this)
         && !this->textPlaceHolder()->text().isEmpty())
     {
@@ -468,9 +468,9 @@ ZFMETHOD_DEFINE_0(ZFUITextEdit, void, textEditNotifyConfirm)
     this->textOnEditConfirm();
 }
 
-void ZFUITextEdit::scaleOnChange(void)
+void ZFUITextEdit::UIScaleOnChange(void)
 {
-    zfsuper::scaleOnChange();
+    zfsuper::UIScaleOnChange();
     d->updateSizeRelatedProperty();
 }
 void ZFUITextEdit::layoutOnMeasure(ZF_OUT ZFUISize &ret,
@@ -513,15 +513,18 @@ void ZFUITextEdit::viewFocusOnChange(void)
 
 zfbool ZFUITextEdit::internalViewShouldLayout(ZF_IN ZFUIView *internalView)
 {
-    if(internalView == this->textPlaceHolder()->toObject())
+    if(internalView == this->textPlaceHolder())
     {
         return zffalse;
     }
-    return zfsuper::internalViewShouldLayout(internalView);
+    else
+    {
+        return zfsuper::internalViewShouldLayout(internalView);
+    }
 }
-void ZFUITextEdit::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
+void ZFUITextEdit::internalViewOnLayout(ZF_IN const ZFUIRect &bounds)
 {
-    zfsuper::internalBgViewOnLayout(bounds);
+    zfsuper::internalViewOnLayout(bounds);
 
     ZFUITextView *textPlaceHolder = this->textPlaceHolder()->to<ZFUITextView *>();
     textPlaceHolder->viewFrame(ZFUIRectApplyMargin(

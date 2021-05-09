@@ -418,11 +418,11 @@ public:
         QRectF frame = ZFImpl_sys_Qt_ZFUIRectToQRectF(rect);
         ZFImpl_sys_Qt_BaseView::ForceGeometry(nativeView->_ZFP_nativeImplView, frame);
     }
-    virtual zffloat nativeViewScaleForImpl(ZF_IN void *nativeView)
+    virtual zffloat UIScaleForImpl(ZF_IN void *nativeView)
     {
         return 1;
     }
-    virtual zffloat nativeViewScaleForPhysicalPixel(ZF_IN void *nativeView)
+    virtual zffloat UIScaleForPixel(ZF_IN void *nativeView)
     {
         return 1;
     }

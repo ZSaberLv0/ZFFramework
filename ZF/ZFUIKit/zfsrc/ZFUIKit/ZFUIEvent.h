@@ -33,7 +33,7 @@ public:
 
 protected:
     /**
-     * @brief see #ZFUIView::scaleOnChange, usually internal use only
+     * @brief see #ZFUIView::UIScaleOnChange, usually internal use only
      */
     virtual void eventOnApplyScale(ZF_IN zffloat scale)
     {

@@ -346,7 +346,7 @@ protected:
      * @brief text edit view would update text settings when scale changed
      */
     zfoverride
-    virtual void scaleOnChange(void);
+    virtual void UIScaleOnChange(void);
     /**
      * @brief text edit view would measure according text size
      */
@@ -366,7 +366,7 @@ protected:
     zfoverride
     virtual zfbool internalViewShouldLayout(ZF_IN ZFUIView *internalView);
     zfoverride
-    virtual void internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds);
+    virtual void internalViewOnLayout(ZF_IN const ZFUIRect &bounds);
 
 private:
     _ZFP_ZFUITextEditPrivate *d;

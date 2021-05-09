@@ -50,8 +50,8 @@ ZFMETHOD_FUNC_DEFINE_1(void *, beginForView,
         ZFUIDrawToken::TypeView,
         view,
         ZFUISizeMake(
-            ZFUISizeApplyScale(view->viewFrame().width, view->scaleFixed()),
-            ZFUISizeApplyScale(view->viewFrame().height, view->scaleFixed()))
+            ZFUISizeApplyScale(view->viewFrame().width, view->UIScaleFixed()),
+            ZFUISizeApplyScale(view->viewFrame().height, view->UIScaleFixed()))
         );
     if(!ZFPROTOCOL_ACCESS(ZFUIDrawForView)->beginForView(*token))
     {

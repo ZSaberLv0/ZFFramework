@@ -70,7 +70,7 @@ public:
     zffinal void scrollContentFrameUpdateByImpl(ZF_IN ZFUIScrollView *scrollView,
                                                 ZF_IN const ZFUIRect &frame)
     {
-        ZFUIRect frameNew = ZFUIRectApplyScaleReversely(frame, scrollView->scaleFixed());
+        ZFUIRect frameNew = ZFUIRectApplyScaleReversely(frame, scrollView->UIScaleFixed());
         frameNew.x -= scrollView->scrollAreaMargin().left;
         frameNew.y -= scrollView->scrollAreaMargin().top;
         scrollView->_ZFP_ZFUIScrollView_scrollContentFrameByImpl(frameNew);
@@ -140,7 +140,7 @@ public:
                                            ZF_IN const ZFUIPoint &mousePos,
                                            ZF_IN zftimet mouseTime)
     {
-        scrollView->_ZFP_ZFUIScrollView_notifyDragBegin(ZFUIPointApplyScaleReversely(mousePos, scrollView->scaleFixed()), mouseTime);
+        scrollView->_ZFP_ZFUIScrollView_notifyDragBegin(ZFUIPointApplyScaleReversely(mousePos, scrollView->UIScaleFixed()), mouseTime);
     }
     /**
      * @brief see #scrollContentFrame for how to implements scroll logic
@@ -149,7 +149,7 @@ public:
                                       ZF_IN const ZFUIPoint &mousePos,
                                       ZF_IN zftimet mouseTime)
     {
-        scrollView->_ZFP_ZFUIScrollView_notifyDrag(ZFUIPointApplyScaleReversely(mousePos, scrollView->scaleFixed()), mouseTime);
+        scrollView->_ZFP_ZFUIScrollView_notifyDrag(ZFUIPointApplyScaleReversely(mousePos, scrollView->UIScaleFixed()), mouseTime);
     }
     /**
      * @brief see #scrollContentFrame for how to implements scroll logic

@@ -69,9 +69,9 @@ void ZFUIListCellView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     ret.width = cellIconSize.width + cellCenterSize.width + cellAccessorySize.width;
     ret.height = zfmMax(zfmMax(cellIconSize.height, cellCenterSize.height), cellAccessorySize.height);
 }
-void ZFUIListCellView::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
+void ZFUIListCellView::internalViewOnLayout(ZF_IN const ZFUIRect &bounds)
 {
-    zfsuper::internalBgViewOnLayout(bounds);
+    zfsuper::internalViewOnLayout(bounds);
 
     ZFUISize cellIconSize = ZFUISizeZero();
     ZFUISize cellCenterSize = ZFUISizeZero();

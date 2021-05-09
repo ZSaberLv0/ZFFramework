@@ -235,7 +235,7 @@ void ZFImpl_sys_Android_viewTreePrintT(ZF_OUT zfstring &ret, ZF_IN jobject nativ
 
 ZF_NAMESPACE_GLOBAL_END
 
-#if 1 // zfzfzf
+#if 0
     #include "ZFUIKit/ZFUISysWindow.h"
     ZF_GLOBAL_INITIALIZER_INIT(ZFImpl_sys_Android_autoPrintViewTree)
     {

@@ -54,8 +54,8 @@ ZFMETHOD_DEFINE_2(ZFUINativeViewWrapper, void, measureNativeView,
                     0 - ZFUIMarginGetWidth(nativeImplViewMargin),
                     0 - ZFUIMarginGetHeight(nativeImplViewMargin)
                 )),
-            this->scaleFixed()));
-    ZFUISizeApplyScaleReversely(ret, ret, this->scaleFixed());
+            this->UIScaleFixed()));
+    ZFUISizeApplyScaleReversely(ret, ret, this->UIScaleFixed());
     ZFUISizeApplyMarginReversely(ret, ret, nativeImplViewMargin);
 }
 

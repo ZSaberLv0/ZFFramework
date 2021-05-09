@@ -155,7 +155,7 @@ protected:
      * @brief we would update text settings when scale changed
      */
     zfoverride
-    virtual void scaleOnChange(void);
+    virtual void UIScaleOnChange(void);
     /**
      * @brief we would measure according text size
      */
@@ -164,7 +164,7 @@ protected:
                                  ZF_IN const ZFUISize &sizeHint,
                                  ZF_IN const ZFUISizeParam &sizeParam);
     zfoverride
-    virtual void internalImplViewOnLayout(ZF_IN const ZFUIRect &bounds);
+    virtual void internalViewOnLayout(ZF_IN const ZFUIRect &bounds);
 };
 
 ZF_NAMESPACE_GLOBAL_END

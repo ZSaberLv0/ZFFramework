@@ -88,7 +88,7 @@ public:
     virtual ZFUISize nativeImageSize(ZF_IN void *nativeImage)
     {
         UIImage *uiImage = (__bridge UIImage *)nativeImage;
-        return ZFUISizeMake(zfmRound(uiImage.size.width * uiImage.scale), zfmRound(uiImage.size.height * uiImage.scale));
+        return ZFUISizeMake(uiImage.size.width * uiImage.scale, uiImage.size.height * uiImage.scale);
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFUIImageImpl_sys_iOS)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFUIImageImpl_sys_iOS)

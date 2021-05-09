@@ -99,9 +99,9 @@ zfbool ZFUITextEditWidget::internalViewShouldLayout(ZF_IN ZFUIView *internalView
     }
     return zfsuper::internalViewShouldLayout(internalView);
 }
-void ZFUITextEditWidget::internalBgViewOnLayout(ZF_IN const ZFUIRect &bounds)
+void ZFUITextEditWidget::internalViewOnLayout(ZF_IN const ZFUIRect &bounds)
 {
-    zfsuper::internalBgViewOnLayout(bounds);
+    zfsuper::internalViewOnLayout(bounds);
 
     ZFUIButtonBasic *textEditClearButton = this->textEditClearButton()->to<ZFUIButtonBasic *>();
     if(!textEditClearButton->viewVisible())
