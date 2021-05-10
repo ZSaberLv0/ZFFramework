@@ -920,10 +920,10 @@ protected:
     virtual void viewChildOnChange(void);
     /** @brief see #EventViewChildOnAdd */
     virtual void viewChildOnAdd(ZF_IN ZFUIView *child,
-                                ZF_IN ZFUIViewChildLayerEnum layer);
+                                ZF_IN ZFUIViewChildLayerEnum childLayer);
     /** @brief see #EventViewChildOnRemove */
     virtual void viewChildOnRemove(ZF_IN ZFUIView *child,
-                                   ZF_IN ZFUIViewChildLayerEnum layer);
+                                   ZF_IN ZFUIViewChildLayerEnum childLayer);
     /** @brief see #EventViewOnAddToParent */
     virtual void viewOnAddToParent(ZF_IN ZFUIView *parent);
     /** @brief see #EventViewOnRemoveFromParent */
@@ -959,11 +959,7 @@ public:
      * such as #internalBgViewAdd and #internalBgViewRemove
      * (considering the #childAdd and #childRemove)\n
      * \n
-     * internal views has no measure steps, its size always depends on parent's size\n
-     * \n
-     * for safety, internal views has no access methods related to index
-     * subclass should save internal views as member and access manually\n
-     * also, subclass must call super's method when override internalXXX
+     * internal views has no measure steps, its size always depends on parent's size
      */
     ZFMETHOD_DECLARE_3(void, internalBgViewAdd,
                        ZFMP_IN(ZFUIView *, view),

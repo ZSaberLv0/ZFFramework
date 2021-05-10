@@ -509,11 +509,11 @@ public:
     }
     zfbool childArrayIsTheSame(ZF_IN ZFUIView *view0,
                                ZF_IN ZFUIView *view1,
-                               ZF_IN ZFUIViewChildLayerEnum layer)
+                               ZF_IN ZFUIViewChildLayerEnum childLayer)
     {
         const ZFCoreArrayPOD<ZFUIView *> *children0 = zfnull;
         const ZFCoreArrayPOD<ZFUIView *> *children1 = zfnull;
-        switch(layer)
+        switch(childLayer)
         {
             case ZFUIViewChildLayer::e_Normal:
                 children0 = &(view0->d->layerNormal.views);
@@ -550,7 +550,7 @@ public:
         return zftrue;
     }
     ZFUILayoutParam *childLayoutParamAtIndex(ZF_IN _ZFP_ZFUIViewLayerData &layer,
-                                                 ZF_IN zfindex index)
+                                             ZF_IN zfindex index)
     {
         return layer.views.get(index)->layoutParam();
     }
@@ -2020,22 +2020,22 @@ void ZFUIView::viewChildOnChange(void)
     }
 }
 void ZFUIView::viewChildOnAdd(ZF_IN ZFUIView *child,
-                              ZF_IN ZFUIViewChildLayerEnum layer)
+                              ZF_IN ZFUIViewChildLayerEnum childLayer)
 {
     if(ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_observerHasAddFlag_viewChildOnAdd)
         || ZFBitTest(_ZFP_ZFUIView_stateFlags, _ZFP_ZFUIViewPrivate::stateFlag_observerHasAddFlag_viewChildOnAdd))
     {
-        zfblockedAlloc(ZFUIViewChildLayer, t, layer);
+        zfblockedAlloc(ZFUIViewChildLayer, t, childLayer);
         this->observerNotify(ZFUIView::EventViewChildOnAdd(), child, t);
     }
 }
 void ZFUIView::viewChildOnRemove(ZF_IN ZFUIView *child,
-                                 ZF_IN ZFUIViewChildLayerEnum layer)
+                                 ZF_IN ZFUIViewChildLayerEnum childLayer)
 {
     if(ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_observerHasAddFlag_viewChildOnRemove)
         || ZFBitTest(_ZFP_ZFUIView_stateFlags, _ZFP_ZFUIViewPrivate::stateFlag_observerHasAddFlag_viewChildOnRemove))
     {
-        zfblockedAlloc(ZFUIViewChildLayer, t, layer);
+        zfblockedAlloc(ZFUIViewChildLayer, t, childLayer);
         this->observerNotify(ZFUIView::EventViewChildOnRemove(), child, t);
     }
 }
