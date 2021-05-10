@@ -20,13 +20,13 @@ ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewTreePrint,
 /**
  * @brief delay to #ZFUIViewTreePrint using #ZFThreadTaskRequest
  */
-ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewTreePrintDelayed,
+ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewTreePrintAfterDelay,
                         ZFMP_IN(ZFUIView *, view),
                         ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
 /**
  * @brief delay to #ZFUIViewTreePrint using #ZFExecuteAfterDelay
  */
-ZFMETHOD_FUNC_DECLARE_3(void, ZFUIViewTreePrintDelayed,
+ZFMETHOD_FUNC_DECLARE_3(void, ZFUIViewTreePrintAfterDelay,
                         ZFMP_IN(zftimet, delay),
                         ZFMP_IN(ZFUIView *, view),
                         ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))

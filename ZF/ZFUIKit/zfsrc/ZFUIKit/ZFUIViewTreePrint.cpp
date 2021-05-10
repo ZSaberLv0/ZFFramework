@@ -4,28 +4,28 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-static void _ZFP_ZFUIViewTreePrintDelayedAction(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
+static void _ZFP_ZFUIViewTreePrintAfterDelayAction(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
 {
     ZFListenerHolder *data = ZFCastZFObjectUnchecked(ZFListenerHolder *, userData);
     ZFUIViewTreePrint(data->listenerData.param0<ZFUIView *>(), data->runnable);
 }
-ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrintDelayed,
+ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrintAfterDelay,
                        ZFMP_IN(ZFUIView *, view),
                        ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
 {
     ZFThreadTaskRequest(
-        ZFCallbackForFunc(_ZFP_ZFUIViewTreePrintDelayedAction),
+        ZFCallbackForFunc(_ZFP_ZFUIViewTreePrintAfterDelayAction),
         zflineAlloc(ZFListenerHolder, outputCallback, ZFListenerData().param0(view)));
 }
 
-ZFMETHOD_FUNC_DEFINE_3(void, ZFUIViewTreePrintDelayed,
+ZFMETHOD_FUNC_DEFINE_3(void, ZFUIViewTreePrintAfterDelay,
                        ZFMP_IN(zftimet, delay),
                        ZFMP_IN(ZFUIView *, view),
                        ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
 {
     ZFExecuteAfterDelay(
         delay,
-        ZFCallbackForFunc(_ZFP_ZFUIViewTreePrintDelayedAction),
+        ZFCallbackForFunc(_ZFP_ZFUIViewTreePrintAfterDelayAction),
         zflineAlloc(ZFListenerHolder, outputCallback, ZFListenerData().param0(view)));
 }
 

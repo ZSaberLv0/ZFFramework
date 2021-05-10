@@ -65,17 +65,17 @@ public class ZFAndroidUI {
             }
         }, view);
     }
-    public static void viewTreePrintToLogDelayed(long delayInMiliSeconds, String sTag, View view) {
+    public static void viewTreePrintToLogAfterDelay(long delayInMiliSeconds, String sTag, View view) {
         _ViewTreePrintData data = new _ViewTreePrintData();
         data.tag = sTag;
         data.view = view;
-        _viewTreePrintDelayedHandler.sendMessageDelayed(Message.obtain(_viewTreePrintDelayedHandler, 0, data), delayInMiliSeconds);
+        _viewTreePrintAfterDelayHandler.sendMessageDelayed(Message.obtain(_viewTreePrintAfterDelayHandler, 0, data), delayInMiliSeconds);
     }
     private static class _ViewTreePrintData {
         public String tag = null;
         public View view = null;
     }
-    private static Handler _viewTreePrintDelayedHandler = new Handler() {
+    private static Handler _viewTreePrintAfterDelayHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
