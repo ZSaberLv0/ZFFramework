@@ -23,6 +23,7 @@ public:
     ZFListener sysWindowLayoutParamOnChangeListener;
     zfbool nativeWindowCreated;
     zfbool nativeWindowResumed;
+    ZFUISize sysWindowSize;
     ZFUIMargin sysWindowMargin;
 
 public:
@@ -37,6 +38,7 @@ public:
     , sysWindowLayoutParamOnChangeListener(ZFCallbackForFunc(_ZFP_ZFUISysWindowPrivate::sysWindowLayoutParamOnChange))
     , nativeWindowCreated(zffalse)
     , nativeWindowResumed(zffalse)
+    , sysWindowSize()
     , sysWindowMargin()
     {
     }
@@ -173,6 +175,12 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, keyWindow)
     {
         return ZFUISysWindow::mainWindow();
     }
+}
+
+// ============================================================
+ZFMETHOD_DEFINE_0(ZFUISysWindow, const ZFUISize &, sysWindowSize)
+{
+    return d->sysWindowSize;
 }
 
 // ============================================================
@@ -388,11 +396,14 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIRootView *, rootView)
 
 ZFUIRect ZFUISysWindow::_ZFP_ZFUISysWindow_measureWindow(ZF_IN const ZFUIRect &rootRefRect)
 {
-    return ZFUIRectApplyScale(ZFUILayoutParam::layoutParamApply(
-            ZFUIRectApplyScaleReversely(rootRefRect, this->rootView()->UIScaleFixed()),
-            this->rootView(),
-            this->sysWindowLayoutParam()),
-        this->rootView()->UIScaleFixed());
+    // use UIScaleForImpl instead of UIScaleFixed, to ensure native window's size unit
+    ZFUIRect ret = ZFUILayoutParam::layoutParamApply(
+        ZFUIRectApplyScaleReversely(rootRefRect, this->rootView()->UIScaleForImpl()),
+        this->rootView(),
+        this->sysWindowLayoutParam());
+    d->sysWindowSize.width = ret.width;
+    d->sysWindowSize.height = ret.height;
+    return ZFUIRectApplyScale(ret, this->rootView()->UIScaleForImpl());
 }
 void ZFUISysWindow::_ZFP_ZFUISysWindow_onCreate(ZF_IN void *nativeWindow)
 {

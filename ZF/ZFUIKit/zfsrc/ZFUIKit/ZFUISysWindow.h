@@ -163,7 +163,23 @@ public:
 
 public:
     /**
+     * @brief native window's size
+     *
+     * to change window's size or layout,
+     * use #sysWindowLayoutParam\n
+     * to observe window size change,
+     * attach #ZFUIView::EventViewLayoutOnLayoutFinish listener to #rootView
+     */
+    ZFMETHOD_DECLARE_0(const ZFUISize &, sysWindowSize)
+
+public:
+    /**
      * @brief native window margin according to impl
+     *
+     * the margin usually used for mobile phones,
+     * whose edge contains virtual button or front camera\n
+     * by default, #ZFUIWindow would automatically exclude the margin,
+     * you may change it by #ZFUIWindow::sysWindowMarginShouldApply
      */
     ZFMETHOD_DECLARE_0(const ZFUIMargin &, sysWindowMargin)
     void _ZFP_ZFUISysWindow_sysWindowMargin(ZF_IN const ZFUIMargin &sysWindowMargin);
