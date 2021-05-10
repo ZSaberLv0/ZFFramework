@@ -142,5 +142,18 @@ void ZFTimer::_ZFP_ZFTimer_timerOnStop(void)
     zfRelease(this);
 }
 
+// ============================================================
+ZFMETHOD_FUNC_DEFINE_3(zfautoObjectT<ZFTimer *>, ZFTimerStart,
+                       ZFMP_IN(zftimet, timerInterval),
+                       ZFMP_IN(const ZFListener &, timerCallback),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+{
+    zfblockedAlloc(ZFTimer, ret);
+    ret->timerInterval(timerInterval);
+    ret->observerAdd(ZFTimer::EventTimerOnActivate(), timerCallback, userData);
+    ret->timerStart();
+    return ret;
+}
+
 ZF_NAMESPACE_GLOBAL_END
 

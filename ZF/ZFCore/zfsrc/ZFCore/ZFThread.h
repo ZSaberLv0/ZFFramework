@@ -18,7 +18,7 @@ zfclassFwd _ZFP_ZFThreadPrivate;
  * -  inherit from ZFThread and override ZFThread::threadOnRun
  * -  declare a callback and set as thread's run loop by #ZFThread::threadRunnable
  *
- * @note try to use ZFThreadExecuteInNewThread is recommended, since it may have thread pool
+ * @note try to use ZFExecuteInNewThread is recommended, since it may have thread pool
  */
 zfclass ZF_ENV_EXPORT ZFThread : zfextends ZFObject
 {

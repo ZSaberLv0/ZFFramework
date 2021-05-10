@@ -139,6 +139,11 @@ const ZFAniBuilder &ZFAniBuilder::aniStart(void) const
     d->aniGroup->aniStart();
     return *this;
 }
+const ZFAniBuilder &ZFAniBuilder::aniStart(ZF_IN const ZFListener &onStopOrOnInvalidCallback, ZF_IN_OPT ZFObject *userData /* = zfnull */) const
+{
+    this->aniOnStopOrInvalid(onStopOrOnInvalidCallback, userData);
+    return *this;
+}
 
 ZFObject *ZFAniBuilder::aniTarget(void) const
 {
@@ -210,6 +215,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFAniBuilder, const ZFAniBuilder &, 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFAniBuilder, const ZFAniBuilder &, aniOnStopOrInvalid, ZFMP_IN(const ZFListener &, cb), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFAniBuilder, const ZFAniBuilder &, aniStart)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFAniBuilder, const ZFAniBuilder &, aniStart, ZFMP_IN(const ZFListener &, onStopOrOnInvalidCallback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFAniBuilder, ZFObject *, aniTarget)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFAniBuilder, const ZFAniBuilder &, aniTarget, ZFMP_IN(ZFObject *, aniTarget))

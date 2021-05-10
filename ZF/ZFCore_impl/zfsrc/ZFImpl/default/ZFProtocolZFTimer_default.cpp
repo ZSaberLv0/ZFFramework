@@ -36,7 +36,7 @@ public:
     {
         zfRetain(this);
         ++(this->threadCallbackTaskId);
-        this->threadCallbackId = ZFThreadExecuteInNewThread(
+        this->threadCallbackId = ZFExecuteInNewThread(
             ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, threadCallback)),
             zflineAlloc(v_zfidentity, this->threadCallbackTaskId));
     }
@@ -44,8 +44,8 @@ public:
     {
         ++(this->threadCallbackTaskId);
         ++(this->mainThreadCallbackTaskId);
-        ZFThreadExecuteCancel(this->threadCallbackId);
-        ZFThreadExecuteCancel(this->mainThreadCallbackId);
+        ZFExecuteCancel(this->threadCallbackId);
+        ZFExecuteCancel(this->mainThreadCallbackId);
         if(this->timerThreadStarted)
         {
             this->timerThreadStarted = zffalse;
@@ -82,7 +82,7 @@ public:
             // if(this->timer->timerActivateInMainThread())
             { // always in main thread for default impl
                 ++(this->mainThreadCallbackTaskId);
-                this->mainThreadCallbackId = ZFThreadExecuteInNewThread(
+                this->mainThreadCallbackId = ZFExecuteInNewThread(
                     ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, mainThreadCallback)),
                     zflineAlloc(v_zfidentity, this->mainThreadCallbackTaskId));
             }

@@ -23,7 +23,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFUIViewTreePrintDelayed,
                        ZFMP_IN(ZFUIView *, view),
                        ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
 {
-    ZFThreadExecuteInMainThreadAfterDelay(
+    ZFExecuteAfterDelay(
         delay,
         ZFCallbackForFunc(_ZFP_ZFUIViewTreePrintDelayedAction),
         zflineAlloc(ZFListenerHolder, outputCallback, ZFListenerData().param0(view)));

@@ -168,7 +168,7 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
             ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder)->delayTaskIdGenerator.idRelease(delayTaskId->zfv);
             _ZFP_ZFUIViewBlink_noAni_doOff(view);
         })
-        zfidentity delayId = ZFThreadExecuteInMainThreadAfterDelay(
+        zfidentity delayId = ZFExecuteAfterDelay(
             #if _ZFP_ZFUIViewBlink_DEBUG_duration
                 (zftimet)5000
             #else

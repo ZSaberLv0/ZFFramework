@@ -103,7 +103,7 @@ public:
         {
             for(zfindex i = 0; i < this->childDelayTaskIds.count(); ++i)
             {
-                ZFThreadExecuteCancel(this->childDelayTaskIds[i]);
+                ZFExecuteCancel(this->childDelayTaskIds[i]);
             }
             this->childDelayTaskIds.removeAll();
         }
@@ -184,7 +184,7 @@ private:
                         childData->childAni()->aniStart();
                     }
                 })
-            zfidentity childDelayTaskId = ZFThreadExecuteInMainThreadAfterDelay(
+            zfidentity childDelayTaskId = ZFExecuteAfterDelay(
                 childData->childDelayBeforeStart(),
                 childOnDelayFinish);
             if(childDelayTaskId != zfidentityInvalid())

@@ -13,7 +13,7 @@ static void _ZFP_ZFCore_ZFTimer_test_timerEvent(ZF_IN const ZFListenerData &list
         ZFLISTENER_LOCAL(action, {
             userData->to<ZFTestCase *>()->testCaseStop();
         })
-        ZFThreadExecuteInMainThread(action, userData);
+        ZFExecuteInMainThread(action, userData);
     }
 }
 zfclass ZFCore_ZFTimer_test : zfextends ZFFramework_test_TestCase

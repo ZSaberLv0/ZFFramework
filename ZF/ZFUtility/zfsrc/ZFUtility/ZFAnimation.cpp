@@ -196,7 +196,7 @@ void ZFAnimation::aniImplDelay(void)
             ZFAnimation *ani = userData->objectHolded();
             ani->_ZFP_ZFAnimation_aniImplDelayNotifyFinish(aniDelayTaskId);
         })
-    d->aniDelayThreadId = ZFThreadExecuteInMainThreadAfterDelay(
+    d->aniDelayThreadId = ZFExecuteAfterDelay(
         this->aniDelay(),
         delayOnFinish,
         this->objectHolder());
@@ -204,7 +204,7 @@ void ZFAnimation::aniImplDelay(void)
 void ZFAnimation::aniImplDelayCancel(void)
 {
     ++(d->aniDelayTaskId);
-    ZFThreadExecuteCancel(d->aniDelayThreadId);
+    ZFExecuteCancel(d->aniDelayThreadId);
 }
 void ZFAnimation::aniImplDelayNotifyFinish(void)
 {
@@ -222,7 +222,7 @@ void ZFAnimation::aniImplStart(void)
                 ZFAnimation *ani = userData->objectHolded();
                 ani->_ZFP_ZFAnimation_aniDummyNotifyStop();
             })
-        d->aniDummyThreadId = ZFThreadExecuteInMainThreadAfterDelay(
+        d->aniDummyThreadId = ZFExecuteAfterDelay(
             this->aniDurationFixed(),
             dummyOnFinish,
             this->objectHolder());
@@ -232,7 +232,7 @@ void ZFAnimation::aniImplStop(void)
 {
     if(this->classData() == ZFAnimation::ClassData())
     {
-        ZFThreadExecuteCancel(d->aniDummyThreadId);
+        ZFExecuteCancel(d->aniDummyThreadId);
     }
 }
 

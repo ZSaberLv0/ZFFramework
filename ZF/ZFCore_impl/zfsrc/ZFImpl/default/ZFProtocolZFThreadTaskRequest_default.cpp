@@ -18,9 +18,9 @@ public:
                 ZFListenerHolder *listenerHolder = ZFCastZFObjectUnchecked(ZFListenerHolder *, userData);
                 listenerHolder->runnableExecute();
             })
-            ZFThreadExecuteInMainThread(mainThreadCallback, userData);
+            ZFExecuteInMainThread(mainThreadCallback, userData);
         })
-        ZFThreadExecuteInNewThread(threadCallback,
+        ZFExecuteInNewThread(threadCallback,
             zflineAlloc(ZFListenerHolder, task, ZFListenerData().param0(param0).param1(param1)));
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFThreadTaskRequestImpl_default)

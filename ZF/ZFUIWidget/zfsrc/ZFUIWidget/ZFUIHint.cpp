@@ -152,7 +152,7 @@ public:
     void hintDoShowDelay(void)
     {
         zfRetainChange(this->hintAnimating, zfnull);
-        this->hintShowDelayTaskId = ZFThreadExecuteInMainThreadAfterDelay(
+        this->hintShowDelayTaskId = ZFExecuteAfterDelay(
             this->pimplOwner->hintDurationFixed(),
             this->hintShowDelayTimeoutListener,
             this->pimplOwner->objectHolder());
@@ -331,7 +331,7 @@ ZFMETHOD_DEFINE_0(ZFUIHint, void, hintHide)
         }
         else
         {
-            ZFThreadExecuteCancel(d->hintShowDelayTaskId);
+            ZFExecuteCancel(d->hintShowDelayTaskId);
             if(d->hintAnimating != zfnull)
             {
                 d->hintAnimating->observerRemove(ZFAnimation::EventAniOnStopOrInvalid(), d->hintAniShowOnStopListener);
@@ -433,7 +433,7 @@ void ZFUIHint::objectOnDealloc(void)
     }
     if(d->hintShowDelayTaskId != zfidentityInvalid())
     {
-        ZFThreadExecuteCancel(d->hintShowDelayTaskId);
+        ZFExecuteCancel(d->hintShowDelayTaskId);
         d->hintShowDelayTaskId = zfidentityInvalid();
     }
     d->hintWindow->windowHide();

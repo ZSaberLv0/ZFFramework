@@ -33,7 +33,7 @@ protected:
             }
             zfLogTrim("async thread end");
         })
-        taskId = ZFThreadExecuteInNewThread(asyncFunc);
+        taskId = ZFExecuteInNewThread(asyncFunc);
         for(zfindex i = 0; i < 5; ++i)
         {
             for(zfindex j = 0; j < 10; ++j)
@@ -44,7 +44,7 @@ protected:
             ZFThread::sleep((zftimet)190);
         }
         zfLogTrim("main thread wait async thread begin");
-        ZFThreadExecuteWait(taskId);
+        ZFExecuteWait(taskId);
         zfLogTrim("main thread wait async thread complete");
 #endif
 
@@ -66,7 +66,7 @@ protected:
             }
             zfLogTrim("sync thread end");
         })
-        taskId = ZFThreadExecuteInNewThread(syncFunc);
+        taskId = ZFExecuteInNewThread(syncFunc);
         for(zfindex i = 0; i < 5; ++i)
         {
             zfCoreMutexLock();
@@ -79,7 +79,7 @@ protected:
             ZFThread::sleep((zftimet)190);
         }
         zfLogTrim("main thread wait sync thread begin");
-        ZFThreadExecuteWait(taskId);
+        ZFExecuteWait(taskId);
         zfLogTrim("main thread wait sync thread complete");
 #endif
 

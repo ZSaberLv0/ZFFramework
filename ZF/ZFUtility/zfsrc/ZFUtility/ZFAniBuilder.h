@@ -22,8 +22,9 @@ zfclassFwd _ZFP_ZFAniBuilderPrivate;
  *       .to("groupedProp2", "from1", "to1")
  *       .step()
  *       .customAni(customAniCallback)
- *       .aniOnStop(onStopCallback)
- *       .aniStart();
+ *       .aniOnStart(callback)
+ *       .aniOnStop(callback)
+ *       .aniStart(onStopOrOnInvalidCallback);
  * @endcode
  */
 zffinal zfclassLikePOD ZFAniBuilder
@@ -71,6 +72,8 @@ public:
 public:
     /** @brief get the impl animation */
     const ZFAniBuilder &aniStart(void) const;
+    /** @brief get the impl animation */
+    const ZFAniBuilder &aniStart(ZF_IN const ZFListener &onStopOrOnInvalidCallback, ZF_IN_OPT ZFObject *userData = zfnull) const;
 
     /** @brief get the aniTarget */
     ZFObject *aniTarget(void) const;

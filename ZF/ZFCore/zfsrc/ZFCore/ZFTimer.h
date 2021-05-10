@@ -142,6 +142,15 @@ private:
     _ZFP_ZFTimerPrivate *d;
 };
 
+// ============================================================
+/**
+ * @brief util to start timer
+ */
+ZFMETHOD_FUNC_DECLARE_3(zfautoObjectT<ZFTimer *>, ZFTimerStart,
+                        ZFMP_IN(zftimet, timerInterval),
+                        ZFMP_IN(const ZFListener &, timerCallback),
+                        ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFTimer_h_
 

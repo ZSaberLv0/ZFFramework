@@ -19,42 +19,42 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * \n
  * note, sender would be retained until execute finish,
  * while owner won't
- * @see ZFThreadExecuteInNewThread, ZFThreadExecuteCancel
+ * @see ZFExecuteInNewThread, ZFExecuteCancel
  */
-ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInMainThread,
+ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFExecuteInMainThread,
                         ZFMP_IN(const ZFListener &, runnable),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull),
                         ZFMP_IN_OPT(ZFObject *, owner, zfnull),
                         ZFMP_IN_OPT(zfbool, waitUntilDone, zffalse))
 /**
- * @brief util method for #ZFThreadExecuteInMainThread
+ * @brief util method for #ZFExecuteInMainThread
  */
-ZFMETHOD_FUNC_INLINE_DECLARE_3(zfidentity, ZFThreadExecuteInMainThreadWaitUntilDone,
+ZFMETHOD_FUNC_INLINE_DECLARE_3(zfidentity, ZFExecuteInMainThreadWaitUntilDone,
                                ZFMP_IN(const ZFListener &, runnable),
                                ZFMP_IN_OPT(ZFObject *, userData, zfnull),
                                ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 {
-    return ZFThreadExecuteInMainThread(runnable, userData, owner, zftrue);
+    return ZFExecuteInMainThread(runnable, userData, owner, zftrue);
 }
 
 /**
  * @brief execute in new thread
  *
  * automatically retain runnable's owner and userData, and release them after finish
- * @see ZFThreadExecuteInMainThread, ZFThreadExecuteCancel
+ * @see ZFExecuteInMainThread, ZFExecuteCancel
  * @note always try this method first to achieve thread processing,
  *   instead of create new ZFThread instance,
  *   since we may have thread pool for performance
  */
-ZFMETHOD_FUNC_DECLARE_3(zfidentity, ZFThreadExecuteInNewThread,
+ZFMETHOD_FUNC_DECLARE_3(zfidentity, ZFExecuteInNewThread,
                         ZFMP_IN(const ZFListener &, runnable),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull),
                         ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 
 /**
- * @brief exeute in main thread after delay, directly schedule an #ZFThreadExecuteInMainThread if (delay <= 0)
+ * @brief exeute in main thread after delay, directly schedule an #ZFExecuteInMainThread if (delay <= 0)
  */
-ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
+ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFExecuteAfterDelay,
                         ZFMP_IN(zftimet, delay),
                         ZFMP_IN(const ZFListener &, runnable),
                         ZFMP_IN_OPT(ZFObject *, userData, zfnull),
@@ -63,19 +63,19 @@ ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
 /**
  * @brief cancel execute of task
  */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancel,
+ZFMETHOD_FUNC_DECLARE_1(void, ZFExecuteCancel,
                         ZFMP_IN(zfidentity, taskId))
 
 /**
- * @brief cancel all execute task of owner, see #ZFThreadExecuteCancel
+ * @brief cancel all execute task of owner, see #ZFExecuteCancel
  */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancelByOwner,
+ZFMETHOD_FUNC_DECLARE_1(void, ZFExecuteCancelByOwner,
                         ZFMP_IN(ZFObject *, owner))
 
 /**
- * @brief cancel all execute task of runnable, ignoring the userData, see #ZFThreadExecuteCancel
+ * @brief cancel all execute task of runnable, ignoring the userData, see #ZFExecuteCancel
  */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancelAll,
+ZFMETHOD_FUNC_DECLARE_1(void, ZFExecuteCancelAll,
                         ZFMP_IN(const ZFListener &, runnable))
 
 /**
@@ -83,7 +83,7 @@ ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancelAll,
  *
  * return immediately if the task is running in main thread
  */
-ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteWait,
+ZFMETHOD_FUNC_DECLARE_1(void, ZFExecuteWait,
                         ZFMP_IN(zfidentity, taskId))
 /**
  * @brief wait thread task until done
@@ -92,12 +92,12 @@ ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteWait,
  * or false if wait timeout or no such task\n
  * return false immediately if the task is running in main thread
  */
-ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFThreadExecuteWait,
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFExecuteWait,
                         ZFMP_IN(zfidentity, taskId),
                         ZFMP_IN(zftimet, miliSecs))
 
 /**
- * @brief attach observer to the tasks started by ZFThreadExecuteXxx, see #ZFObject::observerNotify
+ * @brief attach observer to the tasks started by ZFExecuteXxx, see #ZFObject::observerNotify
  *
  * do nothing if task not exist, auto remove after task finished \n
  * \n
@@ -106,14 +106,14 @@ ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFThreadExecuteWait,
  * -  #ZFThread::EventThreadOnStop
  * -  #ZFThread::EventThreadOnCancel
  */
-ZFMETHOD_FUNC_DECLARE_3(void, ZFThreadExecuteObserverAdd,
+ZFMETHOD_FUNC_DECLARE_3(void, ZFExecuteObserverAdd,
                         ZFMP_IN(zfidentity, taskId),
                         ZFMP_IN(zfidentity, eventId),
                         ZFMP_IN(const ZFListener &, callback))
 /**
- * @brief see #ZFThreadExecuteObserverAdd
+ * @brief see #ZFExecuteObserverAdd
  */
-ZFMETHOD_FUNC_DECLARE_3(void, ZFThreadExecuteObserverRemove,
+ZFMETHOD_FUNC_DECLARE_3(void, ZFExecuteObserverRemove,
                         ZFMP_IN(zfidentity, taskId),
                         ZFMP_IN(zfidentity, eventId),
                         ZFMP_IN(const ZFListener &, callback))
