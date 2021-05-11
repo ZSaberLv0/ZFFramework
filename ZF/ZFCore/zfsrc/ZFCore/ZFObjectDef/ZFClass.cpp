@@ -635,10 +635,10 @@ void *ZFClass::newInstanceGenericBegin(void) const
     zfCoreMutexLocker();
     return d->objectConstruct();
 }
-zfbool ZFClass::newInstanceGenericCheck(ZF_IN void *token
+zfbool ZFClass::newInstanceGenericCheck(ZF_IN void *&token
                                         , ZF_IN const ZFMethod *objectOnInitMethod
                                         , ZF_IN_OUT zfautoObject (&paramList)[ZFMETHOD_MAX_PARAM]
-                                        ) const
+                                        , ZF_OUT_OPT zfstring *errorHint /* = zfnull */) const
 {
     if(objectOnInitMethod == zfnull
         || !this->classIsTypeOf(objectOnInitMethod->methodOwnerClass())
@@ -649,9 +649,32 @@ zfbool ZFClass::newInstanceGenericCheck(ZF_IN void *token
     }
     ZFObject *obj = (ZFObject *)token;
     zfautoObject methodRetDummy;
-    return objectOnInitMethod->methodGenericInvoker()(objectOnInitMethod, obj, zfnull, methodRetDummy, paramList);
+    zfbool ret = objectOnInitMethod->methodGenericInvoker()(objectOnInitMethod, obj, errorHint, methodRetDummy, paramList);
+    if(ret && obj->objectTag(ZFObjectTagKeyword_newInstanceGenericFailed) != zfnull)
+    {
+        zfCoreMutexLocker();
+        ret = zffalse;
+        if(errorHint != zfnull)
+        {
+            v_zfstring *error = ZFCastZFObject(v_zfstring *, obj->objectTag(ZFObjectTagKeyword_newInstanceGenericFailed));
+            if(error != zfnull)
+            {
+                *errorHint += error->zfv;
+            }
+        }
+        // remove for safety
+        obj->objectTagRemove(ZFObjectTagKeyword_newInstanceGenericFailed);
+
+        // since objectOnInit already called,
+        // we must ensure init and destroy the object,
+        // then recreate the token
+        obj->_ZFP_ZFObjectCheckOnInit();
+        zflockfree_zfRelease(obj);
+        token = d->objectConstruct();
+    }
+    return ret;
 }
-zfautoObject ZFClass::newInstanceGenericEnd(ZF_IN void *token,
+zfautoObject ZFClass::newInstanceGenericEnd(ZF_IN void *&token,
                                             ZF_IN zfbool objectOnInitMethodInvokeSuccess) const
 {
     ZFObject *obj = (ZFObject *)token;

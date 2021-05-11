@@ -312,6 +312,8 @@ public:
      *   to prevent logic error
      * @note if all params are #ZFMethodGenericInvokerDefaultParam, this method would call
      *   original #ZFObject::objectOnInit instead (same as #newInstance)
+     *
+     * see also #ZFObjectTagKeyword_newInstanceGenericFailed
      */
     zfautoObject newInstanceGeneric(
                                       ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokerDefaultParam()
@@ -326,12 +328,12 @@ public:
     /** @brief see #newInstanceGeneric */
     void *newInstanceGenericBegin(void) const;
     /** @brief see #newInstanceGeneric */
-    zfbool newInstanceGenericCheck(ZF_IN void *token
+    zfbool newInstanceGenericCheck(ZF_IN void *&token
                                    , ZF_IN const ZFMethod *objectOnInitMethod
                                    , ZF_IN_OUT zfautoObject (&paramList)[ZFMETHOD_MAX_PARAM]
-                                   ) const; /* ZFMETHOD_MAX_PARAM */
+                                   , ZF_OUT_OPT zfstring *errorHint = zfnull) const; /* ZFMETHOD_MAX_PARAM */
     /** @brief see #newInstanceGeneric */
-    zfautoObject newInstanceGenericEnd(ZF_IN void *token,
+    zfautoObject newInstanceGenericEnd(ZF_IN void *&token,
                                        ZF_IN zfbool objectOnInitMethodInvokeSuccess) const;
 
     /**
@@ -643,6 +645,17 @@ private:
     const zfchar *classNameFullCache;
     const ZFClass *classParentCache;
 };
+
+/**
+ * @brief used to mark object allocation failed for #ZFClass::newInstanceGenericCheck
+ *
+ * when object created by #ZFClass::newInstanceGeneric,
+ * it's possible to have mismatch param for generic invoke of `objectOnInit`,
+ * you may set an error message to the allocated object by #ZFObject::objectTag
+ * with this as key and the error message (#v_zfstring) as value,
+ * to tell #ZFClass::newInstanceGenericCheck that the allocation failed
+ */
+#define ZFObjectTagKeyword_newInstanceGenericFailed "_ZFP_NIGFail"
 
 // ============================================================
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFClassRegisterHolder

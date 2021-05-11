@@ -527,7 +527,7 @@ zfbool ZFDI_alloc(ZF_OUT zfautoObject &ret
             {
                 break;
             }
-            if(cls->newInstanceGenericCheck(token, method, paramList))
+            if(cls->newInstanceGenericCheck(token, method, paramList, errorHintTmp))
             {
                 ret = cls->newInstanceGenericEnd(token, zftrue);
                 return zftrue;
@@ -540,6 +540,10 @@ zfbool ZFDI_alloc(ZF_OUT zfautoObject &ret
         for(zfindex iMethod = 0; iMethod < methodList.count(); ++iMethod)
         {
             const ZFMethod *method = methodList[iMethod];
+            if(!_errorHintTmp.isEmpty())
+            {
+                _errorHintTmp += "\n    ";
+            }
             if(paramCount < method->methodParamCountMin() || paramCount > method->methodParamCount())
             {
                 if(errorHintTmp != zfnull)
@@ -576,7 +580,7 @@ zfbool ZFDI_alloc(ZF_OUT zfautoObject &ret
             {
                 continue;
             }
-            if(cls->newInstanceGenericCheck(token, method, paramListTmp))
+            if(cls->newInstanceGenericCheck(token, method, paramListTmp, errorHintTmp))
             {
                 ret = cls->newInstanceGenericEnd(token, zftrue);
                 return zftrue;

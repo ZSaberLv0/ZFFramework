@@ -29,7 +29,31 @@ ZFOBJECT_ON_INIT_USER_REGISTER_1({
     , ZFMP_IN(const zfchar *, src)
     )
 ZFOBJECT_ON_INIT_USER_REGISTER_1({
-        invokerObject->to<ZFTypeIdWrapper *>()->wrappedValueAssign(src);
+        if(src != zfnull)
+        {
+            if(src->classData()->classIsTypeOf(invokerObject->classData()))
+            {
+                invokerObject->to<ZFTypeIdWrapper *>()->wrappedValueAssign(src);
+            }
+            else
+            {
+                zfbool success = zffalse;
+                zfstring s;
+                if(src->wrappedValueToString(s))
+                {
+                    success = invokerObject->to<ZFTypeIdWrapper *>()->wrappedValueFromString(s);
+                }
+                if(!success)
+                {
+                    zfblockedAlloc(v_zfstring, errorHint);
+                    zfstringAppend(errorHint->zfv, "unable to construct %s from (%s)%s",
+                        invokerObject->classData()->className(),
+                        src->classData()->className(),
+                        src->objectInfo().cString());
+                    invokerObject->objectTag(ZFObjectTagKeyword_newInstanceGenericFailed, errorHint);
+                }
+            }
+        }
     }, ZFTypeIdWrapper
     , ZFMP_IN(ZFTypeIdWrapper *, src)
     )

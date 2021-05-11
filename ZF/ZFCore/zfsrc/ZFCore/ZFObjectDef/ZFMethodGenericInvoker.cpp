@@ -37,7 +37,7 @@ zfbool _ZFP_MtdGIParamCheck(ZF_OUT_OPT zfstring *errorHint,
         || (param == ZFMethodGenericInvokerDefaultParam() && paramIndex < invokerMethod->methodParamDefaultBeginIndex()))
     {
         zfstringAppend(errorHint,
-                "[ZFMethodGenericInvoker] unable to access param%zi as type (%s): %s",
+                "unable to access param%zi as type (%s): %s",
                 paramIndex,
                 paramType,
                 ZFObjectInfo(param).cString()
@@ -54,7 +54,7 @@ void _ZFP_MtdGIRetError(ZF_OUT_OPT zfstring *errorHint,
                         ZF_IN const zfchar *returnValueInfo)
 {
     zfstringAppend(errorHint,
-        "[ZFMethodGenericInvoker] unable to convert return value as type %s: %s",
+        "unable to convert return value as type %s: %s",
         returnTypeId,
         returnValueInfo);
 }

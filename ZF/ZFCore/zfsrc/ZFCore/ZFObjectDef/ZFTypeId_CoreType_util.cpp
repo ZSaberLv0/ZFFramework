@@ -17,6 +17,7 @@ zfbool zfflagsToString(ZF_IN_OUT zfstring &ret,
                        ZF_OUT_OPT zfflags *notConverted /* = zfnull */,
                        ZF_IN_OPT zfchar separatorToken /* = '|' */)
 {
+    zfindex retLenSaved = ret.length();
     zfflags flagsLeft = value;
     if(exclusiveMode)
     {
@@ -50,7 +51,7 @@ zfbool zfflagsToString(ZF_IN_OUT zfstring &ret,
     // check flagsLeft and remove tailing separatorToken from ret
     if(flagsLeft == 0)
     {
-        if(ret.isEmpty())
+        if(ret.length() == retLenSaved)
         {
             zfindex zeroTokenIndex = zfindexMax();
             for(zfindex i = 0; i < listCount; ++i)
@@ -67,7 +68,7 @@ zfbool zfflagsToString(ZF_IN_OUT zfstring &ret,
             }
             else
             {
-                ret = nameList[zeroTokenIndex];
+                ret += nameList[zeroTokenIndex];
             }
         }
         else
