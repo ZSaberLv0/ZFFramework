@@ -37,9 +37,10 @@ zfbool _ZFP_MtdGIParamCheck(ZF_OUT_OPT zfstring *errorHint,
         || (param == ZFMethodGenericInvokerDefaultParam() && paramIndex < invokerMethod->methodParamDefaultBeginIndex()))
     {
         zfstringAppend(errorHint,
-                "unable to access param%zi as type (%s): %s",
+                "unable to access param%zi as type (%s): (%s)%s",
                 paramIndex,
                 paramType,
+                param != zfnull ? param->classData()->className() : ZFTOKEN_zfnull,
                 ZFObjectInfo(param).cString()
             );
         return zffalse;

@@ -204,7 +204,7 @@ static zfbool _ZFP_PropDynReg_setterGI(ZFMETHOD_GENERIC_INVOKER_PARAMS)
     if(value == zfnull)
     {
         zfstringAppend(errorHint, "invalid value: (%s)%s, desired: %s",
-            valueNew != zfnull ? valueNew->classData()->className() : "null",
+            valueNew != zfnull ? valueNew->classData()->className() : ZFTOKEN_zfnull,
             ZFObjectInfo(valueNew).cString(),
             property->propertyIsRetainProperty()
                 ? property->propertyClassOfRetainProperty()->classNameFull()
