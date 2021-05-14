@@ -1709,7 +1709,6 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, viewFrame,
             d->layoutAction(this, ZFUIRectGetBounds(d->viewFrame));
         }
         if(d->viewFrame != viewFrame || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_UIScaleChanged)) {
-            d->viewFrameUpdate(viewFrame);
             // size not changed but point changed, notify impl to move the view is enough
             d->viewFrameUpdateForImpl(this);
         }
