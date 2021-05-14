@@ -26,7 +26,12 @@ void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QObject *view)
         QWidget *tmp = qobject_cast<QWidget *>(view);
 
         const QRect &frame = tmp->geometry();
-        zfstringAppend(s, " (%d, %d, %d, %d)", (zfint)frame.x(), (zfint)frame.y(), (zfint)frame.width(), (zfint)frame.height());
+        zfstringAppend(s, " (%d, %d, %d, %d)"
+                , (zfint)zfmRound(frame.x())
+                , (zfint)zfmRound(frame.y())
+                , (zfint)zfmRound(frame.width())
+                , (zfint)zfmRound(frame.height())
+                );
 
         if(tmp->focusPolicy() != Qt::NoFocus)
         {
@@ -46,7 +51,12 @@ void _ZFP_ZFImpl_sys_Qt_viewInfoT(ZF_IN_OUT zfstring &s, ZF_IN QObject *view)
         QGraphicsLayoutItem *tmp = qobject_cast<QGraphicsLayoutItem *>(view);
 
         QRectF frame = tmp->geometry();
-        zfstringAppend(s, " (%d, %d, %d, %d)", (zfint)frame.x(), (zfint)frame.y(), (zfint)frame.width(), (zfint)frame.height());
+        zfstringAppend(s, " (%d, %d, %d, %d)"
+                , (zfint)zfmRound(frame.x())
+                , (zfint)zfmRound(frame.y())
+                , (zfint)zfmRound(frame.width())
+                , (zfint)zfmRound(frame.height())
+                );
 
         QGraphicsWidget *tmpWidget = qobject_cast<QGraphicsWidget *>(view);
         if(tmpWidget != NULL && tmpWidget->focusPolicy() != Qt::NoFocus)

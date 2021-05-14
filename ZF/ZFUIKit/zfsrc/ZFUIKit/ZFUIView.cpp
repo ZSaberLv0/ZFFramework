@@ -1293,6 +1293,10 @@ void ZFUIView::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 
     ret += " ";
     ZFUIRectToString(ret, this->viewFrame());
+    if(this->UIScale() != 1)
+    {
+        zfstringAppend(ret, "(UIScale:%f)", this->UIScale());
+    }
 
     if(!this->viewVisible())
     {
@@ -1682,15 +1686,18 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, viewFrame,
     if(!ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layouting)
         && (d->viewParent == zfnull || !ZFBitTest(d->viewParent->d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layouting)))
     { // changed by user or animation
-        ZFBitSet(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_viewFrameOverrideFlag);
-        d->viewFrameUpdate(viewFrame);
-        if(d->viewFrame.width != d->viewFramePrev.width
-            || d->viewFrame.height != d->viewFramePrev.height)
+        if(d->viewFrame != viewFrame)
         {
-            // request layout only for the changed view
-            d->layoutRequest(this, zffalse);
+            ZFBitSet(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_viewFrameOverrideFlag);
+            d->viewFrameUpdate(viewFrame);
+            if(d->viewFrame.width != d->viewFramePrev.width
+                || d->viewFrame.height != d->viewFramePrev.height)
+            {
+                // request layout only for the changed view
+                d->layoutRequest(this, zffalse);
+            }
+            d->viewFrameUpdateForImpl(this);
         }
-        d->viewFrameUpdateForImpl(this);
         return;
     }
     // else, changed by parent layout step
@@ -1701,27 +1708,33 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, viewFrame,
         {
             d->layoutAction(this, ZFUIRectGetBounds(d->viewFrame));
         }
-        return;
-    }
-
-    if(ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutRequested)
-        || d->viewFrame.width != viewFrame.width
-        || d->viewFrame.height != viewFrame.height)
-    {
-        d->viewFrameUpdate(viewFrame);
-        if(d->viewFrame != d->viewFramePrev || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_UIScaleChanged))
-        {
+        if(d->viewFrame != viewFrame || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_UIScaleChanged)) {
+            d->viewFrameUpdate(viewFrame);
+            // size not changed but point changed, notify impl to move the view is enough
             d->viewFrameUpdateForImpl(this);
         }
-
-        ZFUIRect bounds = ZFUIRectGetBounds(d->viewFrame);
-
-        d->layoutAction(this, bounds);
     }
-    else if(d->viewFrame != viewFrame || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_UIScaleChanged)) {
-        d->viewFrameUpdate(viewFrame);
-        // size not changed but point changed, notify impl to move the view is enough
-        d->viewFrameUpdateForImpl(this);
+    else
+    {
+        if(ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutRequested)
+            || d->viewFrame.width != viewFrame.width
+            || d->viewFrame.height != viewFrame.height)
+        {
+            d->viewFrameUpdate(viewFrame);
+            if(d->viewFrame != d->viewFramePrev || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_UIScaleChanged))
+            {
+                d->viewFrameUpdateForImpl(this);
+            }
+
+            ZFUIRect bounds = ZFUIRectGetBounds(d->viewFrame);
+
+            d->layoutAction(this, bounds);
+        }
+        else if(d->viewFrame != viewFrame || ZFBitTest(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_UIScaleChanged)) {
+            d->viewFrameUpdate(viewFrame);
+            // size not changed but point changed, notify impl to move the view is enough
+            d->viewFrameUpdateForImpl(this);
+        }
     }
     ZFBitUnset(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutRequested);
     ZFBitUnset(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutRequestedRecursively);

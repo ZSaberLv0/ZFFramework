@@ -447,8 +447,7 @@ const ZFProperty *ZFPropertyDynamicRegister(ZF_IN const ZFPropertyDynamicRegiste
                 .methodReturnTypeName("void")
                 .methodParamAdd(
                     param.propertyTypeId(),
-                    zfstringWithFormat("%s const &", param.propertyTypeName()),
-                    zfnull)
+                    zfstringWithFormat("%s const &", param.propertyTypeName()))
             , &errorHintTmp);
         if(setterMethod == zfnull)
         {

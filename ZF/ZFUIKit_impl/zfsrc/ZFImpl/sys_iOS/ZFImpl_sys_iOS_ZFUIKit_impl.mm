@@ -129,8 +129,12 @@ static void _ZFP_ZFImpl_sys_iOS_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, U
     }
 
     NSString *viewInfo = [NSString stringWithFormat:@"<%@ %08X>", [view class], (zfuint)[view hash]];
-    viewInfo = [viewInfo stringByAppendingFormat:@" (%d, %d, %d, %d)",
-        (int)view.frame.origin.x, (int)view.frame.origin.y, (int)view.frame.size.width, (int)view.frame.size.height];
+    viewInfo = [viewInfo stringByAppendingFormat:@" (%d, %d, %d, %d)"
+        , (int)zfmRound(view.frame.origin.x)
+        , (int)zfmRound(view.frame.origin.y)
+        , (int)zfmRound(view.frame.size.width)
+        , (int)zfmRound(view.frame.size.height)
+    ];
 
 #if 0 // test
 #define _TEST_PROPERTY
@@ -148,8 +152,12 @@ static void _ZFP_ZFImpl_sys_iOS_viewTreePrint_recursive(ZF_IN_OUT zfstring &s, U
     if([view isKindOfClass:[UIScrollView class]])
     {
         UIScrollView *scrollView = (UIScrollView *)view;
-        zfstring info = zfstringWithFormat("(%d, %d, %d, %d)",
-            (zfint)scrollView.contentOffset.x, (zfint)scrollView.contentOffset.y, (zfint)scrollView.contentSize.width, (zfint)scrollView.contentSize.height);
+        zfstring info = zfstringWithFormat("(%d, %d, %d, %d)"
+            , (zfint)zfmRound(scrollView.contentOffset.x)
+            , (zfint)zfmRound(scrollView.contentOffset.y)
+            , (zfint)zfmRound(scrollView.contentSize.width)
+            , (zfint)zfmRound(scrollView.contentSize.height)
+            );
         viewInfo = [viewInfo stringByAppendingFormat:@" scroll:%@", [NSString stringWithUTF8String:info]];
     }
 #endif // scroll content

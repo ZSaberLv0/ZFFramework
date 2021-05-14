@@ -42,41 +42,49 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         ParamExpandOrEmpty0(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType0>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType0) \
+                , ZFM_TOSTRING(param0) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty0, 0) \
             ) \
         ParamExpandOrEmpty1(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType1>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType1) \
+                , ZFM_TOSTRING(param1) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty1, 1) \
             ) \
         ParamExpandOrEmpty2(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType2>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType2) \
+                , ZFM_TOSTRING(param2) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty2, 2) \
             ) \
         ParamExpandOrEmpty3(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType3>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType3) \
+                , ZFM_TOSTRING(param3) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty3, 3) \
             ) \
         ParamExpandOrEmpty4(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType4>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType4) \
+                , ZFM_TOSTRING(param4) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty4, 4) \
             ) \
         ParamExpandOrEmpty5(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType5>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType5) \
+                , ZFM_TOSTRING(param5) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty5, 5) \
             ) \
         ParamExpandOrEmpty6(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType6>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType6) \
+                , ZFM_TOSTRING(param6) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty6, 6) \
             ) \
         ParamExpandOrEmpty7(ZFM_EMPTY() \
                 , ZFTypeId<zftTraits<ParamType7>::TrNoRef>::TypeId() \
                 , ZFM_TOSTRING(ParamType7) \
+                , ZFM_TOSTRING(param7) \
                 , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty7, 7) \
             ) \
         , zfnull \

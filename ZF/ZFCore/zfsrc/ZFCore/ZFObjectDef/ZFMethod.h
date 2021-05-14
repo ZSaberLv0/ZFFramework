@@ -252,7 +252,7 @@ public:
                             ZF_IN const zfchar *methodName,
                             ZF_IN const zfchar *returnTypeId,
                             ZF_IN const zfchar *returnTypeName,
-                            /* ParamTypeIdString, ParamTypeName, DefaultValueAccessCallback, end with zfnull */
+                            /* ParamTypeIdString, ParamTypeName, ParamName, DefaultValueAccessCallback, end with zfnull */
                             ...);
     void _ZFP_ZFMethod_initClassMemberType(ZF_IN const ZFClass *methodOwnerClass,
                                            ZF_IN ZFMethodPrivilegeType privilegeType);
@@ -389,6 +389,14 @@ public:
     {
         zfCoreAssert(index < this->methodParamCount());
         return this->_ZFP_ZFMethod_paramTypeNameList[index];
+    }
+    /**
+     * @brief get the method's param name at index, usually for debug use
+     */
+    inline const zfchar *methodParamNameAtIndex(ZF_IN zfindex index) const
+    {
+        zfCoreAssert(index < this->methodParamCount());
+        return this->_ZFP_ZFMethod_paramNameList[index];
     }
     /**
      * @brief get the method param's default value access callback
@@ -619,6 +627,7 @@ public:
     zfindex _ZFP_ZFMethod_paramCountMin;
     zfstring _ZFP_ZFMethod_paramTypeIdList[ZFMETHOD_MAX_PARAM];
     zfstring _ZFP_ZFMethod_paramTypeNameList[ZFMETHOD_MAX_PARAM];
+    zfstring _ZFP_ZFMethod_paramNameList[ZFMETHOD_MAX_PARAM];
     ZFMethodParamDefaultValueCallback _ZFP_ZFMethod_paramDefaultValueCallbackList[ZFMETHOD_MAX_PARAM];
     zfindex _ZFP_ZFMethod_paramDefaultBeginIndex;
 
@@ -646,7 +655,7 @@ extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodRegister(ZF_IN zfbool methodIsUserRe
                                                      , ZF_IN const zfchar *methodName
                                                      , ZF_IN const zfchar *returnTypeId
                                                      , ZF_IN const zfchar *returnTypeName
-                                                     /* ParamTypeIdString, ParamTypeName, DefaultValueAccessCallback, end with zfnull */
+                                                     /* ParamTypeIdString, ParamTypeName, ParamName, DefaultValueAccessCallback, end with zfnull */
                                                      , ...
                                                      );
 extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
@@ -661,7 +670,7 @@ extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserR
                                                       , ZF_IN const zfchar *methodName
                                                       , ZF_IN const zfchar *returnTypeId
                                                       , ZF_IN const zfchar *returnTypeName
-                                                      /* ParamTypeIdString, ParamTypeName, DefaultValueAccessCallback, end with zfnull */
+                                                      /* ParamTypeIdString, ParamTypeName, ParamName, DefaultValueAccessCallback, end with zfnull */
                                                       , ZF_IN va_list vaList
                                                       );
 extern ZF_ENV_EXPORT void _ZFP_ZFMethodUnregister(ZF_IN const ZFMethod *method);
@@ -681,7 +690,7 @@ public:
                                 , ZF_IN const zfchar *methodName
                                 , ZF_IN const zfchar *returnTypeId
                                 , ZF_IN const zfchar *returnTypeName
-                                /* ParamTypeIdString, ParamTypeName, DefaultValueAccessCallback, end with zfnull */
+                                /* ParamTypeIdString, ParamTypeName, ParamName, DefaultValueAccessCallback, end with zfnull */
                                 , ...
                                 );
     _ZFP_ZFMethodRegisterHolder(ZF_IN zfbool dummy
@@ -697,7 +706,7 @@ public:
                                 , ZF_IN const zfchar *methodName
                                 , ZF_IN const zfchar *returnTypeId
                                 , ZF_IN const zfchar *returnTypeName
-                                /* ParamTypeIdString, ParamTypeName, DefaultValueAccessCallback, end with zfnull */
+                                /* ParamTypeIdString, ParamTypeName, ParamName, DefaultValueAccessCallback, end with zfnull */
                                 , ZF_IN va_list vaList
                                 );
     ~_ZFP_ZFMethodRegisterHolder(void);

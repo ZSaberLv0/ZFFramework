@@ -85,6 +85,9 @@ public:
     zfautoObjectT<ZFAnimation *> pauseAni;
     zfint pageMoveFlag;
     ZFUIPage *pageMoveLastResumePage;
+    ZFCoreArray<ZFListener> pageRequestQueue;
+    ZFCoreArray<zfautoObject> pageRequestUserDataQueue;
+    zfbool pageRequestRunningFlag;
 public:
     _ZFP_ZFUIPageManagerPrivate(void)
     : managerOwnerWindow(zfnull)
@@ -99,7 +102,43 @@ public:
     , pauseAni()
     , pageMoveFlag(0)
     , pageMoveLastResumePage(zfnull)
+    , pageRequestQueue()
+    , pageRequestUserDataQueue()
+    , pageRequestRunningFlag(zffalse)
     {
+    }
+
+public:
+    void pageRequestAdd(ZF_IN ZFUIPageManager *owner,
+                        ZF_IN const ZFListener &callback,
+                        ZF_IN_OPT ZFObject *userData = zfnull)
+    {
+        if(this->pageRequestRunningFlag)
+        {
+            this->pageRequestQueue.add(callback);
+            this->pageRequestUserDataQueue.add(userData);
+            return;
+        }
+        if(this->pageRequestQueue.isEmpty())
+        {
+            this->pageRequestRunningFlag = zftrue;
+            callback.execute(ZFListenerData(zfidentityInvalid(), owner), userData);
+            this->pageRequestRunningFlag = zffalse;
+        }
+        this->pageRequestResolve(owner);
+    }
+    void pageRequestResolve(ZF_IN ZFUIPageManager *owner)
+    {
+        while(!this->pageRequestQueue.isEmpty())
+        {
+            ZFListener callback = this->pageRequestQueue[0];
+            zfautoObject userData = this->pageRequestUserDataQueue[0];
+            this->pageRequestQueue.remove(0);
+            this->pageRequestUserDataQueue.remove(0);
+            this->pageRequestRunningFlag = zftrue;
+            callback.execute(ZFListenerData(zfidentityInvalid(), owner), userData);
+            this->pageRequestRunningFlag = zffalse;
+        }
     }
 
 public:
@@ -388,6 +427,8 @@ ZFMETHOD_DEFINE_0(ZFUIPageManager, void, managerDestroy)
         this->managerPause();
     }
 
+    d->pageRequestResolve(this);
+
     if(d->managerOwnerWindow != zfnull)
     {
         ZFUIWindow *managerOwnerWindowTmp = d->managerOwnerWindow;
@@ -568,94 +609,137 @@ ZFMETHOD_DEFINE_1(ZFUIPageManager, void, pageCreate,
     {
         return;
     }
-    zfCoreAssert(page->_ZFP_ZFUIPage_pageManager == zfnull);
-    zfCoreAssert(d->pageMoveFlag == 0);
 
-    ZFUIPage *resumePage = page;
-    ZFUIPage *pausePage = this->pageForeground();
+    ZFUIPageManager *pm = this;
+    ZFLISTENER_LAMBDA_2(callback
+        , ZFUIPageManager *, pm
+        , ZFUIPage *, page
+        , {
+            zfCoreAssert(page->_ZFP_ZFUIPage_pageManager == zfnull);
+            zfCoreAssert(pm->d->pageMoveFlag == 0);
 
-    d->pageList.add(resumePage);
-    resumePage->_ZFP_ZFUIPage_pageManager = this;
+            ZFUIPage *resumePage = page;
+            ZFUIPage *pausePage = pm->pageForeground();
 
-    if(pausePage != zfnull)
-    {
-        _ZFP_ZFUIPageManagerPrivate::pageOnPause(pausePage, ZFUIPagePauseReason::e_ToBackground, resumePage);
-    }
-    _ZFP_ZFUIPageManagerPrivate::pageOnCreate(resumePage);
-    _ZFP_ZFUIPageManagerPrivate::pageOnResume(resumePage, ZFUIPageResumeReason::e_ByRequest, pausePage);
-    _ZFP_ZFUIPageManagerPrivate::pageAniUpdate(
-        resumePage, ZFUIPageResumeReason::e_ByRequest,
-        pausePage, ZFUIPagePauseReason::e_ToBackground);
+            pm->d->pageList.add(resumePage);
+            resumePage->_ZFP_ZFUIPage_pageManager = pm;
+
+            if(pausePage != zfnull)
+            {
+                _ZFP_ZFUIPageManagerPrivate::pageOnPause(pausePage, ZFUIPagePauseReason::e_ToBackground, resumePage);
+            }
+            _ZFP_ZFUIPageManagerPrivate::pageOnCreate(resumePage);
+            _ZFP_ZFUIPageManagerPrivate::pageOnResume(resumePage, ZFUIPageResumeReason::e_ByRequest, pausePage);
+            _ZFP_ZFUIPageManagerPrivate::pageAniUpdate(
+                resumePage, ZFUIPageResumeReason::e_ByRequest,
+                pausePage, ZFUIPagePauseReason::e_ToBackground);
+        })
+    d->pageRequestAdd(this, callback);
 }
 
 ZFMETHOD_DEFINE_1(ZFUIPageManager, void, pageResume,
                   ZFMP_IN(ZFUIPage *, page))
 {
-    this->pageResume(this->pageIndex(page));
+    ZFUIPageManager *pm = this;
+    ZFLISTENER_LAMBDA_2(callback
+        , ZFUIPageManager *, pm
+        , ZFUIPage *, page
+        , {
+            pm->pageResume(pm->pageIndex(page));
+        })
+    d->pageRequestAdd(this, callback);
 }
 ZFMETHOD_DEFINE_1(ZFUIPageManager, void, pageResume,
                   ZFMP_IN(zfindex, pageIndex))
 {
-    if(pageIndex < this->pageCount())
-    {
-        this->pageMoveBegin();
-        d->pageList.move(pageIndex, zfindexMax());
-        this->pageMoveEnd();
-    }
+    ZFUIPageManager *pm = this;
+    ZFLISTENER_LAMBDA_2(callback
+        , ZFUIPageManager *, pm
+        , zfindex, pageIndex
+        , {
+            if(pageIndex < pm->pageCount())
+            {
+                pm->pageMoveBegin();
+                pm->d->pageList.move(pageIndex, zfindexMax());
+                pm->pageMoveEnd();
+            }
+        })
+    d->pageRequestAdd(this, callback);
 }
 ZFMETHOD_DEFINE_1(ZFUIPageManager, void, pageResumeForGroupId,
                   ZFMP_IN(const zfchar *, pageGroupId))
 {
-    this->pageMoveBegin();
-    zfindex moveTo = d->pageList.count() - 1;
-    for(zfindex i = d->pageList.count() - 1; i != zfindexMax(); --i)
-    {
-        if(zfscmpTheSame(d->pageList[i]->pageGroupId(), pageGroupId))
-        {
-            d->pageList.move(i, moveTo);
-            --moveTo;
-        }
-    }
-    this->pageMoveEnd();
+    ZFUIPageManager *pm = this;
+    ZFLISTENER_LAMBDA_2(callback
+        , ZFUIPageManager *, pm
+        , zfstring, pageGroupId
+        , {
+            pm->pageMoveBegin();
+            zfindex moveTo = pm->d->pageList.count() - 1;
+            for(zfindex i = pm->d->pageList.count() - 1; i != zfindexMax(); --i)
+            {
+                if(zfscmpTheSame(pm->d->pageList[i]->pageGroupId(), pageGroupId))
+                {
+                    pm->d->pageList.move(i, moveTo);
+                    --moveTo;
+                }
+            }
+            pm->pageMoveEnd();
+        })
+    d->pageRequestAdd(this, callback);
 }
 
 ZFMETHOD_DEFINE_1(ZFUIPageManager, void, pageDestroy,
                   ZFMP_IN(ZFUIPage *, page))
 {
-    return this->pageDestroy(this->pageIndex(page));
+    ZFUIPageManager *pm = this;
+    ZFLISTENER_LAMBDA_2(callback
+        , ZFUIPageManager *, pm
+        , ZFUIPage *, page
+        , {
+            pm->pageDestroy(pm->pageIndex(page));
+        })
+    d->pageRequestAdd(this, callback);
 }
 ZFMETHOD_DEFINE_1(ZFUIPageManager, void, pageDestroy,
                   ZFMP_IN(zfindex, pageIndex))
 {
-    zfCoreAssert(d->pageMoveFlag == 0);
-    if(pageIndex >= d->pageList.count())
-    {
-        return;
-    }
-    if(pageIndex < d->pageList.count() - 1)
-    {
-        ZFUIPage *pausePage = d->pageList.removeAndGet(pageIndex);
-        _ZFP_ZFUIPageManagerPrivate::pageOnPause(pausePage, ZFUIPagePauseReason::e_BeforeDestroy, zfnull);
-        _ZFP_ZFUIPageManagerPrivate::pageOnDestroy(pausePage);
-        if(!d->pageAniOverrideList.isEmpty())
-        {
-            d->pageAniOverrideList.removeFirst();
-        }
-        return;
-    }
+    ZFUIPageManager *pm = this;
+    ZFLISTENER_LAMBDA_2(callback
+        , ZFUIPageManager *, pm
+        , zfindex, pageIndex
+        , {
+            zfCoreAssert(pm->d->pageMoveFlag == 0);
+            if(pageIndex >= pm->d->pageList.count())
+            {
+                return;
+            }
+            if(pageIndex < pm->d->pageList.count() - 1)
+            {
+                ZFUIPage *pausePage = pm->d->pageList.removeAndGet(pageIndex);
+                _ZFP_ZFUIPageManagerPrivate::pageOnPause(pausePage, ZFUIPagePauseReason::e_BeforeDestroy, zfnull);
+                _ZFP_ZFUIPageManagerPrivate::pageOnDestroy(pausePage);
+                if(!pm->d->pageAniOverrideList.isEmpty())
+                {
+                    pm->d->pageAniOverrideList.removeFirst();
+                }
+                return;
+            }
 
-    ZFUIPage *pausePage = d->pageList.removeAndGet(pageIndex);
-    ZFUIPage *resumePage = d->pageList.isEmpty() ? zfnull : d->pageList.getLast();
-    _ZFP_ZFUIPageManagerPrivate::pageOnPause(pausePage, ZFUIPagePauseReason::e_BeforeDestroy, resumePage);
+            ZFUIPage *pausePage = pm->d->pageList.removeAndGet(pageIndex);
+            ZFUIPage *resumePage = pm->d->pageList.isEmpty() ? zfnull : pm->d->pageList.getLast();
+            _ZFP_ZFUIPageManagerPrivate::pageOnPause(pausePage, ZFUIPagePauseReason::e_BeforeDestroy, resumePage);
 
-    if(resumePage != zfnull)
-    {
-        _ZFP_ZFUIPageManagerPrivate::pageOnResume(resumePage, ZFUIPageResumeReason::e_FromBackground, pausePage);
-    }
+            if(resumePage != zfnull)
+            {
+                _ZFP_ZFUIPageManagerPrivate::pageOnResume(resumePage, ZFUIPageResumeReason::e_FromBackground, pausePage);
+            }
 
-    _ZFP_ZFUIPageManagerPrivate::pageAniUpdate(
-        resumePage, ZFUIPageResumeReason::e_FromBackground,
-        pausePage, ZFUIPagePauseReason::e_BeforeDestroy);
+            _ZFP_ZFUIPageManagerPrivate::pageAniUpdate(
+                resumePage, ZFUIPageResumeReason::e_FromBackground,
+                pausePage, ZFUIPagePauseReason::e_BeforeDestroy);
+        })
+    d->pageRequestAdd(this, callback);
 }
 
 ZFMETHOD_DEFINE_0(ZFUIPageManager, void, pageMoveBegin)
@@ -682,6 +766,30 @@ ZFMETHOD_DEFINE_0(ZFUIPageManager, void, pageMoveEnd)
     _ZFP_ZFUIPageManagerPrivate::pageAniUpdate(
         resumePage, ZFUIPageResumeReason::e_ByRequest,
         pausePage, ZFUIPagePauseReason::e_ToBackground);
+}
+
+ZFMETHOD_DEFINE_2(ZFUIPageManager, void, pageRequest,
+                  ZFMP_IN(const ZFListener &, callback),
+                  ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+{
+    if(callback.callbackIsValid())
+    {
+        d->pageRequestAdd(this, callback, userData);
+    }
+}
+ZFMETHOD_DEFINE_2(ZFUIPageManager, void, pageRequestCancel,
+                  ZFMP_IN(const ZFListener &, callback),
+                  ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+{
+    for(zfindex i = 0; i < d->pageRequestQueue.count(); ++i)
+    {
+        if(d->pageRequestQueue[i] == callback && d->pageRequestUserDataQueue[i] == userData)
+        {
+            d->pageRequestQueue.remove(i);
+            d->pageRequestUserDataQueue.remove(i);
+            break;
+        }
+    }
 }
 
 ZF_NAMESPACE_GLOBAL_END

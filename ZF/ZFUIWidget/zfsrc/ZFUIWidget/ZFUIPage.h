@@ -536,6 +536,21 @@ public:
     /** @brief see #pageMoveBegin */
     ZFMETHOD_DECLARE_0(void, pageMoveEnd)
 
+    /**
+     * @brief add a page request to queue,
+     *   used to ensure execute order when mixed with page management
+     *   (#pageCreate, #pageDestroy, etc)
+     */
+    ZFMETHOD_DECLARE_2(void, pageRequest,
+                       ZFMP_IN(const ZFListener &, callback),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+    /**
+     * @brief remove callback for #pageRequest
+     */
+    ZFMETHOD_DECLARE_2(void, pageRequestCancel,
+                       ZFMP_IN(const ZFListener &, callback),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+
 protected:
     zfoverride
     virtual void objectOnInit(void);

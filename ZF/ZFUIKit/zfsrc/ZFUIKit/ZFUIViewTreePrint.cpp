@@ -1,6 +1,7 @@
 #include "ZFUIViewTreePrint.h"
 
 #include "ZFUIKit/protocol/ZFProtocolZFUIView.h"
+#include "ZFUIKit/protocol/ZFProtocolZFUIViewTreeNative.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -8,14 +9,6 @@ static void _ZFP_ZFUIViewTreePrintAfterDelayAction(ZF_IN const ZFListenerData &l
 {
     ZFListenerHolder *data = ZFCastZFObjectUnchecked(ZFListenerHolder *, userData);
     ZFUIViewTreePrint(data->listenerData.param0<ZFUIView *>(), data->runnable);
-}
-ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrintAfterDelay,
-                       ZFMP_IN(ZFUIView *, view),
-                       ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
-{
-    ZFThreadTaskRequest(
-        ZFCallbackForFunc(_ZFP_ZFUIViewTreePrintAfterDelayAction),
-        zflineAlloc(ZFListenerHolder, outputCallback, ZFListenerData().param0(view)));
 }
 
 ZFMETHOD_FUNC_DEFINE_3(void, ZFUIViewTreePrintAfterDelay,
@@ -280,6 +273,47 @@ ZFUIViewTreePrintInfoGetter ZFUIViewTreePrintInfoGetterForClass(ZF_IN const ZFCl
         }
     }
     return zfnull;
+}
+
+// ============================================================
+ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreeNativePrint,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
+{
+    if(!outputCallback.callbackIsValid())
+    {
+        return;
+    }
+    ZFPROTOCOL_INTERFACE_CLASS(ZFUIViewTreeNative) *impl = ZFPROTOCOL_TRY_ACCESS(ZFUIViewTreeNative);
+    if(impl != zfnull)
+    {
+        impl->viewTreeNative(view, outputCallback);
+    }
+    else
+    {
+        outputCallback
+            << "========== ZFUIViewTreeNativePrint begin ==========\n"
+            << "| not available\n"
+            << "========== ZFUIViewTreeNativePrint  end  ==========\n"
+            ;
+    }
+}
+
+static void _ZFP_ZFUIViewTreeNativePrintAfterDelayAction(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
+{
+    ZFListenerHolder *data = ZFCastZFObjectUnchecked(ZFListenerHolder *, userData);
+    ZFUIViewTreeNativePrint(data->listenerData.param0<ZFUIView *>(), data->runnable);
+}
+
+ZFMETHOD_FUNC_DEFINE_3(void, ZFUIViewTreeNativePrintAfterDelay,
+                       ZFMP_IN(zftimet, delay),
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
+{
+    ZFExecuteAfterDelay(
+        delay,
+        ZFCallbackForFunc(_ZFP_ZFUIViewTreeNativePrintAfterDelayAction),
+        zflineAlloc(ZFListenerHolder, outputCallback, ZFListenerData().param0(view)));
 }
 
 ZF_NAMESPACE_GLOBAL_END

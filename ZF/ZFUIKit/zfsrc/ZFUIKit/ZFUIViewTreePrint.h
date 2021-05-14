@@ -18,12 +18,6 @@ ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewTreePrint,
                         ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
 
 /**
- * @brief delay to #ZFUIViewTreePrint using #ZFThreadTaskRequest
- */
-ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewTreePrintAfterDelay,
-                        ZFMP_IN(ZFUIView *, view),
-                        ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
-/**
  * @brief delay to #ZFUIViewTreePrint using #ZFExecuteAfterDelay
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFUIViewTreePrintAfterDelay,
@@ -54,6 +48,23 @@ extern ZF_ENV_EXPORT void ZFUIViewTreePrintInfoGetterForClass(ZF_IN const ZFClas
  * @brief see #ZFUIViewTreePrintInfoGetterForClass
  */
 extern ZF_ENV_EXPORT ZFUIViewTreePrintInfoGetter ZFUIViewTreePrintInfoGetterForClass(ZF_IN const ZFClass *viewClass);
+
+// ============================================================
+/**
+ * @brief similar to #ZFUIViewTreePrint,
+ *   but print native view's view tree
+ */
+ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewTreeNativePrint,
+                        ZFMP_IN(ZFUIView *, view),
+                        ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
+
+/**
+ * @brief delay to #ZFUIViewTreeNativePrint using #ZFExecuteAfterDelay
+ */
+ZFMETHOD_FUNC_DECLARE_3(void, ZFUIViewTreeNativePrintAfterDelay,
+                        ZFMP_IN(zftimet, delay),
+                        ZFMP_IN(ZFUIView *, view),
+                        ZFMP_IN_OPT(const ZFOutput &, outputCallback, ZFOutputDefault()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIViewTreePrint_h_
