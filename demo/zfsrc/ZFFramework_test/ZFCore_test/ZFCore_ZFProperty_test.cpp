@@ -19,50 +19,41 @@ public:
     ZFPROPERTY_ASSIGN(ZFObject *, propertyWeak)
 
     // custom callback
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFObject *, propertyRetain)
+    ZFPROPERTY_ON_INIT_INLINE(ZFObject *, propertyRetain)
     {
         zfLogT();
     }
-    ZFPROPERTY_OVERRIDE_ON_DEALLOC_INLINE(ZFObject *, propertyRetain)
+    ZFPROPERTY_ON_VERIFY_INLINE(ZFObject *, propertyRetain)
     {
         zfLogT();
     }
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_INLINE(ZFObject *, propertyRetain)
+    ZFPROPERTY_ON_ATTACH_INLINE(ZFObject *, propertyRetain)
     {
         zfLogT();
     }
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_INLINE(ZFObject *, propertyRetain)
-    {
-        zfLogT();
-    }
-    ZFPROPERTY_OVERRIDE_ON_DETACH_INLINE(ZFObject *, propertyRetain)
+    ZFPROPERTY_ON_DETACH_INLINE(ZFObject *, propertyRetain)
     {
         zfLogT();
     }
 
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfstring, propertyAssign)
-    ZFPROPERTY_OVERRIDE_ON_DEALLOC_DECLARE(zfstring, propertyAssign)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zfstring, propertyAssign)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, propertyAssign)
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(zfstring, propertyAssign)
+    ZFPROPERTY_ON_INIT_DECLARE(zfstring, propertyAssign)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zfstring, propertyAssign)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfstring, propertyAssign)
+    ZFPROPERTY_ON_DETACH_DECLARE(zfstring, propertyAssign)
 };
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
+ZFPROPERTY_ON_INIT_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
 {
     zfLogT();
 }
-ZFPROPERTY_OVERRIDE_ON_DEALLOC_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
+ZFPROPERTY_ON_VERIFY_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
 {
     zfLogT();
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
+ZFPROPERTY_ON_ATTACH_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
 {
     zfLogT();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
-{
-    zfLogT();
-}
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
+ZFPROPERTY_ON_DETACH_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
 {
     zfLogT();
 }

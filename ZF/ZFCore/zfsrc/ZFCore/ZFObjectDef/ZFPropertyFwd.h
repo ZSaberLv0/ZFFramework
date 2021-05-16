@@ -67,13 +67,16 @@ typedef void (*ZFPropertyCallbackUserRegisterInitValueSetup)(ZF_IN const ZFPrope
 
 // ============================================================
 typedef void (*_ZFP_PropLifeCycleWrapper)(ZF_IN ZFObject *propertyOwnerObject,
+                                          ZF_IN const ZFProperty *property,
                                           ZF_IN void *propertyValue,
-                                          ZF_IN const void *propertyValueOld);
-zfclassPOD ZF_ENV_EXPORT _ZFP_PropLifeCycleData
+                                          ZF_IN const void *propertyValueOld,
+                                          ZF_IN ZFObject *userData);
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_PropLifeCycleData
 {
 public:
     const ZFClass *propertyOwnerClass;
     _ZFP_PropLifeCycleWrapper propertyLifeCycleWrapper;
+    zfautoObject userData;
 };
 
 ZF_NAMESPACE_GLOBAL_END

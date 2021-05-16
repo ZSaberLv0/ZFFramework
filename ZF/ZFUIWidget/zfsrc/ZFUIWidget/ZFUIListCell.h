@@ -27,8 +27,8 @@ zfclass ZF_ENV_EXPORT ZFUIListCell : zfextends ZFUIView
      * @brief the content view
      */
     ZFPROPERTY_RETAIN(ZFUIView *, cellView)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIView *, cellView)
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIView *, cellView)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIView *, cellView)
+    ZFPROPERTY_ON_DETACH_DECLARE(ZFUIView *, cellView)
 
     /**
      * @brief content view's layout param,
@@ -38,7 +38,7 @@ zfclass ZF_ENV_EXPORT ZFUIListCell : zfextends ZFUIView
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUILayoutParam *, cellViewLayoutParam,
                                ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUILayoutParam *, cellViewLayoutParam)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUILayoutParam *, cellViewLayoutParam)
 
 protected:
     zfoverride

@@ -57,7 +57,7 @@ zfclass _ZFP_ZFUIHintWindow : zfextends ZFUIWindow
 {
     ZFOBJECT_DECLARE(_ZFP_ZFUIHintWindow, ZFUIWindow)
 
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewFocusable)
+    ZFPROPERTY_ON_INIT_INLINE(zfbool, viewFocusable)
     {
         propertyValue = zffalse;
     }
@@ -254,21 +254,21 @@ ZFMETHOD_DEFINE_1(ZFUIHint, ZFCoreArrayPOD<ZFUIHint *>, hintList,
     return ret;
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIHint, ZFUIView *, hintContent)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIHint, ZFUIView *, hintContent)
 {
     if(this->hintContent() != zfnull)
     {
         this->hintWindow()->childAdd(this->hintContent());
     }
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIHint, ZFUIView *, hintContent)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIHint, ZFUIView *, hintContent)
 {
     if(this->hintContent() != zfnull)
     {
         this->hintContent()->viewRemoveFromParent();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIHint, zfbool, hintWindowAutoResize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIHint, zfbool, hintWindowAutoResize)
 {
     if(this->hintWindowAutoResize() != propertyValueOld)
     {

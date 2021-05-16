@@ -23,28 +23,28 @@ zfclass ZF_ENV_EXPORT ZFUIImageView : zfextends ZFUIView
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnable)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
+    ZFPROPERTY_ON_INIT_DECLARE(zfbool, viewUIEnable)
+    ZFPROPERTY_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
 
     /**
      * @brief image for this view
      */
     ZFPROPERTY_RETAIN(ZFUIImage *, image)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIImage *, image)
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIImage *, image)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIImage *, image)
+    ZFPROPERTY_ON_DETACH_DECLARE(ZFUIImage *, image)
 
     /**
      * @brief image scale type, fill by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIContentScaleTypeEnum, imageScaleType,
                                 ZFUIContentScaleType::EnumDefault())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIContentScaleTypeEnum, imageScaleType)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIContentScaleTypeEnum, imageScaleType)
 
     /**
      * @brief margin of the content image
      */
     ZFPROPERTY_ASSIGN(ZFUIMargin, imageMargin)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIMargin, imageMargin)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIMargin, imageMargin)
 
 public:
     /**

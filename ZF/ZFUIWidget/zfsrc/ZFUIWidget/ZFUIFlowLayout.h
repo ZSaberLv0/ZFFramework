@@ -46,7 +46,7 @@ zfclass ZF_ENV_EXPORT ZFUIFlowLayoutParam : zfextends ZFUILayoutParam
      */
     ZFPROPERTY_ASSIGN(zfbool, layoutReserveSpaceWhenNotVisible)
 
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(ZFUIAlignFlags, layoutAlign)
+    ZFPROPERTY_ON_INIT_INLINE(ZFUIAlignFlags, layoutAlign)
     {
         propertyValue = ZFUIAlign::e_Center;
     }
@@ -83,7 +83,7 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIOrientationEnum, layoutOrientationMain,
                                 ZFUIOrientation::e_Left)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIOrientationEnum, layoutOrientationMain)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIOrientationEnum, layoutOrientationMain)
     /**
      * @brief secondary direction to layout children, #ZFUIOrientation::e_Top by default
      *
@@ -98,26 +98,26 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIOrientationEnum, layoutOrientationSecondary,
                                 ZFUIOrientation::e_Top)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIOrientationEnum, layoutOrientationSecondary)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIOrientationEnum, layoutOrientationSecondary)
 
     /**
      * @brief extra margin independent from children's layout param's margin, #ZFUIMarginZero by default
      */
     ZFPROPERTY_ASSIGN(ZFUIMargin, layoutChildMargin)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIMargin, layoutChildMargin)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIMargin, layoutChildMargin)
 
     /**
      * @brief extra space between each child independent from children's layout param,
      *   in x direction, 0 by default
      */
     ZFPROPERTY_ASSIGN(zffloat, layoutChildSpaceX)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, layoutChildSpaceX)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, layoutChildSpaceX)
     /**
      * @brief extra space between each child independent from children's layout param,
      *   in y direction, 0 by default
      */
     ZFPROPERTY_ASSIGN(zffloat, layoutChildSpaceY)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, layoutChildSpaceY)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, layoutChildSpaceY)
 
     // ============================================================
     // override ZFUIView

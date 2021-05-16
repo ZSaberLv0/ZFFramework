@@ -151,7 +151,7 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIWindowLevelEnum, windowLevel,
                                 ZFUIWindowLevel::EnumDefault())
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(ZFUIWindowLevelEnum, windowLevel)
+    ZFPROPERTY_ON_VERIFY_DECLARE(ZFUIWindowLevelEnum, windowLevel)
 
     /**
      * @brief whether this window update layout according to #ZFUISysWindow::sysWindowMargin,

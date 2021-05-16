@@ -61,11 +61,11 @@ public:
 // ============================================================
 ZFOBJECT_REGISTER(ZFCache)
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFCache, zfindex, cacheMaxSize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFCache, zfindex, cacheMaxSize)
 {
     this->cacheTrimBySize(this->cacheMaxSize());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFCache, zfbool, cacheTrimWhenReceiveMemoryWarning)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFCache, zfbool, cacheTrimWhenReceiveMemoryWarning)
 {
     zfsynchronize(this);
     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFCacheDataHolder)->cacheTrimListenerSetup(

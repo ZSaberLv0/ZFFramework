@@ -12,35 +12,35 @@ ZFOBJECT_REGISTER(ZFUIFlowLayoutParam)
 // ZFUIFlowLayout
 ZFOBJECT_REGISTER(ZFUIFlowLayout)
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIOrientationEnum, layoutOrientationMain)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIOrientationEnum, layoutOrientationMain)
 {
     if(this->layoutOrientationMain() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIOrientationEnum, layoutOrientationSecondary)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIOrientationEnum, layoutOrientationSecondary)
 {
     if(this->layoutOrientationSecondary() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIMargin, layoutChildMargin)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIFlowLayout, ZFUIMargin, layoutChildMargin)
 {
     if(this->layoutChildMargin() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, zffloat, layoutChildSpaceX)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIFlowLayout, zffloat, layoutChildSpaceX)
 {
     if(this->layoutChildSpaceX() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIFlowLayout, zffloat, layoutChildSpaceY)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIFlowLayout, zffloat, layoutChildSpaceY)
 {
     if(this->layoutChildSpaceY() != propertyValueOld)
     {

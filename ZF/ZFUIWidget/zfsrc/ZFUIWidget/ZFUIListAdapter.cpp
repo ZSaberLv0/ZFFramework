@@ -18,11 +18,11 @@ ZFMETHOD_DEFINE_0(ZFUIListAdapter, const ZFUISize &, listContainerSize)
     return this->_ZFP_ZFUIListAdapter_listContainerSize;
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListAdapter, zffloat, cellSizeHint)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIListAdapter, zffloat, cellSizeHint)
 {
     this->listAdapterNotifyReload();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListAdapter, zfbool, cellSizeFill)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIListAdapter, zfbool, cellSizeFill)
 {
     this->listAdapterNotifyReload();
 }

@@ -288,9 +288,9 @@ public:
      */
     ZFPROPERTY_RETAIN_WITH_INIT(ZFUIDialogContent *, dialogContent,
                                 ZFUIDialogContentClass()->newInstance().to<ZFUIDialogContent *>())
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(ZFUIDialogContent *, dialogContent)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIDialogContent *, dialogContent)
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIDialogContent *, dialogContent)
+    ZFPROPERTY_ON_VERIFY_DECLARE(ZFUIDialogContent *, dialogContent)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIDialogContent *, dialogContent)
+    ZFPROPERTY_ON_DETACH_DECLARE(ZFUIDialogContent *, dialogContent)
 
 public:
     // ============================================================

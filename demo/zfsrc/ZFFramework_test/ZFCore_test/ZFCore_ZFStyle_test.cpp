@@ -7,7 +7,7 @@ zfclass _ZFP_ZFCore_ZFStyle_test_Object : zfextends ZFStyleableObject
     ZFOBJECT_DECLARE(_ZFP_ZFCore_ZFStyle_test_Object, ZFStyleableObject)
 
     ZFPROPERTY_ASSIGN(zfint, myProperty)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_INLINE(zfint, myProperty)
+    ZFPROPERTY_ON_ATTACH_INLINE(zfint, myProperty)
     {
         zfLogT() << propertyValue;
     }

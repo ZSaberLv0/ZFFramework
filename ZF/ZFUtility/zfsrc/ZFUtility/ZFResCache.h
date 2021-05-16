@@ -21,7 +21,7 @@ zfclass ZF_ENV_EXPORT ZFResCache : zfextends ZFCache
     ZFOBJECT_DECLARE(ZFResCache, ZFCache)
     ZFOBJECT_SINGLETON_DECLARE(ZFResCache, instance)
 
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfindex, cacheMaxSize)
+    ZFPROPERTY_ON_INIT_DECLARE(zfindex, cacheMaxSize)
 };
 
 /**

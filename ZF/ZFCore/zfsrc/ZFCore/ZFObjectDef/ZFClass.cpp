@@ -101,7 +101,7 @@ public:
     ZFCoreArrayPOD<const ZFProperty *> propertyList;
     ZFCoreMap propertyMap; // map to const ZFProperty *
     /*
-     * store all property that has override parent's OnInit step by #ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE
+     * store all property that has override parent's OnInit step by #ZFPROPERTY_ON_INIT_DECLARE
      * including self and all parent
      *
      * note, only stored when subclass override parent's OnInit,
@@ -1649,7 +1649,10 @@ void ZFClass::_ZFP_ZFClass_propertyAutoInitAction(ZF_IN ZFObject *owner) const
     for(zfstlmap<const ZFProperty *, zfbool>::iterator it = d->propertyAutoInitMap.begin(); it != d->propertyAutoInitMap.end(); ++it)
     {
         const ZFProperty *property = it->first;
-        property->_ZFP_ZFProperty_callbackEnsureInit(property, owner);
+        if(property->_ZFP_ZFProperty_callbackEnsureInit)
+        {
+            property->_ZFP_ZFProperty_callbackEnsureInit(property, owner);
+        }
     }
 }
 void ZFClass::_ZFP_ZFClass_propertyInitStepRegister(ZF_IN const ZFProperty *property) const

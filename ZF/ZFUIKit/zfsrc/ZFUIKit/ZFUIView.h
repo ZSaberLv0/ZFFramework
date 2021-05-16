@@ -244,14 +244,14 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, viewVisible,
                                 zftrue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, viewVisible)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, viewVisible)
 
     /**
      * @brief view's alpha, 1 by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewAlpha, 1)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewAlpha)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, viewAlpha)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zffloat, viewAlpha)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, viewAlpha)
 
     /**
      * @brief whether the view should receive user interaction
@@ -259,7 +259,7 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, viewUIEnable,
                                 zftrue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, viewUIEnable)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, viewUIEnable)
 
     /**
      * @brief whether the view as well as all its children should receive user interaction,
@@ -267,19 +267,19 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, viewUIEnableTree,
                                 zftrue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, viewUIEnableTree)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, viewUIEnableTree)
 
     /**
      * @brief whether enable mouse hover event, see #ZFUIView::viewEventOnMouseEvent, false by default
      */
     ZFPROPERTY_ASSIGN(zfbool, viewMouseHoverEventEnable)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, viewMouseHoverEventEnable)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, viewMouseHoverEventEnable)
 
     /**
      * @brief whether the view can be focused, false by default
      */
     ZFPROPERTY_ASSIGN(zfbool, viewFocusable)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, viewFocusable)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, viewFocusable)
     /**
      * @brief whether try to obtain focus when clicked down, true by default
      */
@@ -340,25 +340,25 @@ public:
      * if prefered size not set, size hint would be used
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUISize, viewSizePrefer, ZFUISizeInvalid())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUISize, viewSizePrefer)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUISize, viewSizePrefer)
     /**
      * @brief min size, #ZFUISizeZero by default
      */
     ZFPROPERTY_ASSIGN(ZFUISize, viewSizeMin)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUISize, viewSizeMin)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUISize, viewSizeMin)
     /**
      * @brief max size, negative value means not set, #ZFUISizeInvalid by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUISize, viewSizeMax,
                                 ZFUISizeInvalid())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUISize, viewSizeMax)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUISize, viewSizeMax)
 
     /**
      * @brief background color, #ZFUIColorZero by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIColor, viewBackgroundColor,
                                 ZFUIColorZero())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIColor, viewBackgroundColor)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIColor, viewBackgroundColor)
 
     // ============================================================
     // transform
@@ -368,10 +368,10 @@ public:
      * when impl not available, setting this value would have no effect
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewTranslateX, 0)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, viewTranslateX)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, viewTranslateX)
     /** @brief see #viewTranslateX */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewTranslateY, 0)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, viewTranslateY)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, viewTranslateY)
 
     /**
      * @brief scale for the view
@@ -379,10 +379,10 @@ public:
      * when impl not available, setting this value would have no effect
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewScaleX, 1)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewScaleX)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zffloat, viewScaleX)
     /** @brief see #viewScaleX */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewScaleY, 1)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewScaleY)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zffloat, viewScaleY)
 
     /**
      * @brief rotation for the view
@@ -393,7 +393,7 @@ public:
      * when impl not available, setting this value would have no effect
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, viewRotate, 0)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, viewRotate)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zffloat, viewRotate)
 
     // ============================================================
     // init and dealloc
@@ -454,7 +454,7 @@ public:
      * @brief see #nativeImplViewMargin, #ZFUIMarginZero by default
      */
     ZFPROPERTY_ASSIGN(ZFUIMargin, nativeImplViewMarginCustom)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIMargin, nativeImplViewMarginCustom)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIMargin, nativeImplViewMarginCustom)
 
 protected:
     /**
@@ -636,8 +636,8 @@ public:
      * use #viewScaleX instead
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, UIScale, 1)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zffloat, UIScale)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, UIScale)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zffloat, UIScale)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, UIScale)
     /** @brief see #UIScale */
     ZFMETHOD_DECLARE_0(zffloat, UIScaleInherited)
     /** @brief see #UIScale */

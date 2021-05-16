@@ -60,6 +60,7 @@
 #include "ZFObjectDef/ZFProperty.h"
 #include "ZFObjectDef/ZFPropertyDeclare.h"
 #include "ZFObjectDef/ZFPropertyDynamicRegister.h"
+#include "ZFObjectDef/ZFPropertyDynamicRegisterExtra.h"
 #include "ZFObjectDef/ZFPropertyFwd.h"
 #include "ZFObjectDef/ZFPropertySerializable.h"
 #include "ZFObjectDef/ZFPropertyUserRegister.h"

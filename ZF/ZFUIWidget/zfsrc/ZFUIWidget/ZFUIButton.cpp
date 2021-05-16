@@ -369,34 +369,34 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIButton, ButtonMouseOnMoveOutside)
 ZFOBSERVER_EVENT_REGISTER(ZFUIButton, ButtonMouseOnUpInside)
 ZFOBSERVER_EVENT_REGISTER(ZFUIButton, ButtonMouseOnUp)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButton, zfbool, viewFocusable)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButton, zfbool, viewFocusable)
 {
     propertyValue = zftrue;
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButton, ZFUISize, viewSizeMin)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButton, ZFUISize, viewSizeMin)
 {
     propertyValue = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeButton());
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonEnable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonEnable)
 {
     d->buttonEnable(this->buttonEnable());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonCheckable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonCheckable)
 {
     if(!this->buttonCheckable() && this->buttonChecked())
     {
         this->buttonChecked(zffalse);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIButton, zfbool, buttonChecked)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIButton, zfbool, buttonChecked)
 {
     if(!this->buttonCheckable())
     {
         propertyValue = zffalse;
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonChecked)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIButton, zfbool, buttonChecked)
 {
     d->buttonStateUpdate(d->buttonHighlightedFlag);
 }

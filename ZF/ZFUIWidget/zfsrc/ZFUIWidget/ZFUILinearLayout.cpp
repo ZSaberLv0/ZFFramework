@@ -6,7 +6,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ZFUILinearLayoutParam
 ZFOBJECT_REGISTER(ZFUILinearLayoutParam)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUILinearLayoutParam, ZFUIAlignFlags, layoutAlign)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUILinearLayoutParam, ZFUIAlignFlags, layoutAlign)
 {
     propertyValue = ZFUIAlign::e_Center;
 }
@@ -16,21 +16,21 @@ ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUILinearLayoutParam, ZFUIAlignFlags, layout
 ZFOBJECT_REGISTER(ZFUILinearLayout)
 ZFSTYLE_DEFAULT_DEFINE(ZFUILinearLayout)
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, ZFUIOrientationEnum, layoutOrientation)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUILinearLayout, ZFUIOrientationEnum, layoutOrientation)
 {
     if(this->layoutOrientation() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, ZFUIMargin, layoutChildMargin)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUILinearLayout, ZFUIMargin, layoutChildMargin)
 {
     if(this->layoutChildMargin() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUILinearLayout, zffloat, layoutChildSpace)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUILinearLayout, zffloat, layoutChildSpace)
 {
     if(this->layoutChildSpace() != propertyValueOld)
     {

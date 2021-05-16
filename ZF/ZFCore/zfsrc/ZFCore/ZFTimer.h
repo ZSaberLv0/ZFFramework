@@ -76,7 +76,7 @@ public:
      * assert fail if interval is less than 0
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zftimet, timerInterval, 1000)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zftimet, timerInterval)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zftimet, timerInterval)
 
     /**
      * @brief timer's delay when start a timer in mili seconds, default is 0
@@ -85,7 +85,7 @@ public:
      * else, first timer event would be fired after (timerDelay + timerInterval)
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zftimet, timerDelay, 0)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zftimet, timerDelay)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zftimet, timerDelay)
 
     /**
      * @brief whether timer should be fired in main thread, true by default
@@ -94,7 +94,7 @@ public:
      * use only if necessary
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, timerActivateInMainThread, zftrue)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zfbool, timerActivateInMainThread)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zfbool, timerActivateInMainThread)
 
 public:
     /**

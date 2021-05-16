@@ -35,6 +35,11 @@ protected:
     }
 };
 
+/** @brief see #ZFPropertyUserRegisterRetain */
+extern ZF_ENV_EXPORT void ZFPropertyUserRegisterNotifyUpdate(ZF_IN ZFObject *ownerObject,
+                                                             ZF_IN const ZFProperty *property,
+                                                             ZF_IN const void *propertyValueOld);
+
 // ============================================================
 /** @brief default impl for #ZFPropertyUserRegisterRetain */
 template<typename T_Type>
@@ -71,7 +76,7 @@ public:
                     v ? v->toObject() : zfnull
                 )
             );
-        ownerObj->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, &oldValue);
+        ZFPropertyUserRegisterNotifyUpdate(ownerObj, property, &oldValue);
     }
     /** @brief default impl for #ZFPropertyUserRegisterRetain */
     static T_Type const &getterInvoker(ZF_IN const ZFMethod *method, ZF_IN ZFObject *ownerObj)
@@ -150,7 +155,7 @@ private:
                 );
             ownerObj->objectTag(key, holderTmp);
             holder = holderTmp;
-            ownerObj->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, zfnull);
+            ZFPropertyUserRegisterNotifyUpdate(ownerObj, property, zfnull);
         }
         return holder;
     }
@@ -190,7 +195,7 @@ public:
                     _deleteCallback
                 )
             );
-        ownerObj->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, &oldValue);
+        ZFPropertyUserRegisterNotifyUpdate(ownerObj, property, &oldValue);
     }
     /** @brief default impl for #ZFPropertyUserRegisterAssign */
     static T_Type const &getterInvoker(ZF_IN const ZFMethod *method, ZF_IN ZFObject *ownerObj)
@@ -255,7 +260,7 @@ private:
                 );
             ownerObj->objectTag(key, holderTmp);
             holder = holderTmp;
-            ownerObj->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, zfnull);
+            ZFPropertyUserRegisterNotifyUpdate(ownerObj, property, zfnull);
         }
         return holder;
     }
@@ -501,6 +506,9 @@ private:
  *   register would fail
  * -  the registered property must be unregister manually at proper time,
  *   use #ZF_GLOBAL_INITIALIZER_INIT is recommeded
+ * -  when you supply custom setter or getter method,
+ *   you must use #ZFPropertyUserRegisterNotifyUpdate at proper time
+ *   to notify #ZFObject::EventObjectPropertyValueOnUpdate
  * -  once registered, the property can be reflected by #ZFClass::propertyForName,
  *   but there's no way to access the property by object directly,
  *   it can only be accessed by #ZFProperty's method

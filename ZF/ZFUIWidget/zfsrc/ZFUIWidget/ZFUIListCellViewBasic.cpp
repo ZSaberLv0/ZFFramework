@@ -19,50 +19,50 @@ public:
 ZFOBJECT_REGISTER(ZFUIListCellViewBasic)
 ZFSTYLE_DEFAULT_DEFINE(ZFUIListCellViewBasic)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIListCellViewBasic, ZFUIImageView *, cellIcon)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIListCellViewBasic, ZFUIImageView *, cellIcon)
 {
     zfblockedAlloc(ZFUIImageView, cellIcon);
     propertyValue = cellIcon;
     cellIcon->viewSizeMax(ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeIcon()));
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListCellViewBasic, ZFUIImageView *, cellIcon)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIListCellViewBasic, ZFUIImageView *, cellIcon)
 {
     this->cellIconContainer()->childAdd(this->cellIcon());
     this->cellIcon()->layoutParam()->layoutAlign(ZFUIAlign::e_Center);
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIListCellViewBasic, ZFUIImageView *, cellIcon)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIListCellViewBasic, ZFUIImageView *, cellIcon)
 {
     this->cellIcon()->viewRemoveFromParent();
 }
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelMain)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelMain)
 {
     zfblockedAlloc(ZFUITextView, cellLabelMain);
     propertyValue = cellLabelMain;
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelMain)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelMain)
 {
     this->cellLabelMainContainer()->childAdd(this->cellLabelMain());
     this->cellLabelMain()->layoutParam()->layoutAlign(ZFUIAlign::e_LeftInner);
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelMain)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelMain)
 {
     this->cellLabelMain()->viewRemoveFromParent();
 }
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelSub)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelSub)
 {
     zfblockedAlloc(ZFUITextView, cellLabelSub);
     propertyValue = cellLabelSub;
     cellLabelSub->textColor(ZFUIGlobalStyle::DefaultStyle()->textColorSecondary());
     cellLabelSub->textSize(ZFUIGlobalStyle::DefaultStyle()->textSizeSmall());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelSub)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelSub)
 {
     this->cellLabelSubContainer()->childAdd(this->cellLabelSub());
     this->cellLabelSub()->layoutParam()->layoutAlign(ZFUIAlign::e_LeftInner);
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelSub)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIListCellViewBasic, ZFUITextView *, cellLabelSub)
 {
     this->cellLabelSub()->viewRemoveFromParent();
 }

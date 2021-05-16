@@ -439,7 +439,7 @@ zfbool ZFSerializable::serializableOnSerializePropertyFromData(ZF_IN const ZFSer
     }
     else
     {
-        const ZFTypeInfo *typeId = property->propertyTypeIdData();
+        const ZFTypeInfo *typeId = ZFTypeInfoForName(property->propertyTypeId());
         if(typeId == zfnull)
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, propertyData,

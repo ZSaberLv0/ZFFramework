@@ -90,7 +90,7 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIDialogForChoiceModeEnum, choiceMode,
                                 ZFUIDialogForChoiceMode::EnumDefault())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_INLINE(ZFUIDialogForChoiceModeEnum, choiceMode)
+    ZFPROPERTY_ON_ATTACH_INLINE(ZFUIDialogForChoiceModeEnum, choiceMode)
     {
         if(this->choiceMode() != propertyValueOld)
         {

@@ -67,17 +67,17 @@ ZFMETHOD_DEFINE_0(ZFTimer, void *, nativeTimer)
     return d->nativeTimer;
 }
 
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, zftimet, timerInterval)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFTimer, zftimet, timerInterval)
 {
     zfCoreAssert(!this->timerStarted());
     zfCoreAssert(this->timerInterval() > 0);
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, zftimet, timerDelay)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFTimer, zftimet, timerDelay)
 {
     zfCoreAssert(!this->timerStarted());
     zfCoreAssert(this->timerDelay() >= 0);
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFTimer, zfbool, timerActivateInMainThread)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFTimer, zfbool, timerActivateInMainThread)
 {
     zfCoreAssert(!this->timerStarted());
 }

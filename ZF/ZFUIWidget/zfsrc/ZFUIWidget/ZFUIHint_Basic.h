@@ -21,10 +21,10 @@ zfclass ZF_ENV_EXPORT ZFUIHintContentBasic : zfextends ZFUIButtonBasic
     ZFSTYLE_DEFAULT_DECLARE(ZFUIHintContentBasic)
 
 public:
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
+    ZFPROPERTY_ON_INIT_DECLARE(zfbool, viewUIEnableTree)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
 };
 
 /**

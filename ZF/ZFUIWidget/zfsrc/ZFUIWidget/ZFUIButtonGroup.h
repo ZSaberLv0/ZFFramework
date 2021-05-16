@@ -79,7 +79,7 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIButtonGroupTypeEnum, buttonGroupType,
                                 ZFUIButtonGroupType::EnumDefault())
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIButtonGroupTypeEnum, buttonGroupType)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIButtonGroupTypeEnum, buttonGroupType)
 
 private:
     ZFPROPERTY_RETAIN_WITH_INIT(ZFArray *, _ZFP_ZFUIButtonGroup_buttons, zflineAlloc(ZFArray))
@@ -219,14 +219,14 @@ public:
      * @brief for #ZFUIButtonGroupType::e_Tab type only, whether allow uncheck all button, false by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, buttonTabAllowUnchecked, zffalse)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, buttonTabAllowUnchecked)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, buttonTabAllowUnchecked)
 
     /**
      * @brief for #ZFUIButtonGroupType::e_Tab type only, the checked tab index, zfindexMax() by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, buttonTabChecked, zfindexMax())
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zfindex, buttonTabChecked)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfindex, buttonTabChecked)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zfindex, buttonTabChecked)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfindex, buttonTabChecked)
 
 public:
     zffinal inline void _ZFP_ZFUIButtonGroup_buttonTabOnChange(ZF_IN ZFUIButton *button,

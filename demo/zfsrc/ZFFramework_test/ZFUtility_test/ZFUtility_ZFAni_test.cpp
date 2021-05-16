@@ -7,7 +7,7 @@ zfclass _ZFP_ZFUtility_ZFAni_test_Object : zfextends ZFObject
     ZFOBJECT_DECLARE(_ZFP_ZFUtility_ZFAni_test_Object, ZFObject)
 
     ZFPROPERTY_ASSIGN(zfint, testProp)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_INLINE(zfint, testProp)
+    ZFPROPERTY_ON_ATTACH_INLINE(zfint, testProp)
     {
         zfLogTrimT() << "[ZFAni_test] testProp:" << this->testProp();
     }

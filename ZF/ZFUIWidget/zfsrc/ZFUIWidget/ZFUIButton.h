@@ -115,28 +115,28 @@ public:
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, viewFocusable)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
+    ZFPROPERTY_ON_INIT_DECLARE(zfbool, viewFocusable)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
 
     /**
      * @brief true if the button is enabled, true by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, buttonEnable,
                                 zftrue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, buttonEnable)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, buttonEnable)
     /**
      * @brief true if the button is checkable button, false by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, buttonCheckable,
                                 zffalse)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, buttonCheckable)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, buttonCheckable)
     /**
      * @brief true if the button is checked, valid only if #buttonCheckable, false by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, buttonChecked,
                                 zffalse)
-    ZFPROPERTY_OVERRIDE_ON_VERIFY_DECLARE(zfbool, buttonChecked)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, buttonChecked)
+    ZFPROPERTY_ON_VERIFY_DECLARE(zfbool, buttonChecked)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, buttonChecked)
     /**
      * @brief mouse up tolerance to detect as click, (0 - #ZFUIGlobalStyle::itemMargin) by default
      *

@@ -18,16 +18,16 @@ static void _ZFP_ZFUITextView_updateSizeRelatedProperty(ZF_IN ZFUITextView *owne
 ZFOBJECT_REGISTER(ZFUITextView)
 ZFSTYLE_DEFAULT_DEFINE(ZFUITextView)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextView, zfbool, viewUIEnable)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUITextView, zfbool, viewUIEnable)
 {
     propertyValue = zffalse;
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextView, zfbool, viewUIEnableTree)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUITextView, zfbool, viewUIEnableTree)
 {
     propertyValue = zffalse;
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zfstring, text)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, zfstring, text)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->text(this, this->text());
     if(propertyValueOld.compare(this->text()) != 0)
@@ -36,7 +36,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zfstring, text)
     }
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUITextAppearanceEnum, textAppearance)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, ZFUITextAppearanceEnum, textAppearance)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textAppearance(this, this->textAppearance());
     if(this->textAppearance() != propertyValueOld)
@@ -44,23 +44,23 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUITextAppearanceEnum, textA
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUIAlignFlags, textAlign)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, ZFUIAlignFlags, textAlign)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textAlign(this, this->textAlign());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUIColor, textColor)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, ZFUIColor, textColor)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textColor(this, this->textColor());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUIColor, textShadowColor)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, ZFUIColor, textShadowColor)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textShadowColor(this, this->textShadowColor());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUISize, textShadowOffset)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, ZFUISize, textShadowOffset)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->UIScaleFixed()));
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSize)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->UIScaleFixed()));
     if(this->textSize() != propertyValueOld)
@@ -68,7 +68,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSize)
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMinSize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMinSize)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeAutoChangeMinSize(this, ZFUISizeApplyScale(this->textSizeAutoChangeMinSize(), this->UIScaleFixed()));
     if(this->textSizeAutoChangeMinSize() != propertyValueOld)
@@ -76,7 +76,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMi
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMaxSize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMaxSize)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textSizeAutoChangeMaxSize(this, ZFUISizeApplyScale(this->textSizeAutoChangeMaxSize(), this->UIScaleFixed()));
     if(this->textSizeAutoChangeMaxSize() != propertyValueOld)
@@ -84,7 +84,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zffloat, textSizeAutoChangeMa
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zfbool, textSingleLine)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, zfbool, textSingleLine)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textSingleLine(this, this->textSingleLine());
     if(this->textSingleLine() != propertyValueOld)
@@ -92,7 +92,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, zfbool, textSingleLine)
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextView, ZFUITextTruncateModeEnum, textTruncateMode)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextView, ZFUITextTruncateModeEnum, textTruncateMode)
 {
     ZFPROTOCOL_ACCESS(ZFUITextView)->textTruncateMode(this, this->textTruncateMode());
     if(this->textTruncateMode() != propertyValueOld)

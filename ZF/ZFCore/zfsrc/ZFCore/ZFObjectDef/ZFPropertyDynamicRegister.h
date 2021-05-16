@@ -8,7 +8,6 @@
 
 #include "ZFMethodDynamicRegister.h"
 #include "ZFProperty.h"
-#include "ZFObjectSmartPointer.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================

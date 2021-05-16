@@ -9,20 +9,20 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFOBJECT_REGISTER(ZFUIDialogContentBasic)
 ZFSTYLE_DEFAULT_DEFINE(ZFUIDialogContentBasic)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIDialogContentBasic, ZFUISize, viewSizeMin)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIDialogContentBasic, ZFUISize, viewSizeMin)
 {
     propertyValue = ZFUISizeMake(
         ZFUIGlobalStyle::DefaultStyle()->itemSizeDialogWidth(),
         ZFUIGlobalStyle::DefaultStyle()->itemSizeDialog());
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIDialogContentBasic, ZFUITextView *, titleTextView)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIDialogContentBasic, ZFUITextView *, titleTextView)
 {
     zfblockedAlloc(ZFUITextView, titleTextView);
     propertyValue = titleTextView;
     titleTextView->textSize(ZFUIGlobalStyle::DefaultStyle()->textSizeBig());
     titleTextView->textAppearance(ZFUITextAppearance::e_Bold);
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIDialogContentBasic, ZFUITextView *, contentTextView)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIDialogContentBasic, ZFUITextView *, contentTextView)
 {
     zfblockedAlloc(ZFUITextView, contentTextView);
     propertyValue = contentTextView;

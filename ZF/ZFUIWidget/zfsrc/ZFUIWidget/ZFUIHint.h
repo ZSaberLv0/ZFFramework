@@ -85,8 +85,8 @@ public:
      * @brief the actual hint view
      */
     ZFPROPERTY_RETAIN(ZFUIView *, hintContent)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIView *, hintContent)
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIView *, hintContent)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIView *, hintContent)
+    ZFPROPERTY_ON_DETACH_DECLARE(ZFUIView *, hintContent)
 
     /**
      * @brief hint duration in miliseconds, 0 to use #ZFUIHintDurationDefault, 0 by default
@@ -111,7 +111,7 @@ public:
      *   true by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, hintWindowAutoResize, zftrue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, hintWindowAutoResize)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, hintWindowAutoResize)
 
 public:
     /**

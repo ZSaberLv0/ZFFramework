@@ -33,7 +33,7 @@ public:
 public:
     // ============================================================
     // properties
-    ZFPROPERTY_OVERRIDE_ON_INIT_INLINE(zfbool, viewFocusable)
+    ZFPROPERTY_ON_INIT_INLINE(zfbool, viewFocusable)
     {
         propertyValue = zftrue;
     }

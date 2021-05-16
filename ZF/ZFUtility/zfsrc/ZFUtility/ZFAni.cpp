@@ -277,9 +277,9 @@ private:
 ZFOBJECT_REGISTER(ZFAniForCustomAni)
 
 ZFOBJECT_REGISTER(ZFAniForObject)
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFAniForObject, zfstring, name) {d->needUpdate = true;}
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFAniForObject, ZFObject *, fromValue) {d->needUpdate = true;}
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFAniForObject, ZFObject *, toValue) {d->needUpdate = true;}
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFAniForObject, zfstring, name) {d->needUpdate = true;}
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFAniForObject, ZFObject *, fromValue) {d->needUpdate = true;}
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFAniForObject, ZFObject *, toValue) {d->needUpdate = true;}
 void ZFAniForObject::aniImplTargetOnChange(ZF_IN ZFObject *aniTargetOld)
 {
     zfsuper::aniImplTargetOnChange(aniTargetOld);
@@ -311,9 +311,9 @@ void ZFAniForObject::objectOnDealloc(void)
 }
 
 ZFOBJECT_REGISTER(ZFAniForGeneric)
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFAniForGeneric, zfstring, name) {d->needUpdate = true;}
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFAniForGeneric, zfstring, fromValue) {d->needUpdate = true;}
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFAniForGeneric, zfstring, toValue) {d->needUpdate = true;}
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFAniForGeneric, zfstring, name) {d->needUpdate = true;}
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFAniForGeneric, zfstring, fromValue) {d->needUpdate = true;}
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFAniForGeneric, zfstring, toValue) {d->needUpdate = true;}
 void ZFAniForGeneric::aniImplTargetOnChange(ZF_IN ZFObject *aniTargetOld)
 {
     zfsuper::aniImplTargetOnChange(aniTargetOld);

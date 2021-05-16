@@ -138,7 +138,7 @@ public:
      * to access pixel size, use #imageSizeFixed instead
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zffloat, imageScale, 1)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, imageScale)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, imageScale)
     /**
      * @brief nine patch described by a margin value, disabled if zero margin or margin exceeds image size
      * @note #ZFUIImage always use custom scale value, see #ZFUIImage::imageScale

@@ -124,13 +124,6 @@ public:
         return this->_ZFP_ZFProperty_typeId.cString();
     }
     /**
-     * @brief see #ZFTypeInfo, may be null if #propertyTypeId is #ZFTypeId_none
-     */
-    inline const ZFTypeInfo *propertyTypeIdData(void) const
-    {
-        return ZFTypeInfoForName(this->propertyTypeId());
-    }
-    /**
      * @brief get the getter method
      */
     inline const ZFMethod *setterMethod(void) const
@@ -211,11 +204,10 @@ public:
     const ZFClass *_ZFP_ZFProperty_propertyClassOfRetainProperty;
     _ZFP_ZFPropertyCallbackEnsureInit _ZFP_ZFProperty_callbackEnsureInit;
     _ZFP_ZFPropertyCallbackDealloc _ZFP_ZFProperty_callbackDealloc;
-    ZFCoreArrayPOD<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnInit;
-    ZFCoreArrayPOD<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnDealloc;
-    ZFCoreArrayPOD<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnVerify;
-    ZFCoreArrayPOD<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnAttach;
-    ZFCoreArrayPOD<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnDetach;
+    ZFCoreArray<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnInit; // ordered from parent to child
+    ZFCoreArray<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnVerify;
+    ZFCoreArray<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnAttach;
+    ZFCoreArray<_ZFP_PropLifeCycleData> _ZFP_ZFPropertyLifeCycle_OnDetach;
 };
 
 // ============================================================

@@ -46,7 +46,7 @@ zfclass ZF_ENV_EXPORT ZFUILinearLayoutParam : zfextends ZFUILayoutParam
      */
     ZFPROPERTY_ASSIGN(zfbool, layoutReserveSpaceWhenNotVisible)
 
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIAlignFlags, layoutAlign)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIAlignFlags, layoutAlign)
 };
 
 // ============================================================
@@ -70,19 +70,19 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIOrientationEnum, layoutOrientation,
                                 ZFUIOrientation::e_Left)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIOrientationEnum, layoutOrientation)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIOrientationEnum, layoutOrientation)
 
     /**
      * @brief extra margin independent from children's layout param's margin, #ZFUIMarginZero by default
      */
     ZFPROPERTY_ASSIGN(ZFUIMargin, layoutChildMargin)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIMargin, layoutChildMargin)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIMargin, layoutChildMargin)
 
     /**
      * @brief extra space between each child independent from children's layout param, 0 by default
      */
     ZFPROPERTY_ASSIGN(zffloat, layoutChildSpace)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zffloat, layoutChildSpace)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zffloat, layoutChildSpace)
 
     // ============================================================
     // override ZFUIView

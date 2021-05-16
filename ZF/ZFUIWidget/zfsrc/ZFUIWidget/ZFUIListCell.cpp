@@ -6,14 +6,14 @@ ZFSTYLE_DEFAULT_DEFINE(ZFUIListCell)
 
 // ============================================================
 ZFOBJECT_REGISTER(ZFUIListCell)
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIListCell, ZFUIView *, cellView)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIListCell, ZFUIView *, cellView)
 {
     if(this->cellView() != zfnull)
     {
         this->internalFgViewAdd(this->cellView(), this->cellViewLayoutParam());
     }
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIListCell, ZFUIView *, cellView)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIListCell, ZFUIView *, cellView)
 {
     if(this->cellView() != zfnull)
     {
@@ -21,7 +21,7 @@ ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIListCell, ZFUIView *, cellView)
     }
 }
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIListCell, ZFUILayoutParam *, cellViewLayoutParam)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIListCell, ZFUILayoutParam *, cellViewLayoutParam)
 {
     propertyValue = this->layoutParamCreate();
     ZFUILayoutParam *value = propertyValue.to<ZFUILayoutParam *>();

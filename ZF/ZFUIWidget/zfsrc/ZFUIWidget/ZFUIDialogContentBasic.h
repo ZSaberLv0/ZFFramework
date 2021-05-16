@@ -22,19 +22,19 @@ zfclass ZF_ENV_EXPORT ZFUIDialogContentBasic : zfextends ZFUIView, zfimplements 
     ZFSTYLE_DEFAULT_DECLARE(ZFUIDialogContentBasic)
 
 public:
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUISize, viewSizeMin)
 
     /**
      * @brief dialog title view
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, titleTextView, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, titleTextView)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUITextView *, titleTextView)
 
     /**
      * @brief dialog content view
      */
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, contentTextView, ZFPropertyNoInitValue)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, contentTextView)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUITextView *, contentTextView)
 
 public:
     // ============================================================

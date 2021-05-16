@@ -61,7 +61,7 @@ public:
     }
 ZF_GLOBAL_INITIALIZER_END(ZFUIDialogBasicDataHolder)
 
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogContent)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogContent)
 {
     if(propertyValueOld == zfnull)
     {
@@ -74,7 +74,7 @@ ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialo
         return ;
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogContent)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogContent)
 {
     this->dialogInternalContainer()->childAdd(this->dialogContent()->to<ZFUIView *>());
     this->dialogContent()->to<ZFUIView *>()->layoutParam()->layoutAlign(ZFUIAlign::e_Center);
@@ -88,7 +88,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialo
         ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIDialogBasicDataHolder)->dialogButtonOnRemoveListener,
         this->objectHolder());
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogContent)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogContent)
 {
     if(this->dialogContent() != zfnull)
     {

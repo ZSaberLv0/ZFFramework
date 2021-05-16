@@ -120,9 +120,9 @@ public:
     /** @brief to value of ani, see #ZFAni */
     ZFPROPERTY_RETAIN(ZFObject *, toValue)
 
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, name)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFObject *, fromValue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFObject *, toValue)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfstring, name)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFObject *, fromValue)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFObject *, toValue)
 protected:
     zfoverride
     virtual void aniImplTargetOnChange(ZF_IN ZFObject *aniTargetOld);
@@ -152,9 +152,9 @@ public:
     /** @brief to value of ani, see #ZFAni */
     ZFPROPERTY_ASSIGN(zfstring, toValue)
 
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, name)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, fromValue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfstring, toValue)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfstring, name)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfstring, fromValue)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfstring, toValue)
 protected:
     zfoverride
     virtual void aniImplTargetOnChange(ZF_IN ZFObject *aniTargetOld);

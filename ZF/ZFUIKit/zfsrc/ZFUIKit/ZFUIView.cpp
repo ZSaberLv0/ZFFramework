@@ -997,7 +997,7 @@ zfbool ZFUIView::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &ser
 
 // ============================================================
 // properties
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewVisible)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewVisible)
 {
     if(this->viewVisible() != propertyValueOld)
     {
@@ -1005,18 +1005,18 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewVisible)
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewAlpha)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewAlpha)
 {
     propertyValue = zfmApplyRange<zffloat>(propertyValue, 0, 1);
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewAlpha)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewAlpha)
 {
     if(propertyValue != propertyValueOld)
     {
         ZFPROTOCOL_ACCESS(ZFUIView)->viewAlpha(this, this->viewAlpha());
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewFocusable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewFocusable)
 {
     ZFPROTOCOL_INTERFACE_CLASS(ZFUIViewFocus) *impl = ZFPROTOCOL_TRY_ACCESS(ZFUIViewFocus);
     if(impl != zfnull)
@@ -1024,71 +1024,60 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewFocusable)
         impl->viewFocusable(this, this->viewFocusable());
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewUIEnable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewUIEnable)
 {
     ZFPROTOCOL_ACCESS(ZFUIView)->viewUIEnable(this, this->viewUIEnable());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewUIEnableTree)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewUIEnableTree)
 {
     ZFPROTOCOL_ACCESS(ZFUIView)->viewUIEnableTree(this, this->viewUIEnableTree());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewMouseHoverEventEnable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zfbool, viewMouseHoverEventEnable)
 {
     ZFPROTOCOL_ACCESS(ZFUIView)->viewMouseHoverEventEnable(this, this->viewMouseHoverEventEnable());
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, ZFUISize, viewSizePrefer)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, ZFUISize, viewSizePrefer)
 {
     if(this->viewSizePrefer() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, ZFUISize, viewSizeMin)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, ZFUISize, viewSizeMin)
 {
     if(this->viewSizeMin() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, ZFUISize, viewSizeMax)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, ZFUISize, viewSizeMax)
 {
     if(this->viewSizeMax() != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, ZFUIColor, viewBackgroundColor)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, ZFUIColor, viewBackgroundColor)
 {
     ZFPROTOCOL_ACCESS(ZFUIView)->viewBackgroundColor(this, this->viewBackgroundColor());
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewTranslateX)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewTranslateX)
 {
     if(propertyValue != propertyValueOld)
     {
         d->viewTransformUpdate(this);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewTranslateY)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zffloat, viewTranslateY)
 {
     if(propertyValue != propertyValueOld)
     {
         d->viewTransformUpdate(this);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleX)
-{
-    if(propertyValue < 0)
-    {
-        propertyValue = 0;
-    }
-    if(propertyValue != propertyValueOld)
-    {
-        d->viewTransformUpdate(this);
-    }
-}
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleY)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleX)
 {
     if(propertyValue < 0)
     {
@@ -1099,7 +1088,18 @@ ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleY)
         d->viewTransformUpdate(this);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewRotate)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewScaleY)
+{
+    if(propertyValue < 0)
+    {
+        propertyValue = 0;
+    }
+    if(propertyValue != propertyValueOld)
+    {
+        d->viewTransformUpdate(this);
+    }
+}
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIView, zffloat, viewRotate)
 {
     while(propertyValue < 0)
     {
@@ -1350,7 +1350,7 @@ ZFMETHOD_DEFINE_0(ZFUIView, const ZFUIRect &, nativeImplViewFrame)
     return d->nativeImplViewFrame;
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, ZFUIMargin, nativeImplViewMarginCustom)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, ZFUIMargin, nativeImplViewMarginCustom)
 {
     if(propertyValue != propertyValueOld)
     {
@@ -1502,14 +1502,14 @@ ZFMETHOD_DEFINE_0(ZFUIView, void, viewRemoveFromParent)
 
 // ============================================================
 // scale settings
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUIView, zffloat, UIScale)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUIView, zffloat, UIScale)
 {
     if(propertyValue < 0)
     {
         propertyValue = 0;
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIView, zffloat, UIScale)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIView, zffloat, UIScale)
 {
     if(propertyValue != propertyValueOld)
     {

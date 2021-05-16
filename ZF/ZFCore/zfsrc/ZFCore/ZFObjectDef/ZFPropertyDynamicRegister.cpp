@@ -217,6 +217,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFProperty *, ZFPropertyDynamicRegister, ZFMP_IN(const ZFPropertyDynamicRegisterParam &, param), ZFMP_OUT_OPT(zfstring *, errorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFPropertyDynamicUnregister, ZFMP_IN(const ZFProperty *, property))
 
+ZFOBJECT_REGISTER(ZFPropertyInvokeData)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFPropertyInvokeData, ZFObject *, invokerObject)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFPropertyInvokeData, const ZFProperty *, invokerProperty)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFPropertyInvokeData, zfautoObject, propertyValue)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFPropertyInvokeData, zfautoObject, propertyValueOld)
+
 ZF_NAMESPACE_GLOBAL_END
 #endif
 

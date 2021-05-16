@@ -20,12 +20,12 @@ zfclass ZF_ENV_EXPORT ZFUIButtonCheckBox : zfextends ZFUIButtonBasic
     ZFSTYLE_DEFAULT_DECLARE(ZFUIButtonCheckBox)
 
 public:
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(zfbool, buttonCheckable)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIAlignFlags, buttonContentAlign)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
-    ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
+    ZFPROPERTY_ON_INIT_DECLARE(zfbool, buttonCheckable)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIAlignFlags, buttonContentAlign)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
+    ZFPROPERTY_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
 };
 
 ZF_NAMESPACE_GLOBAL_END

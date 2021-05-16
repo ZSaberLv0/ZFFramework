@@ -6,25 +6,25 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // hint with simple text and icon
 ZFSTYLE_DEFAULT_DEFINE(ZFUIHintContentBasic)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, zfbool, viewUIEnableTree)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIHintContentBasic, zfbool, viewUIEnableTree)
 {
     propertyValue = zffalse;
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUISize, viewSizeMin)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUISize, viewSizeMin)
 {
     propertyValue = ZFUISizeMake(
         ZFUIGlobalStyle::DefaultStyle()->itemSizeButtonWidth(),
         ZFUIGlobalStyle::DefaultStyle()->itemSizeButton());
 }
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUITextView *, buttonLabelStyleNormal)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUITextView *, buttonLabelStyleNormal)
 {
     ZFUITextView *value = propertyValue.to<ZFUITextView *>();
     value->textColor(ZFUIColorWhite());
     value->textSingleLine(zffalse);
     value->textSizeAutoChangeMinSize(0);
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUIImageView *, buttonBackgroundStyleNormal)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIHintContentBasic, ZFUIImageView *, buttonBackgroundStyleNormal)
 {
     ZFUIImageView *value = propertyValue;
     value->image(zfRes("ZFUIWidget/ZFUIHintContentBasic_background.xml"));

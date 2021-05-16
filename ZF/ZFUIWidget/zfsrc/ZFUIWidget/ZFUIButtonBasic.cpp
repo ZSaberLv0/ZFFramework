@@ -172,14 +172,14 @@ ZFOBJECT_REGISTER(ZFUIButtonBasic)
 ZFSTYLE_DEFAULT_DEFINE(ZFUIButtonBasic)
 
 #define _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(Type, ComponentName, StateName) \
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIButtonBasic, Type, button##ComponentName##Style##StateName) \
+    ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIButtonBasic, Type, button##ComponentName##Style##StateName) \
     { \
         this->button##ComponentName##Style##StateName()->toObject()->observerAdd( \
             ZFObject::EventObjectPropertyValueOnUpdate(), \
             ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIButtonBasicListenerHolder)->button##ComponentName##Style##StateName##ChangedListener, \
             this->objectHolder()); \
     } \
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIButtonBasic, Type, button##ComponentName##Style##StateName) \
+    ZFPROPERTY_ON_DETACH_DEFINE(ZFUIButtonBasic, Type, button##ComponentName##Style##StateName) \
     { \
         this->button##ComponentName##Style##StateName()->toObject()->observerRemove( \
             ZFObject::EventObjectPropertyValueOnUpdate(), \
@@ -204,78 +204,78 @@ _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, Checke
 _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, CheckedHighlighted)
 _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, Disabled)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleNormal)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleNormal)
 {
     ZFUITextView *v = propertyValue.to<ZFUITextView *>();
     v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorNormal());
 
     this->prepareButtonLabel();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleHighlighted)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleHighlighted)
 {
     ZFUITextView *v = propertyValue.to<ZFUITextView *>();
     v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorHighlighted());
 
     this->prepareButtonLabel();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleChecked)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleChecked)
 {
     ZFUITextView *v = propertyValue.to<ZFUITextView *>();
     v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorChecked());
 
     this->prepareButtonLabel();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleCheckedHighlighted)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleCheckedHighlighted)
 {
     ZFUITextView *v = propertyValue.to<ZFUITextView *>();
     v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorCheckedHighlighted());
 
     this->prepareButtonLabel();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleDisabled)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUITextView *, buttonLabelStyleDisabled)
 {
     ZFUITextView *v = propertyValue.to<ZFUITextView *>();
     v->textColor(ZFUIGlobalStyle::DefaultStyle()->controlColorDisabled());
 
     this->prepareButtonLabel();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleNormal)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleNormal)
 {
     this->prepareButtonIcon();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleHighlighted)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleHighlighted)
 {
     this->prepareButtonIcon();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleChecked)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleChecked)
 {
     this->prepareButtonIcon();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleCheckedHighlighted)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleCheckedHighlighted)
 {
     this->prepareButtonIcon();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleDisabled)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonIconStyleDisabled)
 {
     this->prepareButtonIcon();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleNormal)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleNormal)
 {
     this->prepareButtonBackground();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleHighlighted)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleHighlighted)
 {
     this->prepareButtonBackground();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleChecked)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleChecked)
 {
     this->prepareButtonBackground();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleCheckedHighlighted)
 {
     this->prepareButtonBackground();
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleDisabled)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIButtonBasic, ZFUIImageView *, buttonBackgroundStyleDisabled)
 {
     this->prepareButtonBackground();
 }

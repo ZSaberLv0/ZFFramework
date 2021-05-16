@@ -610,37 +610,37 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIScrollView, ScrollAutoScrollOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFUIScrollView, ScrollAutoScrollOnStop)
 ZFOBSERVER_EVENT_REGISTER(ZFUIScrollView, ScrollOnScrolledByUser)
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollEnable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollEnable)
 {
     d->xScrollEnable = this->scrollEnable();
     d->yScrollEnable = this->scrollEnable();
     ZFPROTOCOL_ACCESS(ZFUIScrollView)->scrollEnable(this, this->scrollEnable());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceHorizontal)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceHorizontal)
 {
     d->scrollBounceChanged();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceVertical)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceVertical)
 {
     d->scrollBounceChanged();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceHorizontalAlways)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceHorizontalAlways)
 {
     d->scrollBounceChanged();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceVerticalAlways)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollBounceVerticalAlways)
 {
     d->scrollBounceChanged();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollAlignToPageHorizontal)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollAlignToPageHorizontal)
 {
     d->scrollAlignToPageChanged();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollAlignToPageVertical)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, zfbool, scrollAlignToPageVertical)
 {
     d->scrollAlignToPageChanged();
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIScrollView, ZFUIRect, scrollContentFrame)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIScrollView, ZFUIRect, scrollContentFrame)
 {
     if(d->xScroll->scrollContentOffset() != propertyValue.x
         || d->xScroll->scrollContentSize() != propertyValue.width)

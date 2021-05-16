@@ -4,7 +4,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFSTYLE_DEFAULT_DEFINE(ZFUIDialogForInput)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIDialogForInput, ZFUITextEditWidget *, inputView)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIDialogForInput, ZFUITextEditWidget *, inputView)
 {
     zfblockedAlloc(ZFUITextEditWidget, inputView);
     propertyValue = inputView;

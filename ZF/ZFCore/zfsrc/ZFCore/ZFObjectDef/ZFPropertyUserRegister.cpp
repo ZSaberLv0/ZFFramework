@@ -29,5 +29,12 @@ void ZFPropertyUserUnregister(ZF_IN const ZFProperty *zfproperty)
     _ZFP_ZFPropertyUnregister(zfproperty);
 }
 
+void ZFPropertyUserRegisterNotifyUpdate(ZF_IN ZFObject *ownerObject,
+                                        ZF_IN const ZFProperty *property,
+                                        ZF_IN const void *propertyValueOld)
+{
+    ownerObject->_ZFP_ZFObject_objectPropertyValueOnUpdate(property, propertyValueOld);
+}
+
 ZF_NAMESPACE_GLOBAL_END
 

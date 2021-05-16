@@ -520,11 +520,11 @@ public:
     const ZFMethod *propertyGetterForName(const zfchar *propertyName) const;
 
     /**
-     * @brief whether the property has #ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE
+     * @brief whether the property has #ZFPROPERTY_ON_INIT_DECLARE
      */
     zfbool propertyHasOverrideInitStep(void) const;
     /**
-     * @brief whether the property has #ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE
+     * @brief whether the property has #ZFPROPERTY_ON_INIT_DECLARE
      */
     zfbool propertyHasOverrideInitStep(ZF_IN const ZFProperty *property) const;
 

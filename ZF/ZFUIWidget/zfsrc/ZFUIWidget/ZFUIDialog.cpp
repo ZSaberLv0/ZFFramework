@@ -308,15 +308,15 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIDialog, DialogBeforeHide)
 ZFOBSERVER_EVENT_REGISTER(ZFUIDialog, DialogAfterHide)
 ZFOBSERVER_EVENT_REGISTER(ZFUIDialog, DialogFocusOnUpdate)
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIColor, dialogWindowColor)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIColor, dialogWindowColor)
 {
     d->dialogWindowBg->viewBackgroundColor(this->dialogWindowColor());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIImage *, dialogBackgroundImage)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIImage *, dialogBackgroundImage)
 {
     d->dialogBg->image(this->dialogBackgroundImage());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
 {
     if(this->dialogView() != zfnull)
     {
@@ -324,7 +324,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
         this->dialogView()->layoutParam()->layoutAlign(ZFUIAlign::e_Center);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
 {
     if(this->dialogView() != zfnull)
     {
@@ -332,7 +332,7 @@ ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
     }
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, zfbool, dialogWindowAutoResize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIDialog, zfbool, dialogWindowAutoResize)
 {
     if(this->dialogWindowAutoResize())
     {
@@ -340,7 +340,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, zfbool, dialogWindowAutoResize)
     }
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIDialog, zfbool, dialogWindowAutoFit)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIDialog, zfbool, dialogWindowAutoFit)
 {
     if(this->dialogWindowAutoFit())
     {

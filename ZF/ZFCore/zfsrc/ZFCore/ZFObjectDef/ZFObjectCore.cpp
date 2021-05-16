@@ -486,7 +486,10 @@ void ZFObject::_ZFP_ZFObjectCheckRelease(void)
     for(zfstlsize i = d->propertyAccessed.size() - 1; i != (zfstlsize)-1; --i)
     {
         const ZFProperty *property = d->propertyAccessed[i];
-        property->_ZFP_ZFProperty_callbackDealloc(property, this);
+        if(property->_ZFP_ZFProperty_callbackDealloc)
+        {
+            property->_ZFP_ZFProperty_callbackDealloc(property, this);
+        }
     }
     d->objectInstanceState = ZFObjectInstanceStateOnDealloc;
     this->objectOnDealloc();

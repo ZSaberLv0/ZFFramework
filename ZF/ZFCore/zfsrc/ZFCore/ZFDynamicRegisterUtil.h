@@ -266,6 +266,29 @@ public:
     /** @brief see #ZFDynamic */
     ZFDynamic &property(ZF_IN const ZFPropertyDynamicRegisterParam &param);
 
+    /** @brief util to #ZFPropertyDynamicRegisterLifeCycle */
+    ZFDynamic &propertyOnInit(ZF_IN const zfchar *propertyName,
+                              ZF_IN const ZFListener &callback,
+                              ZF_IN_OPT ZFObject *userData = zfnull);
+    /** @brief util to #ZFPropertyDynamicRegisterLifeCycle */
+    ZFDynamic &propertyOnVerify(ZF_IN const zfchar *propertyName,
+                                ZF_IN const ZFListener &callback,
+                                ZF_IN_OPT ZFObject *userData = zfnull);
+    /** @brief util to #ZFPropertyDynamicRegisterLifeCycle */
+    ZFDynamic &propertyOnAttach(ZF_IN const zfchar *propertyName,
+                                ZF_IN const ZFListener &callback,
+                                ZF_IN_OPT ZFObject *userData = zfnull);
+    /** @brief util to #ZFPropertyDynamicRegisterLifeCycle */
+    ZFDynamic &propertyOnDetach(ZF_IN const zfchar *propertyName,
+                                ZF_IN const ZFListener &callback,
+                                ZF_IN_OPT ZFObject *userData = zfnull);
+
+    /** @brief util to #ZFPropertyDynamicRegisterLifeCycle */
+    ZFDynamic &propertyLifeCycle(ZF_IN const zfchar *propertyName,
+                                 ZF_IN ZFPropertyLifeCycle lifeCycle,
+                                 ZF_IN const ZFListener &callback,
+                                 ZF_IN_OPT ZFObject *userData = zfnull);
+
 public:
     /**
      * @brief callbacks which would be called when error occurred

@@ -51,46 +51,46 @@ ZFOBSERVER_EVENT_REGISTER(ZFUITextEdit, TextOnChange)
 ZFOBSERVER_EVENT_REGISTER(ZFUITextEdit, TextOnReturnClick)
 ZFOBSERVER_EVENT_REGISTER(ZFUITextEdit, TextOnEditConfirm)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEdit, zfbool, viewFocusable)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUITextEdit, zfbool, viewFocusable)
 {
     propertyValue = zftrue;
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEdit, ZFUISize, viewSizeMin)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUITextEdit, ZFUISize, viewSizeMin)
 {
     propertyValue = ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeControl());
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfbool, textEditEnable)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, zfbool, textEditEnable)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textEditEnable(this, this->textEditEnable());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfbool, textEditSecured)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, zfbool, textEditSecured)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textEditSecure(this, this->textEditSecured());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardTypeEnum, textEditKeyboardType)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardTypeEnum, textEditKeyboardType)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textEditKeyboardType(this, this->textEditKeyboardType());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardReturnTypeEnum, textEditKeyboardReturnType)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardReturnTypeEnum, textEditKeyboardReturnType)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textEditKeyboardReturnType(this, this->textEditKeyboardReturnType());
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUITextEdit, ZFUITextView *, textPlaceHolder)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUITextEdit, ZFUITextView *, textPlaceHolder)
 {
     zfblockedAlloc(ZFUITextView, textPlaceHolder);
     propertyValue = textPlaceHolder;
     textPlaceHolder->textColor(ZFUIGlobalStyle::DefaultStyle()->textColorHint());
     textPlaceHolder->textSize(ZFUIGlobalStyle::DefaultStyle()->textSizeSmall());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFRegExp *, textEditFilter)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFRegExp *, textEditFilter)
 {
     if(!this->text().isEmpty() && !this->textShouldChange(this->text()))
     {
         this->text("");
     }
 }
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUITextEdit, ZFIndexRange, textSelectRange)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUITextEdit, ZFIndexRange, textSelectRange)
 {
     zfindex textLength = this->text().length();
     if(propertyValue.start >= textLength)
@@ -102,7 +102,7 @@ ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUITextEdit, ZFIndexRange, textSelectRange
         propertyValue.count = textLength - propertyValue.start;
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFIndexRange, textSelectRange)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFIndexRange, textSelectRange)
 {
     if(d->textSelectRangeChangedByImplFlag)
     {
@@ -114,14 +114,14 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFIndexRange, textSelectRange
     }
 }
 
-ZFPROPERTY_OVERRIDE_ON_VERIFY_DEFINE(ZFUITextEdit, zfstring, text)
+ZFPROPERTY_ON_VERIFY_DEFINE(ZFUITextEdit, zfstring, text)
 {
     if(!propertyValue.isEmpty() && !this->textShouldChange(propertyValue))
     {
         propertyValue.removeAll();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfstring, text)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, zfstring, text)
 {
     if(d->textChangedByImplFlag)
     {
@@ -138,7 +138,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zfstring, text)
     }
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextAppearanceEnum, textAppearance)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextAppearanceEnum, textAppearance)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textAppearance(this, this->textAppearance());
     if(this->textAppearance() != propertyValueOld)
@@ -146,24 +146,24 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUITextAppearanceEnum, textA
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIAlignFlags, textAlign)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIAlignFlags, textAlign)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textAlign(this, this->textAlign());
     this->textPlaceHolder()->textAlign(this->textAlign());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIColor, textColor)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIColor, textColor)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textColor(this, this->textColor());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIColor, textShadowColor)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUIColor, textShadowColor)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowColor(this, this->textShadowColor());
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUISize, textShadowOffset)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, ZFUISize, textShadowOffset)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textShadowOffset(this, ZFUISizeApplyScale(this->textShadowOffset(), this->UIScaleFixed()));
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUITextEdit, zffloat, textSize)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUITextEdit, zffloat, textSize)
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->textSize(this, ZFUISizeApplyScale(this->textSize(), this->UIScaleFixed()));
     if(this->textSize() != propertyValueOld)

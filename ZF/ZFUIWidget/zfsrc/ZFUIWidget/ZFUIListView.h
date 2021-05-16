@@ -87,8 +87,8 @@ public:
      * you can enable it by #listAdapterSerializable
      */
     ZFPROPERTY_ASSIGN(ZFUIListAdapter *, listAdapter)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIListAdapter *, listAdapter)
-    ZFPROPERTY_OVERRIDE_ON_DETACH_DECLARE(ZFUIListAdapter *, listAdapter)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIListAdapter *, listAdapter)
+    ZFPROPERTY_ON_DETACH_DECLARE(ZFUIListAdapter *, listAdapter)
     /**
      * @brief set and retain the list adapter
      *
@@ -116,14 +116,14 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIOrientationEnum, listOrientation,
                                 ZFUIOrientation::e_Top)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(ZFUIOrientationEnum, listOrientation)
+    ZFPROPERTY_ON_ATTACH_DECLARE(ZFUIOrientationEnum, listOrientation)
 
     /**
      * @brief whether auto update #ZFUIScrollView::scrollBounceVertical series according to #listOrientation,
      *   true by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, listBounce, zftrue)
-    ZFPROPERTY_OVERRIDE_ON_ATTACH_DECLARE(zfbool, listBounce)
+    ZFPROPERTY_ON_ATTACH_DECLARE(zfbool, listBounce)
 
     // ============================================================
     // override

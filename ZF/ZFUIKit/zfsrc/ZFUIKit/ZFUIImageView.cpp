@@ -32,16 +32,16 @@ ZF_GLOBAL_INITIALIZER_END(ZFUIImageViewListenerHolder)
 ZFOBJECT_REGISTER(ZFUIImageView)
 ZFSTYLE_DEFAULT_DEFINE(ZFUIImageView)
 
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIImageView, zfbool, viewUIEnable)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIImageView, zfbool, viewUIEnable)
 {
     propertyValue = zffalse;
 }
-ZFPROPERTY_OVERRIDE_ON_INIT_DEFINE(ZFUIImageView, zfbool, viewUIEnableTree)
+ZFPROPERTY_ON_INIT_DEFINE(ZFUIImageView, zfbool, viewUIEnableTree)
 {
     propertyValue = zffalse;
 }
 
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
 {
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIImageViewListenerHolder) *listenerHolder = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIImageViewListenerHolder);
     if(this->image() != zfnull)
@@ -68,7 +68,7 @@ ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
+ZFPROPERTY_ON_DETACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
 {
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIImageViewListenerHolder) *listenerHolder = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIImageViewListenerHolder);
     if(this->image() != zfnull)
@@ -76,14 +76,14 @@ ZFPROPERTY_OVERRIDE_ON_DETACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
         this->image()->observerRemove(ZFObject::EventObjectPropertyValueOnUpdate(), listenerHolder->imageNinePatchChangedListener);
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIContentScaleTypeEnum, imageScaleType)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIContentScaleTypeEnum, imageScaleType)
 {
     if(propertyValue != propertyValueOld)
     {
         this->layoutRequest();
     }
 }
-ZFPROPERTY_OVERRIDE_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIMargin, imageMargin)
+ZFPROPERTY_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIMargin, imageMargin)
 {
     if(propertyValue != propertyValueOld)
     {
