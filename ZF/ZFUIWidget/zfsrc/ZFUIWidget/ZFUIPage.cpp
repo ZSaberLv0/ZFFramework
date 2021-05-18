@@ -113,7 +113,7 @@ public:
                         ZF_IN const ZFListener &callback,
                         ZF_IN_OPT ZFObject *userData = zfnull)
     {
-        if(this->pageRequestRunningFlag)
+        if(this->pageRequestRunningFlag || !this->pageRequestQueue.isEmpty())
         {
             this->pageRequestQueue.add(callback);
             this->pageRequestUserDataQueue.add(userData);

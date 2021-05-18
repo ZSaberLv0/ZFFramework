@@ -24,30 +24,8 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFResCacheAutoCleanup)
 ZF_GLOBAL_INITIALIZER_END(ZFResCacheAutoCleanup)
 
 // ============================================================
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFResCacheHolder, ZFLevelZFFrameworkStatic)
-{
-    this->resOnDeallocListener = ZFCallbackForFunc(zfself::resOnDealloc);
-}
-zfstlmap<zfstlstringZ, ZFObject *> keyMap;
-zfstlmap<ZFObject *, const zfchar *> valueMap;
-ZFListener resOnDeallocListener;
-static void resOnDealloc(ZF_IN const ZFListenerData &listenerData, ZF_IN ZFObject *userData)
-{
-    zfCoreMutexLocker();
-    ZF_GLOBAL_INITIALIZER_CLASS(ZFResCacheHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFResCacheHolder);
-    zfstlmap<ZFObject *, const zfchar *>::iterator itValue = d->valueMap.find(listenerData.sender());
-    if(itValue != d->valueMap.end())
-    {
-        d->keyMap.erase(itValue->second);
-        d->valueMap.erase(itValue);
-    }
-}
-ZF_GLOBAL_INITIALIZER_END(ZFResCacheHolder)
-
-// ============================================================
-ZFMETHOD_FUNC_DEFINE_2(zfautoObject, zfRes,
-                       ZFMP_IN(const zfchar *, resFilePath),
-                       ZFMP_IN_OPT(zfbool, enableCache, zftrue))
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, zfRes,
+                       ZFMP_IN(const zfchar *, resFilePath))
 {
     ZFInput input = ZFInputForResFile(resFilePath);
     if(!input.callbackIsValid())
@@ -55,13 +33,12 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, zfRes,
         return zfnull;
     }
     zfCoreMutexLocker();
-    ZF_GLOBAL_INITIALIZER_CLASS(ZFResCacheHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFResCacheHolder);
     if(input.callbackId() != zfnull)
     {
-        zfstlmap<zfstlstringZ, ZFObject *>::iterator itKey = d->keyMap.find(input.callbackId());
-        if(itKey != d->keyMap.end())
+        zfautoObject ret = ZFResCache::instance()->cacheGet(input.callbackId());
+        if(ret != zfnull)
         {
-            return itKey->second;
+            return ret;
         }
     }
     zfautoObject ret;
@@ -69,18 +46,12 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, zfRes,
     {
         return zfnull;
     }
-    if(enableCache && input.callbackId() != zfnull && ret != zfnull)
+    if(ret != zfnull && input.callbackId() != zfnull)
     {
-        ZFResCache::instance()->cacheAdd(ret);
-        d->keyMap[input.callbackId()] = ret;
-        d->valueMap[ret] = d->keyMap.find(input.callbackId())->first.c_str();
-        ret->observerAdd(ZFObject::EventObjectBeforeDealloc(), d->resOnDeallocListener);
+        ZFResCache::instance()->cacheAdd(input.callbackId(), ret);
     }
     return ret;
 }
-
-ZFMETHOD_FUNC_INLINE_DEFINE_1(zfautoObject, zfResNoCache,
-                              ZFMP_IN(const zfchar *, resFilePath))
 
 ZF_NAMESPACE_GLOBAL_END
 
