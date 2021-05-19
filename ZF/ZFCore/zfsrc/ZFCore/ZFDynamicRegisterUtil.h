@@ -51,7 +51,9 @@ zfclassFwd _ZFP_ZFDynamicPrivate;
  *   ZFDynamic()
  *       .classBegin(classNameFull [, parent, userData])
  *           .event(eventName)
- *           .method(callback, userData, returnTypeId, methodName [, paramTypeId0, ...])
+ *           .methodBegin(returnTypeId, methodName [, methodType])
+ *               .mp(paramTypeId0 [, paramName0, paramDefault0])
+ *           .methodEnd(callback)
  *           .property(typeIdOrRetainClass, propertyName [, propertyInitValue])
  *           .on(ZFObject::EventObjectAfterAlloc(), callback)
  *           .onInit(callback)
@@ -59,7 +61,9 @@ zfclassFwd _ZFP_ZFDynamicPrivate;
  *       .classEnd()
  *       .NSBegin([methodNamespace])
  *           .event(eventName)
- *           .method(callback, userData, returnTypeId, methodName [, paramTypeId0, ...])
+ *           .methodBegin(returnTypeId, methodName [, methodType])
+ *               .mp(paramTypeId0 [, paramName0, paramDefault0])
+ *           .methodEnd(callback)
  *       .NSEnd()
  *       .enumBegin(enumClassName) // or enumBeginFlags()
  *           .enumValue(enumName [, enumValue])
@@ -207,40 +211,27 @@ public:
      * util method to register method (global method or class member method),
      * methodImpl's param0 is #ZFMethodInvokeData,
      * userData is methodImplUserData
-     */
-    ZFDynamic &method(ZF_IN const ZFListener &methodImpl
-                      , ZF_IN ZFObject *methodImplUserData
-                      , ZF_IN const zfchar *methodReturnTypeId
-                      , ZF_IN const zfchar *methodName
-                      , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                      );
-    /**
-     * @brief see #ZFDynamic
      *
-     * util method to register method (global method or class static method),
-     * methodImpl's param0 is #ZFMethodInvokeData,
-     * userData is methodImplUserData
+     * usage:
+     * @code
+     *   ZFDynamic()
+     *       .methodBegin('void', 'myMethod')
+     *           .mp('zfint', 'p0')
+     *           .mp('zfint', 'p1', zflineAlloc(v_zfint, 123))
+     *       .methodEnd(methodImpl);
+     * @endcode
      */
-    ZFDynamic &methodStatic(ZF_IN const ZFListener &methodImpl
-                            , ZF_IN ZFObject *methodImplUserData
-                            , ZF_IN const zfchar *methodReturnTypeId
-                            , ZF_IN const zfchar *methodName
-                            , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
-                            , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                            );
+    ZFDynamic &methodBegin(ZF_IN const zfchar *methodReturnTypeId,
+                           ZF_IN const zfchar *methodName,
+                           ZF_IN_OPT ZFMethodType methodType = ZFMethodTypeVirtual);
+    /** @brief see #methodBegin */
+    ZFDynamic &mp(ZF_IN const zfchar *methodParamTypeId,
+                  ZF_IN_OPT const zfchar *methodParamName = zfnull,
+                  ZF_IN_OPT ZFObject *methodParamDefaultValue = ZFMethodGenericInvokerDefaultParam());
+    /** @brief see #methodBegin */
+    ZFDynamic &methodEnd(ZF_IN const ZFListener &methodImpl,
+                         ZF_IN_OPT ZFObject *methodImplUserData = zfnull);
+
     /** @brief see #ZFDynamic */
     ZFDynamic &method(ZF_IN const ZFMethodDynamicRegisterParam &param);
 

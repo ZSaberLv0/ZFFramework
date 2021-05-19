@@ -139,7 +139,7 @@ const ZFMethod *ZFMethodDynamicRegister(ZF_IN const ZFMethodDynamicRegisterParam
                 if(param.methodParamDefaultValueCallbackAtIndex(i) == zfnull)
                 {
                     zfstringAppend(errorHint,
-                        "param %zi has no default value by previous param has",
+                        "param %zi has no default value but previous param has",
                         i);
                 }
             }
@@ -226,6 +226,10 @@ const ZFMethod *ZFMethodDynamicRegister(ZF_IN const ZFMethodDynamicRegisterParam
             , param.methodParamTypeIdAtIndex(7), param.methodParamTypeNameAtIndex(7), param.methodParamNameAtIndex(7), param.methodParamDefaultValueCallbackAtIndex(7)
             , zfnull
         );
+    for(zfindex i = 0; i < param.methodParamCount(); ++i)
+    {
+        method->_ZFP_ZFMethod_removeConst()->_ZFP_ZFMethod_paramDefaultValueList[i] = param.methodParamDefaultValueAtIndex(i);
+    }
     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFMethodDynamicRegisterDataHolder)->m[method] = zftrue;
     return method;
 }

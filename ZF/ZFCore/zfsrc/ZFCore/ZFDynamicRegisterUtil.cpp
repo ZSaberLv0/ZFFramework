@@ -31,17 +31,27 @@ public:
 zfclassNotPOD _ZFP_ZFDynamicPrivate
 {
 public:
+    // global
     zfuint refCount;
     zfbool errorOccurred;
     zfstlstringZ regTag;
+
+    // scope
     const ZFClass *cls;
     zfstring methodNamespace;
     zfstring enumClassName;
+
+    // methodBegin
+    ZFMethodDynamicRegisterParam *methodData;
+
+    // enumBegin
     zfuint enumDefault;
     zfbool enumIsFlags;
     zfuint enumValueNext;
     ZFCoreArrayPOD<zfuint> enumValues;
     ZFCoreArray<zfstring> enumNames;
+
+    // state
     ZFCoreArrayPOD<const ZFClass *> allClass;
     ZFCoreArrayPOD<const ZFClass *> allEnum;
     ZFCoreArrayPOD<const ZFMethod *> allMethod;
@@ -56,6 +66,7 @@ public:
     , cls(zfnull)
     , methodNamespace()
     , enumClassName()
+    , methodData(zfnull)
     , enumDefault(ZFEnumInvalid())
     , enumIsFlags(zffalse)
     , enumValueNext(0)
@@ -69,6 +80,14 @@ public:
     , allEvent()
     {
         this->attachGlobal();
+    }
+    ~_ZFP_ZFDynamicPrivate(void)
+    {
+        this->scopeBeginCheck();
+        if(this->methodData != zfnull)
+        {
+            zfdelete(this->methodData);
+        }
     }
 public:
     void error(ZF_IN const zfchar *errorHint, ...)
@@ -100,6 +119,11 @@ public:
         else if(!this->methodNamespace.isEmpty())
         {
             this->error("have you forgot NSEnd?");
+            return zffalse;
+        }
+        else if(this->methodData != zfnull)
+        {
+            this->error("have you forgot methodEnd?");
             return zffalse;
         }
         else if(!this->enumClassName.isEmpty())
@@ -728,71 +752,75 @@ ZFDynamic &ZFDynamic::event(ZF_IN const zfchar *eventName)
     return *this;
 }
 
-ZFDynamic &ZFDynamic::method(ZF_IN const ZFListener &methodImpl
-                             , ZF_IN ZFObject *methodImplUserData
-                             , ZF_IN const zfchar *methodReturnTypeId
-                             , ZF_IN const zfchar *methodName
-                             , ZF_IN_OPT const zfchar *methodParamTypeId0 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId1 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId2 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId3 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId4 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId5 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId6 /* = zfnull */
-                             , ZF_IN_OPT const zfchar *methodParamTypeId7 /* = zfnull */
-                             )
+ZFDynamic &ZFDynamic::methodBegin(ZF_IN const zfchar *methodReturnTypeId,
+                                  ZF_IN const zfchar *methodName,
+                                  ZF_IN_OPT ZFMethodType methodType /* = ZFMethodTypeVirtual */)
 {
     if(d->errorOccurred) {return *this;}
-    return this->method(ZFMethodDynamicRegisterParam()
-            .methodOwnerClass(d->cls)
-            .methodNamespace(d->methodNamespace)
-            .methodImpl(methodImpl)
-            .methodImplUserData(methodImplUserData)
-            .methodType(d->cls ? ZFMethodTypeVirtual : ZFMethodTypeStatic)
-            .methodName(methodName)
-            .methodReturnTypeId(methodReturnTypeId)
-            .methodParamAdd(methodParamTypeId0)
-            .methodParamAdd(methodParamTypeId1)
-            .methodParamAdd(methodParamTypeId2)
-            .methodParamAdd(methodParamTypeId3)
-            .methodParamAdd(methodParamTypeId4)
-            .methodParamAdd(methodParamTypeId5)
-            .methodParamAdd(methodParamTypeId6)
-            .methodParamAdd(methodParamTypeId7)
-        );
+    if(!d->enumClassName.isEmpty())
+    {
+        d->error("can not be called within enumBegin");
+        return *this;
+    }
+    if(d->methodData != zfnull)
+    {
+        d->error("have you forgot methodEnd?");
+        return *this;
+    }
+    d->methodData = zfnew(ZFMethodDynamicRegisterParam);
+    d->methodData->methodReturnTypeId(methodReturnTypeId);
+    d->methodData->methodName(methodName);
+    d->methodData->methodType(methodType);
+    return *this;
 }
-ZFDynamic &ZFDynamic::methodStatic(ZF_IN const ZFListener &methodImpl
-                                   , ZF_IN ZFObject *methodImplUserData
-                                   , ZF_IN const zfchar *methodReturnTypeId
-                                   , ZF_IN const zfchar *methodName
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId0 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId1 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId2 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId3 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId4 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId5 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId6 /* = zfnull */
-                                   , ZF_IN_OPT const zfchar *methodParamTypeId7 /* = zfnull */
-                                   )
+ZFDynamic &ZFDynamic::mp(ZF_IN const zfchar *methodParamTypeId,
+                         ZF_IN_OPT const zfchar *methodParamName /* = zfnull */,
+                         ZF_IN_OPT ZFObject *methodParamDefaultValue /* = ZFMethodGenericInvokerDefaultParam() */)
 {
     if(d->errorOccurred) {return *this;}
-    return this->method(ZFMethodDynamicRegisterParam()
-            .methodOwnerClass(d->cls)
-            .methodNamespace(d->methodNamespace)
-            .methodImpl(methodImpl)
-            .methodImplUserData(methodImplUserData)
-            .methodName(methodName)
-            .methodReturnTypeId(methodReturnTypeId)
-            .methodParamAdd(methodParamTypeId0)
-            .methodParamAdd(methodParamTypeId1)
-            .methodParamAdd(methodParamTypeId2)
-            .methodParamAdd(methodParamTypeId3)
-            .methodParamAdd(methodParamTypeId4)
-            .methodParamAdd(methodParamTypeId5)
-            .methodParamAdd(methodParamTypeId6)
-            .methodParamAdd(methodParamTypeId7)
-        );
+    if(d->methodData == zfnull)
+    {
+        d->error("have you forgot methodBegin?");
+        return *this;
+    }
+    if(methodParamDefaultValue == ZFMethodGenericInvokerDefaultParam())
+    {
+        d->methodData->methodParamAdd(methodParamTypeId, methodParamTypeId, methodParamName);
+    }
+    else
+    {
+        d->methodData->methodParamAddWithDefault(methodParamTypeId, methodParamTypeId, methodParamName, methodParamDefaultValue);
+    }
+    return *this;
 }
+ZFDynamic &ZFDynamic::methodEnd(ZF_IN const ZFListener &methodImpl,
+                                ZF_IN_OPT ZFObject *methodImplUserData /* = zfnull */)
+{
+    if(d->errorOccurred) {return *this;}
+    if(d->methodData == zfnull)
+    {
+        d->error("have you forgot methodBegin?");
+        return *this;
+    }
+    if(d->cls == zfnull)
+    {
+        d->methodData->methodNamespace(d->methodNamespace);
+        d->methodData->methodPrivilegeType(ZFMethodPrivilegeTypePublic);
+        d->methodData->methodType(ZFMethodTypeStatic);
+    }
+    else
+    {
+        d->methodData->methodOwnerClass(d->cls);
+    }
+    ZFMethodDynamicRegisterParam *methodData = d->methodData;
+    d->methodData = zfnull;
+    methodData->methodImpl(methodImpl);
+    methodData->methodImplUserData(methodImplUserData);
+    this->method(*methodData);
+    zfdelete(methodData);
+    return *this;
+}
+
 ZFDynamic &ZFDynamic::method(ZF_IN const ZFMethodDynamicRegisterParam &param)
 {
     if(d->errorOccurred) {return *this;}
@@ -1051,34 +1079,9 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, enumBeginFla
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, enumValue, ZFMP_IN(const zfchar *, enumName), ZFMP_IN_OPT(zfuint, enumValue, ZFEnumInvalid()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, enumEnd, ZFMP_IN_OPT(zfuint, enumDefault, ZFEnumInvalid()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, event, ZFMP_IN(const zfchar *, eventName))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFDynamic, ZFDynamic &, method
-    , ZFMP_IN(const ZFListener &, methodImpl)
-    , ZFMP_IN(ZFObject *, methodImplUserData)
-    , ZFMP_IN(const zfchar *, methodReturnTypeId)
-    , ZFMP_IN(const zfchar *, methodName)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId0, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId2, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId3, zfnull)
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId4, zfnull) */
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull) */
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull) */
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull) */
-    )
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFDynamic, ZFDynamic &, methodStatic
-    , ZFMP_IN(const ZFListener &, methodImpl)
-    , ZFMP_IN(ZFObject *, methodImplUserData)
-    , ZFMP_IN(const zfchar *, methodReturnTypeId)
-    , ZFMP_IN(const zfchar *, methodName)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId0, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId2, zfnull)
-    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId3, zfnull)
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId4, zfnull) */
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull) */
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull) */
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull) */
-    )
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFDynamic, ZFDynamic &, methodBegin, ZFMP_IN(ZF_IN const zfchar *, methodReturnTypeId), ZFMP_IN(ZF_IN const zfchar *, methodName), ZFMP_IN_OPT(ZFMethodType, methodType, ZFMethodTypeVirtual))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFDynamic, ZFDynamic &, mp, ZFMP_IN(ZF_IN const zfchar *, methodParamTypeId), ZFMP_IN(ZF_IN const zfchar *, methodParamName), ZFMP_IN_OPT(ZFObject *, methodParamDefaultValue, ZFMethodGenericInvokerDefaultParam()))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFDynamic, ZFDynamic &, methodEnd, ZFMP_IN(const ZFListener &, methodImpl), ZFMP_IN_OPT(ZFObject *, methodImplUserData, zfnull))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFDynamic, ZFDynamic &, method, ZFMP_IN(const ZFMethodDynamicRegisterParam &, param))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_5(v_ZFDynamic, ZFDynamic &, property, ZFMP_IN(const zfchar *, propertyTypeId), ZFMP_IN(const zfchar *, propertyName), ZFMP_IN_OPT(ZFObject *, propertyInitValue, zfnull), ZFMP_IN_OPT(ZFMethodPrivilegeType, setterPrivilegeType, ZFMethodPrivilegeTypePublic), ZFMP_IN_OPT(ZFMethodPrivilegeType, getterPrivilegeType, ZFMethodPrivilegeTypePublic))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_5(v_ZFDynamic, ZFDynamic &, property, ZFMP_IN(const ZFClass *, propertyClassOfRetainProperty), ZFMP_IN(const zfchar *, propertyName), ZFMP_IN_OPT(ZFObject *, propertyInitValue, zfnull), ZFMP_IN_OPT(ZFMethodPrivilegeType, setterPrivilegeType, ZFMethodPrivilegeTypePublic), ZFMP_IN_OPT(ZFMethodPrivilegeType, getterPrivilegeType, ZFMethodPrivilegeTypePublic))

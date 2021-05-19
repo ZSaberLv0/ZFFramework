@@ -103,10 +103,10 @@ public:
     }
 };
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_ACCESS_EXPAND(N, DefaultExpandOrEmpty, ParamType, param) \
-    _ZFP_MtdGIPA<_TR##N, _T##N>(param).a(DefaultExpandOrEmpty(pDef##N()))
+    _ZFP_MtdGIPA<_TR##N, _T##N>(param).a(DefaultExpandOrEmpty(pDef##N(invokerMethod, N)))
 #define _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS(N, DefaultExpandOrEmpty, ParamType, DefaultValueFix) \
     DefaultExpandOrEmpty( \
-        static zfautoObject pDef##N(void) \
+        static zfautoObject pDef##N(ZF_IN const ZFMethod *invokerMethod, ZF_IN zfindex index) \
         { \
             zftValue<zftTraits<ParamType>::TrNoRef> paramDefault; \
             zfautoObject ret; \

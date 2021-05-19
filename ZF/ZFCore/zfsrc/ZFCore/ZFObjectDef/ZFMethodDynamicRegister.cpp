@@ -115,6 +115,7 @@ public:
     zfstring methodParamTypeName[ZFMETHOD_MAX_PARAM];
     zfstring methodParamName[ZFMETHOD_MAX_PARAM];
     ZFMethodParamDefaultValueCallback methodParamDefaultValueCallback[ZFMETHOD_MAX_PARAM];
+    zfautoObject methodParamDefaultValue[ZFMETHOD_MAX_PARAM];
 
 public:
     _ZFP_ZFMethodDynamicRegisterParamPrivate(void)
@@ -135,6 +136,7 @@ public:
     , methodParamTypeName()
     , methodParamName()
     , methodParamDefaultValueCallback()
+    , methodParamDefaultValue()
     {
     }
 };
@@ -273,6 +275,19 @@ ZFMethodDynamicRegisterParam &ZFMethodDynamicRegisterParam::methodParamAdd(ZF_IN
     }
     return *this;
 }
+static zfautoObject _ZFP_ZFMethodDynamicRegisterParamDefaultGetter(ZF_IN const ZFMethod *invokerMethod, ZF_IN zfindex paramIndex)
+{
+    return invokerMethod->_ZFP_ZFMethod_paramDefaultValueList[paramIndex];
+}
+ZFMethodDynamicRegisterParam &ZFMethodDynamicRegisterParam::methodParamAddWithDefault(ZF_IN const zfchar *methodParamTypeId,
+                                                                                      ZF_IN_OPT const zfchar *methodParamTypeName /* = zfnull */,
+                                                                                      ZF_IN_OPT const zfchar *methodParamName /* = zfnull */,
+                                                                                      ZF_IN_OPT ZFObject *methodParamDefaultValue /* = zfnull */)
+{
+    d->methodParamDefaultValue[d->methodParamCount] = methodParamDefaultValue;
+    this->methodParamAdd(methodParamTypeId, methodParamTypeName, methodParamName, _ZFP_ZFMethodDynamicRegisterParamDefaultGetter);
+    return *this;
+}
 zfindex ZFMethodDynamicRegisterParam::methodParamCount(void) const
 {
     return d->methodParamCount;
@@ -306,6 +321,10 @@ const zfchar *ZFMethodDynamicRegisterParam::methodParamNameAtIndex(ZF_IN zfindex
 ZFMethodParamDefaultValueCallback ZFMethodDynamicRegisterParam::methodParamDefaultValueCallbackAtIndex(ZF_IN zfindex index) const
 {
     return (index < d->methodParamCount ? d->methodParamDefaultValueCallback[index] : zfnull);
+}
+ZFObject *ZFMethodDynamicRegisterParam::methodParamDefaultValueAtIndex(ZF_IN zfindex index) const
+{
+    return (index < d->methodParamCount ? d->methodParamDefaultValue[index].toObject() : zfnull);
 }
 
 ZFMethodDynamicRegisterParam::ZFMethodDynamicRegisterParam(void)

@@ -140,6 +140,11 @@ public:
                                                  ZF_IN_OPT const zfchar *methodParamName = zfnull,
                                                  ZF_IN_OPT ZFMethodParamDefaultValueCallback methodParamDefaultValueCallback = zfnull);
     /** @brief see #ZFMethodDynamicRegister */
+    ZFMethodDynamicRegisterParam &methodParamAddWithDefault(ZF_IN const zfchar *methodParamTypeId,
+                                                            ZF_IN_OPT const zfchar *methodParamTypeName = zfnull,
+                                                            ZF_IN_OPT const zfchar *methodParamName = zfnull,
+                                                            ZF_IN_OPT ZFObject *methodParamDefaultValue = zfnull);
+    /** @brief see #ZFMethodDynamicRegister */
     zfindex methodParamCount(void) const;
     /** @brief see #ZFMethodDynamicRegister */
     const zfchar *methodParamTypeIdAtIndex(ZF_IN zfindex index) const;
@@ -149,6 +154,8 @@ public:
     const zfchar *methodParamNameAtIndex(ZF_IN zfindex index) const;
     /** @brief see #ZFMethodDynamicRegister */
     ZFMethodParamDefaultValueCallback methodParamDefaultValueCallbackAtIndex(ZF_IN zfindex index) const;
+    /** @brief see #ZFMethodDynamicRegister */
+    ZFObject *methodParamDefaultValueAtIndex(ZF_IN zfindex index) const;
 
 public:
     /** @cond ZFPrivateDoc */

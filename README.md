@@ -121,10 +121,11 @@ ZFMAIN_ENTRY()
     ZFLuaExecute(
         "ZFDynamic()\n"
         "    :classBegin('MyChildView', 'MyBaseView')\n"
-        "        :method(function(listenerData, userData)\n"
+        "        :methodBegin('void', 'testFunc')\n"
+        "        :methodEnd(function(listenerData, userData)\n"
         "            listenerData:param0():callSuper()\n"
         "            zfLog('MyChildView::testFunc() called')\n"
-        "        end, zfnull, 'void', 'testFunc')\n"
+        "        end)\n"
         "    :classEnd()\n"
         "\n"
         "local myView = MyChildView()\n"

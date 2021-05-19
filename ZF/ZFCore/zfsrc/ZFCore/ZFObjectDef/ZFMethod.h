@@ -129,7 +129,7 @@ zfclassFwd ZFClass;
  * @brief callback to access method param's default value,
  *   for method generic invoker
  */
-typedef zfautoObject (*ZFMethodParamDefaultValueCallback)(void);
+typedef zfautoObject (*ZFMethodParamDefaultValueCallback)(ZF_IN const ZFMethod *invokerMethod, ZF_IN zfindex paramIndex);
 
 // ============================================================
 /**
@@ -418,7 +418,7 @@ public:
         }
         else
         {
-            return this->_ZFP_ZFMethod_paramDefaultValueCallbackList[index]();
+            return this->_ZFP_ZFMethod_paramDefaultValueCallbackList[index](this, index);
         }
     }
     /**
@@ -629,6 +629,7 @@ public:
     zfstring _ZFP_ZFMethod_paramTypeNameList[ZFMETHOD_MAX_PARAM];
     zfstring _ZFP_ZFMethod_paramNameList[ZFMETHOD_MAX_PARAM];
     ZFMethodParamDefaultValueCallback _ZFP_ZFMethod_paramDefaultValueCallbackList[ZFMETHOD_MAX_PARAM];
+    zfautoObject _ZFP_ZFMethod_paramDefaultValueList[ZFMETHOD_MAX_PARAM];
     zfindex _ZFP_ZFMethod_paramDefaultBeginIndex;
 
     // for class member type
