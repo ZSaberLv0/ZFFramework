@@ -1,4 +1,4 @@
-# 0.9.0RC
+# 0.9.0
 
 * reduce property impl's complexity
 * change property setter name
